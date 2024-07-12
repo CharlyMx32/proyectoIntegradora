@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-app-bar app color="red" flat>
       <v-container class="py-0 fill-height">
-        <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
+        <v-avatar class="mr-10" color="grey darken-1" size="32">HS</v-avatar>
 
         <v-spacer></v-spacer>
 
@@ -66,14 +66,14 @@ import { useRouter } from 'vue-router'
 
 export default {
   setup() {
-    const links = ref(['Login']) // Ejemplo de arreglo de links
+    const links = ref(['Login', 'Registrarme']) // Ejemplo de arreglo de links
     const router = useRouter()
 
     const handleButtonClick = (index) => {
       if (index === 0) {
         router.push('/Login') // Cambia '/dashboard' por la ruta a la que quieres redirigir
       } else {
-        router.push('/Login')
+        router.push('/register')
       }
     }
 
