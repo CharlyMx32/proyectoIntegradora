@@ -1,38 +1,19 @@
+<!-- App.vue -->
+
 <template>
-  <nav>
-    <ul>
-      <li>
-        <router-link to="/login">Login</router-link>
-      </li>
-    </ul>
-  </nav>
+  <v-app>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+  </v-app>
 </template>
 
-<script setup></script>
-
-<style scoped>
-nav {
-  background-color: #333;
-  color: white;
-  padding: 1rem;
+<script>
+export default {
+  name: 'App'
 }
+</script>
 
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  display: inline;
-  margin-right: 1rem;
-}
-
-a {
-  color: white;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
+<style>
+/* Estilos específicos de tu aplicación si es necesario */
 </style>
