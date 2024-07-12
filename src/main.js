@@ -9,6 +9,7 @@ import { createVuetify } from 'vuetify'
 import 'vuetify/styles' // Asegúrate de importar estilos de Vuetify aquí
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import * as icons from 'vuetify/iconsets/mdi-svg'
 import axios from 'axios' // Importar Axios
 
 // Importar componente raíz y router
@@ -21,7 +22,8 @@ const app = createApp(App)
 // Configurar Vuetify
 const vuetify = createVuetify({
   components,
-  directives
+  directives,
+  icons
 })
 
 // Usar plugins y configuraciones

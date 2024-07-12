@@ -1,6 +1,7 @@
 // index.js (router)
 
 import { createRouter, createWebHistory } from 'vue-router'
+import Global from '@/GlobalHome.vue'
 import Login from '@/views/LoginFrom.vue'
 import Register from '@/views/RegistroFrom.vue'
 import AdminDashboard from '@/views/Admin/DashBoardAdmin.vue'
@@ -11,7 +12,8 @@ import { useAuthStore } from '@/stores/auth'
 
 // Definir las rutas de la aplicación
 const routes = [
-  { path: '/', redirect: '/login' }, // Redirigir al login por defecto
+  { path: '/', redirect: 'Global' },
+  { path: '/Global', name: '/Global', component: Global }, // Redirigir al login por defecto
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
   {
