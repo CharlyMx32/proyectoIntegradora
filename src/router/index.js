@@ -4,11 +4,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Global from '@/GlobalHome.vue'
 import Login from '@/views/LoginFrom.vue'
 import Register from '@/views/RegistroFrom.vue'
-import AdminDashboard from '@/views/Admin/DashBoardAdmin.vue'
-import TecnicoDashboard from '@/views/Tecnico/DashBoardTecnico.vue'
-import RecepcionistaDashboard from '@/views/Recepcionista/DashBoardRecepcionista.vue'
-import ClienteDashboard from '@/views/Cliente/DashBoardCliente.vue'
 import { useAuthStore } from '@/stores/auth'
+import DashBoardAdmin from '@/views/Admin/DashBoardAdmin.vue'
+import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
+import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista.vue'
+import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
 
 // Definir las rutas de la aplicación
 const routes = [
@@ -16,30 +16,10 @@ const routes = [
   { path: '/Global', name: '/Global', component: Global }, // Redirigir al login por defecto
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
-  {
-    path: '/admin',
-    name: 'AdminDashboard',
-    component: AdminDashboard,
-    meta: { requiresAuth: true, role: 'admin' } // Requiere autenticación y rol de admin
-  },
-  {
-    path: '/technician',
-    name: 'TechnicianDashboard',
-    component: TecnicoDashboard,
-    meta: { requiresAuth: true, role: 'technician' } // Requiere autenticación y rol de técnico
-  },
-  {
-    path: '/receptionist',
-    name: 'ReceptionistDashboard',
-    component: RecepcionistaDashboard,
-    meta: { requiresAuth: true, role: 'receptionist' } // Requiere autenticación y rol de recepcionista
-  },
-  {
-    path: '/client',
-    name: 'ClientDashboard',
-    component: ClienteDashboard,
-    meta: { requiresAuth: true, role: 'client' } // Requiere autenticación y rol de cliente
-  }
+  { path: '/Admin', name: 'Admin', component: DashBoardAdmin },
+  { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
+  { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
+  { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico }
 ]
 
 // Crear el enrutador con history mode
