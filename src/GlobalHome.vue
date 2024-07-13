@@ -20,7 +20,9 @@
               <v-list color="transparent">
                 <v-list-item v-for="n in 5" :key="n" link>
                   <v-list-item-content>
-                    <v-list-item-title> List Item {{ n }} </v-list-item-title>
+                    <v-list-item-title @click="redirectToPage(n)"
+                      >List Item {{ n }}</v-list-item-title
+                    >
                   </v-list-item-content>
                 </v-list-item>
 
@@ -66,19 +68,46 @@ import { useRouter } from 'vue-router'
 
 export default {
   setup() {
-    const links = ref(['Login', 'Registrarme']) // Ejemplo de arreglo de links
+    // Lista de links en la barra de la aplicación
+    const links = ref(['Login', 'Registrarme'])
+
+    // Router de Vue para manejar las redirecciones
     const router = useRouter()
 
+    // Función para redirigir a diferentes páginas según el ítem de la lista clicado
+    const redirectToPage = (lista) => {
+      switch (lista) {
+        case 1:
+          router.push('/Admin')
+          break
+        case 2:
+          router.push('/Cliente')
+          break
+        case 3:
+          router.push('/Recepcionista')
+          break
+        case 4:
+          router.push('/Tecnico')
+          break
+        // Agrega más casos según tus necesidades
+        default:
+          break
+      }
+    }
+
+    // Función para manejar el clic en los botones de la barra de la aplicación
     const handleButtonClick = (index) => {
       if (index === 0) {
-        router.push('/Login') // Cambia '/dashboard' por la ruta a la que quieres redirigir
-      } else {
-        router.push('/register')
+        router.push('/Login') // Redirige a la ruta '/Login'
+      } else if (index === 1) {
+        router.push('/register') // Redirige a la ruta '/register'
       }
+      // Añade más condiciones según necesites para otros botones
     }
 
     return {
       links,
+      redirectToPage,
       handleButtonClick
     }
   }
