@@ -19,7 +19,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item v-for="link in links" :key="link" @click="Paginas(link)" class="menu-item">
+          <v-list-item v-for="link in links" :key="link" @click="goToPage(link)" class="menu-item">
             <v-list-item-content>
               <v-list-item-title>{{ link }}</v-list-item-title>
             </v-list-item-content>
@@ -40,17 +40,17 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const links = ref([' Registrar Usuarios', 'Detalle Servicios', 'Usuarios', 'Status Negocio'])
+const links = ref(['Registrar Usuarios', 'Detalle Servicios', 'Usuarios', 'Status Negocio'])
 
 const router = useRouter()
 
-const Paginas = (link) => {
+const goToPage = (link) => {
   switch (link) {
     case 'Registrar Usuarios':
       router.push('/RU')
       break
     case 'Detalle Servicios':
-      router.push('/Cliente')
+      router.push('/DS')
       break
     case 'Usuarios':
       router.push('/Recepcionista')
@@ -62,6 +62,7 @@ const Paginas = (link) => {
       break
   }
 }
+
 const drawer = ref(true)
 const drawerWidth = ref(200)
 const mini = ref(false)
