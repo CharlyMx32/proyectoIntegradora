@@ -4,22 +4,35 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Global from '@/GlobalHome.vue'
 import Login from '@/views/LoginFrom.vue'
 import Register from '@/views/RegistroFrom.vue'
-import { useAuthStore } from '@/stores/auth'
 import DashBoardAdmin from '@/views/Admin/DashBoardAdmin.vue'
 import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
 import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista.vue'
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
+import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
+import detalleServicios from '@/views/Admin/detalleServicios.vue'
 
-// Definir las rutas de la aplicación
 const routes = [
-  { path: '/', redirect: 'Global' },
-  { path: '/Global', name: '/Global', component: Global }, // Redirigir al login por defecto
+  { path: '/', redirect: '/Global' },
+  { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
-  { path: '/Admin', name: 'Admin', component: DashBoardAdmin },
   { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
   { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
-  { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico }
+  { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
+  {
+    path: '/admin',
+    component: DashBoardAdmin,
+    children: [
+      {
+        path: '/RU',
+        component: registroUsuarios
+      },
+      {
+        path: '/DS',
+        component: detalleServicios
+      }
+    ]
+  }
 ]
 
 // Crear el enrutador con history mode
@@ -29,23 +42,5 @@ const router = createRouter({
 })
 
 // Middleware para verificar la autenticación y roles antes de cada navegación
-router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore()
-  const isAuthenticated = authStore.isAuthenticated
-  const userRole = authStore.role
-
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    // Requiere autenticación
-    if (!isAuthenticated) {
-      next({ name: 'Login' }) // Redirigir al login si no está autenticado
-    } else if (to.meta.role && to.meta.role !== userRole) {
-      next({ name: 'Login' }) // Redirigir al login si el rol no coincide
-    } else {
-      next() // Permitir la navegación si está autenticado y tiene el rol correcto
-    }
-  } else {
-    next() // Permitir la navegación sin autenticación para rutas públicas
-  }
-})
 
 export default router
