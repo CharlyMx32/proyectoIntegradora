@@ -1,20 +1,7 @@
 <template>
-  <v-container>
-    <v-card>
-      <v-card-title>Dashboard Admin</v-card-title>
-      <v-card-text>
-        Bienvenido/a, aquí puedes configurar la aplicación y gestionar usuarios y roles.
-      </v-card-text>
-    </v-card>
-  </v-container>
+  <BarraLateral />
 </template>
 
-<script>
-export default {
-  name: 'DashboardAdmin'
-}
+<script setup>
+import BarraLateral from '@/components/CompAdmin/BarraLateral.vue'
 </script>
-
-<style scoped>
-/* Estilos específicos para este componente */
-</style>
