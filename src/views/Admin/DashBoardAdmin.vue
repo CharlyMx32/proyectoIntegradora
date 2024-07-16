@@ -5,3 +5,5 @@
 <script setup>
 import BarraLateral from '@/components/CompAdmin/BarraLateral.vue'
 </script>
+
+<style></style>

@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+    <carrosel-global />
     <v-app-bar app color="red" flat>
       <v-container class="py-0 fill-height">
         <v-avatar class="mr-10" color="grey darken-1" size="32">HS</v-avatar>
@@ -65,6 +66,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import CarroselGlobalVue from './components/CompAdmin/CarroselGlobal.vue'
 
 const links = ref(['Login', 'Registrarme'])
 
