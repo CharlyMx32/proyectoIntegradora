@@ -1,126 +1,110 @@
+<!-- src/components/SomeOtherComponent.vue -->
 <template>
-  <v-container class="fill-height d-flex align-center justify-center">
-    <v-form @submit.prevent="submitForm">
-      <v-card-title class="headline text-center">Registrar Usuarios</v-card-title>
-
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field
-            v-model="formData.nombre"
-            label="Nombre"
-            variant="underlined"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            v-model="formData.apellidos"
-            label="Apellidos"
-            variant="underlined"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12">
-          <v-text-field
-            v-model="formData.direccion"
-            label="Dirección"
-            variant="underlined"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            v-model="formData.correo"
-            label="Correo"
-            type="email"
-            variant="underlined"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            v-model="formData.telefono"
-            label="Teléfono"
-            variant="underlined"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12">
-          <v-select
-            v-model="selectedRole"
-            :items="roles"
-            label="Rol"
-            variant="solo-filled"
-            required
-          ></v-select>
-        </v-col>
-        <!-- Mostrar campos adicionales según el rol seleccionado -->
-        <v-col v-if="showFields.value" cols="12">
-          <v-text-field v-model="formData.nss" label="NSS" variant="underlined"></v-text-field>
-        </v-col>
-        <v-col v-if="showFields.value" cols="12">
-          <v-text-field v-model="formData.curp" label="CURP" variant="underlined"></v-text-field>
-        </v-col>
-        <v-col v-if="showFields.value" cols="12">
-          <v-text-field v-model="formData.rfc" label="RFC" variant="underlined"></v-text-field>
-        </v-col>
-      </v-row>
-      <v-btn type="submit" color="primary">Registrar</v-btn>
-    </v-form>
-  </v-container>
+  <div>
+    <h1>Formulario de Registro</h1>
+    <div class="input-row">
+      <CustomVuetifyInput
+        v-model="username"
+        label="Nombre de Usuario"
+        placeholder="Ingrese su nombre de usuario"
+        customClass="my-input-class"
+        :customStyle="{ borderColor: 'blue' }"
+      />
+      <CustomVuetifyInput
+        v-model="apellidoPaterno"
+        label="Apellido Paterno"
+        placeholder="Ingrese su apellido paterno"
+        customClass="my-input-class"
+        :customStyle="{ borderColor: 'blue' }"
+      />
+      <CustomVuetifyInput
+        v-model="apellidoMaterno"
+        label="Apellido Materno"
+        placeholder="Ingrese su apellido materno"
+        customClass="my-input-class"
+        :customStyle="{ borderColor: 'blue' }"
+      />
+    </div>
+    <CustomVuetifyInput
+      v-model="email"
+      label="Correo Electrónico"
+      placeholder="Ingrese su correo electrónico"
+      customClass="my-input-class"
+      :customStyle="{ borderColor: 'green' }"
+    />
+    <v-select
+      v-model="role"
+      :items="roles"
+      label="Selecciona un rol"
+      custom-class="my-select-class"
+      @change="onRoleChange"
+    />
+    <div v-if="role && role !== 'Cliente'">
+      <CustomVuetifyInput
+        v-model="nss"
+        label="NSS"
+        placeholder="Ingrese su NSS"
+        customClass="my-input-class"
+        :customStyle="{ borderColor: 'blue' }"
+      />
+      <CustomVuetifyInput
+        v-model="curp"
+        label="CURP"
+        placeholder="Ingrese su CURP"
+        customClass="my-input-class"
+        :customStyle="{ borderColor: 'blue' }"
+      />
+      <CustomVuetifyInput
+        v-model="rfc"
+        label="RFC"
+        placeholder="Ingrese su RFC"
+        customClass="my-input-class"
+        :customStyle="{ borderColor: 'blue' }"
+      />
+      <v-select
+        v-if="role === 'Técnico'"
+        v-model="especialidad"
+        :items="especialidades"
+        label="Especialidad"
+        custom-class="my-select-class"
+      />
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
+import CustomVuetifyInput from '@/components/Generales/inputText.vue'
 
-const formData = ref({
-  nombre: '',
-  apellidos: '',
-  direccion: '',
-  correo: '',
-  telefono: '',
-  nss: '',
-  curp: '',
-  rfc: ''
-})
+const username = ref('')
+const apellidoPaterno = ref('')
+const apellidoMaterno = ref('')
+const email = ref('')
+const role = ref('')
+const nss = ref('')
+const curp = ref('')
+const rfc = ref('')
+const especialidad = ref('')
+const roles = ['Cliente', 'Recepcionista', 'Admin', 'Técnico']
+const especialidades = ['Especialidad 1', 'Especialidad 2', 'Especialidad 3']
 
-const roles = ['Cliente', 'Recepcionista', 'Técnico', 'Admin']
-const selectedRole = ref('Selecciona Rol')
-const showFields = ref(false)
-
-watch(selectedRole, (newValue) => {
-  showFields.value = newValue === 'Técnico' || newValue === 'Admin' || newValue === 'Recepcionista'
-})
-
-const submitForm = () => {
-  // Aquí puedes manejar el envío de datos, por ejemplo, enviar formData a tu backend
-  console.log(formData.value)
+const onRoleChange = () => {
+  nss.value = ''
+  curp.value = ''
+  rfc.value = ''
+  especialidad.value = ''
 }
 </script>
 
 <style scoped>
-.fill-height {
-  height: 100%;
+.input-row {
+  display: flex;
+  gap: 1em;
 }
-.align-center {
-  align-items: center;
+.my-input-class {
+  margin-bottom: 1em;
 }
-.justify-center {
-  justify-content: center;
-}
-
-.card {
-  padding: 20px;
-  margin: 0%;
-}
-
-.my-custom-class {
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-.v-text-field {
-  margin-bottom: 16px;
+.my-select-class {
+  margin-top: 1em;
 }
 </style>
