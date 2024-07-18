@@ -18,5 +18,5 @@
 </template>
 
 <script setup>
-import BarraRecepcionista from '@/components/CompRecepcionista/BarraRecepcionista.vue'
+import BarraRecepcionista from '@/components/Generales/BarraLateralEmpleados.vue'
 </script>

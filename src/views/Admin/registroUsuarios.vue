@@ -1,4 +1,3 @@
-<!-- src/components/SomeOtherComponent.vue -->
 <template>
   <div>
     <h1>Formulario de Registro</h1>
@@ -39,7 +38,7 @@
       custom-class="my-select-class"
       @change="onRoleChange"
     />
-    <div v-if="role && role !== 'Cliente'">
+    <div v-show="role && role !== 'Cliente'">
       <CustomVuetifyInput
         v-model="nss"
         label="NSS"
