@@ -4,6 +4,9 @@
         <v-navigation-drawer
           expand-on-hover
           rail
+          :mini-variant="mini"
+        :width="drawerWidth"
+        v-model="drawer"
         >
           <v-list>
             <v-list-item
@@ -16,16 +19,46 @@
           <v-divider></v-divider>
   
           <v-list density="compact" nav>
-            <v-list-item title="Pantalla principal" value="principal"></v-list-item>
-            <v-list-item title="Cuenta cliente" value="cliente"></v-list-item>
-            <v-list-item title="Agendar citas" value="agendar"></v-list-item>
-            <v-list-item title="Citas" value="citas"></v-list-item>
-            <v-list-item title="Asignar citas" value="asignar"></v-list-item>
-            <v-list-item title="Citas pendientes" value="pendientes"></v-list-item>
-          </v-list>
+          <v-list-item
+            v-for="link in links"
+            :key="link"
+            :title="link.title"
+            @click="goToPage(link.route)"
+          ></v-list-item>
+        </v-list>
         </v-navigation-drawer>
   
         <v-main style="height: 700px"></v-main>
       </v-layout>
     </v-card>
   </template>
+
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const links = ref([
+  { title: 'Pantalla Principal', route: '/Recepcionista' },
+  { title: 'Registrar Cliente', route: '/RC' },
+  { title: 'Agendar Citas', route: '/AC' },
+  { title: 'Citas', route: '/C' },
+  { title: 'Asignar Citas', route: '/AS' },
+  { title: 'Citas Pendientes', route: '/CP' }
+])
+
+const router = useRouter()
+
+const goToPage = (route) => {
+  router.push(route)
+}
+
+const drawer = ref(true)
+const drawerWidth = ref(200)
+const mini = ref(false)
+
+const toggleDrawer = () => {
+  mini.value = !mini.value
+  drawerWidth.value = mini.value ? 64 : 200
+}
+
+</script>
