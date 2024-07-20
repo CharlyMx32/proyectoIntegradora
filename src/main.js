@@ -23,29 +23,7 @@ const app = createApp(App)
 const vuetify = createVuetify({
   components,
   directives,
-  icons,
-  theme: {
-    themes: {
-      light: {
-        primary: '#000000',
-        secondary: '#121212',
-        accent: '#1E1E1E',
-        info: '#2E2E2E',
-        warning: '#3E3E3E',
-        error: '#4E4E4E',
-        success: '#5E5E5E'
-      },
-      dark: {
-        primary: '#000000',
-        secondary: '#121212',
-        accent: '#1E1E1E',
-        info: '#2E2E2E',
-        warning: '#3E3E3E',
-        error: '#4E4E4E',
-        success: '#5E5E5E'
-      }
-    }
-  }
+  icons
 })
 
 // Usar plugins y configuraciones

@@ -17,6 +17,7 @@ export default {
 <style>
 /* Estilos específicos de tu aplicación si es necesario */
 .fondo {
-  background-color: #000;
+  background-color: #d1d1d1;
+  color: white;
 }
 </style>
