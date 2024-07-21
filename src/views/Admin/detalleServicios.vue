@@ -36,10 +36,16 @@ const headers = [
 
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost/myproject/srcphp/model')
+    const response = await axios.get('HS.com/models/getData.php?model=adminVista')
     users.value = response.data
   } catch (error) {
     console.error('Error fetching users:', error)
   }
 })
 </script>
+
+<style>
+.fill-height {
+  height: 100vh;
+}
+</style>
