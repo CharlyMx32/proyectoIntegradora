@@ -1,20 +1,31 @@
 <template>
-  <v-container>
-    <v-card>
-      <v-card-title>Dashboard Técnico</v-card-title>
-      <v-card-text>
-        Bienvenido/a, aquí puedes ver las órdenes asignadas y gestionar tu trabajo.
-      </v-card-text>
-    </v-card>
-  </v-container>
+  <v-app id="inspire">
+    <v-navigation-drawer v-model="drawer">
+      <!--  -->
+    </v-navigation-drawer>
+
+    <v-app-bar color="#010001">
+      <v-app-bar-nav-icon color="#FE03D0" @click="drawer = !drawer" ></v-app-bar-nav-icon>
+
+      <v-app-bar-titlec>Home</v-app-bar-titlec>
+      
+    </v-app-bar>
+
+    <v-main >
+      hola
+    </v-main>
+  </v-app>
 </template>
 
-<script>
-export default {
-  name: 'DashboardTecnico'
-}
+
+<script setup>
+  import { ref } from 'vue'
+
+  const drawer = ref(null)
 </script>
 
-<style scoped>
-/* Estilos específicos para este componente */
-</style>
+<script>
+  export default {
+    data: () => ({ drawer: null }),
+  }
+</script>
