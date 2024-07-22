@@ -1,163 +1,45 @@
 <template>
   <v-container class="fill-height d-flex align-center justify-center">
-    <v-table dense height="300px">
-      <thead>
+    <v-data-table
+      :headers="headers"
+      :items="users"
+      item-key="id_persona"
+      dense
+      class="elevation-1"
+      style="max-width: 800px; width: 100%"
+    >
+      <!-- Slot for customizing the default table cell rendering -->
+      <template v-slot:item="{ item }">
         <tr>
-          <th class="text-left" style="width: 50%">Name</th>
-          <th class="text-left" style="width: 50%">Calories</th>
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.telefono }}</td>
         </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in desserts" :key="item.name">
-          <td>{{ item.name }}</td>
-          <td>{{ item.calories }}</td>
-        </tr>
-      </tbody>
-    </v-table>
+      </template>
+
+      <!-- Custom header slot -->
+      <template v-slot:column="{ column }">
+        <th>{{ column.text }}</th>
+      </template>
+    </v-data-table>
   </v-container>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
-const desserts = ref([
-  {
-    name: 'Frozen Yogurt',
-    calories: 159
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237
-  },
-  {
-    name: 'Eclair',
-    calories: 262
-  },
-  {
-    name: 'Cupcake',
-    calories: 305
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375
-  },
-  {
-    name: 'Lollipop',
-    calories: 392
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408
-  },
-  {
-    name: 'Donut',
-    calories: 452
-  },
-  {
-    name: 'KitKat',
-    calories: 518
+const users = ref([])
+const headers = [
+  { text: 'Name', value: 'nombre' },
+  { text: 'Phone', value: 'telefono' }
+]
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('http://localhost/myproject/srcphp/model')
+    users.value = response.data
+  } catch (error) {
+    console.error('Error fetching users:', error)
   }
-])
+})
 </script>
-
-<script>
-export default {
-  data() {
-    return {
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237
-        },
-        {
-          name: 'Eclair',
-          calories: 262
-        },
-        {
-          name: 'Cupcake',
-          calories: 305
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375
-        },
-        {
-          name: 'Lollipop',
-          calories: 392
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408
-        },
-        {
-          name: 'Donut',
-          calories: 452
-        },
-        {
-          name: 'KitKat',
-          calories: 518
-        }
-      ]
-    }
-  }
-}
-</script>
-
-<style scoped>
-/* Estilo para hacer la tabla más compacta */
-.v-table {
-  font-size: 14px; /* Tamaño de fuente más pequeño */
-  width: 800px;
-  border: 1px solid rgb(171, 171, 171);
-  border-radius: 5px;
-  padding: 10px;
-}
-
-/* Estilos para las celdas */
-.text-left {
-  text-align: left; /* Alineación del texto a la izquierda */
-  padding: 8px; /* Padding interno de las celdas */
-}
-
-/* Estilos para filas alternas (opcional) */
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2; /* Fondo gris claro para filas pares */
-}
-
-.fill-height {
-  height: 100%;
-}
-.align-center {
-  align-items: center;
-}
-.justify-center {
-  justify-content: center;
-}
-
-.card {
-  padding: 20px;
-  margin: 0%;
-}
-
-.my-custom-class {
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-.v-text-field {
-  margin-bottom: 16px;
-}
-</style>
