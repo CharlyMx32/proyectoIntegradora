@@ -66,7 +66,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import CarroselGlobalVue from './components/CompAdmin/CarroselGlobal.vue'
+
 
 const links = ref(['Login', 'Registrarme'])
 
