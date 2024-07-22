@@ -10,6 +10,8 @@ import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
 import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServicios.vue'
+import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
+import statusNegocio from '@/views/Admin/statusNegocio.vue'
 
 const routes = [
   { path: '/', redirect: '/Global' },
@@ -30,6 +32,14 @@ const routes = [
       {
         path: '/DS',
         component: detalleServicios
+      },
+      {
+        path: '/UA',
+        component: UsuariosAdmin
+      },
+      {
+        path: '/SN',
+        component: statusNegocio
       }
     ]
   }

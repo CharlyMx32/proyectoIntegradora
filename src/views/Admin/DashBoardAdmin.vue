@@ -2,7 +2,6 @@
   <v-app class="fondo">
     <v-container fluid>
       <v-row>
-        <!-- Barra lateral a la izquierda -->
         <v-col :cols="mini ? 1 : 3">
           <BarraLateral
             :avatarUrl="avatarUrl"
@@ -14,7 +13,6 @@
           ></BarraLateral>
         </v-col>
 
-        <!-- Contenido principal a la derecha -->
         <v-col :cols="mini ? 11 : 9">
           <router-view></router-view>
         </v-col>
@@ -32,7 +30,9 @@ const avatarUrl =
 
 const navItems = [
   { title: 'Registro Usuarios', to: '/RU' },
-  { title: 'Detalle Servicios', to: '/DS' }
+  { title: 'Detalle Servicios', to: '/DS' },
+  { title: 'Usuarios Admin', to: '/UA' },
+  { title: 'Status', to: '/SN' }
 ]
 
 const mini = ref(false)
