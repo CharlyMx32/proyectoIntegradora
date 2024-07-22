@@ -1,20 +1,25 @@
 <template>
-  <v-container>
-    <v-card>
-      <v-card-title>Dashboard Cliente</v-card-title>
-      <v-card-text>
-        Bienvenido/a, aquí puedes ver información relevante para los clientes.
-      </v-card-text>
-    </v-card>
-  </v-container>
-</template>
+  <div>
+    <barra-cliente/>
+  </div>
+  <div>
+    <PrincipalCliente/>
+    <router-view/>
+  </div>
+  </template>
 
-<script>
-export default {
-  name: 'DashboardCliente'
-}
+
+  <script setup>
+  import router from '@/router';
+  import PrincipalCliente from './PrincipalCliente.vue';
+  import BarraCliente from '@/components/CompCliente/BarraCliente.vue';
+
 </script>
 
-<style scoped>
-/* Estilos específicos para este componente */
-</style>
+
+
+
+ 
+  
+
+
