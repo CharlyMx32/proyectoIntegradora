@@ -1,7 +1,7 @@
 <!-- App.vue -->
 
 <template>
-  <v-app>
+  <v-app class="fondo">
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -16,4 +16,8 @@ export default {
 
 <style>
 /* Estilos específicos de tu aplicación si es necesario */
+.fondo {
+  background-color: #d1d1d1;
+  color: white;
+}
 </style>

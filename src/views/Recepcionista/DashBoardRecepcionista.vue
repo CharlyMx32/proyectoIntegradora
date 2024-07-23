@@ -1,20 +1,22 @@
 <template>
-  <v-container>
-    <v-card>
-      <v-card-title>Dashboard Recepcionista</v-card-title>
-      <v-card-text>
-        Bienvenido/a, aquí puedes gestionar las citas y comunicarte con técnicos y clientes.
-      </v-card-text>
-    </v-card>
+  <v-container fluid>
+    <v-row>
+      <!-- Barra lateral a la izquierda -->
+      <v-col cols="2">
+        <BarraRecepcionista />
+      </v-col>
+
+      <!-- Contenido principal a la derecha -->
+      <v-col cols="10">
+        <v-card>
+          <v-card-title class="text-center">Bienvenido/a a nuestra plataforma</v-card-title>
+          <!-- Aquí puedes agregar más contenido dinámico -->
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
-<script>
-export default {
-  name: 'DashboardRecepcionista'
-}
+<script setup>
+import BarraRecepcionista from '@/components/Generales/BarraLateralEmpleados.vue'
 </script>
-
-<style scoped>
-/* Estilos específicos para este componente */
-</style>
