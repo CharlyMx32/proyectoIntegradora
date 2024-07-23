@@ -10,6 +10,9 @@ import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
 import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServicios.vue'
+import cuentaCliente from '@/views/Recepcionista/CuentaCliente.vue'
+import agendarCita from '@/views/Recepcionista/AgendarCitas.vue'
+import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
 
 const routes = [
   { path: '/', redirect: '/Global' },
@@ -17,7 +20,26 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
   { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
-  { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
+  { path: '/Recepcionista', 
+
+    component: DashBoardRecepcionista,
+    children: [
+      {
+        path: '/Recepcionista',
+        component: paginaPrincipal
+      },
+      {
+        path: '/CC',
+        component: cuentaCliente
+      },
+      {
+        path: '/AC',
+        component: agendarCita
+      }
+
+    ]
+
+   },
   { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
   {
     path: '/admin',
@@ -32,7 +54,8 @@ const routes = [
         component: detalleServicios
       }
     ]
-  }
+  },
+
 ]
 
 // Crear el enrutador con history mode
