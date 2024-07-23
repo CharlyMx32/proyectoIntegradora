@@ -120,7 +120,7 @@ const headers = [
 const fetchData = async () => {
   try {
     const { date, clientName, technicianName } = filters.value
-    const response = await axios.get('http://hs.com/Models/detalleServicioadmin.php', {
+    const response = await axios.get('http://hs.com/getData', {
       params: {
         date,
         client_name: clientName,

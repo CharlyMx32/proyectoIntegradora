@@ -1,20 +1,19 @@
 <template>
-  <v-container>
-    <v-card>
-      <v-card-title>Dashboard Cliente</v-card-title>
-      <v-card-text>
-        Bienvenido/a, aquí puedes ver información relevante para los clientes.
-      </v-card-text>
-    </v-card>
-  </v-container>
+  <div>
+    <barra-cliente />
+    <v-app>
+      <v-content>
+        <!-- Incluye el componente AgendarCita -->
+        <router-view />
+      </v-content>
+    </v-app>
+  </div>
 </template>
 
-<script>
-export default {
-  name: 'DashboardCliente'
-}
+<script setup>
+import BarraCliente from '@/components/CompCliente/BarraCliente.vue'
 </script>
 
 <style scoped>
-/* Estilos específicos para este componente */
+/* Aquí puedes agregar estilos específicos para el DashBoardCliente */
 </style>

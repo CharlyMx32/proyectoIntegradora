@@ -10,9 +10,15 @@ import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
 import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServicios.vue'
+
+
+
+
+
 import cuentaCliente from '@/views/Recepcionista/CuentaCliente.vue'
 import agendarCita from '@/views/Recepcionista/AgendarCitas.vue'
 import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
+
 
 const routes = [
   { path: '/', redirect: '/Global' },
@@ -20,26 +26,7 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
   { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
-  { path: '/Recepcionista', 
-
-    component: DashBoardRecepcionista,
-    children: [
-      {
-        path: '/Recepcionista',
-        component: paginaPrincipal
-      },
-      {
-        path: '/CC',
-        component: cuentaCliente
-      },
-      {
-        path: '/AC',
-        component: agendarCita
-      }
-
-    ]
-
-   },
+  { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
   { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
   {
     path: '/admin',
@@ -52,6 +39,32 @@ const routes = [
       {
         path: '/DS',
         component: detalleServicios
+      },
+      {
+        path: '/UA',
+        component: UsuariosAdmin
+      },
+      {
+        path: '/SN',
+        component: statusNegocio
+      }
+    ]
+  },
+  {
+    path: '/Cliente',
+    component: DashBoardCliente,
+    children: [
+      {
+        path: '/principal',
+        component: PrincipalCliente
+      },
+      {
+        path: '',
+        redirect: '/principal'
+      },
+      {
+        path: '/Agendar',
+        component: AgendarCita
       }
     ]
   },

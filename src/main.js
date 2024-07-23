@@ -37,3 +37,4 @@ app.config.globalProperties.$axios = axios
 
 // Montar la aplicación en el DOM
 app.mount('#app')
+
