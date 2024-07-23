@@ -44,12 +44,16 @@ const routes = [
       }
     ]
   },
-  { path: '/Cliente', 
-    component: DashBoardCliente ,
+  {
+    path: '/Cliente',
+    component: DashBoardCliente,
     children: [
       {
         path: '/principal',
-        component: PrincipalCliente,
+        component: PrincipalCliente
+      },
+      {
+        path: '',
         redirect: '/principal'
       },
       {

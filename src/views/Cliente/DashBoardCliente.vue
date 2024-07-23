@@ -1,25 +1,19 @@
 <template>
   <div>
-    <barra-cliente/>
+    <barra-cliente />
+    <v-app>
+      <v-content>
+        <!-- Incluye el componente AgendarCita -->
+        <router-view />
+      </v-content>
+    </v-app>
   </div>
-  <div>
-    <PrincipalCliente/>
-    <router-view/>
-  </div>
-  </template>
+</template>
 
-
-  <script setup>
-  import router from '@/router';
-  import PrincipalCliente from './PrincipalCliente.vue';
-  import BarraCliente from '@/components/CompCliente/BarraCliente.vue';
-
+<script setup>
+import BarraCliente from '@/components/CompCliente/BarraCliente.vue'
 </script>
 
-
-
-
- 
-  
-
-
+<style scoped>
+/* Aquí puedes agregar estilos específicos para el DashBoardCliente */
+</style>
