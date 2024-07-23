@@ -1,75 +1,156 @@
 <template>
-  <v-app>
-    <v-parallax height="300" src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg">
-      <v-btn class="ma-2" color="orange darken-2" dark @click="home">
-        <v-icon dark left> mdi-arrow-left </v-icon>Back
-      </v-btn>
+  <v-container
+    class="d-flex justify-center align-center fill-height gradient-background pa-0"
+    fluid
+  >
+    <v-card class="rounded-lg" max-width="50%" elevation="5" flat max-height="80%">
+      <v-row no-gutters>
+        <!-- Sección de bienvenida -->
+        <v-col
+          cols="12"
+          md="5"
+          class="d-flex flex-column align-center justify-center pa-4"
+          style="background-color: #f5f5f5"
+        >
+          <v-img :src="imgRegister" aspect-ratio="1" contain max-height="150" class="mb-4"></v-img>
+          <v-typography variant="h5" class="text-center">¡Bienvenido!</v-typography>
+        </v-col>
 
-      <v-container class="fill-height d-flex align-center justify-center">
-        <v-card class="elevation-10 w-25 rounded-xl card">
-          <v-card-title class="headline text-center">registro</v-card-title>
-          <v-divider class="my-2"></v-divider>
-          <v-card-text>
-            <v-form @submit.prevent="Registro">
-              <v-text-field
-                v-model="nombre"
-                color="purple darken-2"
-                label="First name"
-                required
-              ></v-text-field>
-              <v-text-field v-model="apeliido" label="Apellido" required> </v-text-field>
-              <v-text-field v-model="email" label="Email" required> </v-text-field>
-              <v-text-field v-model="password" label="Password" type="password" required>
-              </v-text-field>
-              <v-btn type="submit" color="red darken-2" dark block>Ingresar</v-btn>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-container>
-    </v-parallax>
-  </v-app>
+        <!-- Sección del formulario -->
+        <v-col cols="12" md="7" class="pa-4">
+          <v-form>
+            <v-row>
+              <v-col cols="12" md="6" class="pa-1">
+                <v-text-field
+                  v-model="form.nombre"
+                  label="Nombre"
+                  outlined
+                  class="minimalista"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" class="pa-1">
+                <v-text-field
+                  v-model="form.apellidos"
+                  label="Apellidos"
+                  outlined
+                  class="minimalista"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-text-field
+              v-model="form.correo"
+              label="Correo"
+              outlined
+              class="minimalista mb-3"
+            ></v-text-field>
+            <v-text-field
+              v-model="form.telefono"
+              label="Teléfono"
+              outlined
+              class="minimalista mb-3"
+            ></v-text-field>
+            <v-text-field
+              v-model="form.contraseña"
+              label="Contraseña"
+              type="password"
+              outlined
+              class="minimalista mb-3"
+            ></v-text-field>
+            <v-text-field
+              v-model="form.confirmarContraseña"
+              label="Confirmar Contraseña"
+              type="password"
+              outlined
+              class="minimalista mb-3"
+            ></v-text-field>
+            <v-btn color="primary" @click="registrarse" class="mt-4">Registrarse</v-btn>
+          </v-form>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-container>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
+import imgRegister from '@/assets/imgregister.jpg' // Importa la imagen desde assets
 
-const email = ref('')
-const password = ref('')
-const authStore = useAuthStore()
-const router = useRouter()
+const form = ref({
+  nombre: '',
+  apellidos: '',
+  correo: '',
+  telefono: '',
+  contraseña: '',
+  confirmarContraseña: ''
+})
 
-const home = () => {
-  router.push('/Global')
-}
-
-const Registro = async () => {
-  // Aquí debes añadir la lógica para autenticar al usuario con tu backend
-  const user = { email: email.value }
-  const role = 'client' // Obtener el rol del usuario desde el backend
-  authStore.registro(user, role)
-
-  if (role === 'admin') router.push({ name: 'AdminDashboard' })
-  else if (role === 'technician') router.push({ name: 'TechnicianDashboard' })
-  else if (role === 'receptionist') router.push({ name: 'ReceptionistDashboard' })
-  else router.push({ name: 'ClientDashboard' })
+function registrarse() {
+  // Lógica para registrar al usuario
+  console.log(form.value)
 }
 </script>
 
 <style scoped>
-.fill-height {
+html,
+body {
   height: 100%;
-}
-.align-center {
-  align-items: center;
-}
-.justify-center {
-  justify-content: center;
+  margin: 0;
+  overflow-y: hidden; /* Oculta el scroll vertical */
 }
 
-.card {
-  padding: 0%;
-  margin: 0%;
+.fill-height {
+  height: 100%;
+  overflow: hidden; /* Oculta el scroll vertical y horizontal si hay desbordamiento */
+}
+
+.gradient-background {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    135deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(1, 1, 94, 1) 48%,
+    rgba(0, 142, 171, 1) 100%
+  );
+}
+
+.v-container {
+  width: 100%;
+  padding: 0;
+}
+
+.v-card {
+  width: 100%;
+  max-width: 50%; /* Reducir el ancho máximo del card */
+  margin: 0 auto;
+  padding: 0;
+}
+
+.v-row {
+  margin: 0;
+}
+
+.v-col {
+  padding: 0;
+}
+
+img,
+.v-img {
+  max-width: 100%;
+  height: auto;
+}
+
+.v-text-field {
+  width: 100%; /* Asegúrate de que los campos de texto ocupen todo el ancho disponible */
+}
+
+.minimalista {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: none;
+}
+
+.v-btn {
+  width: 100%; /* Asegúrate de que el botón ocupe todo el ancho disponible */
 }
 </style>

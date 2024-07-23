@@ -7,7 +7,7 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn v-for="link in links" :key="link" text @click="handleButtonClick(index)">
+        <v-btn v-for="(link, index) in links" :key="link" text @click="handleButtonClick(index)">
           {{ link }}
         </v-btn>
       </v-container>
@@ -19,19 +19,11 @@
           <v-col cols="2">
             <v-sheet rounded="lg">
               <v-list color="transparent">
-                <v-list-item v-for="n in 5" :key="n" link>
+                <v-list-item v-for="(role, index) in Roles" :key="index" link>
                   <v-list-item-content>
-                    <v-list-item-title @click="redirectToPage(n)"
-                      >List Item {{ n }}</v-list-item-title
-                    >
-                  </v-list-item-content>
-                </v-list-item>
-
-                <v-divider class="my-2"> </v-divider>
-
-                <v-list-item link color="grey lighten-4">
-                  <v-list-item-content>
-                    <v-list-item-title> Refresh </v-list-item-title>
+                    <v-list-item-title @click="redirectToPage(index + 1)">
+                      {{ role }}
+                    </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
@@ -67,13 +59,14 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-
 const links = ref(['Login', 'Registrarme'])
 
 const router = useRouter()
 
-const redirectToPage = (lista) => {
-  switch (lista) {
+const Roles = ref(['Admin', 'Cliente', 'Recepcionista', 'Tecnico'])
+
+const redirectToPage = (roleIndex) => {
+  switch (roleIndex) {
     case 1:
       router.push('/Admin')
       break
