@@ -20,6 +20,7 @@ const routes = [
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
+  { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
   { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
   { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
   {
