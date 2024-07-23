@@ -14,6 +14,9 @@ import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
 import statusNegocio from '@/views/Admin/statusNegocio.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
+import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
+import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
+
 
 const routes = [
   { path: '/', redirect: '/Global' },
@@ -60,6 +63,21 @@ const routes = [
         path: '/Agendar',
         component: AgendarCita
       }
+    ]
+  },
+  {
+    path: '/Tecnico',
+    component: DashBoardTecnico,
+    children: [
+      {
+        path: '/TAS',
+        component: TareasFrom
+      },
+      {
+        path: '/DES',
+        component: MisdetallesFrom
+      }
+
     ]
   }
 ]
