@@ -7,14 +7,19 @@
   box-sizing: border-box; /* Incluye el padding y el borde en el ancho y alto total del elemento */
 }
 
-/* Establece la fuente base y el color de texto para todo el documento */
 body {
-  font-family: Arial, sans-serif; /* Cambia según tu fuente preferida */
-  line-height: 1.6; /* Mejora la legibilidad */
-  color: #333; /* Color de texto base */
-  background-color: #fff; /* Color de fondo base */
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: url('./fondo\ verde.svg') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  font-family: Arial, sans-serif;
 }
 
+.container {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
 /* Elimina subrayado de enlaces y establece color predeterminado */
 a {
   text-decoration: none;

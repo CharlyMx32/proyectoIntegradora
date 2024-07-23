@@ -39,9 +39,8 @@ const mini = ref(false)
 </script>
 
 <style scoped>
-/* Estilos adicionales si son necesarios */
 .fondo {
-  background-color: #d1d1d1;
-  color: white;
+  background: url('../../assets/fondo.svg') no-repeat center center fixed;
+  background-size: cover;
 }
 </style>

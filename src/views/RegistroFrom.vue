@@ -9,10 +9,8 @@
         <v-col
           cols="12"
           md="5"
-          class="d-flex flex-column align-center justify-center pa-4"
-          style="background-color: #f5f5f5"
+          class="d-flex flex-column align-center justify-center pa-4 fondoimg"
         >
-          <v-img :src="imgRegister" aspect-ratio="1" contain max-height="150" class="mb-4"></v-img>
           <v-typography variant="h5" class="text-center">¡Bienvenido!</v-typography>
         </v-col>
 
@@ -21,48 +19,28 @@
           <v-form>
             <v-row>
               <v-col cols="12" md="6" class="pa-1">
-                <v-text-field
-                  v-model="form.nombre"
-                  label="Nombre"
-                  outlined
-                  class="minimalista"
-                ></v-text-field>
+                <CustomInput id="nombre" label="Nombre" v-model="form.nombre" />
               </v-col>
               <v-col cols="12" md="6" class="pa-1">
-                <v-text-field
-                  v-model="form.apellidos"
-                  label="Apellidos"
-                  outlined
-                  class="minimalista"
-                ></v-text-field>
+                <CustomInput id="apellidos" label="Apellidos" v-model="form.apellidos" />
               </v-col>
             </v-row>
-            <v-text-field
-              v-model="form.correo"
-              label="Correo"
-              outlined
-              class="minimalista mb-3"
-            ></v-text-field>
-            <v-text-field
-              v-model="form.telefono"
-              label="Teléfono"
-              outlined
-              class="minimalista mb-3"
-            ></v-text-field>
-            <v-text-field
-              v-model="form.contraseña"
+            <CustomInput id="correo" label="Correo" v-model="form.correo" class="mb-3" />
+            <CustomInput id="telefono" label="Teléfono" v-model="form.telefono" class="mb-3" />
+            <CustomInput
+              id="contraseña"
               label="Contraseña"
               type="password"
-              outlined
-              class="minimalista mb-3"
-            ></v-text-field>
-            <v-text-field
-              v-model="form.confirmarContraseña"
+              v-model="form.contraseña"
+              class="mb-3"
+            />
+            <CustomInput
+              id="confirmarContraseña"
               label="Confirmar Contraseña"
               type="password"
-              outlined
-              class="minimalista mb-3"
-            ></v-text-field>
+              v-model="form.confirmarContraseña"
+              class="mb-3"
+            />
             <v-btn color="primary" @click="registrarse" class="mt-4">Registrarse</v-btn>
           </v-form>
         </v-col>
@@ -73,7 +51,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import imgRegister from '@/assets/imgregister.jpg' // Importa la imagen desde assets
+import CustomInput from '@/components/Generales/CustomInput.vue' // Asegúrate de ajustar la ruta si es necesario
 
 const form = ref({
   nombre: '',
@@ -101,6 +79,12 @@ body {
 .fill-height {
   height: 100%;
   overflow: hidden; /* Oculta el scroll vertical y horizontal si hay desbordamiento */
+}
+
+.fondoimg {
+  background: url('../assets/loginRegister.svg');
+  background-size: cover;
+  color: #fff;
 }
 
 .gradient-background {
@@ -139,7 +123,8 @@ img,
   height: auto;
 }
 
-.v-text-field {
+.v-text-field,
+.custom-input-container {
   width: 100%; /* Asegúrate de que los campos de texto ocupen todo el ancho disponible */
 }
 
