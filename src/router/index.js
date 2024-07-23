@@ -12,13 +12,14 @@ import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServicios.vue'
 import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
 import statusNegocio from '@/views/Admin/statusNegocio.vue'
+import AgendarCita from '@/views/Cliente/AgendarCita.vue'
+import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 
 const routes = [
   { path: '/', redirect: '/Global' },
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
-  { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
   { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
   { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
   {
@@ -40,6 +41,20 @@ const routes = [
       {
         path: '/SN',
         component: statusNegocio
+      }
+    ]
+  },
+  { path: '/Cliente', 
+    component: DashBoardCliente ,
+    children: [
+      {
+        path: '/principal',
+        component: PrincipalCliente,
+        redirect: '/principal'
+      },
+      {
+        path: '/Agendar',
+        component: AgendarCita
       }
     ]
   }
