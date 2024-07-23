@@ -10,15 +10,10 @@ import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
 import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServicios.vue'
-
-
-
-
-
-import cuentaCliente from '@/views/Recepcionista/CuentaCliente.vue'
-import agendarCita from '@/views/Recepcionista/AgendarCitas.vue'
-import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
-
+import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
+import statusNegocio from '@/views/Admin/statusNegocio.vue'
+import AgendarCita from '@/views/Cliente/AgendarCita.vue'
+import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 
 const routes = [
   { path: '/', redirect: '/Global' },
@@ -67,8 +62,7 @@ const routes = [
         component: AgendarCita
       }
     ]
-  },
-
+  }
 ]
 
 // Crear el enrutador con history mode
