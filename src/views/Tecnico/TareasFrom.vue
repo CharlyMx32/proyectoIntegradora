@@ -27,7 +27,6 @@
                   <template v-slot:default>
                     <thead>
                       <tr>
-                        <th class="text-left">ID</th>
                         <th class="text-left">Nombre</th>
                         <th class="text-left">Producto</th>
                         <th class="text-left">Problema</th>
@@ -38,7 +37,6 @@
                     </thead>
                     <tbody>
                       <tr v-for="(item, idx) in filteredItems(index)" :key="idx">
-                        <td>{{ item.id }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.producto }}</td>
                         <td>{{ item.problema }}</td>
@@ -54,10 +52,10 @@
               <!-- Botón debajo de la tabla -->
               <v-row justify="end" class="mt-2">
                 <v-col cols="auto">
-                  <v-btn v-if="index === 1" @click="handleSeguimientoClick(index)" color="#fdbb2d">
+                  <v-btn v-if="index === 1" @click="handleSeguimientoClick(index)" color="#ffcc05">
                     Seguimiento
                   </v-btn>
-                  <v-btn v-else-if="index < 2" @click="handleButtonClick(index)" color="#fdbb2d">
+                  <v-btn v-else-if="index < 2" @click="handleButtonClick(index)" color="#ffcc05">
                     Detallar
                   </v-btn>
                 </v-col>
@@ -77,22 +75,22 @@ const tables = ref([
   {
     name: 'Tareas Asignadas',
     items: [
-      { id: 1, name: 'Message 1 (Today)', producto: 'Producto A', problema: 'Problema 1', tipo_orden: 'orden_fisica' },
-      { id: 2, name: 'Message 2 (Today)', producto: 'Producto B', problema: 'Problema 2', tipo_orden: 'orden_linea' },
+      { name: 'Message 1 (Today)', producto: 'Producto A', problema: 'Problema 1', tipo_orden: 'orden_fisica' },
+      { name: 'Message 2 (Today)', producto: 'Producto B', problema: 'Problema 2', tipo_orden: 'orden_linea' },
     ]
   },
   {
     name: 'Tareas en proceso',
     items: [
-      { id: 3, name: 'Message 1 (Yesterday)', producto: 'Producto C', problema: 'Problema 3', tipo_orden: 'orden_fisica', status: 'En proceso' },
-      { id: 4, name: 'Message 2 (Yesterday)', producto: 'Producto D', problema: 'Problema 4', tipo_orden: 'orden_linea', status: 'En proceso' },
+      { name: 'Message 1 (Yesterday)', producto: 'Producto C', problema: 'Problema 3', tipo_orden: 'orden_fisica', status: 'En proceso' },
+      { name: 'Message 2 (Yesterday)', producto: 'Producto D', problema: 'Problema 4', tipo_orden: 'orden_linea', status: 'En proceso' },
     ]
   },
   {
     name: 'Tareas Completadas',
     items: [
-      { id: 5, name: 'Message 1 (Inbox)', producto: 'Producto E', problema: 'Problema 5', tipo_orden: 'orden_fisica' },
-      { id: 6, name: 'Message 2 (Inbox)', producto: 'Producto F', problema: 'Problema 6', tipo_orden: 'orden_linea' },
+      { name: 'Message 1 (Inbox)', producto: 'Producto E', problema: 'Problema 5', tipo_orden: 'orden_fisica' },
+      { name: 'Message 2 (Inbox)', producto: 'Producto F', problema: 'Problema 6', tipo_orden: 'orden_linea' },
     ]
   },
 ]);
@@ -126,8 +124,9 @@ function handleSeguimientoClick(index) {
 }
 
 .v-simple-table {
-  border: 1px solid #000000;
+  border: 1px solid #e0e0e0; /* Color de borde más suave */
   border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
 .v-simple-table th,
@@ -136,7 +135,7 @@ function handleSeguimientoClick(index) {
 }
 
 .v-simple-table thead {
-  background-color: #000000;
+  background-color: #f5f5f5; /* Fondo más claro para el encabezado */
 }
 
 .table-container {
@@ -148,3 +147,4 @@ function handleSeguimientoClick(index) {
   min-width: 120px;
 }
 </style>
+
