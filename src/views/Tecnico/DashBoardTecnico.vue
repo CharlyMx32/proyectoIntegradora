@@ -1,5 +1,5 @@
 <template>
-     <v-app class="fondo">
+     <v-app class="logo">
     <v-container fluid>
       <v-row>
         <v-col :cols="mini ? 1 : 3">
@@ -23,6 +23,7 @@
 
 <script setup>
 import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue';
+
 import { ref } from 'vue'
 
 const avatarUrl =
@@ -31,6 +32,7 @@ const avatarUrl =
 const navItems = [
   { title: 'Mis Tareas', to: '/TAS' },
   { title: 'Mis Detalles', to: '/DES' },
+  { title: 'Mis Seguimientos', to: '/SEG' },
 
 ]
 
@@ -39,8 +41,8 @@ const mini = ref(false)
 
 <style scoped>
 /* Estilos adicionales si son necesarios */
-.fondo {
-  background: url('../../assets/fondo.svg') no-repeat center center fixed;
+.logo {
+  background: url('../../assets/tec.png') no-repeat center center fixed;
   background-size: cover;
 }
 </style>

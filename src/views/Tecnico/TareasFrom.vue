@@ -7,7 +7,7 @@
             <!-- Iteración de las tablas -->
             <div v-for="(table, index) in tables" :key="index" class="mb-8">
               <!-- Encabezado de la tabla -->
-              <div class="d-flex align-center justify-space-between mb-4">
+              <div class="d-flex align-center justify-space-between mb-2">
                 <h3 class="mb-0">{{ table.name }}</h3>
                 <!-- Filtro -->
                 <v-text-field
@@ -16,8 +16,8 @@
                   outlined
                   dense
                   hide-details
-                  class="ml-4"
-                  style="width: 160px;"
+                  class="ml-2"
+                  style="width: 120px;"
                 ></v-text-field>
               </div>
 
@@ -31,7 +31,9 @@
                         <th class="text-left">Nombre</th>
                         <th class="text-left">Producto</th>
                         <th class="text-left">Problema</th>
-                        <th class="text-left">Status</th>
+                        <th class="text-left">Tipo de Orden</th> <!-- Nueva columna -->
+                        <!-- Mostrar la columna de Status solo en la segunda tabla -->
+                        <th v-if="index === 1" class="text-left">Estado</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -40,7 +42,9 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.producto }}</td>
                         <td>{{ item.problema }}</td>
-                        <td>{{ item.status }}</td>
+                        <td>{{ item.tipo_orden }}</td> <!-- Mostrar el tipo de orden -->
+                        <!-- Mostrar el campo de Status solo en la segunda tabla -->
+                        <td v-if="index === 1">{{ item.status }}</td>
                       </tr>
                     </tbody>
                   </template>
@@ -48,10 +52,15 @@
               </div>
 
               <!-- Botón debajo de la tabla -->
-              <v-row justify="end">
-                <v-btn v-if="index < 2" @click="handleButtonClick(index)" color="primary">
-                  Botón {{ index + 1 }}
-                </v-btn>
+              <v-row justify="end" class="mt-2">
+                <v-col cols="auto">
+                  <v-btn v-if="index === 1" @click="handleSeguimientoClick(index)" color="#fdbb2d">
+                    Seguimiento
+                  </v-btn>
+                  <v-btn v-else-if="index < 2" @click="handleButtonClick(index)" color="#fdbb2d">
+                    Detallar
+                  </v-btn>
+                </v-col>
               </v-row>
             </div>
           </v-col>
@@ -61,60 +70,54 @@
   </v-app>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 
-export default {
-  name: 'App',
-  setup() {
-    const tables = ref([
-      {
-        name: 'Tareas Asignadas',
-        items: [
-          { id: 1, name: 'Message 1 (Today)', producto: 'Producto A', problema: 'Problema 1', status: 'Pendiente' },
-          { id: 2, name: 'Message 2 (Today)', producto: 'Producto B', problema: 'Problema 2', status: 'En proceso' },
-        ]
-      },
-      {
-        name: 'Tareas en proceso',
-        items: [
-          { id: 3, name: 'Message 1 (Yesterday)', producto: 'Producto C', problema: 'Problema 3', status: 'Completado' },
-          { id: 4, name: 'Message 2 (Yesterday)', producto: 'Producto D', problema: 'Problema 4', status: 'Pendiente' },
-        ]
-      },
-      {
-        name: 'Tareas Completadas',
-        items: [
-          { id: 5, name: 'Message 1 (Inbox)', producto: 'Producto E', problema: 'Problema 5', status: 'Completado' },
-          { id: 6, name: 'Message 2 (Inbox)', producto: 'Producto F', problema: 'Problema 6', status: 'Completado' },
-        ]
-      },
-    ]);
+const tables = ref([
+  {
+    name: 'Tareas Asignadas',
+    items: [
+      { id: 1, name: 'Message 1 (Today)', producto: 'Producto A', problema: 'Problema 1', tipo_orden: 'orden_fisica' },
+      { id: 2, name: 'Message 2 (Today)', producto: 'Producto B', problema: 'Problema 2', tipo_orden: 'orden_linea' },
+    ]
+  },
+  {
+    name: 'Tareas en proceso',
+    items: [
+      { id: 3, name: 'Message 1 (Yesterday)', producto: 'Producto C', problema: 'Problema 3', tipo_orden: 'orden_fisica', status: 'En proceso' },
+      { id: 4, name: 'Message 2 (Yesterday)', producto: 'Producto D', problema: 'Problema 4', tipo_orden: 'orden_linea', status: 'En proceso' },
+    ]
+  },
+  {
+    name: 'Tareas Completadas',
+    items: [
+      { id: 5, name: 'Message 1 (Inbox)', producto: 'Producto E', problema: 'Problema 5', tipo_orden: 'orden_fisica' },
+      { id: 6, name: 'Message 2 (Inbox)', producto: 'Producto F', problema: 'Problema 6', tipo_orden: 'orden_linea' },
+    ]
+  },
+]);
 
-    const filters = ref(['', '', '']);
+const filters = ref(['', '', '']);
 
-    function filteredItems(index) {
-      const filterText = filters.value[index].toLowerCase();
-      return tables.value[index].items.filter(item =>
-        item.name.toLowerCase().includes(filterText) ||
-        item.producto.toLowerCase().includes(filterText) ||
-        item.problema.toLowerCase().includes(filterText) ||
-        item.status.toLowerCase().includes(filterText)
-      );
-    }
+function filteredItems(index) {
+  const filterText = filters.value[index].toLowerCase();
+  return tables.value[index].items.filter(item =>
+    item.name.toLowerCase().includes(filterText) ||
+    item.producto.toLowerCase().includes(filterText) ||
+    item.problema.toLowerCase().includes(filterText) ||
+    (index === 1 && item.status && item.status.toLowerCase().includes(filterText)) ||
+    item.tipo_orden.toLowerCase().includes(filterText)
+  );
+}
 
-    function handleButtonClick(index) {
-      alert(`Botón ${index + 1} presionado.`);
-    }
+function handleButtonClick(index) {
+  alert(`Botón Detallar ${index + 1} presionado.`);
+}
 
-    return {
-      tables,
-      filters,
-      filteredItems,
-      handleButtonClick
-    };
-  }
-};
+function handleSeguimientoClick(index) {
+  alert(`Botón Seguimiento presionado para la tabla ${index + 1}.`);
+}
+
 </script>
 
 <style scoped>
@@ -123,7 +126,7 @@ export default {
 }
 
 .v-simple-table {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #000000;
   border-radius: 4px;
 }
 
@@ -133,7 +136,7 @@ export default {
 }
 
 .v-simple-table thead {
-  background-color: #f5f5f5;
+  background-color: #000000;
 }
 
 .table-container {
