@@ -1,5 +1,5 @@
 <template>
-     <v-app class="logo">
+     <v-app class="fondo">
     <v-container fluid>
       <v-row>
         <v-col :cols="mini ? 1 : 3">
@@ -41,8 +41,8 @@ const mini = ref(false)
 
 <style scoped>
 /* Estilos adicionales si son necesarios */
-.logo {
-  background: url('../../assets/tec.png') no-repeat center center fixed;
+.fondo{
+  background: url('../../assets/f.svg') no-repeat center center fixed;
   background-size: cover;
 }
 </style>
