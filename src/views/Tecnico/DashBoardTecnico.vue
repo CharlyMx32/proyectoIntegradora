@@ -41,8 +41,8 @@ const mini = ref(false)
 
 <style scoped>
 /* Estilos adicionales si son necesarios */
-.fondo{
-  background: url('../../assets/f.svg') no-repeat center center fixed;
+.fondo {
+  background: url('../../assets/fondo.svg') no-repeat center center fixed;
   background-size: cover;
 }
 </style>
