@@ -52,10 +52,10 @@
               <!-- Botón debajo de la tabla -->
               <v-row justify="end" class="mt-2">
                 <v-col cols="auto">
-                  <v-btn v-if="index === 1" @click="handleSeguimientoClick(index)" color="#ffcc05">
+                  <v-btn v-if="index === 1" @click="handleSeguimientoClick(index)" color="green">
                     Seguimiento
                   </v-btn>
-                  <v-btn v-else-if="index < 2" @click="handleButtonClick(index)" color="#ffcc05">
+                  <v-btn v-else-if="index < 2" @click="handleButtonClick(index)" color="green">
                     Detallar
                   </v-btn>
                 </v-col>
