@@ -4,12 +4,9 @@
       <v-container class="py-8 px-6" fluid>
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <!-- Iteración de las tablas -->
             <div v-for="(table, index) in tables" :key="index" class="mb-8">
-              <!-- Encabezado de la tabla -->
               <div class="d-flex align-center justify-space-between mb-2">
                 <h3 class="mb-0">{{ table.name }}</h3>
-                <!-- Filtro -->
                 <v-text-field
                   v-model="filters[index]"
                   label="Filtrar"
@@ -21,17 +18,36 @@
                 ></v-text-field>
               </div>
 
-              <!-- Tabla con scroll -->
               <div class="table-container">
-                <v-simple-table dense class="elevation-1 mb-4">
+                <v-simple-table dense class="elevation-1 mb-4" v-if="index === 0">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">Nombre Cliente</th>
+                        <th class="text-left">Producto</th>
+                        <th class="text-left">Problema</th>
+                        <th class="text-left">Tipo de Orden</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, idx) in filteredItems(index)" :key="idx">
+                        <td>{{ item.nombre_cliente }}</td>
+                        <td>{{ item.producto }}</td>
+                        <td>{{ item.problema }}</td>
+                        <td>{{ item.tipo_orden }}</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+
+                <v-simple-table dense class="elevation-1 mb-4" v-else>
                   <template v-slot:default>
                     <thead>
                       <tr>
                         <th class="text-left">Nombre</th>
                         <th class="text-left">Producto</th>
                         <th class="text-left">Problema</th>
-                        <th class="text-left">Tipo de Orden</th> <!-- Nueva columna -->
-                        <!-- Mostrar la columna de Status solo en la segunda tabla -->
+                        <th class="text-left">Tipo de Orden</th>
                         <th v-if="index === 1" class="text-left">Estado</th>
                       </tr>
                     </thead>
@@ -40,8 +56,7 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.producto }}</td>
                         <td>{{ item.problema }}</td>
-                        <td>{{ item.tipo_orden }}</td> <!-- Mostrar el tipo de orden -->
-                        <!-- Mostrar el campo de Status solo en la segunda tabla -->
+                        <td>{{ item.tipo_orden }}</td>
                         <td v-if="index === 1">{{ item.status }}</td>
                       </tr>
                     </tbody>
@@ -49,10 +64,9 @@
                 </v-simple-table>
               </div>
 
-              <!-- Botón debajo de la tabla -->
               <v-row justify="end" class="mt-2">
                 <v-col cols="auto">
-                  <v-btn v-if="index === 1" @click="handleSeguimientoClick(index)" color="green">
+                  <v-btn v-if="index === 0" @click="handleSeguimientoClick(index)" color="green">
                     Seguimiento
                   </v-btn>
                   <v-btn v-else-if="index < 2" @click="handleButtonClick(index)" color="green">
@@ -69,15 +83,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, defineEmits } from 'vue';
 
 const tables = ref([
   {
     name: 'Tareas Asignadas',
-    items: [
-      { name: 'Message 1 (Today)', producto: 'Producto A', problema: 'Problema 1', tipo_orden: 'orden_fisica' },
-      { name: 'Message 2 (Today)', producto: 'Producto B', problema: 'Problema 2', tipo_orden: 'orden_linea' },
-    ]
+    items: []
   },
   {
     name: 'Tareas en proceso',
@@ -97,25 +108,41 @@ const tables = ref([
 
 const filters = ref(['', '', '']);
 
-function filteredItems(index) {
+const filteredItems = (index) => {
   const filterText = filters.value[index].toLowerCase();
   return tables.value[index].items.filter(item =>
-    item.name.toLowerCase().includes(filterText) ||
+    item.nombre_cliente.toLowerCase().includes(filterText) ||
     item.producto.toLowerCase().includes(filterText) ||
     item.problema.toLowerCase().includes(filterText) ||
-    (index === 1 && item.status && item.status.toLowerCase().includes(filterText)) ||
-    item.tipo_orden.toLowerCase().includes(filterText)
+    item.tipo_orden.toLowerCase().includes(filterText) ||
+    (index === 1 && item.status && item.status.toLowerCase().includes(filterText))
   );
-}
+};
 
-function handleButtonClick(index) {
+const handleButtonClick = (index) => {
   alert(`Botón Detallar ${index + 1} presionado.`);
-}
+};
 
-function handleSeguimientoClick(index) {
+const handleSeguimientoClick = (index) => {
   alert(`Botón Seguimiento presionado para la tabla ${index + 1}.`);
-}
+};
 
+const MostrarOrdenes = () => {
+  fetch('http://hs.com/orden')
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 200) {
+        tables.value[0].items = data.data.filter(item => item.tipo_orden === 'Orden de Cita');
+      }
+    })
+    .catch(error => {
+      console.error('Error al obtener órdenes:', error);
+    });
+};
+
+onMounted(() => {
+  MostrarOrdenes();
+});
 </script>
 
 <style scoped>
@@ -124,9 +151,9 @@ function handleSeguimientoClick(index) {
 }
 
 .v-simple-table {
-  border: 1px solid #e0e0e0; /* Color de borde más suave */
+  border: 1px solid #e0e0e0; 
   border-radius: 4px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .v-simple-table th,
@@ -135,7 +162,7 @@ function handleSeguimientoClick(index) {
 }
 
 .v-simple-table thead {
-  background-color: #f5f5f5; /* Fondo más claro para el encabezado */
+  background-color: #f5f5f5;
 }
 
 .table-container {
@@ -147,4 +174,3 @@ function handleSeguimientoClick(index) {
   min-width: 120px;
 }
 </style>
-
