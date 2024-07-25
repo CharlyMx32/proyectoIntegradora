@@ -14,6 +14,9 @@ import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
 import statusNegocio from '@/views/Admin/statusNegocio.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
+import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
+
+
 
 const routes = [
   { path: '/', redirect: '/Global' },
@@ -59,6 +62,10 @@ const routes = [
       {
         path: '/Agendar',
         component: AgendarCita
+      },
+      {
+      path:'/Pedir',
+      component: PedidoProducto
       }
     ]
   }

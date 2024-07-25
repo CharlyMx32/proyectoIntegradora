@@ -13,7 +13,6 @@ body {
   line-height: 1.6; /* Mejora la legibilidad */
   color: #333; /* Color de texto base */
   background-color: #fff; /* Color de fondo base */
-  overflow: hidden; /* Oculta los scrollbars en el body */
 }
 
 /* Elimina subrayado de enlaces y establece color predeterminado */
@@ -101,13 +100,11 @@ body {
 .v-container {
   width: 100%;
   padding: 0;
-  overflow: hidden; /* Oculta el desbordamiento en el contenedor */
 }
 
 .v-card {
   width: 100%;
   max-width: none;
-  overflow: hidden; /* Oculta el desbordamiento en el card */
 }
 
 /* Otras reglas de estilo para evitar desbordamiento */
@@ -117,7 +114,3 @@ img,
   height: auto;
 }
 
-/* Opcional: Eliminación global de scrollbars */
-body {
-  overflow: hidden; /* Oculta los scrollbars en el cuerpo */
-}

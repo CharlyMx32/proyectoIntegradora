@@ -1,14 +1,23 @@
 <template>
-    <v-app>
+    <v-app class="Fondo">
         <v-content>
-          <v-carousel :show-arrows="false">
+        <br>
+          <v-carousel hide-delimiters 
+          height="400"
+          show-arrows="hover"
+          cycle
+          hide-delimiter-background >
+         
+          
           <v-carousel-item
           v-for="(item,i) in items"
           :key="i"
           :src="item.src"
-          cover >
-          </v-carousel-item>
-        </v-carousel><br>
+          cover
+          >
+        </v-carousel-item>
+        </v-carousel>
+        <br>
           <v-row justify="center">
         <v-col cols="12" md="8" class="text-center">
           <p class="white-text">NOSOTROS</p> <br>
@@ -19,21 +28,15 @@
                  y electrodomesticos de gran tamaño.</p></v-col>
       </v-row>
         </v-content><br>
-        <v-defaults-provider
-    :defaults="{'VBtn':{'color':'#FF1493','size':'large','variant':'tonal'}}">
-    <v-btn @click="clickAgenda">Agendar Cita</v-btn>
-  </v-defaults-provider><br>
+        
+        
+    <v-row justify="center" align="center">
+      <v-btn  color="#1E88E5" style="width: 300px; " @click="clickAgenda">Agendar Cita</v-btn>
+    </v-row>
+<br>
   
-        <div>
-          <v-progress-linear
-            color="#FF1493"
-            model-value="100"
-            rounded
-          ></v-progress-linear>
-          </div>
-          <br>
-     
-      
+  <v-divider class="border-opacity-100" color="#E8EAF6"></v-divider> <br>
+           
         <v-row align="center" justify="center">
           <v-col cols="auto">
             <v-btn density="comfortable" icon="$vuetify"></v-btn>
@@ -45,42 +48,54 @@
             <v-btn density="comfortable" icon="$vuetify"></v-btn>
           </v-col>
           </v-row>
-  
+  <br>
     </v-app>
     </template>
 
-<script setup>
-    import router from '@/router';
+    <script setup>  
+      import router from '@/router';
 
 const clickAgenda = () => {
  
     router.push('/Agendar')
   }
-
+  
   const items = [
     {
-      src: ' https://www.phonefixationusa.com/wp-content/uploads/2022/12/repairman-fixing-smartphone-camera.jpg',
+      src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
     },
     {
       src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
     },
-    {
-      src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-    },
-    {
-      src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-    },
   ]
-
-
- </script>
+</script>
 
 <style scoped>
+
 .v-application {
-  background-color:black;
+  background: url('../../assets/iii.svg') no-repeat center center fixed;
+  background-size: cover;
 }
 .white-text {
   color: rgb(248, 248, 248);
 }
 
+
 </style>
+
+<script>
+export default {
+    data () {
+      return {
+        items: [
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+          },
+          {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+    },
+        ]
+      }
+    }
+  }
+</script>
