@@ -42,7 +42,7 @@ const mini = ref(false)
 <style scoped>
 /* Estilos adicionales si son necesarios */
 .fondo {
-  background: url('../../assets/fondo.svg') no-repeat center center fixed;
+  background: url('../../assets/geometria-3d_3840x2160_xtrafondos.com.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 </style>

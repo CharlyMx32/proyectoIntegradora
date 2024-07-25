@@ -4,76 +4,42 @@
       <v-container class="py-8 px-6" fluid>
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <div v-for="(table, index) in tables" :key="index" class="mb-8">
-              <div class="d-flex align-center justify-space-between mb-2">
-                <h3 class="mb-0">{{ table.name }}</h3>
-                <v-text-field
-                  v-model="filters[index]"
-                  label="Filtrar"
-                  outlined
-                  dense
-                  hide-details
-                  class="ml-2"
-                  style="width: 120px;"
-                ></v-text-field>
-              </div>
+            <div class="d-flex align-items-center justify-space-between mb-8">
+              <h3 class="mb-0">Listado de Tareas</h3>
+              <v-text-field
+                v-model="filterText"
+                label="Filtrar"
+                outlined
+                dense
+                hide-details
+                style="max-width: 300px;"
+              ></v-text-field>
+            </div>
 
-              <div class="table-container">
-                <v-simple-table dense class="elevation-1 mb-4" v-if="index === 0">
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">Nombre Cliente</th>
-                        <th class="text-left">Producto</th>
-                        <th class="text-left">Problema</th>
-                        <th class="text-left">Tipo de Orden</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, idx) in filteredItems(index)" :key="idx">
-                        <td>{{ item.nombre_cliente }}</td>
-                        <td>{{ item.producto }}</td>
-                        <td>{{ item.problema }}</td>
-                        <td>{{ item.tipo_orden }}</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-
-                <v-simple-table dense class="elevation-1 mb-4" v-else>
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">Nombre</th>
-                        <th class="text-left">Producto</th>
-                        <th class="text-left">Problema</th>
-                        <th class="text-left">Tipo de Orden</th>
-                        <th v-if="index === 1" class="text-left">Estado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, idx) in filteredItems(index)" :key="idx">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.producto }}</td>
-                        <td>{{ item.problema }}</td>
-                        <td>{{ item.tipo_orden }}</td>
-                        <td v-if="index === 1">{{ item.status }}</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </div>
-
-              <v-row justify="end" class="mt-2">
-                <v-col cols="auto">
-                  <v-btn v-if="index === 0" @click="handleSeguimientoClick(index)" color="green">
-                    Seguimiento
-                  </v-btn>
-                  <v-btn v-else-if="index < 2" @click="handleButtonClick(index)" color="green">
-                    Detallar
-                  </v-btn>
-                </v-col>
-              </v-row>
+            <div class="table-container">
+              <v-simple-table dense class="custom-table">
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Nombre Cliente</th>
+                      <th class="text-left">Producto</th>
+                      <th class="text-left">Problema</th>
+                      <th class="text-left">Tipo de Orden</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, idx) in filteredItems" :key="idx">
+                      <td>{{ item.nombre_cliente }}</td>
+                      <td>{{ item.producto }}</td>
+                      <td>{{ item.problema }}</td>
+                      <td>{{ item.tipo_orden }}</td>
+                    </tr>
+                    <tr v-if="filteredItems.length === 0">
+                      <td colspan="4" class="text-center py-4">No se encontraron tareas que coincidan con el filtro.</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
             </div>
           </v-col>
         </v-row>
@@ -83,56 +49,47 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineEmits } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 const tables = ref([
   {
-    name: 'Tareas Asignadas',
+    name: 'Listado de Tareas',
     items: []
   },
   {
     name: 'Tareas en proceso',
     items: [
-      { name: 'Message 1 (Yesterday)', producto: 'Producto C', problema: 'Problema 3', tipo_orden: 'orden_fisica', status: 'En proceso' },
-      { name: 'Message 2 (Yesterday)', producto: 'Producto D', problema: 'Problema 4', tipo_orden: 'orden_linea', status: 'En proceso' },
+      { nombre_cliente: 'Cliente A', producto: 'Producto X', problema: 'Problema 1', tipo_orden: 'orden_fisica' },
+      { nombre_cliente: 'Cliente B', producto: 'Producto Y', problema: 'Problema 2', tipo_orden: 'orden_linea' },
     ]
   },
   {
     name: 'Tareas Completadas',
     items: [
-      { name: 'Message 1 (Inbox)', producto: 'Producto E', problema: 'Problema 5', tipo_orden: 'orden_fisica' },
-      { name: 'Message 2 (Inbox)', producto: 'Producto F', problema: 'Problema 6', tipo_orden: 'orden_linea' },
+      { nombre_cliente: 'Cliente C', producto: 'Producto Z', problema: 'Problema 3', tipo_orden: 'orden_fisica' },
+      { nombre_cliente: 'Cliente D', producto: 'Producto W', problema: 'Problema 4', tipo_orden: 'orden_linea' },
     ]
   },
 ]);
 
-const filters = ref(['', '', '']);
+const filterText = ref('');
 
-const filteredItems = (index) => {
-  const filterText = filters.value[index].toLowerCase();
-  return tables.value[index].items.filter(item =>
-    item.nombre_cliente.toLowerCase().includes(filterText) ||
-    item.producto.toLowerCase().includes(filterText) ||
-    item.problema.toLowerCase().includes(filterText) ||
-    item.tipo_orden.toLowerCase().includes(filterText) ||
-    (index === 1 && item.status && item.status.toLowerCase().includes(filterText))
+const filteredItems = computed(() => {
+  const filter = filterText.value.toLowerCase();
+  return tables.value[0].items.filter(item =>
+    item.nombre_cliente.toLowerCase().includes(filter) ||
+    item.producto.toLowerCase().includes(filter) ||
+    item.problema.toLowerCase().includes(filter) ||
+    item.tipo_orden.toLowerCase().includes(filter)
   );
-};
+});
 
-const handleButtonClick = (index) => {
-  alert(`Botón Detallar ${index + 1} presionado.`);
-};
-
-const handleSeguimientoClick = (index) => {
-  alert(`Botón Seguimiento presionado para la tabla ${index + 1}.`);
-};
-
-const MostrarOrdenes = () => {
+const mostrarOrden = () => {
   fetch('http://hs.com/orden')
     .then(response => response.json())
-    .then(data => {
-      if (data.status === 200) {
-        tables.value[0].items = data.data.filter(item => item.tipo_orden === 'Orden de Cita');
+    .then(json => {
+      if (json.status === 200) {
+        tables.value[0].items = json.data; 
       }
     })
     .catch(error => {
@@ -141,7 +98,7 @@ const MostrarOrdenes = () => {
 };
 
 onMounted(() => {
-  MostrarOrdenes();
+  mostrarOrden();
 });
 </script>
 
@@ -150,27 +107,57 @@ onMounted(() => {
   text-align: left;
 }
 
-.v-simple-table {
-  border: 1px solid #e0e0e0; 
+.custom-table {
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.v-simple-table th,
-.v-simple-table td {
+.custom-table th,
+.custom-table td {
   padding: 12px 16px;
 }
 
-.v-simple-table thead {
+.custom-table thead {
   background-color: #f5f5f5;
+  font-weight: bold;
 }
 
 .table-container {
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
-.v-btn {
-  min-width: 120px;
+.table-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 6px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+  .v-col {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .v-text-field {
+    max-width: 180px;
+  }
+}
+
+.text-center {
+  text-align: center;
+  color: #777;
 }
 </style>
+
