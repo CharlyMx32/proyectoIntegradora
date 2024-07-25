@@ -1,22 +1,41 @@
 <template>
   <v-container fluid>
     <v-row>
-      <!-- Barra lateral a la izquierda -->
-      <v-col cols="2">
-        <BarraRecepcionista />
-      </v-col>
+      <v-col :cols="mini ? 1 : 3">
+          <BarraLateral
+            :avatarUrl="avatarUrl"
+            subtitle="centenoavalosc@gmail.com"
+            title="Admin"
+            :items="navItems"
+            @mouseenter="mini = false"
+            @mouseleave="mini = true"
+          ></BarraLateral>
+        </v-col>
 
       <!-- Contenido principal a la derecha -->
-      <v-col cols="10">
-        <v-card>
-          <v-card-title class="text-center">Bienvenido/a a nuestra plataforma</v-card-title>
-          <!-- Aquí puedes agregar más contenido dinámico -->
-        </v-card>
+      <v-col cols="10" class="text-center fill-height">
+
+        <router-view></router-view>
+
       </v-col>
     </v-row>
+
   </v-container>
 </template>
 
+
+
 <script setup>
-import BarraRecepcionista from '@/components/Generales/BarraLateralEmpleados.vue'
+import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue'
+import { ref } from 'vue'
+
+const navItems = [
+  { title: 'Pagina Principal', to: '/Recepcionista' },
+  { title: 'Cuenta Cliente', to: '/CC' },
+  { title: 'Agendar Citas', to: '/AC' },
+  { title: 'Asignar Citas', to: '/ASC' },
+  { title: 'Citas Pendientes', to: '/CP' }
+]
+
+const mini = ref(false)
 </script>

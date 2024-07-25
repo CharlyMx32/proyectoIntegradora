@@ -15,7 +15,9 @@ import statusNegocio from '@/views/Admin/statusNegocio.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
-
+import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
+import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
+import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
 
 
 const routes = [
@@ -23,6 +25,7 @@ const routes = [
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
+  { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
   { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
   { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
   {
@@ -45,6 +48,24 @@ const routes = [
         path: '/SN',
         component: statusNegocio
       }
+    ]
+  },
+  {
+    path: '/Tecnico',
+    component: DashBoardTecnico,
+    children: [
+      {
+        path: '/TAS',
+        component: TareasFrom
+      },
+      {
+        path: '/DES',
+        component: MisdetallesFrom
+      },
+      {
+        path: '/SEG',
+        component: SeguimientoFrom
+      },
     ]
   },
   {

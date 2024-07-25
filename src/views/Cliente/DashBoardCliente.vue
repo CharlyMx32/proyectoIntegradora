@@ -1,5 +1,6 @@
 <template>
   <div class="Fondo">
+
     <barra-cliente />
     <v-app>
       <v-content>

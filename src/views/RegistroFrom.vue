@@ -3,68 +3,97 @@
     class="d-flex justify-center align-center fill-height gradient-background pa-0"
     fluid
   >
-    <v-card class="rounded-lg" max-width="50%" elevation="5" flat max-height="80%">
+    <v-card class="rounded-lg card-size" elevation="10" flat>
       <v-row no-gutters>
         <!-- Sección de bienvenida -->
         <v-col
           cols="12"
           md="5"
-          class="d-flex flex-column align-center justify-center pa-4"
-          style="background-color: #f5f5f5"
+          class="d-flex flex-column align-center justify-center pa-4 fondoimg"
         >
-          <v-img :src="imgRegister" aspect-ratio="1" contain max-height="150" class="mb-4"></v-img>
           <v-typography variant="h5" class="text-center">¡Bienvenido!</v-typography>
         </v-col>
 
         <!-- Sección del formulario -->
         <v-col cols="12" md="7" class="pa-4">
-          <v-form>
-            <v-row>
-              <v-col cols="12" md="6" class="pa-1">
-                <v-text-field
-                  v-model="form.nombre"
-                  label="Nombre"
-                  outlined
-                  class="minimalista"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" md="6" class="pa-1">
-                <v-text-field
-                  v-model="form.apellidos"
-                  label="Apellidos"
-                  outlined
-                  class="minimalista"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-text-field
-              v-model="form.correo"
-              label="Correo"
-              outlined
-              class="minimalista mb-3"
-            ></v-text-field>
-            <v-text-field
-              v-model="form.telefono"
-              label="Teléfono"
-              outlined
-              class="minimalista mb-3"
-            ></v-text-field>
-            <v-text-field
-              v-model="form.contraseña"
-              label="Contraseña"
-              type="password"
-              outlined
-              class="minimalista mb-3"
-            ></v-text-field>
-            <v-text-field
-              v-model="form.confirmarContraseña"
-              label="Confirmar Contraseña"
-              type="password"
-              outlined
-              class="minimalista mb-3"
-            ></v-text-field>
-            <v-btn color="primary" @click="registrarse" class="mt-4">Registrarse</v-btn>
-          </v-form>
+          <v-card class="white-card" elevation="5" flat>
+            <v-col cols="12" class="pa-4">
+              <v-form>
+                <template v-if="step === 1">
+                  <v-row>
+                    <v-col cols="12" class="pa-1">
+                      <v-text-field
+                        id="nombre"
+                        label="Nombre"
+                        v-model="form.nombre"
+                        outlined
+                        dense
+                        class="minimalista"
+                      />
+                    </v-col>
+                    <v-col cols="12" class="pa-1">
+                      <v-text-field
+                        id="apellidoPaterno"
+                        label="Apellido Paterno"
+                        v-model="form.apellidoPaterno"
+                        outlined
+                        dense
+                        class="minimalista"
+                      />
+                    </v-col>
+                    <v-col cols="12" class="pa-1">
+                      <v-text-field
+                        id="apellidoMaterno"
+                        label="Apellido Materno"
+                        v-model="form.apellidoMaterno"
+                        outlined
+                        dense
+                        class="minimalista"
+                      />
+                    </v-col>
+                  </v-row>
+                  <v-btn color="primary" @click="nextStep" class="mt-4">Continuar</v-btn>
+                </template>
+                <template v-else>
+                  <v-text-field
+                    id="correo"
+                    label="Correo"
+                    v-model="form.correo"
+                    outlined
+                    dense
+                    class="minimalista mb-3"
+                  />
+                  <v-text-field
+                    id="telefono"
+                    label="Teléfono"
+                    v-model="form.telefono"
+                    outlined
+                    dense
+                    class="minimalista mb-3"
+                  />
+                  <v-text-field
+                    id="contraseña"
+                    label="Contraseña"
+                    type="password"
+                    v-model="form.contraseña"
+                    outlined
+                    dense
+                    class="minimalista mb-3"
+                  />
+                  <v-text-field
+                    id="confirmarContraseña"
+                    label="Confirmar Contraseña"
+                    type="password"
+                    v-model="form.confirmarContraseña"
+                    outlined
+                    dense
+                    class="minimalista mb-3"
+                  />
+                  <v-btn color="primary" @click="registrarse" class="mt-4">Registrarse</v-btn>
+                </template>
+              </v-form>
+            </v-col>
+          </v-card>
         </v-col>
       </v-row>
     </v-card>
@@ -73,20 +102,42 @@
 
 <script setup>
 import { ref } from 'vue'
-import imgRegister from '@/assets/imgregister.jpg' // Importa la imagen desde assets
+import axios from '../axiosconf' // Ajusta la ruta según tu estructura de carpetas
+
+const step = ref(1)
 
 const form = ref({
   nombre: '',
-  apellidos: '',
+  apellidoPaterno: '',
+  apellidoMaterno: '',
   correo: '',
   telefono: '',
   contraseña: '',
   confirmarContraseña: ''
 })
 
+function nextStep() {
+  step.value = 2
+}
+
 function registrarse() {
-  // Lógica para registrar al usuario
-  console.log(form.value)
+  console.log('Formulario enviado', form.value)
+
+  if (form.value.contraseña !== form.value.confirmarContraseña) {
+    alert('Las contraseñas no coinciden')
+    return
+  }
+
+  axios
+    .post('/register', form.value)
+    .then((response) => {
+      console.log('Registro exitoso:', response.data)
+      // Maneja la respuesta del servidor aquí
+    })
+    .catch((error) => {
+      console.error('Error al registrar:', error)
+      // Maneja el error aquí
+    })
 }
 </script>
 
@@ -103,6 +154,17 @@ body {
   overflow: hidden; /* Oculta el scroll vertical y horizontal si hay desbordamiento */
 }
 
+.fondoimg {
+  background: url('../assets/loginRegister.svg');
+  background-size: cover;
+  color: #fff;
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .gradient-background {
   background: rgb(2, 0, 36);
   background: linear-gradient(
@@ -113,33 +175,22 @@ body {
   );
 }
 
-.v-container {
-  width: 100%;
-  padding: 0;
-}
-
-.v-card {
-  width: 100%;
-  max-width: 50%; /* Reducir el ancho máximo del card */
+.card-size {
+  width: 80%; /* Ajusta el ancho según sea necesario */
+  max-width: 900px; /* Ajusta el ancho máximo según sea necesario */
   margin: 0 auto;
   padding: 0;
 }
 
-.v-row {
-  margin: 0;
+.white-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.v-col {
-  padding: 0;
-}
-
-img,
-.v-img {
-  max-width: 100%;
-  height: auto;
-}
-
-.v-text-field {
+.v-text-field,
+.custom-input-container {
   width: 100%; /* Asegúrate de que los campos de texto ocupen todo el ancho disponible */
 }
 

@@ -1,10 +1,10 @@
-// src/axiosConfig.js
 import axios from 'axios'
 
-const instance = axios.create({
-  baseURL: 'HS.com/Models', // Cambia 'POOCRUD' por el nombre de tu carpeta
-  timeout: 1000,
-  headers: { 'X-Custom-Header': 'foobar' }
+const apiClient = axios.create({
+  baseURL: 'http://HS.com/', // La base URL debe coincidir con tu configuración del enrutador
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
-export default instance
+export default apiClient
