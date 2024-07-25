@@ -30,9 +30,9 @@ const avatarUrl =
   'll'
 
 const navItems = [
-  { title: 'Mis Tareas', to: '/TAS' },
-  { title: 'Mis Detalles', to: '/DES' },
-  { title: 'Mis Seguimientos', to: '/SEG' },
+  { title: 'Tareas', to: '/TAS' },
+  { title: 'Detalles', to: '/DES' },
+  { title: 'Seguimientos', to: '/SEG' },
 
 ]
 

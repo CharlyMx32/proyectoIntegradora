@@ -5,7 +5,7 @@
         <v-row justify="center">
           <v-col cols="12" md="8">
             <div class="d-flex align-items-center justify-space-between mb-8">
-              <h3 class="mb-0">Listado de Tareas</h3>
+              <h3 class="mb-0">Mis asignaciones de Tareas</h3>
               <v-text-field
                 v-model="filterText"
                 label="Filtrar"
@@ -55,20 +55,6 @@ const tables = ref([
   {
     name: 'Listado de Tareas',
     items: []
-  },
-  {
-    name: 'Tareas en proceso',
-    items: [
-      { nombre_cliente: 'Cliente A', producto: 'Producto X', problema: 'Problema 1', tipo_orden: 'orden_fisica' },
-      { nombre_cliente: 'Cliente B', producto: 'Producto Y', problema: 'Problema 2', tipo_orden: 'orden_linea' },
-    ]
-  },
-  {
-    name: 'Tareas Completadas',
-    items: [
-      { nombre_cliente: 'Cliente C', producto: 'Producto Z', problema: 'Problema 3', tipo_orden: 'orden_fisica' },
-      { nombre_cliente: 'Cliente D', producto: 'Producto W', problema: 'Problema 4', tipo_orden: 'orden_linea' },
-    ]
   },
 ]);
 
