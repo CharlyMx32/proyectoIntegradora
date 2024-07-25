@@ -9,31 +9,32 @@
   :height="300"
   :width="600"
   border
-  color="#283593"
+  color="#E8EAF6"
   rounded>
   <H2 style="width: 200px;">
     Tu producto
   </H2> 
   <v-responsive
   max-width="500"
-   style="background-color: #E8EAF6;">
+   style="background-color: #283593;">
   <v-text-field
     hide-details="auto"
-     style="color: black;"
+     style="color: white;"
   ></v-text-field> <br>
 </v-responsive>
 <br>
-<H3 style="width: 200px;">
-  Detalla tu Producto
+<H3 style="width: 300px;">
+  Detalla el problema de tu Producto
 </H3>
   <v-responsive
   max-width="500"
-  style="background-color: #E8EAF6;">
+  style="background-color: #283593;">
   <v-text-field
     hide-details="auto"
-     style="color: black;"
+     style="color: white;"
   ></v-text-field> <br>
 </v-responsive>
+
 </v-sheet>
 
 <v-row justify="end" align="start">
