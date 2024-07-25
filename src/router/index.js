@@ -15,6 +15,25 @@ import statusNegocio from '@/views/Admin/statusNegocio.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 
+
+
+
+
+
+
+
+
+// mar lineas
+
+import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
+import cuentaCliente from '@/views/Recepcionista/CuentaCliente.vue'
+import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
+import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
+import citasGeneral from '@/views/Recepcionista/CitasGenerales.vue'
+
+
+
+
 const routes = [
   { path: '/', redirect: '/Global' },
   { path: '/Global', name: 'Global', component: Global },
@@ -62,8 +81,36 @@ const routes = [
         component: AgendarCita
       }
     ]
-  }
+  },
+  {
+  path: '/Recepcionista',
+  component: DashBoardRecepcionista,
+  children: [
+    {
+      path: '/Recepcionista',
+      component: paginaPrincipal
+    },
+    {
+      path: '/CC',
+      component: cuentaCliente
+    },
+    {
+      path: '/AC',
+      component: agendarCitas
+    },
+    {
+      path: '/ASC',
+      component: asignarCita
+    },
+    {
+      path: '/CG',
+      component: citasGeneral
+    }
+  ]
+}
 ]
+
+
 
 // Crear el enrutador con history mode
 const router = createRouter({

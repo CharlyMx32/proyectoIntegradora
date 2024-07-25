@@ -93,7 +93,7 @@ const email = ref('')
 
 const rules = {
   required: (value) => !!value || 'Este campo es obligatorio.',
-  telefono: (value) => /^\d{9}$/.test(value) || 'Ingrese un teléfono válido de 9 dígitos.',
+  telefono: (value) => /^\d{10}$/.test(value) || 'Ingrese un teléfono válido de 10 dígitos.',
   email: (value) => /.+@.+\..+/.test(value) || 'Ingrese un correo electrónico válido.'
 }
 
