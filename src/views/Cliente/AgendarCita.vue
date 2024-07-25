@@ -1,27 +1,23 @@
 <template>
   <v-app class="Fondo">
-    <v-container class="d-flex justify-center align-center fill-height pa-0" fluid>
-      <v-card class="rounded-lg card-size" elevation="10" flat>
-        <v-row no-gutters>
-          <!-- Sección del formulario -->
-          <v-col cols="12" md="6" class="pa-4">
-            <v-card class="white-card" elevation="5" flat>
-              <v-col cols="12" class="pa-4">
-                <v-text-field outlined dense class="minimalista" />
-                <v-text-field outlined dense class="minimalista" />
-              </v-col>
-            </v-card>
-          </v-col>
-          <!-- Sección del calendario -->
-          <v-col cols="12" md="6" class="pa-4">
-            <v-card class="white-card" elevation="5" flat>
-              <v-col cols="12" class="pa-4">
-                <v-date-picker width="400"></v-date-picker>
-              </v-col>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-card>
+    <v-container>
+      <H1 style="width: 300px; color: white">AGENDAR CITA</H1>
+      <br />
+      <v-sheet :elevation="6" :height="300" :width="600" border color="#283593" rounded>
+        <H2 style="width: 200px"> Tu producto </H2>
+        <v-responsive max-width="500" style="background-color: #e8eaf6">
+          <v-text-field hide-details="auto" style="color: black"></v-text-field> <br />
+        </v-responsive>
+        <br />
+        <H3 style="width: 200px"> Detalla tu Producto </H3>
+        <v-responsive max-width="500" style="background-color: #e8eaf6">
+          <v-text-field hide-details="auto" style="color: black"></v-text-field> <br />
+        </v-responsive>
+      </v-sheet>
+
+      <v-row justify="end" align="start">
+        <v-date-picker width="400"></v-date-picker>
+      </v-row>
     </v-container>
   </v-app>
 </template>

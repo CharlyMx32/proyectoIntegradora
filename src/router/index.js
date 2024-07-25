@@ -19,6 +19,14 @@ import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
 import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
 import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
 
+// mar lineas
+
+import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
+import cuentaCliente from '@/views/Recepcionista/CuentaCliente.vue'
+import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
+import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
+import citasGeneral from '@/views/Recepcionista/CitasGenerales.vue'
+
 const routes = [
   { path: '/', redirect: '/Global' },
   { path: '/Global', name: 'Global', component: Global },
@@ -86,6 +94,32 @@ const routes = [
       {
         path: '/Pedir',
         component: PedidoProducto
+      }
+    ]
+  },
+  {
+    path: '/Recepcionista',
+    component: DashBoardRecepcionista,
+    children: [
+      {
+        path: '/Recepcionista',
+        component: paginaPrincipal
+      },
+      {
+        path: '/CC',
+        component: cuentaCliente
+      },
+      {
+        path: '/AC',
+        component: agendarCitas
+      },
+      {
+        path: '/ASC',
+        component: asignarCita
+      },
+      {
+        path: '/CG',
+        component: citasGeneral
       }
     ]
   }

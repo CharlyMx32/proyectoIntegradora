@@ -112,6 +112,13 @@ onMounted(() => {
   font-weight: bold;
 }
 
+.sticky-header th {
+  position: sticky;
+  top: 0;
+  background-color: #f5f5f5;
+  z-index: 1; /* Ensure the header stays above the table content */
+}
+
 .table-container {
   max-height: 400px;
   overflow-y: auto;
@@ -147,5 +154,9 @@ onMounted(() => {
 .text-center {
   text-align: center;
   color: #777;
+}
+
+.mt-4 {
+  margin-top: 16px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-toolbar class="barra">
-      <v-toolbar-title style="color: white"> HardwareSolutions</v-toolbar-title>
+    <v-toolbar class="barra"  >
+      <v-toolbar-title  style="color: white"> HardwareSolutions</v-toolbar-title>
       <v-spacer >
         <v-row justify="end" style="margin-right: 50px;">
         <v-btn  color="white" @click="ClickBarra">Cita</v-btn>

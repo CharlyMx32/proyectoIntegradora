@@ -4,8 +4,8 @@
       <v-col :cols="mini ? 1 : 3">
           <BarraLateral
             :avatarUrl="avatarUrl"
-            subtitle="centenoavalosc@gmail.com"
-            title="Admin"
+            subtitle="marbellaperez@gmail.com"
+            title="Recepcionista"
             :items="navItems"
             @mouseenter="mini = false"
             @mouseleave="mini = true"
@@ -30,11 +30,11 @@ import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue'
 import { ref } from 'vue'
 
 const navItems = [
-  { title: 'Pagina Principal', to: '/Recepcionista' },
+  { title: 'Pagina Principal', to: '/Recepcionista'},
   { title: 'Cuenta Cliente', to: '/CC' },
   { title: 'Agendar Citas', to: '/AC' },
   { title: 'Asignar Citas', to: '/ASC' },
-  { title: 'Citas Pendientes', to: '/CP' }
+  { title: 'Citas General', to: '/CG' }
 ]
 
 const mini = ref(false)
