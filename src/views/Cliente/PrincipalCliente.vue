@@ -2,7 +2,6 @@
   <v-app class="Fondo">
     <v-content>
       <v-container>
-        <v-card> </v-card>
         <v-row justify="center" align="center">
           <v-col cols="12" md="6">
             <v-sheet :elevation="24" height="402" width="598" border rounded>
@@ -56,6 +55,17 @@ const clickAgenda = () => {
 
 const colors = ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4']
 const slides = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
+const items = [
+  {
+    src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
+  },
+  {
+    src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
+  },
+  {
+    src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
+  }
+]
 </script>
 
 <style scoped>
