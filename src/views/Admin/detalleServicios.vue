@@ -6,7 +6,7 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
-            Citas en linea
+            Citas en línea
           </h3>
         </v-flex>
       </v-card-title>
@@ -39,7 +39,6 @@
               <v-text-field
                 v-model="filters.date"
                 label="Fecha"
-                prepend-icon="mdi-calendar"
                 placeholder="Ingrese la fecha"
                 outlined
                 class="my-input-class"
@@ -51,47 +50,37 @@
         </v-form>
 
         <!-- Tabla de datos -->
-        <v-data-table
-          :headers="headers"
-          :items="filteredOrders"
-          item-key="id_persona"
-          dense
-          class="elevation-1 v-data-table"
-          style="width: 100%; max-width: 100%; overflow-x: auto"
-        >
-          <template v-slot:item="{ item }">
-            <tr>
-              <td>{{ item.fecha_cita }}</td>
-              <td>{{ item.fecha_hora }}</td>
-              <td>{{ item.producto }}</td>
-              <td>{{ item.problema }}</td>
-              <td>{{ item.nombre_cliente }}</td>
-              <td>{{ item.nombre_tecnico }}</td>
-              <td>{{ item.estatus_cita }}</td>
-              <td>{{ item.fecha_registro }}</td>
-            </tr>
-          </template>
-
-          <template v-slot:column="{ column }">
-            <th>{{ column.text }}</th>
-          </template>
-
-          <template v-slot:footer>
-            <div class="d-flex justify-end">
-              <v-pagination
-                v-model:page="page"
-                :length="numberOfPages"
-                :total-visible="7"
-                @input="loadItems"
-              ></v-pagination>
-            </div>
-            <div class="mt-2 text-center">
-              Mostrando {{ startItem }}-{{ endItem }} de {{ totalItems }} elementos.
-            </div>
-          </template>
-        </v-data-table>
+        <div class="table-container">
+          <v-data-table :headers="headers" :items="filteredOrders" item-key="id_orden_cita">
+            <template v-slot:item="{ item }">
+              <tr
+                :class="{
+                  'selected-row':
+                    selectedOrder && selectedOrder.id_orden_cita === item.id_orden_cita
+                }"
+                @click="selectOrder(item)"
+              >
+                <td>{{ item.diaHora }}</td>
+                <td>{{ item.producto }}</td>
+                <td>{{ item.problema }}</td>
+                <td>{{ item.nombre_cliente }}</td>
+                <td>{{ item.nombre_tecnico }}</td>
+                <td>{{ item.estatus_cita }}</td>
+              </tr>
+            </template>
+          </v-data-table>
+        </div>
       </v-card-text>
     </v-card>
+
+    <!-- Componente adicional -->
+    <div v-if="selectedOrder" class="additional-component-container">
+      <!-- Aquí colocas el contenido del componente adicional -->
+      <p>Detalles de la cita seleccionada:</p>
+      <p>ID: {{ selectedOrder.id_orden_cita }}</p>
+      <p>Fecha Cita: {{ selectedOrder.fecha_cita }}</p>
+      <!-- Agrega más detalles según sea necesario -->
+    </div>
   </v-container>
 </template>
 
@@ -105,22 +94,21 @@ const filters = ref({
   clientName: '',
   technicianName: ''
 })
+const selectedOrder = ref(null)
 
 const headers = [
-  { text: 'Fecha Cita', value: 'fecha_cita' },
-  { text: 'Fecha Hora', value: 'fecha_hora' },
+  { text: 'Fecha Cita', value: 'diaHora' },
   { text: 'Producto', value: 'producto' },
   { text: 'Problema', value: 'problema' },
   { text: 'Nombre Cliente', value: 'nombre_cliente' },
   { text: 'Nombre Técnico', value: 'nombre_tecnico' },
-  { text: 'Estatus Cita', value: 'estatus_cita' },
-  { text: 'fecha_registro', value: 'fecha_registro' }
+  { text: 'Estatus Cita', value: 'estatus_cita' }
 ]
 
 const fetchData = async () => {
   try {
     const { date, clientName, technicianName } = filters.value
-    const response = await axios.get('http://hs.com/getData', {
+    const response = await axios.get('http://hs.com/DSA', {
       params: {
         date,
         client_name: clientName,
@@ -128,7 +116,6 @@ const fetchData = async () => {
       }
     })
 
-    console.log('API response:', response.data) // Verifica el formato de la respuesta
     orders.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
     console.error('Error fetching orders:', error)
@@ -138,11 +125,6 @@ const fetchData = async () => {
 onMounted(fetchData)
 
 const filteredOrders = computed(() => {
-  if (!Array.isArray(orders.value)) {
-    console.error('orders.value is not an array:', orders.value)
-    return []
-  }
-
   return orders.value.filter((order) => {
     const matchesClient = order.nombre_cliente
       .toLowerCase()
@@ -154,23 +136,28 @@ const filteredOrders = computed(() => {
     return matchesClient && matchesTechnician && matchesDate
   })
 })
+
+const selectOrder = (order) => {
+  selectedOrder.value = order
+}
 </script>
 
 <style scoped>
 .my-input-class {
-  background-color: #f9f9f9; /* Gris claro para los inputs */
-  border: 1px solid #d1d1d1; /* Borde gris medio */
+  background-color: #f9f9f9;
+  border: 1px solid #d1d1d1;
   border-radius: 4px;
-  color: #333333; /* Texto gris oscuro */
+  color: #333333;
 }
 
 .my-card {
-  background-color: #f7f7f7; /* Gris muy claro */
-  border: 1px solid #d1d1d1; /* Borde gris medio */
+  background-color: #f7f7f7;
+  border: 1px solid #d1d1d1;
 }
 
-.v-data-table {
-  width: 100%;
+.table-container {
+  max-height: 200px; /* Ajuste de altura para el v-data-table */
+  overflow-y: auto;
 }
 
 .v-data-table th,
@@ -180,16 +167,18 @@ const filteredOrders = computed(() => {
 }
 
 .v-data-table th {
-  background-color: #e0e0e0; /* Gris claro para los encabezados */
-}
-/* Oculta el texto "Items per page" y el selector de número de items por página */
-.v-data-table .v-data-table__pagination .v-select__selections {
-  display: none;
+  background-color: #e0e0e0;
 }
 
-/* Opción alternativa: Ocultar sólo el texto y mantener el selector visible */
-.v-data-table .v-data-table__pagination .v-select__selections::before {
-  content: ' ';
-  display: none;
+.selected-row {
+  background-color: rgba(0, 179, 136, 0.2); /* Verde claro y semi-transparente */
+}
+
+.additional-component-container {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #e8f5e9; /* Fondo verde claro para el contenedor del componente adicional */
+  border: 1px solid #c8e6c9;
+  border-radius: 4px;
 }
 </style>

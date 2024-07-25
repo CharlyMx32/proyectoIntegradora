@@ -8,6 +8,10 @@
 }
 
 body {
+  font-family: Arial, sans-serif; /* Cambia según tu fuente preferida */
+  line-height: 1.6; /* Mejora la legibilidad */
+  color: #333; /* Color de texto base */
+  background-color: #fff; /* Color de fondo base */
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -15,6 +19,7 @@ body {
   background-size: cover;
   color: white;
   font-family: Arial, sans-serif;
+
 }
 
 .container {
@@ -110,8 +115,4 @@ img,
 .v-img {
   max-width: 100%;
   height: auto;
-}
-
-/* Opcional: Eliminación global de scrollbars */
-body {
 }

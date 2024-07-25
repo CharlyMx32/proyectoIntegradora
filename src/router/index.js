@@ -14,6 +14,11 @@ import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
 import statusNegocio from '@/views/Admin/statusNegocio.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
+import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
+import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
+import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
+import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
+
 
 
 
@@ -65,6 +70,24 @@ const routes = [
     ]
   },
   {
+    path: '/Tecnico',
+    component: DashBoardTecnico,
+    children: [
+      {
+        path: '/TAS',
+        component: TareasFrom
+      },
+      {
+        path: '/DES',
+        component: MisdetallesFrom
+      },
+      {
+        path: '/SEG',
+        component: SeguimientoFrom
+      },
+    ]
+  },
+  {
     path: '/Cliente',
     component: DashBoardCliente,
     children: [
@@ -79,6 +102,10 @@ const routes = [
       {
         path: '/Agendar',
         component: AgendarCita
+      },
+      {
+      path:'/Pedir',
+      component: PedidoProducto
       }
     ]
   },

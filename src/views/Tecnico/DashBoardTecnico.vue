@@ -23,14 +23,16 @@
 
 <script setup>
 import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue';
+
 import { ref } from 'vue'
 
 const avatarUrl =
   'll'
 
 const navItems = [
-  { title: 'Mis Tareas', to: '/TAS' },
-  { title: 'Mis Detalles', to: '/DES' },
+  { title: 'Tareas', to: '/TAS' },
+  { title: 'Detalles', to: '/DES' },
+  { title: 'Seguimientos', to: '/SEG' },
 
 ]
 
@@ -40,7 +42,7 @@ const mini = ref(false)
 <style scoped>
 /* Estilos adicionales si son necesarios */
 .fondo {
-  background: url('../../assets/fondo.svg') no-repeat center center fixed;
+  background: url('../../assets/geometria-3d_3840x2160_xtrafondos.com.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 </style>
