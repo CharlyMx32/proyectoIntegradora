@@ -5,33 +5,25 @@
       <br>
       
       <v-sheet :elevation="24" :height="402" :width="598" border rounded style="margin-left: 50px; position: relative;">
-        <v-carousel
+        <v-carousel hide-delimiters
         height="400"
         show-arrows="hover"
         cycle
         hide-delimiter-background
       >
         <v-carousel-item
-          v-for="(slide, i) in slides"
+          v-for="(item,i) in items"
           :key="i"
-        >
-          <v-sheet
-            :color="colors[i]"
-            height="500%"
-          >
-            <div class="d-flex fill-height justify-center align-center">
-              <div class="text-h2">
-                {{ slide }} Slide
-              </div>
-            </div>
-            
-          </v-sheet>
+         :src="item.src"
+          cover>
+          
+    
         </v-carousel-item>
       </v-carousel>
       <br>
       </v-sheet>
-      <v-row style="margin-right: 70px;">
-        <v-col cols="12" md="8" class="text-right">
+      <v-row >
+        <v-col cols="12" md="8" class="text-right" >
           <p class="white-text">NOSOTROS</p>
           <br>
           <p class="white-text">
@@ -76,22 +68,17 @@ const clickAgenda = () => {
 
   router.push('/Agendar')
 }
-
-const colors = [
-    'indigo',
-    'warning',
-    'pink darken-2',
-    'red lighten-1',
-    'deep-purple accent-4',
-  ]
-  const slides = [
-    'First',
-    'Second',
-    'Third',
-    'Fourth',
-    'Fifth',
-  ]
-
+const items = [
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+    },
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+    },
+    {
+      src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+    }
+]
 
 </script>
 
@@ -104,24 +91,25 @@ background-size: cover;
 .white-text {
 color: rgb(248, 248, 248);
 }
-
-
 </style>
 
-<script>
-export default {
-  data () {
-    return {
-      items: [
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-        },
-        {
-    src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-  },
-      ]
-    }
-  }
-}
-</script>
 
+<script>
+  export default {
+    data () {
+      return {
+        items: [
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+          },
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+          },
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+          }
+        ],
+      }
+    },
+  }
+</script>
