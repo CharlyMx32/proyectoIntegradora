@@ -23,6 +23,7 @@
 
 <script setup>
 import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue';
+
 import { ref } from 'vue'
 
 const avatarUrl =
@@ -31,6 +32,7 @@ const avatarUrl =
 const navItems = [
   { title: 'Mis Tareas', to: '/TAS' },
   { title: 'Mis Detalles', to: '/DES' },
+  { title: 'Mis Seguimientos', to: '/SEG' },
 
 ]
 
