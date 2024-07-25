@@ -1,23 +1,51 @@
 <template>
   <v-app class="Fondo">
     <v-container>
-      <H1 style="width: 300px; color: white">AGENDAR CITA</H1>
-      <br />
-      <v-sheet :elevation="6" :height="300" :width="600" border color="#283593" rounded>
-        <H2 style="width: 200px"> Tu producto </H2>
-        <v-responsive max-width="500" style="background-color: #e8eaf6">
-          <v-text-field hide-details="auto" style="color: black"></v-text-field> <br />
-        </v-responsive>
-        <br />
-        <H3 style="width: 200px"> Detalla tu Producto </H3>
-        <v-responsive max-width="500" style="background-color: #e8eaf6">
-          <v-text-field hide-details="auto" style="color: black"></v-text-field> <br />
-        </v-responsive>
-      </v-sheet>
-
-      <v-row justify="end" align="start">
-        <v-date-picker width="400"></v-date-picker>
-      </v-row>
+      <v-card class="white-card" :elevation="6" max-width="800" color="#283593" rounded>
+        <v-card-title>
+          <H1 style="width: 100%; color: white">AGENDAR CITA</H1>
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col>
+              <v-card class="nested-card" :elevation="2">
+                <v-card-title>
+                  <H2>Tu producto</H2>
+                </v-card-title>
+                <v-card-text>
+                  <v-responsive max-width="500">
+                    <v-text-field hide-details="auto" style="color: black"></v-text-field>
+                  </v-responsive>
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col>
+              <v-card class="nested-card" :elevation="2">
+                <v-card-title>
+                  <H3>Detalla tu Producto</H3>
+                </v-card-title>
+                <v-card-text>
+                  <v-responsive max-width="500">
+                    <v-text-field hide-details="auto" style="color: black"></v-text-field>
+                  </v-responsive>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row justify="end" class="mt-4">
+            <v-col cols="12" md="6">
+              <v-card class="nested-card" :elevation="2">
+                <v-card-title>
+                  <H3>Fecha de la Cita</H3>
+                </v-card-title>
+                <v-card-text>
+                  <v-date-picker width="100%"></v-date-picker>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
     </v-container>
   </v-app>
 </template>
@@ -52,10 +80,9 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.card-size {
-  width: 80%; /* Ajusta el ancho según sea necesario */
-  max-width: 900px; /* Ajusta el ancho máximo según sea necesario */
-  margin: 0 auto;
-  padding: 0;
+.nested-card {
+  background: #e8eaf6;
+  padding: 20px;
+  border-radius: 8px;
 }
 </style>
