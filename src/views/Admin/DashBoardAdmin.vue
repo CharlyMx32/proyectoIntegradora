@@ -10,10 +10,11 @@
             :items="navItems"
             @mouseenter="mini = false"
             @mouseleave="mini = true"
+            class="sidebar"
           ></BarraLateral>
         </v-col>
 
-        <v-col :cols="mini ? 11 : 9">
+        <v-col :cols="mini ? 11 : 9" class="content">
           <router-view></router-view>
         </v-col>
       </v-row>
@@ -42,5 +43,17 @@ const mini = ref(false)
 .fondo {
   background: url('../../assets/fondo.svg') no-repeat center center fixed;
   background-size: cover;
+}
+.sidebar {
+  height: 100vh; /* Altura completa de la ventana */
+  position: fixed; /* Fijar la barra lateral */
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Permitir desplazamiento si la barra lateral tiene mucho contenido */
+}
+
+.content {
+  height: 100vh; /* Altura completa de la ventana */
+  overflow-y: auto; /* Permitir desplazamiento en el área de contenido */
 }
 </style>
