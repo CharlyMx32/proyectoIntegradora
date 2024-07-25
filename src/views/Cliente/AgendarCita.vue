@@ -1,50 +1,68 @@
 <template>
-  <v-app class="Fondo fill-height">
+  <v-app class="fondo">
     <v-container class="d-flex justify-center align-center fill-height">
-      <v-card class="white-card" :elevation="6" max-width="900" color="#283593" rounded>
+      <v-card class="white-card" :elevation="6" max-width="800">
         <v-card-title>
-          <H1 style="width: 100%; color: white">AGENDAR CITA</H1>
+          <h1 style="color: #283593">Agendar una cita</h1>
         </v-card-title>
         <v-card-text>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-card class="nested-card" :elevation="2">
-                <v-card-title>
-                  <H2>Tu producto</H2>
-                </v-card-title>
-                <v-card-text>
-                  <v-select
-                    :items="productos"
-                    label="Selecciona un producto"
-                    hide-details="auto"
-                    style="color: black"
-                  ></v-select>
-                </v-card-text>
-              </v-card>
-              <v-card class="nested-card mt-4" :elevation="2">
-                <v-card-title>
-                  <H3>Detalla tu Producto</H3>
-                </v-card-title>
-                <v-card-text>
-                  <v-textarea
-                    label="Descripción del producto"
-                    hide-details="auto"
-                    style="color: black"
-                  ></v-textarea>
-                </v-card-text>
-              </v-card>
-            </v-col>
-            <v-col cols="12" md="6" class="d-flex flex-column align-center">
-              <v-card class="nested-card" :elevation="2" width="100%">
-                <v-card-title>
-                  <H3>Fecha de la Cita</H3>
-                </v-card-title>
-                <v-card-text>
-                  <v-date-picker width="100%"></v-date-picker>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
+          <v-form @submit.prevent="agendarCita">
+            <v-row>
+              <!-- Columna 1 -->
+              <v-col cols="12" md="6">
+                <v-card class="nested-card mb-4" :elevation="2">
+                  <v-card-title class="title-card">Selecciona un Producto</v-card-title>
+                  <v-card-text>
+                    <v-select
+                      v-model="selectedProduct"
+                      :items="products"
+                      label="Selecciona un producto"
+                      full-width
+                    ></v-select>
+                  </v-card-text>
+                </v-card>
+                <v-card class="nested-card mb-4" :elevation="2">
+                  <v-card-title class="title-card">Detalles del Problema</v-card-title>
+                  <v-card-text>
+                    <v-textarea
+                      v-model="problemDetails"
+                      label="Describe el problema"
+                      rows="4"
+                      full-width
+                    ></v-textarea>
+                  </v-card-text>
+                </v-card>
+                <v-card v-if="selectedDate" class="nested-card mb-4" :elevation="2">
+                  <v-card-title class="title-card">Selecciona una Hora</v-card-title>
+                  <v-card-text>
+                    <v-select
+                      v-model="selectedTime"
+                      :items="timeSlots"
+                      label="Selecciona una hora"
+                      full-width
+                    ></v-select>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+
+              <!-- Columna 2 -->
+              <v-col cols="12" md="6">
+                <v-card class="nested-card mb-4" :elevation="2">
+                  <v-card-title class="title-card">Selecciona una Fecha</v-card-title>
+                  <v-card-text>
+                    <v-date-picker
+                      v-model="selectedDate"
+                      :allowed-dates="allowedDates"
+                      @input="onDateChange"
+                      locale="es"
+                      full-width
+                    ></v-date-picker>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-btn type="submit" color="primary" block>Agendar Cita</v-btn>
+          </v-form>
         </v-card-text>
       </v-card>
     </v-container>
@@ -52,51 +70,98 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import {
+  format,
+  isWeekend,
+  isSunday,
+  isBefore,
+  isAfter,
+  addDays,
+  eachMinuteOfInterval
+} from 'date-fns'
 
-const productos = ref([
+// Datos para los productos
+const products = [
   'Laptop',
+  'Smartphone',
   'Tablet',
-  'Teléfono móvil',
-  'Televisión',
-  'Consola de videojuegos',
-  'Otros'
-])
+  'Impresora',
+  'Televisor',
+  'Auriculares',
+  'Cámara'
+]
+
+const selectedDate = ref(null)
+const selectedTime = ref(null)
+const selectedProduct = ref(null)
+const problemDetails = ref('')
+
+const allowedDates = (date) => {
+  const today = new Date()
+  const maxDate = addDays(today, 7)
+  // Solo permitir lunes a sábado y dentro de los próximos 7 días, excluyendo los domingos
+  return !isSunday(date) && !isBefore(date, today) && !isAfter(date, maxDate)
+}
+
+const timeSlots = computed(() => {
+  if (!selectedDate.value) return []
+  const date = new Date(selectedDate.value)
+  const morningStart = new Date(date.setHours(9, 0, 0))
+  const morningEnd = new Date(date.setHours(14, 0, 0))
+  const afternoonStart = new Date(date.setHours(15, 0, 0))
+  const afternoonEnd = new Date(date.setHours(17, 0, 0))
+
+  const morningSlots = eachMinuteOfInterval(
+    { start: morningStart, end: morningEnd },
+    { step: 30 }
+  ).map((time) => format(time, 'HH:mm'))
+  const afternoonSlots = eachMinuteOfInterval(
+    { start: afternoonStart, end: afternoonEnd },
+    { step: 30 }
+  ).map((time) => format(time, 'HH:mm'))
+
+  return [...morningSlots, ...afternoonSlots]
+})
+
+const onDateChange = (date) => {
+  selectedDate.value = date
+  selectedTime.value = null // Limpiar la hora cuando cambie la fecha
+}
+
+const agendarCita = () => {
+  if (selectedDate.value && selectedTime.value && selectedProduct.value && problemDetails.value) {
+    const cita = new Date(`${selectedDate.value}T${selectedTime.value}`)
+    if (isAfter(cita, new Date())) {
+      alert(`Cita agendada para ${format(cita, 'dd/MM/yyyy HH:mm')}
+      \nProducto: ${selectedProduct.value}
+      \nProblema: ${problemDetails.value}`)
+    } else {
+      alert('La fecha y hora deben ser futuras')
+    }
+  } else {
+    alert('Por favor, completa todos los campos.')
+  }
+}
 </script>
 
 <style scoped>
-.Fondo {
+.fondo {
   background: url('../../assets/iii.svg') no-repeat center center fixed;
   background-size: cover;
   height: 100%;
 }
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-  overflow-y: hidden; /* Oculta el scroll vertical */
-}
-
-.fill-height {
-  height: 100%;
-  overflow: hidden; /* Oculta el scroll vertical y horizontal si hay desbordamiento */
-}
-
 .white-card {
   background: #fff;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Asegura que el contenido no se desborde */
 }
-
+.title-card {
+  font-size: 14px;
+  font-weight: 600;
+}
 .nested-card {
-  background: #e8eaf6;
-  padding: 20px;
-  width: 350px;
-  border-radius: 8px;
-  max-height: 200px; /* Ajusta según el espacio que necesitas */
-  overflow-y: auto; /* Permite el desplazamiento interno si el contenido es demasiado grande */
+  margin-bottom: 10px;
 }
 </style>
