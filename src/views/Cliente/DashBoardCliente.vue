@@ -1,10 +1,8 @@
 <template>
   <div class="Fondo">
-
     <barra-cliente />
     <v-app>
       <v-content>
-        <!-- Incluye el componente AgendarCita -->
         <router-view />
       </v-content>
     </v-app>

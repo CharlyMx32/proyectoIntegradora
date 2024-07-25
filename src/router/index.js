@@ -19,7 +19,6 @@ import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
 import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
 import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
 
-
 const routes = [
   { path: '/', redirect: '/Global' },
   { path: '/Global', name: 'Global', component: Global },
@@ -65,7 +64,7 @@ const routes = [
       {
         path: '/SEG',
         component: SeguimientoFrom
-      },
+      }
     ]
   },
   {
@@ -85,8 +84,8 @@ const routes = [
         component: AgendarCita
       },
       {
-      path:'/Pedir',
-      component: PedidoProducto
+        path: '/Pedir',
+        component: PedidoProducto
       }
     ]
   }

@@ -71,7 +71,7 @@ const redirectToPage = (roleIndex) => {
       router.push('/Admin')
       break
     case 2:
-      router.push('/Cliente')
+      router.push('/principal')
       break
     case 3:
       router.push('/Recepcionista')

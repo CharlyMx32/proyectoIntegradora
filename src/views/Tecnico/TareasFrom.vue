@@ -12,7 +12,7 @@
                 outlined
                 dense
                 hide-details
-                style="max-width: 300px;"
+                style="max-width: 300px"
               ></v-text-field>
             </div>
 
@@ -35,7 +35,9 @@
                       <td>{{ item.tipo_orden }}</td>
                     </tr>
                     <tr v-if="filteredItems.length === 0">
-                      <td colspan="4" class="text-center py-4">No se encontraron tareas que coincidan con el filtro.</td>
+                      <td colspan="4" class="text-center py-4">
+                        No se encontraron tareas que coincidan con el filtro.
+                      </td>
                     </tr>
                   </tbody>
                 </template>
@@ -49,43 +51,44 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue'
 
 const tables = ref([
   {
     name: 'Listado de Tareas',
     items: []
-  },
-]);
+  }
+])
 
-const filterText = ref('');
+const filterText = ref('')
 
 const filteredItems = computed(() => {
-  const filter = filterText.value.toLowerCase();
-  return tables.value[0].items.filter(item =>
-    item.nombre_cliente.toLowerCase().includes(filter) ||
-    item.producto.toLowerCase().includes(filter) ||
-    item.problema.toLowerCase().includes(filter) ||
-    item.tipo_orden.toLowerCase().includes(filter)
-  );
-});
+  const filter = filterText.value.toLowerCase()
+  return tables.value[0].items.filter(
+    (item) =>
+      item.nombre_cliente.toLowerCase().includes(filter) ||
+      item.producto.toLowerCase().includes(filter) ||
+      item.problema.toLowerCase().includes(filter) ||
+      item.tipo_orden.toLowerCase().includes(filter)
+  )
+})
 
 const mostrarOrden = () => {
   fetch('http://hs.com/orden')
-    .then(response => response.json())
-    .then(json => {
+    .then((response) => response.json())
+    .then((json) => {
       if (json.status === 200) {
-        tables.value[0].items = json.data; 
+        tables.value[0].items = json.data
       }
     })
-    .catch(error => {
-      console.error('Error al obtener órdenes:', error);
-    });
-};
+    .catch((error) => {
+      console.error('Error al obtener órdenes:', error)
+    })
+}
 
 onMounted(() => {
-  mostrarOrden();
-});
+  mostrarOrden()
+})
 </script>
 
 <style scoped>
@@ -146,4 +149,3 @@ onMounted(() => {
   color: #777;
 }
 </style>
-
