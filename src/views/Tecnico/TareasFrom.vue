@@ -190,10 +190,8 @@ const thirdItems = computed(() => {
   );
 });
 
-// Métodos
-const refreshTareasAsignadas = () => {
-  console.log('Actualizar tareas asignadas');
-};
+
+
 
 const seguimientoTareasEnProceso = () => {
   console.log('Seguimiento de tareas en proceso');
@@ -203,21 +201,37 @@ const mostrarDetalle = () => {
   console.log('Mostrar detalle de tareas asignadas');
 };
 
-const mostrarOrden = () => {
-  fetch('http://hs.com/orden')
-    .then(response => response.json())
-    .then(json => {
-      if (json.status === 200) {
-        tareasAsignadas.value = json.data; 
-      }
-    })
-    .catch(error => {
-      console.error('Error al obtener órdenes:', error);
-    });
+// Obtener datos de las tareas
+const fetchData = async () => {
+  try {
+    const [asignadasRes, enProcesoRes, completadasRes] = await Promise.all([
+      fetch('http://hs.com/orden'),
+      fetch('http://hs.com/TERorden'),
+      fetch('http://hs.com/TCorden')
+    ]);
+    const [asignadasJson, enProcesoJson, completadasJson] = await Promise.all([
+      asignadasRes.json(),
+      enProcesoRes.json(),
+      completadasRes.json()
+    ]);
+
+    if (asignadasJson.status === 200) {
+      tareasAsignadas.value = asignadasJson.data;
+    }
+    if (enProcesoJson.status === 200) {
+      tareasEnProceso.value = enProcesoJson.data;
+    }
+    if (completadasJson.status === 200) {
+      tareasCompletadas.value = completadasJson.data;
+    }
+  } catch (error) {
+    console.error('Error al obtener datos:', error);
+  }
+  
 };
 
 onMounted(() => {
-  mostrarOrden();
+  fetchData();
 });
 </script>
 
