@@ -33,6 +33,7 @@ const navItems = [
   { title: 'Pagina Principal', to: '/Recepcionista'},
   { title: 'Cuenta Cliente', to: '/CC' },
   { title: 'Agendar Citas', to: '/AC' },
+  { title: 'Citas Pendientes', to: '/CP'},
   { title: 'Asignar Citas', to: '/ASC' },
   { title: 'Citas General', to: '/CG' }
 ]
