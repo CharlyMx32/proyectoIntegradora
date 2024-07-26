@@ -51,24 +51,34 @@
 
         <!-- Tabla de datos -->
         <div class="table-container">
-          <v-data-table :headers="headers" :items="filteredOrders" item-key="id_orden_cita">
-            <template v-slot:item="{ item }">
+          <v-table density="compact">
+            <thead>
+              <tr>
+                <th class="text-left">Nombre Cliente</th>
+                <th class="text-left">Producto</th>
+                <th class="text-left">Problema</th>
+                <th class="text-left">Fecha Cita</th>
+                <th class="text-left">Nombre Técnico</th>
+              </tr>
+            </thead>
+            <tbody>
               <tr
+                v-for="item in filteredOrders"
+                :key="item.id_orden_cita"
                 :class="{
                   'selected-row':
                     selectedOrder && selectedOrder.id_orden_cita === item.id_orden_cita
                 }"
                 @click="selectOrder(item)"
               >
-                <td>{{ item.diaHora }}</td>
+                <td>{{ item.nombre_cliente }}</td>
                 <td>{{ item.producto }}</td>
                 <td>{{ item.problema }}</td>
-                <td>{{ item.nombre_cliente }}</td>
+                <td>{{ item.diaHora }}</td>
                 <td>{{ item.nombre_tecnico }}</td>
-                <td>{{ item.estatus_cita }}</td>
               </tr>
-            </template>
-          </v-data-table>
+            </tbody>
+          </v-table>
         </div>
       </v-card-text>
     </v-card>
@@ -95,15 +105,6 @@ const filters = ref({
   technicianName: ''
 })
 const selectedOrder = ref(null)
-
-const headers = [
-  { text: 'Fecha Cita', value: 'diaHora' },
-  { text: 'Producto', value: 'producto' },
-  { text: 'Problema', value: 'problema' },
-  { text: 'Nombre Cliente', value: 'nombre_cliente' },
-  { text: 'Nombre Técnico', value: 'nombre_tecnico' },
-  { text: 'Estatus Cita', value: 'estatus_cita' }
-]
 
 const fetchData = async () => {
   try {
@@ -156,28 +157,28 @@ const selectOrder = (order) => {
 }
 
 .table-container {
-  max-height: 200px; /* Ajuste de altura para el v-data-table */
+  max-height: 200px; /* Ajuste de altura para el contenedor de la tabla */
   overflow-y: auto;
 }
 
-.v-data-table th,
-.v-data-table td {
+.v-table th,
+.v-table td {
   text-align: left;
   padding: 8px;
 }
 
-.v-data-table th {
-  background-color: #e0e0e0;
+.v-table th {
+  background-color: #49a3f8;
 }
 
 .selected-row {
-  background-color: rgba(0, 179, 136, 0.2); /* Verde claro y semi-transparente */
+  background-color: rgba(46, 61, 151, 0.2); /* Verde claro y semi-transparente */
 }
 
 .additional-component-container {
   margin-top: 20px;
   padding: 10px;
-  background-color: #e8f5e9; /* Fondo verde claro para el contenedor del componente adicional */
+  background-color: #3961da; /* Fondo verde claro para el contenedor del componente adicional */
   border: 1px solid #c8e6c9;
   border-radius: 4px;
 }

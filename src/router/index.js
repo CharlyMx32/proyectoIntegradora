@@ -1,4 +1,3 @@
-// index.js (router)
 // Generales lineas
 import { createRouter, createWebHistory } from 'vue-router'
 import Global from '@/GlobalHome.vue'
