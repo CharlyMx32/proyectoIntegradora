@@ -1,25 +1,39 @@
 // index.js (router)
-
+// Generales lineas
 import { createRouter, createWebHistory } from 'vue-router'
 import Global from '@/GlobalHome.vue'
 import Login from '@/views/LoginFrom.vue'
 import Register from '@/views/RegistroFrom.vue'
-import DashBoardAdmin from '@/views/Admin/DashBoardAdmin.vue'
-import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
+
+// Charly lineas
 import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista.vue'
-import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
-import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
-import detalleServicios from '@/views/Admin/detalleServicios.vue'
+import DashBoardAdmin from '@/views/Admin/DashBoardAdmin.vue'
 import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
 import statusNegocio from '@/views/Admin/statusNegocio.vue'
+import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
+import detalleServicios from '@/views/Admin/detalleServiciosLinea.vue'
+import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
+
+// Tecnico lineas
+import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
+import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
+import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
+import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
+
+// Ochoa lineas
+import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
-import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
 
+// mar lineas
+import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
+import cuentaCliente from '@/views/Recepcionista/CuentaCliente.vue'
+import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
+import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
+import citasGeneral from '@/views/Recepcionista/CitasGenerales.vue'
 
 const routes = [
- 
   { path: '/', redirect: '/Global' },
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
@@ -46,6 +60,10 @@ const routes = [
       {
         path: '/SN',
         component: statusNegocio
+      },
+      {
+        path: '/ServiciosFisicos',
+        component: detalleServiciosFisicos
       }
     ]
   },
@@ -57,6 +75,14 @@ const routes = [
         path: '/TAS',
         component: TareasFrom
       },
+      {
+        path: '/DES',
+        component: MisdetallesFrom
+      },
+      {
+        path: '/SEG',
+        component: SeguimientoFrom
+      }
     ]
   },
   {
@@ -76,8 +102,34 @@ const routes = [
         component: AgendarCita
       },
       {
-      path:'/Pedir',
-      component: PedidoProducto
+        path: '/Pedir',
+        component: PedidoProducto
+      }
+    ]
+  },
+  {
+    path: '/Recepcionista',
+    component: DashBoardRecepcionista,
+    children: [
+      {
+        path: '/Recepcionista',
+        component: paginaPrincipal
+      },
+      {
+        path: '/CC',
+        component: cuentaCliente
+      },
+      {
+        path: '/AC',
+        component: agendarCitas
+      },
+      {
+        path: '/ASC',
+        component: asignarCita
+      },
+      {
+        path: '/CG',
+        component: citasGeneral
       }
     ]
   }
