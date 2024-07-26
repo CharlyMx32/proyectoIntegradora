@@ -15,7 +15,9 @@ import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
 
 // Tecnico lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
+import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
 import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
+import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
 
 // Ochoa lineas
 import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
@@ -71,6 +73,14 @@ const routes = [
       {
         path: '/TAS',
         component: TareasFrom
+      },
+      {
+        path: '/DES',
+        component: MisdetallesFrom
+      },
+      {
+        path: '/SEG',
+        component: SeguimientoFrom
       }
     ]
   },
@@ -132,4 +142,4 @@ const router = createRouter({
 
 // Middleware para verificar la autenticación y roles antes de cada navegación
 
-export default router 
+export default router
