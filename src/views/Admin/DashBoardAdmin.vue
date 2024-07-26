@@ -31,7 +31,8 @@ const avatarUrl =
 
 const navItems = [
   { title: 'Registro Usuarios', to: '/RU' },
-  { title: 'Detalle Servicios', to: '/DS' },
+  { title: 'Servicios Linea', to: '/DS' },
+  { title: 'Servicios Fisicos', to: '/ServiciosFisicos' },
   { title: 'Usuarios Admin', to: '/UA' },
   { title: 'Status', to: '/SN' }
 ]
@@ -41,7 +42,7 @@ const mini = ref(false)
 
 <style scoped>
 .fondo {
-  background: url('../../assets/fondo.svg') no-repeat center center fixed;
+  background: url('../../assets/Admin/fondoAdmin.svg') no-repeat center center fixed;
   background-size: cover;
 }
 .sidebar {

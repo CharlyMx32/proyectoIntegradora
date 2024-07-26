@@ -6,7 +6,7 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
-            Reguistrar Usuarios
+            Registrar Usuarios
           </h3>
           <p class="text-sm text-muted-foreground">Ingresa los datos del usuario</p>
         </v-flex>
@@ -120,14 +120,7 @@
         </v-form>
       </v-card-text>
       <v-card-actions class="flex items-center p-6">
-        <v-btn
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-4 py-2 w-full"
-          variant="contained"
-          @click="submitForm"
-          :disabled="isSubmitting"
-        >
-          Registrar
-        </v-btn>
+        <v-btn class="btn-grad" @click="submitForm" :disabled="isSubmitting"> Registrar </v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -203,13 +196,17 @@ const submitForm = () => {
 }
 
 .v-btn {
-  background-color: #77dd77; /* Verde pastel */
+  background-image: linear-gradient(to right, #1a2980 0%, #26d0ce 51%, #1a2980 100%);
   color: #ffffff; /* Texto blanco */
   margin-left: 8px;
+  border-radius: 4px;
+  transition: background-position 0.5s ease;
+  background-size: 200% auto;
 }
 
 .v-btn:hover {
-  background-color: #66cdaa; /* Verde claro */
+  background-position: right center; /* Cambia el fondo al hacer hover */
+  color: #ffffff; /* Texto blanco */
 }
 
 .my-card {
