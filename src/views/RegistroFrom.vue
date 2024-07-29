@@ -57,7 +57,7 @@
                 <template v-else>
                   <v-text-field
                     id="correo"
-                    label="Correo"
+                    label="correo"
                     v-model="form.correo"
                     outlined
                     dense
@@ -89,6 +89,15 @@
                     dense
                     class="minimalista mb-3"
                   />
+                  <v-alert
+                    v-if="errorMessage"
+                    type="error"
+                    dismissible
+                    v-model="errorMessage"
+                    class="mb-3"
+                  >
+                    {{ errorMessage }}
+                  </v-alert>
                   <v-btn color="primary" @click="registrarse" class="mt-4">Registrarse</v-btn>
                 </template>
               </v-form>
@@ -116,27 +125,36 @@ const form = ref({
   confirmarContraseña: ''
 })
 
+const errorMessage = ref('')
+
 function nextStep() {
   step.value = 2
 }
 
-function registrarse() {
-  console.log('Formulario enviado', form.value)
-
-  if (form.value.contraseña !== form.value.confirmarContraseña) {
-    alert('Las contraseñas no coinciden')
-    return
+function validarFormulario() {
+  if (!form.value.correo) {
+    errorMessage.value = 'El campo correo es obligatorio.'
+    return false
   }
+  if (form.value.contraseña !== form.value.confirmarContraseña) {
+    errorMessage.value = 'Las contraseñas no coinciden.'
+    return false
+  }
+  return true
+}
+
+function registrarse() {
+  if (!validarFormulario()) return
 
   axios
-    .post('/register', form.value)
+    .post('http://hs.com/registro', form.value)
     .then((response) => {
       console.log('Registro exitoso:', response.data)
-      // Maneja la respuesta del servidor aquí
+      // Redireccionar o manejar el éxito
     })
     .catch((error) => {
-      console.error('Error al registrar:', error)
-      // Maneja el error aquí
+      console.error('Error al registrar:', error.response.data.msg)
+      errorMessage.value = error.response.data.msg || 'Error al registrar'
     })
 }
 </script>
