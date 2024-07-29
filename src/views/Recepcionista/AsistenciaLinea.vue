@@ -6,7 +6,7 @@
         <v-card-title>
           <v-flex class="flex-col space-y-1.5 p-6">
             <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
-              Citas Fisico
+              Citas Linea
             </h3>
           </v-flex>
         </v-card-title>
