@@ -7,11 +7,16 @@
           <v-btn color="white" @click="ClickBarra">Cita</v-btn>
           <v-btn color="white" @click="ClickPedido">Periodo</v-btn>
           <v-btn color="white" @click="handleThirdButtonClick">{{ thirdButtonText }}</v-btn>
+          
         </v-row>
       </v-spacer>
     </v-toolbar>
   </div>
 </template>
+
+
+
+
 
 <script setup>
 import { computed } from 'vue'
@@ -29,6 +34,7 @@ const ClickPedido = () => {
 const home = () => {
   router.push('/principal')
 }
+
 
 const thirdButtonText = computed(() => {
   return route.path === '/principal' ? 'Cerrar Sesión' : 'Inicio'

@@ -13,6 +13,7 @@
   "dependencies": {
     "@vee-validate/rules": "^4.13.2",
     "axios": "^1.7.2",
+    "date": "^2.0.5",
     "date-fns": "^3.6.0",
     "pinia": "^2.1.7",
     "vee-validate": "^4.13.2",

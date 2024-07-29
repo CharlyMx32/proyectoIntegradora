@@ -37,28 +37,92 @@
       <v-main>
         <!-- Contenido principal de la página -->
       </v-main>
-  
-      
-        <v-row align="center" justify="start">
-          <v-col cols="12" md="8" class="text-center">
-            <p class="white--text">Conéctate con nosotros en las redes sociales</p>
-            <br>
-            <v-row justify="center" class="social-icons">
-              <v-btn icon class="mx-2" href="https://facebook.com" target="_blank">
-                <v-icon size="30" class="white--text">mdi-facebook</v-icon>
-              </v-btn>
-              <v-btn icon class="mx-2" href="https://whatsapp.com" target="_blank">
 
-                <v-icon> size="30" class="white--text">mi-whatsapp</v-icon>
-              </v-btn>
-              <v-btn icon class="mx-2" href="https://instagram.com" target="_blank">
-                <v-icon size="30" class="white--text">mdi-instagram</v-icon>
-              </v-btn>
-            </v-row>
+      <v-row align="center" justify="start">
+        <v-col cols="12" md="8" class="text-center">
+          <br>
+          <v-row  style="position: absolute; top: 555px; left: 40px; color:aliceblue" class="social-icons">
+            <v-btn icon class="mx-2" href="https://www.facebook.com/profile.php?id=100054380206513" target="_blank">
+              <font-awesome-icon :icon="['fab', 'facebook']" />
+            </v-btn>
+            <v-btn icon class="mx-2" href="https://whatsapp.com" target="_blank">
+              <v-icon size="30" class="white--text">mi-whatsapp></v-icon>
+            </v-btn>
+            <v-btn icon class="mx-2" href="https://instagram.com" target="_blank">
+              <v-icon size="30" class="white--text">mdi-instagram</v-icon>
+            </v-btn>
+          </v-row>
+
             <h5 class="my-4 white--text">
-            <b> Diag.Las Fuentes 1463,Local 6</b> <br>
-            <b> Esq.Saltillo 400 (En la gasolinera)</b>
+              <h3 style="position: absolute; top: 500px; left: 40px; color:aliceblue">
+                <b>HardwareSolutions</b>
+              </h3>
+              <v-btn style="position: absolute; top: 500px; left: 400px; color:aliceblue"
+              @click="clickAgenda" 
+              class="transparent-btn" 
+              text
+            >
+              Agendar Cita
+            </v-btn>
+            
+            <v-btn style="position: absolute; top: 500px; left: 640px; color:aliceblue" @click="ClickPedido"   class="transparent-btn" 
+            text>Periodo</v-btn>
+             
+            <v-btn style="position: absolute; top: 500px; left: 800px; color:aliceblue" @click="ClickPedido"   class="transparent-btn" 
+            text>Cerrar Sesion</v-btn>
+              <b style="position: absolute; top: 610px; left: 40px; color:aliceblue">Telefono:8715265042</b>
+              <b style="position: absolute; top: 630px; left: 40px; color:aliceblue">MundoElectronicoTRC@gmail.com</b>
+              
+              <v-row style="position: absolute; top: 503px; left: 1020px; color:aliceblue">
+                <v-col cols="auto">
+                  <h3>
+                    <b style="color: aliceblue;">Desarrolladores</b>
+                  </h3>
+                </v-col>
+              </v-row>
+              <v-row style="position: absolute; top: 545px; left: 1020px; color:aliceblue">
+                <v-col cols="auto">
+                  <h3>
+                    <b style="color: aliceblue;">Carlos Centeno</b>
+                  </h3>
+                </v-col>
+              </v-row>
+              <v-row style="position: absolute; top: 567px; left: 1020px; color:aliceblue">
+                <v-col cols="auto">
+                  <h3>
+                    <b style="color: aliceblue;">Diana Ochoa</b>
+                  </h3>
+                </v-col>
+              </v-row>
+              <v-row style="position: absolute; top: 590px; left: 1020px; color:aliceblue">
+                <v-col cols="auto">
+                  <h3>
+                    <b style="color: aliceblue;">Marbella Perez</b>
+                  </h3>
+                </v-col>
+              </v-row>
+              <v-row style="position: absolute; top: 520px; left: 1020px; color:aliceblue">
+                <v-col cols="auto">
+                  <h3>
+                    <b style="color: aliceblue;">Edwin Lopez</b>
+                  </h3>
+                </v-col>
+              </v-row>
             </h5>
+          <v-row style="position: absolute; top: 503px; left: 1290px; color:aliceblue">
+            <v-col cols="auto">
+              <h4>
+                <b style="color: aliceblue;">Direccion</b>
+              </h4>
+            </v-col>
+          </v-row>
+          <v-row style="position: absolute; top: 520px; left: 1200px; color:aliceblue">
+            <v-col cols="auto">
+              <h4>
+                <b style="color: aliceblue;">Calle dia de la fuente No.1463 6 campestre la rosita , Torreón, Mexico</b>
+              </h4>
+            </v-col>
+          </v-row>
           </v-col>
         </v-row>
      
@@ -75,6 +139,9 @@ const router = useRouter()
 const clickAgenda = () => {
   router.push('/Agendar')
 }
+
+
+
 
 const colors = ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4']
 const slides = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
@@ -99,8 +166,12 @@ const items = [
 .white-text {
   color: rgb(248, 248, 248);
 }
-
-
+.transparent-btn {
+  background-color: transparent;
+  color: currentColor; /* O puedes especificar un color aquí */
+  box-shadow: none; /* Elimina cualquier sombra que pueda tener el botón */
+  border: none; /* Elimina cualquier borde */
+}
 
 
 .social-icons .v-btn {
@@ -111,10 +182,13 @@ const items = [
 .social-icons .v-btn:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
 </style>
+
+
 
 <script>
 export default {
-  name: 'AppFooter'
-}
+  name: 'DevelopersList',
+};
 </script>

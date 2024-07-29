@@ -15,15 +15,16 @@ import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
 
 // Tecnico lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
-import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
+
 import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
-import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
+
 
 // Ochoa lineas
 import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
+
 
 // mar lineas
 import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
@@ -73,15 +74,9 @@ const routes = [
       {
         path: '/TAS',
         component: TareasFrom
-      },
-      {
-        path: '/DES',
-        component: MisdetallesFrom
-      },
-      {
-        path: '/SEG',
-        component: SeguimientoFrom
+
       }
+
     ]
   },
   {

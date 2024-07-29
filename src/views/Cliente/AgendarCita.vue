@@ -1,12 +1,11 @@
 <template>
   <v-app class="fondo">
     <v-container class="d-flex justify-center align-center fill-height">
-      <v-card class="white-card" :elevation="6" max-width="800">
-        <v-card-title>
-          <h1 style="color: #283593">Agendar una cita</h1>
-        </v-card-title>
+     
         <v-card-text>
+          <h1 style="color:#FFFFFF; text-align: center; font-size: 50px;">Agendar una cita</h1> 
           <v-form @submit.prevent="agendarCita">
+            <br>
             <v-row>
               <!-- Columna 1 -->
               <v-col cols="12" md="6">
@@ -32,7 +31,7 @@
                     ></v-textarea>
                   </v-card-text>
                 </v-card>
-                <v-card v-if="selectedDate" class="nested-card mb-4" :elevation="2">
+                <v-card v-if="selectedDate" class="nested-card mb-4" :elevation="16">
                   <v-card-title class="title-card">Selecciona una Hora</v-card-title>
                   <v-card-text>
                     <v-select
@@ -55,16 +54,19 @@
                       :allowed-dates="allowedDates"
                       @input="onDateChange"
                       locale="es"
-                      full-width
+                      style="max-height: 445px; overflow: hidden;"
+                       full-width
                     ></v-date-picker>
                   </v-card-text>
                 </v-card>
               </v-col>
             </v-row>
-            <v-btn type="submit" color="primary" block>Agendar Cita</v-btn>
+            <div style="text-align: center; margin-top: 20px;">
+              <v-btn type="submit" color="primary" style="width: 300px;">Agendar Cita</v-btn>
+            </div>
           </v-form>
         </v-card-text>
-      </v-card>
+     
     </v-container>
   </v-app>
 </template>
