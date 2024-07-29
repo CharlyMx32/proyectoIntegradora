@@ -15,14 +15,13 @@ import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
 
 // Tecnico lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
-import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
+import Tareas from '@/views/Tecnico/TareasFrom.vue'
 
 // Ochoa lineas
 import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
-
 
 // mar lineas
 import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
@@ -68,13 +67,11 @@ const routes = [
   },
   {
     path: '/Tecnico',
-    component: DashBoardTecnico,
-    children: [
-      {
-        path: '/TAS',
-        component: TareasFrom
-      },
-    ]
+    component: DashBoardTecnico
+  },
+  {
+    path: '/TAS',
+    component: Tareas
   },
   {
     path: '/Cliente',
@@ -109,7 +106,7 @@ const routes = [
       {
         path: '',
         redirect: '/PP'
-      },  
+      },
       {
         path: '/CPF',
         component: asistenciaFisico

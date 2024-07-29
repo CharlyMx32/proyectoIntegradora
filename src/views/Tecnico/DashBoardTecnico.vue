@@ -1,11 +1,7 @@
 <template>
   <v-container fluid class="full-height d-flex align-center justify-center">
     <v-card class="pa-4 text-center" max-width="400" outlined>
-      <v-img
-        class="custom-img mb-4"
-        height="200px"
-        contain
-      ></v-img>
+      <v-img class="custom-img mb-4" height="200px" contain></v-img>
       <v-card-title>
         <h1 class="display-1 font-weight-bold">Bienvenido</h1>
       </v-card-title>
@@ -20,13 +16,13 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 const Tareas = () => {
-  router.push('/TareasTecnico');
-};
+  router.push('/TAS')
+}
 </script>
 
 <style scoped>
@@ -39,7 +35,9 @@ body {
   font-family: 'Arial', sans-serif; /* Fuente de la página */
 }
 /* Estilos para el Contenido Principal */
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
   margin: 0;
 }
@@ -88,4 +86,3 @@ html, body, #app {
   background-size: cover;
 }
 </style>
-
