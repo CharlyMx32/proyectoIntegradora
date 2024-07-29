@@ -51,7 +51,7 @@
                   <td>{{ item.Nombre_Cliente }}</td>
                   <td>{{ item.Producto }}</td>
                   <td>{{ item.Pago }}</td>
-                  <td>{{ item.Garantia }}</td>
+                  <td>{{ item.Uso_Garantia }}</td>
                 </tr>
               </tbody>
             </v-table>

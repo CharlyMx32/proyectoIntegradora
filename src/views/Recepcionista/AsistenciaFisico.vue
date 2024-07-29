@@ -6,7 +6,7 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
-            Citas en línea
+            Citas Fisico
           </h3>
         </v-flex>
       </v-card-title>
@@ -51,7 +51,7 @@
                 <td>{{ item.Nombre_Cliente }}</td>
                 <td>{{ item.Producto }}</td>
                 <td>{{ item.Pago }}</td>
-                <td>{{ item.Garantia }}</td>
+                <td>{{ item.Uso_Garantia }}</td>
               </tr>
             </tbody>
           </v-table>
@@ -83,7 +83,7 @@ const selectedOrder = ref(null)
 const fetchData = async () => {
   try {
     const { clientName } = filters.value
-    const response = await axios.get('http://hs.com/AsignacionLinea', {
+    const response = await axios.get('http://hs.com/AsignacionFisico', {
       params: {
         client_name: clientName,
       }
@@ -101,7 +101,6 @@ onMounted(fetchData)
 const filteredOrders = computed(() => {
   return orders.value.filter(order =>
     order.Nombre_Cliente.toLowerCase().includes(filters.value.clientName.toLowerCase())
-
   )
 })
 
