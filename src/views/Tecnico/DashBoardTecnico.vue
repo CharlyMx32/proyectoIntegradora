@@ -30,9 +30,7 @@ const avatarUrl =
   'll'
 
 const navItems = [
-  { title: 'Tareas', to: '/TAS' },
-  { title: 'Detalles', to: '/DES' },
-  { title: 'Seguimientos', to: '/SEG' },
+  { title: 'Mis Tareas', to: '/TAS' },
 
 ]
 
@@ -42,7 +40,7 @@ const mini = ref(false)
 <style scoped>
 /* Estilos adicionales si son necesarios */
 .fondo {
-  background: url('../../assets/geometria-3d_3840x2160_xtrafondos.com.jpg') no-repeat center center fixed;
+  background: url('../../assets/blurry-gradient-haikei.png') no-repeat center center fixed;
   background-size: cover;
 }
 </style>

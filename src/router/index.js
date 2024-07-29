@@ -15,9 +15,7 @@ import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
 
 // Tecnico lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
-import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
 import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
-import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
 
 // Ochoa lineas
 import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
@@ -27,10 +25,11 @@ import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
 
 // mar lineas
 import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
-import cuentaCliente from '@/views/Recepcionista/CuentaCliente.vue'
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
-import citasGeneral from '@/views/Recepcionista/CitasGenerales.vue'
+import citasLinea from '@/views/Recepcionista/CitasLinea.vue'
+import citasPendientes from '@/views/Recepcionista/CitasPendientes.vue'
+import CitasFisico from '@/views/Recepcionista/CitasFisico.vue'
 
 const routes = [
   { path: '/', redirect: '/Global' },
@@ -73,14 +72,6 @@ const routes = [
       {
         path: '/TAS',
         component: TareasFrom
-      },
-      {
-        path: '/DES',
-        component: MisdetallesFrom
-      },
-      {
-        path: '/SEG',
-        component: SeguimientoFrom
       }
     ]
   },
@@ -111,12 +102,16 @@ const routes = [
     component: DashBoardRecepcionista,
     children: [
       {
-        path: '/Recepcionista',
+        path: '/PP',
         component: paginaPrincipal
       },
       {
-        path: '/CC',
-        component: cuentaCliente
+        path: '',
+        redirect: '/PP'
+      },  
+      {
+        path: '/CP',
+        component: citasPendientes
       },
       {
         path: '/AC',
@@ -127,8 +122,12 @@ const routes = [
         component: asignarCita
       },
       {
-        path: '/CG',
-        component: citasGeneral
+        path: '/CL',
+        component: citasLinea
+      },
+      {
+        path: '/CF',
+        component: CitasFisico
       }
     ]
   }
