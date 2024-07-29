@@ -13,11 +13,14 @@ import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServiciosLinea.vue'
 import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
 
-// Tecnico lineas
+
+//  Cheche lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
-import MisdetallesFrom from '@/views/Tecnico/MisdetallesFrom.vue'
-import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
-import SeguimientoFrom from '@/views/Tecnico/SeguimientoFrom.vue'
+import TareasTecnico from '@/views/Tecnico/TareasFrom.vue'
+
+
+
+
 
 // Ochoa lineas
 import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
@@ -32,6 +35,7 @@ import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
 import citasGeneral from '@/views/Recepcionista/CitasGenerales.vue'
 
+
 const routes = [
   { path: '/', redirect: '/Global' },
   { path: '/Global', name: 'Global', component: Global },
@@ -40,6 +44,7 @@ const routes = [
   { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
   { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
   { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
+  { path:'/TareasTecnico', name:'TareasTecnico',component:TareasTecnico},
   {
     path: '/admin',
     component: DashBoardAdmin,
@@ -69,21 +74,8 @@ const routes = [
   {
     path: '/Tecnico',
     component: DashBoardTecnico,
-    children: [
-      {
-        path: '/TAS',
-        component: TareasFrom
-      },
-      {
-        path: '/DES',
-        component: MisdetallesFrom
-      },
-      {
-        path: '/SEG',
-        component: SeguimientoFrom
-      }
-    ]
   },
+
   {
     path: '/Cliente',
     component: DashBoardCliente,
