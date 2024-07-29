@@ -16,7 +16,7 @@ import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
 
 //  Cheche lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
-import TareasTecnico from '@/views/Tecnico/TareasFrom.vue'
+import TareasFrom from '@/views/Tecnico/TareasFrom.vue'
 
 
 
@@ -30,10 +30,8 @@ import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
 
 // mar lineas
 import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
-import cuentaCliente from '@/views/Recepcionista/CuentaCliente.vue'
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
-import citasGeneral from '@/views/Recepcionista/CitasGenerales.vue'
 
 
 const routes = [
@@ -44,7 +42,7 @@ const routes = [
   { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
   { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
   { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
-  { path:'/TareasTecnico', name:'TareasTecnico',component:TareasTecnico},
+  { path:'/TareasTecnico', name:'TareasTecnico',component:TareasFrom},
   {
     path: '/admin',
     component: DashBoardAdmin,
@@ -74,8 +72,13 @@ const routes = [
   {
     path: '/Tecnico',
     component: DashBoardTecnico,
+    children: [
+      {
+        path: '/TAS',
+        component: TareasFrom
+      }
+    ]
   },
-
   {
     path: '/Cliente',
     component: DashBoardCliente,
@@ -103,13 +106,13 @@ const routes = [
     component: DashBoardRecepcionista,
     children: [
       {
-        path: '/Recepcionista',
+        path: '/PP',
         component: paginaPrincipal
       },
       {
-        path: '/CC',
-        component: cuentaCliente
-      },
+        path: '',
+        redirect: '/PP'
+      },  
       {
         path: '/AC',
         component: agendarCitas
@@ -118,10 +121,6 @@ const routes = [
         path: '/ASC',
         component: asignarCita
       },
-      {
-        path: '/CG',
-        component: citasGeneral
-      }
     ]
   }
 ]

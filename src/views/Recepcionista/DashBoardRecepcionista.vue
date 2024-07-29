@@ -1,4 +1,5 @@
 <template>
+  <v-app class="fondo">
   <v-container fluid>
     <v-row>
       <v-col :cols="mini ? 1 : 3">
@@ -21,20 +22,27 @@
     </v-row>
 
   </v-container>
+</v-app>
 </template>
 
-
+<style scoped>
+.fondo {
+  background: url('../../assets/Recepcionista/fondoRecepcionista.svg') no-repeat center center fixed;
+  background-size: cover;
+}
+</style>
 
 <script setup>
 import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue'
 import { ref } from 'vue'
 
 const navItems = [
-  { title: 'Pagina Principal', to: '/Recepcionista'},
-  { title: 'Cuenta Cliente', to: '/CC' },
+  { title: 'Pagina Principal', to: '/PP'},
   { title: 'Agendar Citas', to: '/AC' },
+  { title: 'Citas Pendientes', to: '/CP'},
   { title: 'Asignar Citas', to: '/ASC' },
-  { title: 'Citas General', to: '/CG' }
+  { title: 'Citas Linea', to: '/CL' },
+  { title: 'Citas Fisico', to: '/CF' }
 ]
 
 const mini = ref(false)
