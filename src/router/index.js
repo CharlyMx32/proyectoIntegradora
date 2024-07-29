@@ -28,7 +28,7 @@ import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
 import citasLinea from '@/views/Recepcionista/CitasLinea.vue'
-import citasPendientes from '@/views/Recepcionista/CitasPendientes.vue'
+import asistenciaFisico from '@/views/Recepcionista/AsistenciaFisico.vue'
 import CitasFisico from '@/views/Recepcionista/CitasFisico.vue'
 
 const routes = [
@@ -110,8 +110,8 @@ const routes = [
         redirect: '/PP'
       },  
       {
-        path: '/CP',
-        component: citasPendientes
+        path: '/CPF',
+        component: asistenciaFisico
       },
       {
         path: '/AC',
