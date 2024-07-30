@@ -3,7 +3,7 @@
     <v-row justify="center" class="py-4">
       <v-col cols="12" md="10">
         
-        <!-- ESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
+        <!-- eESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
         <v-card class="mb-6" outlined>
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
