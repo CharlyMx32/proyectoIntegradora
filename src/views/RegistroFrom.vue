@@ -3,6 +3,9 @@
     class="d-flex justify-center align-center fill-height gradient-background pa-0"
     fluid
   >
+    <!-- Contenedor para partículas -->
+    <div id="particles-container"></div>
+
     <v-card class="rounded-lg card-size" elevation="10" flat>
       <v-row no-gutters>
         <!-- Sección de bienvenida -->
@@ -165,7 +168,6 @@ function validarFormulario() {
 
   return true
 }
-
 function registrarse() {
   if (!validarFormulario()) return
 
@@ -177,25 +179,27 @@ function registrarse() {
   axios
     .post('http://hs.com/registro', datosRegistro)
     .then((response) => {
-      if (response.data.success) {
-        // Asegúrate de que la respuesta tenga un campo 'success'
+      // Verifica si la respuesta del servidor es exitosa
+      if (response.data.status === 200 && response.data.msg === 'success') {
+        // Mensaje de éxito si la respuesta es exitosa
         successMessage.value = 'Registro exitoso. Ahora puede iniciar sesión.'
         showSuccessSnackbar.value = true
         setTimeout(() => {
           window.location.href = '/login'
         }, 2000)
       } else {
-        errorMessage.value = response.data.message || 'Error al registrar'
+        // Mostrar mensaje de error si el mensaje del servidor indica un problema
+        errorMessage.value = response.data.msg || 'Error al registrar'
         showErrorSnackbar.value = true
       }
     })
     .catch((error) => {
+      // Manejo de errores en caso de fallo de la solicitud
       console.error('Error al registrar:', error)
-      errorMessage.value = error.response?.data?.message || 'Error al registrar'
+      errorMessage.value = error.response?.data?.msg || 'Error al registrar'
       showErrorSnackbar.value = true
     })
 }
-
 function clearSuccessMessage() {
   successMessage.value = ''
   showSuccessSnackbar.value = false
@@ -218,6 +222,15 @@ body {
 .fill-height {
   height: 100%;
   overflow: hidden;
+  position: relative;
+}
+
+#particles-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .fondoimg {
@@ -229,6 +242,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .gradient-background {
@@ -239,6 +253,7 @@ body {
     rgba(1, 1, 94, 1) 48%,
     rgba(0, 142, 171, 1) 100%
   );
+  z-index: 1;
 }
 
 .card-size {
@@ -246,6 +261,7 @@ body {
   max-width: 900px;
   margin: 0 auto;
   padding: 0;
+  z-index: 1;
 }
 
 .white-card {
@@ -253,6 +269,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
 .v-text-field,
