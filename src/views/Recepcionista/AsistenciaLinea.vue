@@ -123,7 +123,7 @@ const markAsAttended = () => {
 }
 
 .my-card {
-  background-color: #f7f7f7;
+  background-color: rgb(13, 13, 12);
   border: 1px solid #d1d1d1;
 }
 
@@ -139,7 +139,7 @@ const markAsAttended = () => {
 }
 
 .v-table th {
-  background-color: #49a3f8;
+  background-color: rgb(247, 79, 77);
 }
 
 .selected-row {

@@ -3,7 +3,7 @@
     <v-card class="rounded-lg card-size" elevation="10" flat>
       <v-row no-gutters>
         <v-col cols="12" md="5" class="d-flex flex-column align-center justify-center pa-4">
-          <v-typography variant="h5" class="text-center">¡REGISTRAR CITA!</v-typography>
+          <v-typography variant="h5" class="text-center efecto-titulo">¡REGISTRAR CITA!</v-typography>
         </v-col>
         <v-col cols="12" md="7" class="pa-4">
             <v-col cols="12" class="pa-4">
@@ -56,7 +56,7 @@
 
                 <template v-else>
                   <v-row>
-                    <v-col cols="12" class="pa-4">
+                    <v-col cols="12" class="pa-4 efecto-titulo">
                        <h1>¿Cuál es el producto?</h1>
                       <v-container fluid>
                         <v-textarea
@@ -106,7 +106,7 @@
 </template>
 
 <script setup>
-import { ref, shallowRef } from 'vue'
+import {ref} from 'vue'
 
 const form = ref({
   nombre: '',
@@ -135,6 +135,10 @@ const submitForm = () => {
   max-width: 800px;
   width: 100%;
   margin: auto; /* Centrar horizontalmente */
+  background-color: rgb(13, 13, 12);
+}
+.efecto-titulo{
+ color: rgb(247, 79, 77);
 }
 .white-card {
   background-color: white;
