@@ -29,7 +29,6 @@ import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
 import citasLinea from '@/views/Recepcionista/CitasLinea.vue'
-import asistenciaFisico from '@/views/Recepcionista/AsistenciaFisico.vue'
 import CitasFisico from '@/views/Recepcionista/CitasFisico.vue'
 import asistenciaLinea from '@/views/Recepcionista/AsistenciaLinea.vue'
 
@@ -84,14 +83,38 @@ const routes = [
     component: DashBoardRecepcionista,
     meta: { requiresAuth: true, role: 4 },
     children: [
-      { path: '/PP', component: paginaPrincipal },
-      { path: '', redirect: '/PP' },
-      { path: '/CPF', component: asistenciaFisico },
-      { path: '/CPL', component: asistenciaLinea },
-      { path: '/AC', component: agendarCitas },
-      { path: '/ASC', component: asignarCita },
-      { path: '/CL', component: citasLinea },
-      { path: '/CF', component: CitasFisico }
+      {
+        path: '/PP',
+        component: paginaPrincipal
+      },
+      {
+        path: '',
+        redirect: '/PP'
+      },
+      {
+        path: '/CPF',
+        component: asistenciaFisico
+      },
+      {
+        path: '/CPL',
+        component: asistenciaLinea
+      },
+      {
+        path: '/AC',
+        component: agendarCitas
+      },
+      {
+        path: '/ASC',
+        component: asignarCita
+      },
+      {
+        path: '/CL',
+        component: citasLinea
+      },
+      {
+        path: '/CF',
+        component: CitasFisico
+      }
     ]
   }
 ]

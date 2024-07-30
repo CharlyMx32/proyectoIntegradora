@@ -27,7 +27,7 @@
 
 <style scoped>
 .fondo {
-  background: url('../../assets/Recepcionista/fondoRecepcionista.svg') no-repeat center center fixed;
+  background: rgb(37, 36, 35);
   background-size: cover;
 }
 </style>
@@ -39,7 +39,6 @@ import { ref } from 'vue'
 const navItems = [
   { title: 'Pagina Principal', to: '/PP'},
   { title: 'Agendar Citas', to: '/AC' },
-  { title: 'Asistencia Fisicos', to: '/CPF'},
   { title: 'Asistencia Linea', to: '/CPL'},
   { title: 'Asignar Citas', to: '/ASC' },
   { title: 'Citas Linea', to: '/CL' },

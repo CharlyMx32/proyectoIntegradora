@@ -7,7 +7,7 @@
           <v-btn color="white" @click="ClickBarra">Cita</v-btn>
           <v-btn color="white" @click="ClickPedido">Periodo</v-btn>
           <v-btn color="white" @click="handleThirdButtonClick">{{ thirdButtonText }}</v-btn>
-          
+
         </v-row>
       </v-spacer>
     </v-toolbar>
@@ -52,9 +52,10 @@ const handleThirdButtonClick = () => {
 
 <style scoped>
 .barra {
-  background: url('../../assets/iii.svg') no-repeat center center fixed;
-  background-size: cover;
+  background: rgb(48,63,159);
+  background: radial-gradient(circle, rgba(48,63,159,1) 0%, rgba(0,0,0,1) 100%);
 }
+
 .clickable-title {
   cursor: pointer;
   color: white;

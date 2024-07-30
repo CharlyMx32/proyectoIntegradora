@@ -3,8 +3,8 @@
     <v-row justify="center" class="py-4">
       <v-col cols="12" md="10">
         
-         <!-- eESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
-        <v-card class="mb-6" outlined >
+        <!-- eESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
+        <v-card class="mb-6" outlined>
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
@@ -167,44 +167,45 @@
           </v-card-text>
         </v-card>
 
-        <!-- ESTE ES EL CUADRITO QUE SALE DESPUES DE DARLE AL BOTON DE DETALLAR  -->
-   <v-dialog v-model="showDetailDialog" max-width="800px" class="dialog-custom">
-  <v-card>
-    <v-card-title class="dialog-title">
-      <span class="headline">Detalles del Cliente</span>
-    </v-card-title>
-    <v-card-text>
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-form>
-            <v-text-field v-model="selectedItem.nombre_cliente" label="Nombre del Cliente" readonly />
-            <v-text-field v-model="selectedItem.producto" label="Producto" readonly />
-            <v-text-field v-model="selectedItem.problema" label="Problema" readonly />
-            <v-text-field v-model="selectedItem.tipo_orden" label="Tipo de Orden" readonly />
-          </v-form>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-form>
-            <v-textarea v-model="nuevosDatos.cambios" label="Cambios" placeholder="Ingrese los cambios aquí" />
-            <v-text-field v-model="nuevosDatos.costoChequeo" label="Costo de Chequeo" placeholder="Ingrese el costo de chequeo aquí" />
-            <v-text-field v-model="nuevosDatos.costoReparacion" label="Costo de Reparación" placeholder="Ingrese el costo de reparación aquí" />
-          </v-form>
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <v-card-actions>
-      <v-btn @click="guardarDatos" color="primary">
-        <v-icon left>mdi-content-save</v-icon>
-        Guardar Datos
-      </v-btn>
-      <v-btn @click="closeDetailDialog" color="secondary" >
-        <v-icon left>mdi-close</v-icon>
-        Cerrar
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
-
+        <!-- ESTE ES EL CUADRITO QUE SALE DESPUES DE DARLE AL BOTON DE DETALLAR -->
+        <v-dialog v-model="showDetailDialog" max-width="800px" class="dialog-custom">
+          <v-card>
+            <v-card-title class="dialog-title">
+              <span class="headline">Detalles del Cliente</span>
+            </v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col cols="12" md="6">
+                  <v-form>
+                    <v-text-field v-model="selectedItem.nombre_cliente" label="Nombre del Cliente" readonly />
+                    <v-text-field v-model="selectedItem.producto" label="Producto" readonly />
+                    <v-text-field v-model="selectedItem.problema" label="Problema" readonly />
+                    <v-text-field v-model="selectedItem.tipo_orden" label="Tipo de Orden" readonly />
+                    <!-- Nuevo campo Diagnóstico Línea -->
+                    <v-textarea v-model="nuevosDatos.diagnostico" label="Diagnóstico Línea" placeholder="Ingrese el diagnóstico aquí" />
+                  </v-form>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-form>
+                    <v-textarea v-model="nuevosDatos.cambios" label="Cambios" placeholder="Ingrese los cambios aquí" />
+                    <v-text-field v-model="nuevosDatos.costoChequeo" label="Costo de Chequeo" placeholder="Ingrese el costo de chequeo aquí" />
+                    <v-text-field v-model="nuevosDatos.costoReparacion" label="Costo de Reparación" placeholder="Ingrese el costo de reparación aquí" />
+                  </v-form>
+                </v-col>
+              </v-row>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn @click="guardarDatos" color="primary">
+                <v-icon left>mdi-content-save</v-icon>
+                Guardar Datos
+              </v-btn>
+              <v-btn @click="closeDetailDialog" color="secondary">
+                <v-icon left>mdi-close</v-icon>
+                Cerrar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
         <!-- ESTE ES OTRO CUADRITO PERO PARA EL BOTON DE SEGUIMIENTO xd -->
         <v-dialog v-model="showSeguimientoDialog" max-width="600px">
@@ -248,7 +249,6 @@
   </v-app>
 </template>
 
-<!-- POR MI SALUD MENTAL YA NO LE MUEVAN A MI SCRIPT -->
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
@@ -261,7 +261,8 @@ const showSeguimientoDialog = ref(false);
 const nuevosDatos = ref({
   cambios: '',
   costoChequeo: '',
-  costoReparacion: ''
+  costoReparacion: '',
+  diagnostico: '' // Agregar nuevo campo para diagnóstico
 });
 const selectedStatus = ref('');
 const statusOptions = ['Asignado a un técnico', 'En reparación', 'Con retraso', 'Completado'];
@@ -311,7 +312,8 @@ const openDetailDialog = () => {
     nuevosDatos.value = {
       cambios: '',
       costoChequeo: '',
-      costoReparacion: ''
+      costoReparacion: '',
+      diagnostico: '' // Inicializar el nuevo campo para diagnóstico
     };
   } else {
     console.log('No se ha seleccionado ningún item.');
@@ -382,9 +384,6 @@ onMounted(() => {
   fetchData();
 });
 </script>
-
-<!-- PS AQUI EMPIEZA EL ESTILO, es muy obvio la vdd, 
-casi ni le muevo pq Ochoa dice que no tengo OJO de diseñador -->
 
 <style scoped>
 .fondo {

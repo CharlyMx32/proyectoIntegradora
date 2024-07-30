@@ -3,7 +3,7 @@
     <v-card class="rounded-lg card-size" elevation="10" flat>
       <v-row no-gutters>
         <v-col cols="12" md="5" class="d-flex flex-column align-center justify-center pa-4">
-          <v-typography variant="h5" class="text-center">¡REGISTRAR CITA!</v-typography>
+          <v-typography variant="h5" class="text-center efecto-titulo">¡REGISTRAR CITA!</v-typography>
         </v-col>
         <v-col cols="12" md="7" class="pa-4">
             <v-col cols="12" class="pa-4">
@@ -56,7 +56,7 @@
 
                 <template v-else>
                   <v-row>
-                    <v-col cols="12" class="pa-4">
+                    <v-col cols="12" class="pa-4 efecto-titulo">
                        <h1>¿Cuál es el producto?</h1>
                       <v-container fluid>
                         <v-textarea
@@ -80,19 +80,6 @@
                         />
                       </v-container>
                     </v-col>
-                    <v-col cols="12" class="pa-4">
-                      <v-card class="mx-auto" max-width="328" rounded="lg" border>
-                        <v-confirm-edit v-model="date">
-                          <template v-slot:default="{ model: proxyModel, actions }">
-                            <v-date-picker v-model="proxyModel.value">
-                              <template v-slot:actions>
-                                <component :is="actions"></component>
-                              </template>
-                            </v-date-picker>
-                          </template>
-                        </v-confirm-edit>
-                      </v-card>
-                    </v-col>
                   </v-row>
                   <v-card-actions class="flex items-center p-6">
                     <v-btn
@@ -103,10 +90,11 @@
                     >
                       AGENDAR
                     </v-btn>
-                    <v-btn cclass="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-4 py-2"
+                    <v-btn class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors h-10 px-4 py-2"
                       variant="contained"
-                      @click="submitForm"
-                      :disabled="isSubmitting">REGRESAR</v-btn>
+                      @click="showAgendarCita = false"
+                      :disabled="isSubmitting"
+                    >REGRESAR</v-btn>
                   </v-card-actions>
                 </template>
               </v-form>
@@ -118,7 +106,7 @@
 </template>
 
 <script setup>
-import { ref, shallowRef } from 'vue'
+import {ref} from 'vue'
 
 const form = ref({
   nombre: '',
@@ -131,7 +119,6 @@ const form = ref({
 
 const showAgendarCita = ref(false)
 const isSubmitting = ref(false)
-const date = shallowRef(null)
 
 const submitForm = () => {
   isSubmitting.value = true
@@ -148,6 +135,10 @@ const submitForm = () => {
   max-width: 800px;
   width: 100%;
   margin: auto; /* Centrar horizontalmente */
+  background-color: rgb(13, 13, 12);
+}
+.efecto-titulo{
+ color: rgb(247, 79, 77);
 }
 .white-card {
   background-color: white;
