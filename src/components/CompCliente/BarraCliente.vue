@@ -52,8 +52,8 @@ const handleThirdButtonClick = () => {
 
 <style scoped>
 .barra {
-  background: rgb(48,63,159);
-  background: radial-gradient(circle, rgba(48,63,159,1) 0%, rgba(0,0,0,1) 100%);
+  background:#ffad00
+
 }
 
 .clickable-title {
