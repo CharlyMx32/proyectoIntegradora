@@ -92,10 +92,6 @@ const routes = [
         redirect: '/PP'
       },
       {
-        path: '/CPF',
-        component: asistenciaFisico
-      },
-      {
         path: '/CPL',
         component: asistenciaLinea
       },
