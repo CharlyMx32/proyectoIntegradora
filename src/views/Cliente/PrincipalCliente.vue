@@ -27,7 +27,7 @@
               de productos, desde teléfonos móviles hasta televisores y electrodomésticos de gran
               tamaño.
             </p> <br>
-            <v-btn   color="#1E88E5" style="width: 200px" @click="clickAgenda">Agendar Cita</v-btn>
+            <v-btn   color="#2477977" style="width: 200px" @click="clickAgenda">Agendar Cita</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -162,8 +162,8 @@ const items = [
 
 <style scoped>
 .v-application {
-  background: rgb(48,63,159);
-  background: radial-gradient(circle, rgba(48,63,159,1) 0%, rgba(0,0,0,1) 100%);
+  background: #252423;
+  background: radial-gradient(circle, rgba(55,54,53,1) 0%, rgba(55,54,53,1) 95%);
 }
 .white-text {
   color: rgb(248, 248, 248);

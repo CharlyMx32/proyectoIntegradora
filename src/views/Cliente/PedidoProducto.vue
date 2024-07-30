@@ -24,7 +24,7 @@
             </v-row>
           </v-card-title>
           <v-card-text>
-            <div class="table-container">
+            <div class="table-container custom-table-container">
               <v-simple-table dense class="custom-table">
                 <thead>
                   <tr>
@@ -350,12 +350,13 @@ onMounted(() => {
 }
 
 .table-container {
-  max-height: 300px; 
+  max-height: 100px; 
   overflow-y: auto;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
   background-color: #ffffff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  
 }
 
 .custom-table {
@@ -411,5 +412,24 @@ onMounted(() => {
 .custom-btn:hover {
   background-position: right center; 
   color: #ffffff; 
+}
+/*-----------------------------------------------------------------------------------------*/
+.custom-table-container {
+  max-width: 400px; /* Ajusta el tamaño máximo del contenedor */
+  margin: 0 ;   /* Centra el contenedor horizontalmente */
+  padding: 16px;    /* Opcional: agrega padding alrededor del contenedor */
+}
+
+.custom-table {
+  font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 4px 8px; /* Reducir el padding */
+}
+
+.selected-row {
+  background-color: #f5f5f5;
 }
 </style>
