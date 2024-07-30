@@ -1,5 +1,7 @@
-// Generales lineas
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore' // Asegúrate de que la ruta sea correcta
+
+// Importa tus componentes
 import Global from '@/GlobalHome.vue'
 import Login from '@/views/LoginFrom.vue'
 import Register from '@/views/RegistroFrom.vue'
@@ -36,68 +38,57 @@ const routes = [
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
-  { path: '/Cliente', name: 'Cliente', component: DashBoardCliente },
-  { path: '/Recepcionista', name: 'Recepcionista', component: DashBoardRecepcionista },
-  { path: '/Tecnico', name: 'Tecnico', component: DashBoardTecnico },
+  {
+    path: '/Cliente',
+    name: 'Cliente',
+    component: DashBoardCliente,
+    meta: { requiresAuth: true, role: 2 }
+  }, // Cliente
+  {
+    path: '/Recepcionista',
+    name: 'Recepcionista',
+    component: DashBoardRecepcionista,
+    meta: { requiresAuth: true, role: 3 }
+  }, // Recepcionista
+  {
+    path: '/Tecnico',
+    name: 'Tecnico',
+    component: DashBoardTecnico,
+    meta: { requiresAuth: true, role: 4 },
+    children: [
+      {
+        path: '/TAS',
+        component: Tareas
+      }
+    ]
+  }, // Técnico
   {
     path: '/admin',
     component: DashBoardAdmin,
+    meta: { requiresAuth: true, role: 1 }, // Admin
     children: [
-      {
-        path: '/RU',
-        component: registroUsuarios
-      },
-      {
-        path: '/DS',
-        component: detalleServicios
-      },
-      {
-        path: '/UA',
-        component: UsuariosAdmin
-      },
-      {
-        path: '/SN',
-        component: statusNegocio
-      },
-      {
-        path: '/ServiciosFisicos',
-        component: detalleServiciosFisicos
-      }
+      { path: '/RU', component: registroUsuarios },
+      { path: '/DS', component: detalleServicios },
+      { path: '/UA', component: UsuariosAdmin },
+      { path: '/SN', component: statusNegocio },
+      { path: '/ServiciosFisicos', component: detalleServiciosFisicos }
     ]
-  },
-  {
-    path: '/Tecnico',
-    component: DashBoardTecnico
-  },
-  {
-    path: '/TAS',
-    component: Tareas
   },
   {
     path: '/Cliente',
     component: DashBoardCliente,
+    meta: { requiresAuth: true, role: 2 },
     children: [
-      {
-        path: '/principal',
-        component: PrincipalCliente
-      },
-      {
-        path: '',
-        redirect: '/principal'
-      },
-      {
-        path: '/Agendar',
-        component: AgendarCita
-      },
-      {
-        path: '/Pedir',
-        component: PedidoProducto
-      }
+      { path: '/principal', component: PrincipalCliente },
+      { path: '', redirect: '/principal' },
+      { path: '/Agendar', component: AgendarCita },
+      { path: '/Pedir', component: PedidoProducto }
     ]
   },
   {
     path: '/Recepcionista',
     component: DashBoardRecepcionista,
+    meta: { requiresAuth: true, role: 3 },
     children: [
       {
         path: '/PP',
@@ -131,12 +122,25 @@ const routes = [
   }
 ]
 
-// Crear el enrutador con history mode
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 
 // Middleware para verificar la autenticación y roles antes de cada navegación
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  const isAuthenticated = !!authStore.token
+  const userRole = authStore.user?.role
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next('/login')
+  } else if (to.meta.role && to.meta.role !== userRole) {
+    // Redirige a una página de acceso denegado si el rol no coincide
+    next('/login') // O redirige a otra página adecuada
+  } else {
+    next()
+  }
+})
 
 export default router
