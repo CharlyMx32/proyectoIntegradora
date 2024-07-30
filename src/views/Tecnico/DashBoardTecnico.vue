@@ -82,7 +82,6 @@ body,
 }
 
 .v-container {
-  background: url('/src/assets/iii.svg') no-repeat center center fixed;
-  background-size: cover;
+  background: rgb(237, 232, 230);
 }
 </style>

@@ -2,7 +2,7 @@
   <v-app class="fondo">
     <v-row justify="center" class="py-4">
       <v-col cols="12" md="10">
-        
+
         <!-- eESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
         <v-card class="mb-6" outlined>
           <v-card-title>
@@ -58,7 +58,7 @@
           </v-card-actions>
         </v-card>
 
-        <!-- ESTA ES LA TABLA DE LAS TAREAS EN PROCESO LOL -->
+        <!-- ESTA ES LA TABLA DE LAS TAREAS EN PROCESO -->
         <v-card class="mb-6" outlined>
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
@@ -75,6 +75,14 @@
                   class="filter-field"
                   prepend-icon="mdi-magnify"
                 ></v-text-field>
+                <v-select
+                  v-model="selectedStateFilter"
+                  :items="stateOptions"
+                  label="Filtrar por Estado"
+                  outlined
+                  dense
+                  class="ml-4"
+                ></v-select>
               </v-col>
             </v-row>
           </v-card-title>
@@ -88,23 +96,34 @@
                     <th class="text-left">Problema</th>
                     <th class="text-left">Tipo de Orden</th>
                     <th class="text-left">Estado</th>
+                    <th class="text-left">Seguimiento</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr
                     v-for="(item, idx) in filteredItems2"
                     :key="'proceso_' + idx"
-                    :class="{ 'selected-row': selectedItem === item }"
-                    @click="selectItem(item)"
+                    :class="{ 'selected-row': selectedItem === item, 'disabled-row': item.estado === 'Aceptado' }"
+                    @click="item.estado !== 'Aceptado' ? selectItem(item) : null"
                   >
                     <td>{{ item.nombre_cliente }}</td>
                     <td>{{ item.producto }}</td>
                     <td>{{ item.problema }}</td>
                     <td>{{ item.tipo_orden }}</td>
                     <td>{{ item.estado }}</td>
+                    <td>
+                      <v-btn
+                        :disabled="item.estado === 'Aceptado'"
+                        @click.stop="openSeguimientoDialog"
+                        color="primary"
+                        class="mr-2"
+                      >
+                        Seguimiento
+                      </v-btn>
+                    </td>
                   </tr>
                   <tr v-if="!filteredItems2.length">
-                    <td colspan="5" class="text-center py-4">No se encontraron tareas que coincidan con el filtro.</td>
+                    <td colspan="6" class="text-center py-4">No se encontraron tareas que coincidan con el filtro.</td>
                   </tr>
                 </tbody>
               </v-simple-table>
@@ -115,7 +134,7 @@
           </v-card-actions>
         </v-card>
 
-        <!-- ESTA ES LA TABLA DE TAREAS COMPLETADAS xd -->
+        <!-- ESTA ES LA TABLA DE TAREAS COMPLETADAS -->
         <v-card outlined>
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
@@ -207,7 +226,7 @@
           </v-card>
         </v-dialog>
 
-        <!-- ESTE ES OTRO CUADRITO PERO PARA EL BOTON DE SEGUIMIENTO xd -->
+        <!-- ESTE ES OTRO CUADRITO PERO PARA EL BOTON DE SEGUIMIENTO -->
         <v-dialog v-model="showSeguimientoDialog" max-width="600px">
           <v-card>
             <v-card-title>
@@ -266,6 +285,9 @@ const nuevosDatos = ref({
 });
 const selectedStatus = ref('');
 const statusOptions = ['Asignado a un técnico', 'En reparación', 'Con retraso', 'Completado'];
+const stateOptions = ['Aceptado', 'Rechazado', 'En Espera']; // Opciones de estados para el filtro
+
+const selectedStateFilter = ref(''); // Filtro por estado
 
 const tareasAsignadas = ref([]);
 const tareasEnProceso = ref([]);
@@ -283,13 +305,16 @@ const filteredItems1 = computed(() => {
 
 const filteredItems2 = computed(() => {
   const filter = filterText2.value.toLowerCase();
-  return tareasEnProceso.value.filter(item =>
-    item.nombre_cliente.toLowerCase().includes(filter) ||
-    item.producto.toLowerCase().includes(filter) ||
-    item.problema.toLowerCase().includes(filter) ||
-    item.tipo_orden.toLowerCase().includes(filter) ||
-    item.estado.toLowerCase().includes(filter)
-  );
+  const stateFilter = selectedStateFilter.value;
+  return tareasEnProceso.value
+    .filter(item => 
+      item.nombre_cliente.toLowerCase().includes(filter) ||
+      item.producto.toLowerCase().includes(filter) ||
+      item.problema.toLowerCase().includes(filter) ||
+      item.tipo_orden.toLowerCase().includes(filter) ||
+      item.estado.toLowerCase().includes(filter)
+    )
+    .filter(item => stateFilter ? item.estado === stateFilter : true); // Aplicar filtro de estado
 });
 
 const filteredItems3 = computed(() => {
@@ -387,12 +412,7 @@ onMounted(() => {
 
 <style scoped>
 .fondo {
-  background-image: url('../../assets/iii.svg'); 
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat; 
-  margin: 0; 
-  font-family: 'Arial', sans-serif;
+ background: rgb(237, 232, 230);
 }
 
 .table-container {
@@ -434,6 +454,11 @@ onMounted(() => {
 
 .selected-row {
   background-color: #e3f2fd;
+}
+
+.disabled-row {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
 }
 
 .text-center {
