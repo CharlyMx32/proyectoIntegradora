@@ -39,7 +39,6 @@ import { ref } from 'vue'
 const navItems = [
   { title: 'Pagina Principal', to: '/PP'},
   { title: 'Agendar Citas', to: '/AC' },
-  { title: 'Asistencia Fisicos', to: '/CPF'},
   { title: 'Asistencia Linea', to: '/CPL'},
   { title: 'Asignar Citas', to: '/ASC' },
   { title: 'Citas Linea', to: '/CL' },

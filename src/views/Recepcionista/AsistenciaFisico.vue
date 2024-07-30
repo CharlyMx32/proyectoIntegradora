@@ -33,9 +33,9 @@
             <thead>
               <tr>
                 <th class="text-left">Nombre Cliente</th>
+                <th class="text-left">Fecha</th>
+                <th class="text-left">Hora</th>
                 <th class="text-left">Producto</th>
-                <th class="text-left">Pago</th>
-                <th class="text-left">Garantia</th>
               </tr>
             </thead>
             <tbody>
@@ -49,9 +49,9 @@
                 @click="selectOrder(item)"
               >
                 <td>{{ item.Nombre_Cliente }}</td>
+                <td>{{ item.Fecha }}</td>
+                <td>{{ item.Hora }}</td>
                 <td>{{ item.Producto }}</td>
-                <td>{{ item.Pago }}</td>
-                <td>{{ item.Uso_Garantia }}</td>
               </tr>
             </tbody>
           </v-table>
@@ -83,7 +83,7 @@ const selectedOrder = ref(null)
 const fetchData = async () => {
   try {
     const { clientName } = filters.value
-    const response = await axios.get('http://hs.com/AsignacionFisico', {
+    const response = await axios.get('http://hs.com/AsistenciaCitas', {
       params: {
         client_name: clientName,
       }
