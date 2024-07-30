@@ -17,6 +17,7 @@ import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
 
 // Tecnico lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
+import Tareas from '@/views/Tecnico/TareasFrom.vue'
 
 // Ochoa lineas
 import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
@@ -53,7 +54,13 @@ const routes = [
     path: '/Tecnico',
     name: 'Tecnico',
     component: DashBoardTecnico,
-    meta: { requiresAuth: true, role: 4 }
+    meta: { requiresAuth: true, role: 4 },
+    children: [
+      {
+        path: '/TAS',
+        component: Tareas
+      }
+    ]
   }, // Técnico
   {
     path: '/admin',
@@ -81,7 +88,7 @@ const routes = [
   {
     path: '/Recepcionista',
     component: DashBoardRecepcionista,
-    meta: { requiresAuth: true, role: 4 },
+    meta: { requiresAuth: true, role: 3 },
     children: [
       {
         path: '/PP',
