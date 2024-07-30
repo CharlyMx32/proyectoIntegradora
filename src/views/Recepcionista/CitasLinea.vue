@@ -6,7 +6,7 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
-            Citas en línea
+            Citas Linea
           </h3>
         </v-flex>
       </v-card-title>
@@ -63,9 +63,16 @@
     <div v-if="selectedOrder" class="additional-component-container">
       <!-- Aquí colocas el contenido del componente adicional -->
       <p>Detalles de la cita seleccionada:</p>
-      <p>ID: {{ selectedOrder.id_orden_cita }}</p>
-      <p>Fecha Cita: {{ selectedOrder.fecha_cita }}</p>
-      <!-- Agrega más detalles según sea necesario -->
+      <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
+      <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
+      <p>Producto: {{ selectedOrder.Producto }}</p>
+      <p>Costo Chequeo: {{ selectedOrder.CostoChequeo }}</p>
+      <p>Costo Reparacion: {{ selectedOrder.CostoReparacion }}</p>
+      <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
+      <p>Pago: {{ selectedOrder.Pago }}</p>
+      <p>Garantia: {{ selectedOrder.Garantia }}</p>
+      <v-btn @click="usarGarantia" color="primary">USAR GARANTÍA</v-btn>
+      <v-btn @click="realizarPago" color="secondary">PAGO</v-btn>
     </div>
   </v-container>
 </template>
@@ -83,12 +90,13 @@ const selectedOrder = ref(null)
 const fetchData = async () => {
   try {
     const { clientName } = filters.value
-    const response = await axios.get('http://hs.com/AsignacionLinea', {
+    const response = await axios.get('http://hs.com/CitasLinea', {
       params: {
         client_name: clientName,
       }
     })
 
+    console.log('Response data:', response.data)
     orders.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
     console.error('Error fetching orders:', error)
@@ -97,16 +105,24 @@ const fetchData = async () => {
 
 onMounted(fetchData)
 
-
 const filteredOrders = computed(() => {
   return orders.value.filter(order =>
     order.Nombre_Cliente.toLowerCase().includes(filters.value.clientName.toLowerCase())
-
   )
 })
 
 const selectOrder = (order) => {
   selectedOrder.value = order
+}
+
+const usarGarantia = () => {
+  alert(`Uso la garantia el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+  // Aquí puedes agregar la lógica para usar la garantía
+}
+
+const realizarPago = () => {
+  alert(`Se realizo el pago del cliente ${selectedOrder.value.Nombre_Cliente}.`)
+  // Aquí puedes agregar la lógica para realizar el pago
 }
 </script>
 
@@ -148,5 +164,18 @@ const selectOrder = (order) => {
   background-color: #3961da; /* Fondo verde claro para el contenedor del componente adicional */
   border: 1px solid #c8e6c9;
   border-radius: 4px;
+}
+.v-btn {
+  background-image: linear-gradient(to right, #1a2980 0%, #26d0ce 51%, #1a2980 100%);
+  color: #ffffff; /* Texto blanco */
+  margin-left: 8px;
+  border-radius: 4px;
+  transition: background-position 0.5s ease;
+  background-size: 200% auto;
+}
+
+.v-btn:hover {
+  background-position: right center; /* Cambia el fondo al hacer hover */
+  color: #ffffff; /* Texto blanco */
 }
 </style>

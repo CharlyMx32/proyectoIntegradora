@@ -1,12 +1,9 @@
 <template>
   <v-app id="inspire">
-    <carrosel-global />
     <v-app-bar app color="red" flat>
       <v-container class="py-0 fill-height">
         <v-avatar class="mr-10" color="grey darken-1" size="32">HS</v-avatar>
-
         <v-spacer></v-spacer>
-
         <v-btn v-for="(link, index) in links" :key="link" text @click="handleButtonClick(index)">
           {{ link }}
         </v-btn>
@@ -31,9 +28,8 @@
           </v-col>
 
           <v-col cols>
-            <v-sheet min-height="70vh" rounded="lg" class="texto">
+            <v-sheet ref="textoRef" min-height="70vh" rounded="lg" class="texto">
               <p style="margin: 0 10px">
-                <!-- Aplicando margen de 10px a los lados -->
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas minus eos amet
                 voluptatem labore, provident sint itaque, ut, rerum tenetur in. A veritatis
                 explicabo quo accusantium porro quae mollitia suscipit. Lorem ipsum dolor sit amet,
@@ -91,14 +87,31 @@ const handleButtonClick = (index) => {
     router.push('/register')
   }
 }
+
+const textoRef = ref(null)
 </script>
 
 <style scoped>
+#inspire {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-sphere {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Asegura que el fondo esté detrás del contenido */
+}
+
 main {
   background-color: gainsboro;
 }
+
 .texto {
   text-align: justify;
-  padding: 20px; /* Añadiendo un padding para separar el texto de los bordes */
+  padding: 20px;
 }
 </style>
