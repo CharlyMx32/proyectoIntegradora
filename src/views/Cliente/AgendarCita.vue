@@ -47,7 +47,7 @@
               <!-- Columna 2 -->
               <v-col cols="12" md="6">
                 <v-card class="nested-card mb-4" :elevation="2">
-                  <v-card-title class="title-card">Selecciona una Fecha</v-card-title>
+                  <v-card-title class="title-card">PRODUCTO</v-card-title>
                   <v-card-text>
                     <v-date-picker
                       v-model="selectedDate"
@@ -160,7 +160,7 @@ const agendarCita = () => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 .title-card {
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 600;
 }
 .nested-card {

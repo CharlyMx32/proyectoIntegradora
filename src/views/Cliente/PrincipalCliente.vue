@@ -42,8 +42,9 @@
         <v-col cols="12" md="8" class="text-center">
           <br>
           <v-row  style="position: absolute; top: 555px; left: 40px; color:aliceblue" class="social-icons">
-            <v-btn icon class="mx-2" href="https://www.facebook.com/profile.php?id=100054380206513" target="_blank">
+            <v-btn icon class="mx-2" href="https://www.facebook.com/profile.php?id=100054380206513" target="_blank"  >
               <font-awesome-icon :icon="['fab', 'facebook']" />
+              <v-img class="icon" :src="logo" contain></v-img>
             </v-btn>
             <v-btn icon class="mx-2" href="https://whatsapp.com" target="_blank">
               <v-icon size="30" class="white--text">mi-whatsapp></v-icon>
@@ -134,6 +135,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import logo from '@/assets/logoFace.png'
 const router = useRouter()
 
 const clickAgenda = () => {
@@ -160,8 +162,8 @@ const items = [
 
 <style scoped>
 .v-application {
-  background: url('../../assets/iii.svg') no-repeat center center fixed;
-  background-size: cover;
+  background: rgb(48,63,159);
+  background: radial-gradient(circle, rgba(48,63,159,1) 0%, rgba(0,0,0,1) 100%);
 }
 .white-text {
   color: rgb(248, 248, 248);
