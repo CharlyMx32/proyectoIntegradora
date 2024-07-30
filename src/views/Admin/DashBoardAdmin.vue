@@ -1,6 +1,7 @@
 <template>
   <v-app class="fondo">
-    <v-container fluid>
+    <Welcome :userName="userName" v-if="showWelcome" />
+    <v-container fluid v-show="!showWelcome">
       <v-row>
         <v-col :cols="mini ? 1 : 3">
           <BarraLateral
@@ -24,7 +25,9 @@
 
 <script setup>
 import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue'
+import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
 import { ref } from 'vue'
+import { useUserStore } from '@/stores/user'
 
 const avatarUrl =
   'https://lh3.googleusercontent.com/a/ACg8ocL542XKyWRIS5_tWhiUu6EFwv4T6PeTTiRRRRUJdMnyhEWKuMmWVA=s360-c-no'
@@ -38,6 +41,14 @@ const navItems = [
 ]
 
 const mini = ref(false)
+const userStore = useUserStore()
+const showWelcome = ref(true)
+
+setTimeout(() => {
+  showWelcome.value = false
+}, 3000) // Duración de la animación en milisegundos
+
+const userName = ref(userStore.name)
 </script>
 
 <style scoped>
