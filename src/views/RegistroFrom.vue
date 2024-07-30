@@ -33,9 +33,9 @@
                     </v-col>
                     <v-col cols="12" class="pa-1">
                       <v-text-field
-                        id="apellidoPaterno"
+                        id="apellido_paterno"
                         label="Apellido Paterno"
-                        v-model="form.apellidoPaterno"
+                        v-model="form.apellido_paterno"
                         outlined
                         dense
                         class="minimalista"
@@ -43,9 +43,9 @@
                     </v-col>
                     <v-col cols="12" class="pa-1">
                       <v-text-field
-                        id="apellidoMaterno"
+                        id="apellido_materno"
                         label="Apellido Materno"
-                        v-model="form.apellidoMaterno"
+                        v-model="form.apellido_materno"
                         outlined
                         dense
                         class="minimalista"
@@ -57,16 +57,8 @@
                 <template v-else>
                   <v-text-field
                     id="correo"
-                    label="correo"
+                    label="Correo"
                     v-model="form.correo"
-                    outlined
-                    dense
-                    class="minimalista mb-3"
-                  />
-                  <v-text-field
-                    id="telefono"
-                    label="Teléfono"
-                    v-model="form.telefono"
                     outlined
                     dense
                     class="minimalista mb-3"
@@ -89,15 +81,6 @@
                     dense
                     class="minimalista mb-3"
                   />
-                  <v-alert
-                    v-if="errorMessage"
-                    type="error"
-                    dismissible
-                    v-model="errorMessage"
-                    class="mb-3"
-                  >
-                    {{ errorMessage }}
-                  </v-alert>
                   <v-btn color="primary" @click="registrarse" class="mt-4">Registrarse</v-btn>
                 </template>
               </v-form>
@@ -106,56 +89,121 @@
         </v-col>
       </v-row>
     </v-card>
+
+    <!-- Mensaje de éxito -->
+    <v-snackbar
+      v-if="successMessage"
+      v-model="showSuccessSnackbar"
+      color="success"
+      timeout="3000"
+      @input="clearSuccessMessage"
+    >
+      {{ successMessage }}
+    </v-snackbar>
+
+    <!-- Mensaje de error -->
+    <v-snackbar
+      v-if="errorMessage"
+      v-model="showErrorSnackbar"
+      color="error"
+      timeout="3000"
+      @input="clearErrorMessage"
+    >
+      {{ errorMessage }}
+    </v-snackbar>
   </v-container>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import axios from '../axiosconf' // Ajusta la ruta según tu estructura de carpetas
+import axios from '../axiosconf'
 
 const step = ref(1)
-
 const form = ref({
   nombre: '',
-  apellidoPaterno: '',
-  apellidoMaterno: '',
+  apellido_paterno: '',
+  apellido_materno: '',
   correo: '',
-  telefono: '',
   contraseña: '',
   confirmarContraseña: ''
 })
-
 const errorMessage = ref('')
+const successMessage = ref('')
+const showSuccessSnackbar = ref(false)
+const showErrorSnackbar = ref(false)
+
+const idRolCliente = 2
 
 function nextStep() {
   step.value = 2
 }
 
 function validarFormulario() {
-  if (!form.value.correo) {
-    errorMessage.value = 'El campo correo es obligatorio.'
+  if (!form.value.nombre || !form.value.apellido_paterno || !form.value.apellido_materno) {
+    errorMessage.value = 'Todos los campos de nombre y apellidos son obligatorios.'
+    showErrorSnackbar.value = true
     return false
   }
+
+  if (!form.value.correo || !form.value.correo.includes('@')) {
+    errorMessage.value = 'El correo electrónico es obligatorio y debe contener un "@"'
+    showErrorSnackbar.value = true
+    return false
+  }
+
+  if (form.value.contraseña.length < 8) {
+    errorMessage.value = 'La contraseña debe tener al menos 8 caracteres.'
+    showErrorSnackbar.value = true
+    return false
+  }
+
   if (form.value.contraseña !== form.value.confirmarContraseña) {
     errorMessage.value = 'Las contraseñas no coinciden.'
+    showErrorSnackbar.value = true
     return false
   }
+
   return true
 }
 
 function registrarse() {
   if (!validarFormulario()) return
 
+  const datosRegistro = {
+    ...form.value,
+    id_rol: idRolCliente
+  }
+
   axios
-    .post('http://hs.com/registro', form.value)
+    .post('http://hs.com/registro', datosRegistro)
     .then((response) => {
-      console.log('Registro exitoso:', response.data)
-      // Redireccionar o manejar el éxito
+      if (response.data.success) {
+        // Asegúrate de que la respuesta tenga un campo 'success'
+        successMessage.value = 'Registro exitoso. Ahora puede iniciar sesión.'
+        showSuccessSnackbar.value = true
+        setTimeout(() => {
+          window.location.href = '/login'
+        }, 2000)
+      } else {
+        errorMessage.value = response.data.message || 'Error al registrar'
+        showErrorSnackbar.value = true
+      }
     })
     .catch((error) => {
-      console.error('Error al registrar:', error.response.data.msg)
-      errorMessage.value = error.response.data.msg || 'Error al registrar'
+      console.error('Error al registrar:', error)
+      errorMessage.value = error.response?.data?.message || 'Error al registrar'
+      showErrorSnackbar.value = true
     })
+}
+
+function clearSuccessMessage() {
+  successMessage.value = ''
+  showSuccessSnackbar.value = false
+}
+
+function clearErrorMessage() {
+  errorMessage.value = ''
+  showErrorSnackbar.value = false
 }
 </script>
 
@@ -164,12 +212,12 @@ html,
 body {
   height: 100%;
   margin: 0;
-  overflow-y: hidden; /* Oculta el scroll vertical */
+  overflow-y: hidden;
 }
 
 .fill-height {
   height: 100%;
-  overflow: hidden; /* Oculta el scroll vertical y horizontal si hay desbordamiento */
+  overflow: hidden;
 }
 
 .fondoimg {
@@ -194,8 +242,8 @@ body {
 }
 
 .card-size {
-  width: 80%; /* Ajusta el ancho según sea necesario */
-  max-width: 900px; /* Ajusta el ancho máximo según sea necesario */
+  width: 80%;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0;
 }
@@ -209,17 +257,28 @@ body {
 
 .v-text-field,
 .custom-input-container {
-  width: 100%; /* Asegúrate de que los campos de texto ocupen todo el ancho disponible */
+  width: 100%;
 }
 
 .minimalista {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  box-shadow: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .v-btn {
-  width: 100%; /* Asegúrate de que el botón ocupe todo el ancho disponible */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+}
+
+.v-btn:hover {
+  background-color: #0056b3;
+  transition: background-color 0.3s;
+}
+
+.v-text-field:focus {
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
 }
 </style>
