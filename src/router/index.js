@@ -30,6 +30,7 @@ import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
 import citasLinea from '@/views/Recepcionista/CitasLinea.vue'
 import asistenciaFisico from '@/views/Recepcionista/AsistenciaFisico.vue'
 import CitasFisico from '@/views/Recepcionista/CitasFisico.vue'
+import asistenciaLinea from '@/views/Recepcionista/AsistenciaLinea.vue'
 
 const routes = [
   { path: '/', redirect: '/Global' },
@@ -110,6 +111,10 @@ const routes = [
       {
         path: '/CPF',
         component: asistenciaFisico
+      },
+      {
+        path: '/CPL',
+        component: asistenciaLinea
       },
       {
         path: '/AC',
