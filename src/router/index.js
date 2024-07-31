@@ -38,42 +38,8 @@ const routes = [
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
-  {
-    path: '/Cliente',
-    name: 'Cliente',
-    component: DashBoardCliente,
-    meta: { requiresAuth: true, role: 2 }
-  }, // Cliente
-  {
-    path: '/Recepcionista',
-    name: 'Recepcionista',
-    component: DashBoardRecepcionista,
-    meta: { requiresAuth: true, role: 3 }
-  }, // Recepcionista
-  {
-    path: '/Tecnico',
-    name: 'Tecnico',
-    component: DashBoardTecnico,
-    meta: { requiresAuth: true, role: 4 },
-    children: [
-      {
-        path: '/TAS',
-        component: Tareas
-      }
-    ]
-  }, // Técnico
-  {
-    path: '/admin',
-    component: DashBoardAdmin,
-    meta: { requiresAuth: true, role: 1 }, // Admin
-    children: [
-      { path: '/RU', component: registroUsuarios },
-      { path: '/DS', component: detalleServicios },
-      { path: '/UA', component: UsuariosAdmin },
-      { path: '/SN', component: statusNegocio },
-      { path: '/ServiciosFisicos', component: detalleServiciosFisicos }
-    ]
-  },
+
+  // Rutas para Cliente
   {
     path: '/Cliente',
     component: DashBoardCliente,
@@ -85,39 +51,42 @@ const routes = [
       { path: '/Pedir', component: PedidoProducto }
     ]
   },
+
+  // Rutas para Recepcionista
   {
     path: '/Recepcionista',
     component: DashBoardRecepcionista,
     meta: { requiresAuth: true, role: 3 },
     children: [
-      {
-        path: '/PP',
-        component: paginaPrincipal
-      },
-      {
-        path: '',
-        redirect: '/PP'
-      },
-      {
-        path: '/CPL',
-        component: asistenciaLinea
-      },
-      {
-        path: '/AC',
-        component: agendarCitas
-      },
-      {
-        path: '/ASC',
-        component: asignarCita
-      },
-      {
-        path: '/CL',
-        component: citasLinea
-      },
-      {
-        path: '/CF',
-        component: CitasFisico
-      }
+      { path: '/PP', component: paginaPrincipal },
+      { path: '', redirect: 'PP' },
+      { path: '/CPL', component: asistenciaLinea },
+      { path: '/AC', component: agendarCitas },
+      { path: '/ASC', component: asignarCita },
+      { path: '/CL', component: citasLinea },
+      { path: '/CF', component: CitasFisico }
+    ]
+  },
+
+  // Rutas para Técnico
+  {
+    path: '/Tecnico',
+    component: DashBoardTecnico,
+    meta: { requiresAuth: true, role: 4 },
+    children: [{ path: '/TAS', component: Tareas }]
+  },
+
+  // Rutas para Admin
+  {
+    path: '/admin',
+    component: DashBoardAdmin,
+    meta: { requiresAuth: true, role: 1 },
+    children: [
+      { path: '/RU', component: registroUsuarios },
+      { path: '/DS', component: detalleServicios },
+      { path: '/UA', component: UsuariosAdmin },
+      { path: '/SN', component: statusNegocio },
+      { path: '/ServiciosFisicos', component: detalleServiciosFisicos }
     ]
   }
 ]
@@ -131,12 +100,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
   const isAuthenticated = !!authStore.token
-  const userRole = authStore.user?.role
+  const userRole = authStore.user?.id_rol
+
+  console.log('Token:', authStore.token)
+  console.log('User Role:', userRole)
+  console.log('Rol del usuario en el middleware:', userRole) // Verifica el rol aquí
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     next('/login')
   } else if (to.meta.role && to.meta.role !== userRole) {
-    // Redirige a una página de acceso denegado si el rol no coincide
     next('/login') // O redirige a otra página adecuada
   } else {
     next()

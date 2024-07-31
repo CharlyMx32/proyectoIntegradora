@@ -1,24 +1,33 @@
-// stores/authStore.js
+import apiClient from 'axios'
 import { defineStore } from 'pinia'
-import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
-    errorMessage: ''
+    token: localStorage.getItem('token') || null
   }),
   actions: {
     async login(email, password) {
       try {
-        const response = await axios.post('http://HS.com/login', {
-          correo: email,
-          contraseña: password
+        const credentials = { correo: email, contraseña: password }
+
+        const response = await apiClient.post('http://hs.com/login', credentials, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         })
-        // Maneja la respuesta del servidor
-        this.user = response.data.user // Asegúrate de que esta propiedad existe en la respuesta
-        localStorage.setItem('token', response.data.token)
+
+        const data = response.data
+        console.log('Datos de la respuesta:', data)
+
+        if (data.status === 200 && data.data.success && data.data.token && data.data.usuario) {
+          this.user = data.data.usuario
+          this.token = data.data.token
+          localStorage.setItem('token', data.data.token)
+        } else {
+          console.error('Usuario o token no encontrado en la respuesta:', data.data.message)
+        }
       } catch (error) {
-        this.errorMessage = error.response?.data?.message || 'Error desconocido'
         console.error('Error en el inicio de sesión:', error)
       }
     }

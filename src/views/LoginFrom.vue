@@ -65,21 +65,30 @@ const login = async () => {
   try {
     await authStore.login(email.value, password.value)
 
-    const userRole = authStore.user?.role // Ajusta según cómo obtengas el rol del usuario
-    if (userRole === 1) router.push({ name: 'AdminDashboard' })
-    else if (userRole === 4) router.push({ name: 'TechnicianDashboard' })
-    else if (userRole === 3) router.push({ name: 'ReceptionistDashboard' })
-    else if (userRole === 2) router.push({ name: 'ClientDashboard' })
-    else router.push({ name: 'Login' }) // Redirige a login si el rol no coincide
+    // Después de la autenticación, redirige basado en el rol del usuario
+    const userRole = authStore.user?.id_rol
+    console.log('Rol del usuario:', userRole)
+
+    switch (userRole) {
+      case 1:
+        router.push({ path: '/admin' })
+        break
+      case 2:
+        router.push({ path: '/Cliente' })
+        break
+      case 3:
+        router.push({ path: '/Recepcionista' })
+        break
+      case 4:
+        router.push({ path: '/Tecnico' })
+        break
+      default:
+        router.push({ path: '/login' })
+    }
   } catch (error) {
     console.error('Error en el inicio de sesión:', error)
     showErrorSnackbar.value = true
   }
-}
-
-function clearErrorMessage() {
-  authStore.errorMessage = ''
-  showErrorSnackbar.value = false
 }
 </script>
 
