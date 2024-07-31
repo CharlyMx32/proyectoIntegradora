@@ -4,7 +4,7 @@
       <v-col cols="14" md="10">
         
         <!-- tabla 1 -->
-        <v-card class="mb-6" outlined>
+        <v-card class="mb-6 custom-card" outlined>
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
@@ -43,7 +43,7 @@
                     <td>{{ item.estado }}</td>
                   </tr>
                   <tr v-if="!filteredItems1.length">
-                    <td colspan="4" class="text-center py-4">No tienes pagos pendientes.</td>
+                    <td colspan="2" class="text-center py-4">No tienes pagos pendientes.</td>
                   </tr>
                 </tbody>
               </v-simple-table>
@@ -55,7 +55,7 @@
         </v-card>
 
         <!-- tabla 2 -->
-        <v-card class="mb-6" outlined>
+        <v-card class="mb-6 custom-card" outlined>
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
@@ -75,11 +75,11 @@
             </v-row>
           </v-card-title>
           <v-card-text>
-            <div class="table-container">
+            <div class="table-container custom-table-container">
               <v-simple-table dense class="custom-table">
                 <thead>
                   <tr>
-                    <th class="text-left">Producto</th>                   
+                    <th class="text-left">Producto</th>
                     <th class="text-left">Estado</th>
                   </tr>
                 </thead>
@@ -94,7 +94,7 @@
                     <td>{{ item.estado }}</td>
                   </tr>
                   <tr v-if="!filteredItems2.length">
-                    <td colspan="5" class="text-center py-4">No tienes ningun producto pendiente.</td>
+                    <td colspan="2" class="text-center py-4">No tienes ningun producto pendiente.</td>
                   </tr>
                 </tbody>
               </v-simple-table>
@@ -103,7 +103,7 @@
         </v-card>
 
         <!-- tabla 3-->
-        <v-card outlined>
+        <v-card class="mb-6 custom-card" outlined>
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
@@ -123,7 +123,7 @@
             </v-row>
           </v-card-title>
           <v-card-text>
-            <div class="table-container">
+            <div class="table-container custom-table-container">
               <v-simple-table dense class="custom-table">
                 <thead>
                   <tr>
@@ -414,11 +414,7 @@ onMounted(() => {
   color: #ffffff; 
 }
 /*-----------------------------------------------------------------------------------------*/
-.custom-table-container {
-  max-width: 400px; /* Ajusta el tamaño máximo del contenedor */
-  margin: 0 ;   /* Centra el contenedor horizontalmente */
-  padding: 16px;    /* Opcional: agrega padding alrededor del contenedor */
-}
+
 
 .custom-table {
   font-size: 0.875rem; /* Tamaño de fuente más pequeño */
@@ -432,4 +428,38 @@ onMounted(() => {
 .selected-row {
   background-color: #f5f5f5;
 }
+
+.custom-card {
+  max-width: 600px; /* Reduce el tamaño máximo del card */
+  margin: 0;        /* Alinea el card a la izquierda */
+  font-size: 0.875rem; /* Tamaño de fuente más pequeño para el contenido del card */
+}
+
+.custom-table-container {
+  max-width: 100%;  /* Asegura que la tabla se ajuste al tamaño del card */
+  padding: 12px;     /* Reduce el padding alrededor de la tabla */
+}
+
+.custom-table {
+  font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 4px 8px; /* Reducir el padding de las celdas */
+}
+
+.custom-btn {
+  font-size: 0.875rem; /* Tamaño de fuente más pequeño para el botón */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.py-4 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
 </style>

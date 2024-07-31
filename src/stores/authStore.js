@@ -1,7 +1,9 @@
 import apiClient from 'axios'
 import { defineStore } from 'pinia'
 
-export const useAuthStore = defineStore('auth', {
+// Define y exporta tu store de autenticación
+export const useAuthStore = defineStore({
+  id: 'auth', // Identificador único para tu store
   state: () => ({
     user: null,
     token: localStorage.getItem('token') || null

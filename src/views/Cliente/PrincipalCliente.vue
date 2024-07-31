@@ -174,7 +174,7 @@ const slides = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
   background: radial-gradient(circle, rgba(55, 54, 53, 1) 0%, rgba(55, 54, 53, 1) 95%);
 }
 .white-text {
-  color: rgb(248, 248, 248);
+  color: rgb(0, 0, 0);
 }
 .transparent-btn {
   background-color: transparent;
