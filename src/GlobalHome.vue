@@ -1,12 +1,17 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app color="red" flat>
+    <v-app-bar app flat>
       <v-container class="py-0 fill-height">
         <v-avatar class="mr-10" color="grey darken-1" size="32">HS</v-avatar>
         <v-spacer></v-spacer>
         <v-btn v-for="(link, index) in links" :key="link" text @click="handleButtonClick(index)">
           {{ link }}
         </v-btn>
+        <v-switch
+          v-model="theme"
+          :label="theme ? 'Modo Claro' : 'Modo Oscuro'"
+          @change="toggleDarkMode"
+        ></v-switch>
       </v-container>
     </v-app-bar>
 
@@ -54,12 +59,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useTheme } from 'vuetify'
 
 const links = ref(['Login', 'Registrarme'])
+const Roles = ref(['Admin', 'Cliente', 'Recepcionista', 'Tecnico'])
+const theme = useTheme()
 
 const router = useRouter()
-
-const Roles = ref(['Admin', 'Cliente', 'Recepcionista', 'Tecnico'])
 
 const redirectToPage = (roleIndex) => {
   switch (roleIndex) {
@@ -88,7 +94,9 @@ const handleButtonClick = (index) => {
   }
 }
 
-const textoRef = ref(null)
+const toggleDarkMode = () => {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
 </script>
 
 <style scoped>
@@ -107,7 +115,7 @@ const textoRef = ref(null)
 }
 
 main {
-  background-color: gainsboro;
+  background-color: var(--v-background-base);
 }
 
 .texto {

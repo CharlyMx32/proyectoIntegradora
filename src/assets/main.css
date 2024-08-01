@@ -7,19 +7,19 @@
   box-sizing: border-box; /* Incluye el padding y el borde en el ancho y alto total del elemento */
 }
 
-body {
+body,
+v-app,
+v-container,
+template {
   font-family: Arial, sans-serif; /* Cambia según tu fuente preferida */
   line-height: 1.6; /* Mejora la legibilidad */
   color: #333; /* Color de texto base */
-  background-color: #fff; /* Color de fondo base */
+  background-color: #ede8e6;
   margin: 0;
   padding: 0;
   height: 100vh;
-  background: url('./fondo\ verde.svg') no-repeat center center fixed;
-  background-size: cover;
-  color: white;
+  color: rgb(30, 30, 30);
   font-family: Arial, sans-serif;
-
 }
 
 .container {
@@ -97,6 +97,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  background-color: rgb(237, 232, 230);
 }
 
 /* Ajustes específicos para Vuetify */
@@ -119,9 +120,9 @@ img,
 
 .body {
   background: #252423;
-  background: radial-gradient(circle, rgba(55,54,53,1) 0%, rgba(55,54,53,1) 95%);
+  background: radial-gradient(circle, rgba(55, 54, 53, 1) 0%, rgba(55, 54, 53, 1) 95%);
 }
 
-.detalles{
-  background-color:rgb(247, 79, 77);
+.detalles {
+  background-color: rgb(247, 79, 77);
 }

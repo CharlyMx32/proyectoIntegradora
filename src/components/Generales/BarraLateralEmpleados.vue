@@ -16,11 +16,20 @@
         {{ item.title }}
       </v-list-item>
     </v-list>
+
+    <v-divider></v-divider>
+
+    <v-list dense="compact">
+      <v-list-item>
+        <v-switch v-model="isDarkMode" label="Modo oscuro" @change="toggleTheme"></v-switch>
+      </v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { ref } from 'vue'
+import { useTheme } from 'vuetify'
 
 const props = defineProps({
   avatarUrl: String,
@@ -28,29 +37,45 @@ const props = defineProps({
   title: String,
   items: Array
 })
+
+const theme = useTheme()
+const isDarkMode = ref(theme.currentTheme === 'dark')
+
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
 </script>
 
 <style scoped>
 /* Estilos para personalizar la apariencia de la barra lateral */
 .nav {
-  background-color: #f0f0f0; /* Fondo gris claro */
-  color: #a0a0a0; /* Color de texto predeterminado */
-  border-right: 1px solid #d1d1d1; /* Borde gris medio a la derecha */
+  background-color: var(--v-theme-barraLateral); /* Fondo del tema actual */
+  color: var(--v-theme-text-primary); /* Color de texto predeterminado */
+  border-right: 1px solid var(--v-theme-border); /* Borde del tema actual */
   width: 250px; /* Ancho de la barra lateral */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra ligera para destacar */
+  box-shadow: 2px 0 5px var(--v-theme-shadow); /* Sombra del tema actual */
+  transition: background-color 0.3s ease; /* Transición suave para cambios de fondo */
 }
 
 .list-item-header {
-  border-bottom: 1px solid #d1d1d1; /* Separador debajo del encabezado */
+  border-bottom: 1px solid var(--v-theme-border); /* Separador debajo del encabezado */
   margin-bottom: 10px;
+  padding: 10px;
+  background-color: var(--v-theme-header-background); /* Fondo del encabezado */
+  color: var(--v-theme-header-text); /* Color de texto del encabezado */
 }
 
 .nav-item {
-  color: #a0a0a0; /* Color de texto predeterminado en los ítems */
+  color: var(--v-theme-text-primary); /* Color de texto predeterminado en los ítems */
+  padding: 10px 15px;
+  border-radius: 4px; /* Bordes redondeados para los ítems */
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease; /* Transiciones suaves */
 }
 
 .nav-item:hover {
-  background-color: #add8e6; /* Fondo azul claro en hover */
-  color: #ffffff; /* Texto blanco en hover para contraste */
+  background-color: var(--v-theme-hover); /* Fondo en hover del tema actual */
+  color: var(--v-theme-on-hover); /* Texto en hover del tema actual */
 }
 </style>

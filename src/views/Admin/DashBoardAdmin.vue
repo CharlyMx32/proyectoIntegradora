@@ -52,10 +52,6 @@ const userName = ref(userStore.name)
 </script>
 
 <style scoped>
-.fondo {
-  background: url('../../assets/Admin/fondoAdmin.svg') no-repeat center center fixed;
-  background-size: cover;
-}
 .sidebar {
   height: 100vh; /* Altura completa de la ventana */
   position: fixed; /* Fijar la barra lateral */

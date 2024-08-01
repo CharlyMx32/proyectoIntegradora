@@ -98,6 +98,7 @@ body {
   height: 100%;
   margin: 0;
   overflow-y: hidden;
+  background-color: var(--v-theme-background);
 }
 
 .fill-height {
@@ -117,23 +118,12 @@ body {
 .fondoimg {
   background: url('../assets/loginRegister.svg');
   background-size: cover;
-  color: #fff;
+  color: var(--v-theme-text-primary);
   width: 100%;
   max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
-}
-
-.gradient-background {
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
-    135deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(1, 1, 94, 1) 48%,
-    rgba(0, 142, 171, 1) 100%
-  );
   z-index: 1;
 }
 
@@ -146,10 +136,10 @@ body {
 }
 
 .white-card {
-  background: #fff;
+  background: var(--v-theme-surface);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--v-theme-shadow);
   z-index: 1;
 }
 
@@ -159,24 +149,26 @@ body {
 }
 
 .minimalista {
-  border: 1px solid #ddd;
+  border: 1px solid var(--v-theme-border);
   border-radius: 8px;
-  background-color: #fafafa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--v-theme-background);
+  box-shadow: 0 2px 4px var(--v-theme-shadow);
 }
 
 .v-btn {
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--v-theme-shadow);
   text-transform: uppercase;
+  background-color: var(--v-theme-primary);
+  color: var(--v-theme-on-primary);
 }
 
 .v-btn:hover {
-  background-color: #0056b3;
+  background-color: var(--v-theme-primary-dark);
   transition: background-color 0.3s;
 }
 
 .v-text-field:focus {
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 0 2px var(--v-theme-primary);
 }
 </style>
