@@ -16,37 +16,19 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>
+      <v-container class="main-container">
         <v-row>
           <v-col cols="2">
             <v-sheet rounded="lg">
-              <v-list color="transparent">
-                <v-list-item v-for="(role, index) in Roles" :key="index" link>
-                  <v-list-item-content>
-                    <v-list-item-title @click="redirectToPage(index + 1)">
-                      {{ role }}
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+              
+              
             </v-sheet>
           </v-col>
 
           <v-col cols>
             <v-sheet ref="textoRef" min-height="70vh" rounded="lg" class="texto">
-              <p style="margin: 0 10px">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas minus eos amet
-                voluptatem labore, provident sint itaque, ut, rerum tenetur in. A veritatis
-                explicabo quo accusantium porro quae mollitia suscipit. Lorem ipsum dolor sit amet,
-                consectetur adipisicing elit. Dolore non eos dolorum eveniet, facilis quis facere
-                pariatur suscipit aliquid? Dicta qui tempore ratione asperiores, provident
-                temporibus eaque explicabo eveniet dignissimos. Lorem ipsum dolor sit, amet
-                consectetur adipisicing elit. Beatae, amet earum voluptatem, totam, dolorem ea iusto
-                ad non debitis praesentium numquam! Saepe, beatae fugit? Quasi ipsa laudantium
-                repellendus repudiandae amet. Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Error quis, odio excepturi eaque rem voluptates nulla facilis veritatis
-                inventore et at. Reprehenderit nemo voluptatum possimus illo quos repellat velit
-                accusantium.
+              <p>
+                hola
               </p>
             </v-sheet>
           </v-col>
@@ -62,29 +44,10 @@ import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 
 const links = ref(['Login', 'Registrarme'])
-const Roles = ref(['Admin', 'Cliente', 'Recepcionista', 'Tecnico'])
 const theme = useTheme()
 
 const router = useRouter()
 
-const redirectToPage = (roleIndex) => {
-  switch (roleIndex) {
-    case 1:
-      router.push('/Admin')
-      break
-    case 2:
-      router.push('/principal')
-      break
-    case 3:
-      router.push('/Recepcionista')
-      break
-    case 4:
-      router.push('/Tecnico')
-      break
-    default:
-      break
-  }
-}
 
 const handleButtonClick = (index) => {
   if (index === 0) {
@@ -105,21 +68,33 @@ const toggleDarkMode = () => {
   overflow: hidden;
 }
 
+.main-container {
+  background-color: var(--v-background-base);
+  min-height: 100vh;
+  padding: 20px;
+}
+
 .animated-sphere {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* Asegura que el fondo esté detrás del contenido */
-}
-
-main {
-  background-color: var(--v-background-base);
+  z-index: -1;
 }
 
 .texto {
   text-align: justify;
   padding: 20px;
 }
+
+/* Ajusta los colores de fondo según el tema */
+.v-application--is-ltr .v-application--dark .main-container {
+  background-color: #11100e; /* Modo oscuro */
+}
+
+.v-application--is-ltr .v-application--light .main-container {
+  background-color: #ede8e6; /* Modo claro */
+}
 </style>
+

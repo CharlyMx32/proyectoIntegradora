@@ -3,7 +3,7 @@
     <v-row justify="center" class="py-4">
       <v-col cols="12" md="10">
 
-        <!-- eESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
+        <!-- ESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
         <v-card class="mb-6" outlined>
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
@@ -19,6 +19,7 @@
                   hide-details
                   class="filter-field"
                   prepend-icon="mdi-magnify"
+                  @input="filterText1 = filterText1.replace(/[^a-zA-Z\s]/g, '')"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -74,6 +75,7 @@
                   hide-details
                   class="filter-field"
                   prepend-icon="mdi-magnify"
+                  @input="filterText2 = filterText2.replace(/[^a-zA-Z\s]/g, '')"
                 ></v-text-field>
                 <v-select
                   v-model="selectedStateFilter"
@@ -150,6 +152,7 @@
                   hide-details
                   class="filter-field"
                   prepend-icon="mdi-magnify"
+                  @input="filterText3 = filterText3.replace(/[^a-zA-Z\s]/g, '')"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -267,6 +270,7 @@
     </v-row>
   </v-app>
 </template>
+
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
@@ -409,10 +413,9 @@ onMounted(() => {
   fetchData();
 });
 </script>
-
 <style scoped>
 .fondo {
- background: rgb(237, 232, 230);
+  background: rgb(237, 232, 230);
 }
 
 .table-container {
@@ -470,17 +473,26 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.custom-btn {
-  background-image: linear-gradient(to right, #1a2980 0%, #26d0ce 51%, #1a2980 100%);
-  color: #ffffff; 
-  margin-left: 8px;
+/* Estilo unificado para todos los botones */
+.v-btn, .custom-btn {
+  background-color: #FFAD00; /* Color de fondo */
+  color: #ffffff; /* Color del texto */
   border-radius: 4px;
-  transition: background-position 0.5s ease;
-  background-size: 200% auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.custom-btn:hover {
-  background-position: right center; 
-  color: #ffffff; 
+.v-btn:hover, .custom-btn:hover {
+  background-color: #e0a800; /* Color de fondo en hover */
+  color: #ffffff; /* Color del texto en hover */
+}
+
+.v-btn:disabled, .custom-btn:disabled {
+  background-color: #f5f5f5; /* Color de fondo para botones deshabilitados */
+  color: #cccccc; /* Color del texto para botones deshabilitados */
+  cursor: not-allowed; /* Cursor cuando el botón está deshabilitado */
+}
+
+.custom-btn {
+  margin-left: 8px;
 }
 </style>
