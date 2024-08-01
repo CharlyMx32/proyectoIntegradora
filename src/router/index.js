@@ -15,7 +15,7 @@ import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServiciosLinea.vue'
 import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
 
-// Tecnico lineas
+// Cheche lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
 import Tareas from '@/views/Tecnico/TareasFrom.vue'
 
@@ -38,6 +38,10 @@ const routes = [
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
+  { path: '/TAS', name:'tareas', component: Tareas },
+
+
+
 
   // Rutas para Cliente
   {
@@ -73,7 +77,7 @@ const routes = [
     path: '/Tecnico',
     component: DashBoardTecnico,
     meta: { requiresAuth: true, role: 4 },
-    children: [{ path: '/TAS', component: Tareas }]
+   
   },
 
   // Rutas para Admin
