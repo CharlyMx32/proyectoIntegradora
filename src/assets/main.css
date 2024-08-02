@@ -1,109 +1,67 @@
 /* CSS Reset */
-
-/* Elimina el margen y el padding de todos los elementos */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* Incluye el padding y el borde en el ancho y alto total del elemento */
-}
-
-body,
-v-app,
-v-container,
-template {
-  font-family: Arial, sans-serif; /* Cambia según tu fuente preferida */
-  line-height: 1.6; /* Mejora la legibilidad */
-  color: #333; /* Color de texto base */
-  background-color: #ede8e6;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  color: rgb(30, 30, 30);
-  font-family: Arial, sans-serif;
-}
-
-.container {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-/* Elimina subrayado de enlaces y establece color predeterminado */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Establece el estilo de los encabezados */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: normal; /* Normaliza el peso de los encabezados */
-}
-
-/* Establece la apariencia de listas */
-ul,
-ol {
-  list-style: none; /* Elimina los puntos o números de las listas */
-}
-
-/* Establece el estilo de las tablas */
-table {
-  border-collapse: collapse; /* Elimina el espacio entre los bordes de las celdas */
-  width: 100%; /* Asegura que la tabla ocupe el 100% del ancho del contenedor */
-}
-
-th,
-td {
-  border: 1px solid #ddd; /* Añade un borde ligero a las celdas de la tabla */
-  padding: 8px; /* Añade espaciado interno a las celdas */
-  text-align: left; /* Alinea el texto a la izquierda */
-}
-
-/* Establece el estilo de los formularios */
-input,
-textarea,
-select,
-button {
-  font-family: inherit; /* Asegura que los campos del formulario usen la misma fuente que el resto del documento */
-  font-size: inherit; /* Asegura que los campos del formulario usen el mismo tamaño de fuente */
-}
-
-/* Establece el estilo de los botones */
-button {
-  cursor: pointer; /* Cambia el cursor a una mano cuando pasa sobre un botón */
-  border: none; /* Elimina el borde predeterminado de los botones */
-}
-
-/* Elimina el borde por defecto de las imágenes */
-img {
-  max-width: 100%; /* Asegura que las imágenes no desborden su contenedor */
-  height: auto; /* Mantiene la relación de aspecto de las imágenes */
-}
-
-/* Asegura que los formularios se comporten de manera coherente */
-form {
-  display: block; /* Asegura que los formularios se comporten como bloques */
-}
-
-/* Reset CSS para asegurar un punto de partida limpio */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
-body {
+body,
+.v-app,
+.v-container,
+template {
+  font-family: 'Roboto', sans-serif; /* Cambia Arial a Roboto */
+  line-height: 1.6;
+  color: #333; /* Color de texto base */
+  background-color: #ede8e6; /* Fondo claro */
   margin: 0;
   padding: 0;
-  background-color: rgb(237, 232, 230);
+  height: 100vh;
 }
 
-/* Ajustes específicos para Vuetify */
-.v-container {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat', sans-serif; /* Fuente para títulos */
+  font-weight: bold; /* Peso de la fuente para títulos */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
   width: 100%;
-  padding: 0;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+form {
+  display: block;
 }
 
 .v-card {
@@ -111,15 +69,12 @@ body {
   max-width: none;
 }
 
-/* Otras reglas de estilo para evitar desbordamiento */
-img,
 .v-img {
   max-width: 100%;
   height: auto;
 }
 
 .body {
-  background: #252423;
   background: radial-gradient(circle, rgba(55, 54, 53, 1) 0%, rgba(55, 54, 53, 1) 95%);
 }
 
