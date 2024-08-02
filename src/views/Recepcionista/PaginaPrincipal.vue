@@ -28,12 +28,12 @@
   height: 100vh; /* Hace que el contenedor ocupe toda la altura de la ventana */
 }
 .color-subtitulo {
-  color: #072b4d;
+  color: #0800ff;
   font-size: 1.5rem; /* Ajusta este tamaño según tus necesidades */
   font-weight: bold; /* Añade peso a las letras */
 }
 .color-titulo {
-  color: #072b4d;
+  color: #0800ff;
 }
 .color-letras {
   color: rgb(255, 255, 255);
