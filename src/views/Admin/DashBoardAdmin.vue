@@ -46,7 +46,7 @@ const showWelcome = ref(true)
 
 setTimeout(() => {
   showWelcome.value = false
-}, 3000) // Duración de la animación en milisegundos
+}, 1500) // Duración de la animación en milisegundos
 
 const userName = ref(userStore.name)
 </script>

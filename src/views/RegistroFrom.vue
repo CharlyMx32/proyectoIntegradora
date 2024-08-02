@@ -2,38 +2,7 @@
   <v-app>
     <!-- Encabezado -->
     <header>
-      <v-container class="py-0 fill-height" fluid>
-        <v-row align="center" no-gutters>
-          <!-- Título a la izquierda -->
-          <v-col>
-            <div class="navbar-title">HardwareSolutions</div>
-          </v-col>
-          <!-- Espacio a la derecha con el ícono de bolita rojiza -->
-          <v-col cols="auto" class="d-flex justify-end">
-            <v-menu offset-y>
-              <template #activator="{ props }">
-                <v-avatar
-                  v-bind="props"
-                  class="red-ball"
-                  size="40"
-                  @mouseenter="animateBall"
-                  @mouseleave="resetBall"
-                >
-                  <v-icon>mdi-menu</v-icon>
-                </v-avatar>
-              </template>
-              <v-list>
-                <v-list-item @click="handleButtonClick(0)">
-                  <v-list-item-title>Login</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="handleButtonClick(1)">
-                  <v-list-item-title>Registrarme</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-col>
-        </v-row>
-      </v-container>
+      <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
     </header>
 
     <!-- Contenido Principal -->
@@ -93,33 +62,48 @@
                       <v-btn color="primary" @click="nextStep" class="mt-4">Continuar</v-btn>
                     </template>
                     <template v-else>
-                      <v-text-field
-                        id="correo"
-                        label="Correo"
-                        v-model="form.correo"
-                        outlined
-                        dense
-                        class="minimalista mb-3"
-                      />
-                      <v-text-field
-                        id="contraseña"
-                        label="Contraseña"
-                        type="password"
-                        v-model="form.contraseña"
-                        outlined
-                        dense
-                        class="minimalista mb-3"
-                      />
-                      <v-text-field
-                        id="confirmarContraseña"
-                        label="Confirmar Contraseña"
-                        type="password"
-                        v-model="form.confirmarContraseña"
-                        outlined
-                        dense
-                        class="minimalista mb-3"
-                      />
-                      <v-btn color="primary" @click="registrarse" class="mt-4">Registrarse</v-btn>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-text-field
+                            id="correo"
+                            label="Correo"
+                            v-model="form.correo"
+                            outlined
+                            dense
+                            class="minimalista mb-3"
+                          />
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            id="contraseña"
+                            label="Contraseña"
+                            type="password"
+                            v-model="form.contraseña"
+                            outlined
+                            dense
+                            class="minimalista mb-3"
+                          />
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            id="confirmarContraseña"
+                            label="Confirmar Contraseña"
+                            type="password"
+                            v-model="form.confirmarContraseña"
+                            outlined
+                            dense
+                            class="minimalista mb-3"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-btn color="primary" @click="prevStep" class="mt-4 mr-2">Regresar</v-btn>
+                      <v-btn
+                        color="primary"
+                        :disabled="!isFormComplete"
+                        @click="registrarse"
+                        class="mt-4"
+                        >Registrarse</v-btn
+                      >
                     </template>
                   </v-form>
                 </v-col>
@@ -164,9 +148,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import axios from '../axiosconf'
-import anime from 'animejs'
+import HeaderComponent from '@/components/Generales/navBlancoo.vue'
 
 const step = ref(1)
 const form = ref({
@@ -187,6 +171,21 @@ const idRolCliente = 2
 function nextStep() {
   step.value = 2
 }
+
+function prevStep() {
+  step.value = 1
+}
+
+const isFormComplete = computed(() => {
+  return (
+    form.value.nombre &&
+    form.value.apellido_paterno &&
+    form.value.apellido_materno &&
+    form.value.correo &&
+    form.value.contraseña &&
+    form.value.confirmarContraseña
+  )
+})
 
 function validarFormulario() {
   if (!form.value.nombre || !form.value.apellido_paterno || !form.value.apellido_materno) {
@@ -255,32 +254,10 @@ function clearErrorMessage() {
   showErrorSnackbar.value = false
 }
 
-function handleButtonClick(index) {
-  // Aquí puedes manejar los clics en los ítems del menú
-  if (index === 0) {
-    window.location.href = '/login'
-  } else if (index === 1) {
-    window.location.href = '/register'
-  }
-}
-
-const animateBall = () => {
-  anime({
-    targets: '.red-ball',
-    scale: [
-      { value: 0.001, duration: 100 }, // Se reduce más
-      { value: 1.5, duration: 100 }, // Se agranda más
-      { value: 0.005, duration: 100 }, // Se reduce un poco
-      { value: 1, duration: 100 } // Vuelve al tamaño original
-    ],
-    easing: 'easeInOutSine',
-    loop: false
-  })
-}
-
-const resetBall = () => {
-  // Puedes añadir aquí cualquier animación que desees al salir del hover
-}
+const menuItems = [
+  { name: 'Home', route: '/Global' },
+  { name: 'Login', route: '/login' }
+]
 </script>
 
 <style scoped>
