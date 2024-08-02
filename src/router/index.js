@@ -37,10 +37,7 @@ const routes = [
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
-  { path: '/TAS', name:'tareas', component: Tareas },
-
-
-
+  { path: '/TAS', name: 'tareas', component: Tareas },
 
   // Rutas para Cliente
   {
@@ -75,8 +72,7 @@ const routes = [
   {
     path: '/Tecnico',
     component: DashBoardTecnico,
-    meta: { requiresAuth: true, role: 4 },
-   
+    meta: { requiresAuth: true, role: 4 }
   },
 
   // Rutas para Admin

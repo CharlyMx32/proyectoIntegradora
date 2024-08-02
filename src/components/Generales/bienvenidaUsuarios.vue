@@ -1,7 +1,7 @@
 <template>
   <div class="welcome" v-if="showWelcome">
     <div class="animation">
-      <h1>{{ userName }}</h1>
+      <h1>Bienvenido! {{ userName }}</h1>
     </div>
   </div>
 </template>
@@ -29,15 +29,15 @@ onMounted(() => {
 @keyframes circle-in-hesitate {
   0% {
     clip-path: circle(0%);
-    background: black;
+    background: rgb(255, 255, 255);
   }
   40% {
     clip-path: circle(40%);
-    background: blue;
+    background: rgb(0, 0, 0);
   }
   100% {
     clip-path: circle(125%);
-    background: blue;
+    background: rgb(0, 0, 0);
   }
 }
 
@@ -56,7 +56,7 @@ onMounted(() => {
 }
 
 .animation h1 {
-  color: white;
+  color: #ffad00;
   font-size: 3rem;
   text-align: center;
 }

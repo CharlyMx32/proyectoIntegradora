@@ -6,8 +6,8 @@
         <v-col :cols="mini ? 1 : 3">
           <BarraLateral
             :avatarUrl="avatarUrl"
-            subtitle="centenoavalosc@gmail.com"
-            title="Admin"
+            :subtitle="userEmail"
+            :title="userName"
             :items="navItems"
             @mouseenter="mini = false"
             @mouseleave="mini = true"
@@ -26,11 +26,8 @@
 <script setup>
 import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue'
 import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
-import { ref } from 'vue'
-import { useUserStore } from '@/stores/user'
-
-const avatarUrl =
-  'https://lh3.googleusercontent.com/a/ACg8ocL542XKyWRIS5_tWhiUu6EFwv4T6PeTTiRRRRUJdMnyhEWKuMmWVA=s360-c-no'
+import { ref, computed } from 'vue'
+import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticación en lugar del de usuario
 
 const navItems = [
   { title: 'Registro Usuarios', to: '/RU' },
@@ -41,14 +38,15 @@ const navItems = [
 ]
 
 const mini = ref(false)
-const userStore = useUserStore()
+const authStore = useAuthStore()
 const showWelcome = ref(true)
 
 setTimeout(() => {
   showWelcome.value = false
 }, 1500) // Duración de la animación en milisegundos
 
-const userName = ref(userStore.name)
+const userName = computed(() => authStore.user?.nombre || 'Admin')
+const userEmail = computed(() => authStore.user?.correo || 'correo@example.com')
 </script>
 
 <style scoped>

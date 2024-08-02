@@ -1,12 +1,12 @@
 <template>
   <v-navigation-drawer expand-on-hover rail class="nav">
     <v-list>
-      <v-list-item
-        :prepend-avatar="props.avatarUrl"
-        :subtitle="props.subtitle"
-        :title="props.title"
-        class="list-item-header"
-      ></v-list-item>
+      <v-list-item class="list-item-header">
+        <v-list-item-content>
+          <v-list-item-title>{{ props.title }}</v-list-item-title>
+          <v-list-item-subtitle>{{ props.subtitle }}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
 
     <v-divider></v-divider>
