@@ -18,6 +18,7 @@
             density="compact"
             placeholder="Search name..."
             hide-details
+            
           ></v-text-field>
         </td>
         <td>
@@ -28,6 +29,7 @@
             placeholder="Minimum calories"
             type="number"
             hide-details
+            
           ></v-text-field>
         </td>
       </tr>
@@ -90,12 +92,12 @@ const FakeAPI = {
 // Reactive variables
 const itemsPerPage = ref(5)
 const headers = [
-  { title: 'Dessert (100g serving)', align: 'start', sortable: false, key: 'name' },
-  { title: 'Calories', key: 'calories', align: 'end' },
-  { title: 'Fat (g)', key: 'fat', align: 'end' },
-  { title: 'Carbs (g)', key: 'carbs', align: 'end' },
-  { title: 'Protein (g)', key: 'protein', align: 'end' },
-  { title: 'Iron (%)', key: 'iron', align: 'end' }
+  { title: 'Dessert (100g serving)', align: 'start', sortable: false, key: 'name', class: 'header-text' },
+  { title: 'Calories', key: 'calories', align: 'end', class: 'header-text' },
+  { title: 'Fat (g)', key: 'fat', align: 'end', class: 'header-text' },
+  { title: 'Carbs (g)', key: 'carbs', align: 'end', class: 'header-text' },
+  { title: 'Protein (g)', key: 'protein', align: 'end', class: 'header-text' },
+  { title: 'Iron (%)', key: 'iron', align: 'end', class: 'header-text' }
 ]
 const serverItems = ref([])
 const loading = ref(true)
@@ -127,3 +129,14 @@ const loadItems = ({ page, itemsPerPage, sortBy }) => {
   })
 }
 </script>
+
+<style scoped>
+.header-text {
+  color: #0800FF;
+}
+
+.search-field {
+  background-color: #FFAD00;
+  color: white;
+}
+</style>

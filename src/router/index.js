@@ -10,7 +10,6 @@ import Register from '@/views/RegistroFrom.vue'
 import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista.vue'
 import DashBoardAdmin from '@/views/Admin/DashBoardAdmin.vue'
 import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
-import statusNegocio from '@/views/Admin/statusNegocio.vue'
 import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServiciosLinea.vue'
 import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
@@ -89,7 +88,6 @@ const routes = [
       { path: '/RU', component: registroUsuarios },
       { path: '/DS', component: detalleServicios },
       { path: '/UA', component: UsuariosAdmin },
-      { path: '/SN', component: statusNegocio },
       { path: '/ServiciosFisicos', component: detalleServiciosFisicos }
     ]
   }

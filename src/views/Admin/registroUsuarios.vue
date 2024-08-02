@@ -5,7 +5,7 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
+          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight" style="color: #0800ff;">
             Registrar Usuarios
           </h3>
           <p class="text-sm text-muted-foreground">Ingresa los datos del usuario</p>
@@ -195,19 +195,19 @@ const submitForm = () => {
   margin-bottom: 15px;
 }
 
-.v-btn {
-  background-image: linear-gradient(to right, #1a2980 0%, #26d0ce 51%, #1a2980 100%);
-  color: #ffffff; /* Texto blanco */
-  margin-left: 8px;
+/* Estilo unificado para todos los botones */
+.v-btn, .custom-btn {
+  background-color: #FFAD00; /* Color de fondo */
+  color: #ffffff; /* Color del texto */
   border-radius: 4px;
-  transition: background-position 0.5s ease;
-  background-size: 200% auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.v-btn:hover {
-  background-position: right center; /* Cambia el fondo al hacer hover */
-  color: #ffffff; /* Texto blanco */
+.v-btn:hover, .custom-btn:hover {
+  background-color: #e0a800; /* Color de fondo en hover */
+  color: #ffffff; /* Color del texto en hover */
 }
+
 
 .my-card {
   background-color: #f7f7f7; /* Gris muy claro */

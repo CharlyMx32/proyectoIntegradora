@@ -5,7 +5,7 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
+          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text">
             Citas en línea
           </h3>
         </v-flex>
@@ -68,18 +68,24 @@
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showTechnicianTable = true"
             class="mr-2"
-            color="primary"
+            style="background-color: #FFAD00; color: white;"
           >
             Asignar Técnico
           </v-btn>
           <v-btn
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showDetailModal = true"
-            color="secondary"
+            style="background-color: #FFAD00; color: white;"
           >
             Ver Detalles
           </v-btn>
-          <v-btn v-else @click="showDetailModal = true" color="secondary"> Ver Detalles </v-btn>
+          <v-btn
+            v-else
+            @click="showDetailModal = true"
+            style="background-color: #FFAD00; color: white;"
+          >
+            Ver Detalles
+          </v-btn>
         </div>
       </v-card-text>
     </v-card>
@@ -90,7 +96,7 @@
       class="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-2xl my-card mt-4"
     >
       <v-card-title>
-        <h4 class="text-h5">Técnicos</h4>
+        <h4 class="text-h5 title-text">Técnicos</h4>
       </v-card-title>
       <v-card-text>
         <v-table density="compact">
@@ -118,7 +124,12 @@
           </tbody>
         </v-table>
         <div v-if="selectedTechnician" class="mt-4">
-          <v-btn @click="assignTechnician" color="primary">Asignar</v-btn>
+          <v-btn
+            @click="assignTechnician"
+            style="background-color: #FFAD00; color: white;"
+          >
+            Asignar
+          </v-btn>
         </div>
       </v-card-text>
     </v-card>
@@ -127,7 +138,7 @@
     <v-dialog v-model="showDetailModal" max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5">Detalles de la Cita</span>
+          <span class="text-h5 title-text">Detalles de la Cita</span>
         </v-card-title>
         <v-card-text>
           <!-- Aquí puedes agregar más detalles de la cita -->
@@ -140,7 +151,12 @@
           </div>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="showDetailModal = false" color="primary">Cerrar</v-btn>
+          <v-btn
+            @click="showDetailModal = false"
+            style="background-color: #FFAD00; color: white;"
+          >
+            Cerrar
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -198,7 +214,7 @@ const filteredOrders = computed(() => {
       .includes(filters.value.clientName.toLowerCase())
     const matchesTechnician = order.nombre_tecnico
       .toLowerCase()
-      .includes(filters.value.technicianName.toLowerCase())
+ .includes(filters.value.technicianName.toLowerCase())
     const matchesDate = !filters.value.date || order.fecha_cita === filters.value.date
     return matchesClient && matchesTechnician && matchesDate
   })
@@ -297,5 +313,9 @@ const assignTechnician = async () => {
 
 .v-dialog .v-card {
   border-radius: 8px;
+}
+
+.title-text {
+  color: #0800FF;
 }
 </style>

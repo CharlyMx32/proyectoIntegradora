@@ -8,7 +8,7 @@
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
-                <h3 class="mb-0">Tareas Asignadas</h3>
+                <h3 class="mb-0" style="color: #0800ff;">Tareas Asignadas</h3>
               </v-col>
               <v-col class="d-flex justify-end">
                 <v-text-field
@@ -64,7 +64,7 @@
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
-                <h3 class="mb-0">Tareas en Proceso</h3>
+                <h3 class="mb-0" style="color: #0800ff;">Tareas en Proceso</h3>
               </v-col>
               <v-col class="d-flex justify-end">
                 <v-text-field
@@ -141,7 +141,7 @@
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
-                <h3 class="mb-0">Tareas Completadas</h3>
+                <h3 class="mb-0" style="color: #0800ff;">Tareas Completadas</h3>
               </v-col>
               <v-col class="d-flex justify-end">
                 <v-text-field
@@ -270,7 +270,6 @@
     </v-row>
   </v-app>
 </template>
-
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
@@ -413,6 +412,7 @@ onMounted(() => {
   fetchData();
 });
 </script>
+
 <style scoped>
 .fondo {
   background: rgb(237, 232, 230);

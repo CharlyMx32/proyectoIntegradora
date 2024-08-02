@@ -37,7 +37,7 @@ const navItems = [
   { title: 'Servicios Linea', to: '/DS' },
   { title: 'Servicios Fisicos', to: '/ServiciosFisicos' },
   { title: 'Usuarios Admin', to: '/UA' },
-  { title: 'Status', to: '/SN' }
+  
 ]
 
 const mini = ref(false)
