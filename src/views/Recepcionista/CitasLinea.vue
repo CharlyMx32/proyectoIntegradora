@@ -5,7 +5,7 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
+          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
             Citas Linea
           </h3>
         </v-flex>
@@ -71,8 +71,8 @@
       <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Garantia }}</p>
-      <v-btn @click="usarGarantia" color="primary">USAR GARANTÍA</v-btn>
-      <v-btn @click="realizarPago" color="secondary">PAGO</v-btn>
+      <v-btn @click="usarGarantia" class="custom-btn">USAR GARANTÍA</v-btn>
+      <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
     </div>
   </v-container>
 </template>
@@ -135,8 +135,13 @@ const realizarPago = () => {
 }
 
 .my-card {
-  background-color: #f7f7f7;
+  background-color: #FFFFFF;
   border: 1px solid #d1d1d1;
+}
+
+.efecto-titulo {
+  color: #0800ff;
+  font-family: 'Calibre', sans-serif;
 }
 
 .table-container {
@@ -151,7 +156,7 @@ const realizarPago = () => {
 }
 
 .v-table th {
-  background-color: #49a3f8;
+  background-color: #FFAD00;
 }
 
 .selected-row {
@@ -165,17 +170,15 @@ const realizarPago = () => {
   border: 1px solid #c8e6c9;
   border-radius: 4px;
 }
-.v-btn {
-  background-image: linear-gradient(to right, #1a2980 0%, #26d0ce 51%, #1a2980 100%);
-  color: #ffffff; /* Texto blanco */
+.custom-btn {
+  background-color: #FFAD00;
+  color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;
-  transition: background-position 0.5s ease;
-  background-size: 200% auto;
+  transition: background-color 0.5s ease;
 }
 
-.v-btn:hover {
-  background-position: right center; /* Cambia el fondo al hacer hover */
-  color: #ffffff; /* Texto blanco */
+.custom-btn:hover {
+  background-color: #e69700;
 }
 </style>

@@ -22,17 +22,12 @@
             <v-col cols="12" md="6">
               <v-sheet class="info-box" elevation="2">
                 <p>
-                  <strong>CONÓCENOS</strong><br />
-                  En HardwareSolutions, ofrecemos un servicio integral para la reparación de
-                  <strong>teléfonos móviles</strong>, <strong>computadoras y laptops</strong>,
-                  <strong>electrodomésticos</strong>, y <strong>televisores</strong>. Diagnósticos
-                  rápidos y soluciones efectivas para problemas como pantallas rotas, baterías
-                  defectuosas, fallos de hardware y software, y más.<br />
-                  <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación
-                  cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
-                  <strong>Soporte Técnico:</strong> Brindamos asesoramiento y asistencia técnica
-                  para resolver cualquier duda que puedas tener.
-                </p>
+  <strong>CONÓCENOS</strong><br />
+  En HardwareSolutions, ofrecemos un servicio integral para la reparación de <strong>teléfonos móviles</strong>, <strong>computadoras y laptops</strong>, <strong>electrodomésticos</strong>, y <strong>televisores</strong>. Diagnósticos rápidos y soluciones efectivas para problemas como pantallas rotas, baterías defectuosas, fallos de hardware y software, y más.<br />
+  <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
+  <strong>Soporte Técnico:</strong> Brindamos asesoramiento y asistencia técnica para resolver cualquier duda que puedas tener.
+</p>
+
               </v-sheet>
             </v-col>
           </v-row>

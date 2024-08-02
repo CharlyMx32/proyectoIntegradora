@@ -46,4 +46,5 @@ const navItems = [
 ]
 
 const mini = ref(false)
+
 </script>
