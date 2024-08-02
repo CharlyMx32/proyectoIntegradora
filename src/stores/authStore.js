@@ -36,6 +36,27 @@ export const useAuthStore = defineStore({
       this.user = null
       this.token = null
       localStorage.removeItem('token')
+    },
+    async checkAuth() {
+      const token = localStorage.getItem('token')
+      if (token) {
+        try {
+          const response = await apiClient.get('http://hs.com/auth', {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+          const data = response.data
+          if (data.status === 200 && data.data.success && data.data.usuario) {
+            this.user = data.data.usuario
+            this.token = token
+          } else {
+            this.logout()
+          }
+        } catch (error) {
+          this.logout()
+        }
+      } else {
+        this.logout()
+      }
     }
   }
 })

@@ -1,28 +1,24 @@
 <template>
   <v-container fluid class="full-height d-flex align-center justify-center">
-    <v-card class="pa-4 text-center" max-width="400" outlined>
-      <v-img class="custom-img mb-4" height="200px" contain></v-img>
-      <v-card-title>
-        <h1 class="display-1 font-weight-bold">Bienvenido</h1>
-      </v-card-title>
-      <v-card-subtitle>
-        <p class="mb-4">Organiza tus tareas de manera eficiente.</p>
-      </v-card-subtitle>
-      <v-card-actions class="justify-center">
-        <v-btn color="primary" @click="Tareas('')" large>Ir a Mis Tareas</v-btn>
-      </v-card-actions>
-    </v-card>
+    <Welcome :userName="userName" v-if="showWelcome" />
+    <TareasFrom></TareasFrom>
   </v-container>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
+import TareasFrom from './TareasFrom.vue'
+import { ref, computed } from 'vue'
+import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticación en lugar del de usuario
 
-const router = useRouter()
+const authStore = useAuthStore()
+const showWelcome = ref(true)
 
-const Tareas = () => {
-  router.push('/TAS')
-}
+setTimeout(() => {
+  showWelcome.value = false
+}, 1500) // Duración de la animación en milisegundos
+
+const userName = computed(() => authStore.user?.nombre)
 </script>
 
 <style scoped>

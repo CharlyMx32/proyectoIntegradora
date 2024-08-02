@@ -7,9 +7,19 @@
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+import { defineComponent } from 'vue'
+import { useAuthStore } from '@/stores/authStore'
+
+export default defineComponent({
+  setup() {
+    const authStore = useAuthStore()
+    authStore.checkAuth()
+
+    return {
+      authStore
+    }
+  }
+})
 </script>
 
 <style></style>

@@ -21,7 +21,7 @@ const showWelcome = ref(true)
 onMounted(() => {
   setTimeout(() => {
     showWelcome.value = false
-  }, 3000) // Duración de la animación en milisegundos
+  }, 2500) // Duración de la animación en milisegundos
 })
 </script>
 

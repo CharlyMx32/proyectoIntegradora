@@ -95,14 +95,15 @@ const router = createRouter({
 })
 
 // Middleware para verificar la autenticación y roles antes de cada navegación
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+  await authStore.checkAuth() // Verifica el token y carga el estado del usuario
+
   const isAuthenticated = !!authStore.token
   const userRole = authStore.user?.id_rol
 
   console.log('Token:', authStore.token)
   console.log('User Role:', userRole)
-  console.log('Rol del usuario en el middleware:', userRole) // Verifica el rol aquí
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     next('/login')
