@@ -2,46 +2,13 @@
   <v-app id="inspire" :class="{ 'dark-theme': isDarkMode }">
     <!-- Encabezado -->
     <header>
-      <v-container class="py-0 fill-height" fluid>
-        <v-row align="center" no-gutters>
-          <!-- Título a la izquierda -->
-          <v-col>
-            <div class="navbar-title">HardwareSolutions</div>
-          </v-col>
-          <!-- Espacio a la derecha con el ícono de bolita rojiza -->
-          <v-col cols="auto" class="d-flex justify-end">
-            <v-menu offset-y>
-              <template #activator="{ props }">
-                <v-avatar
-                  v-bind="props"
-                  class="red-ball"
-                  size="40"
-                  @mouseenter="animateBall"
-                  @mouseleave="resetBall"
-                >
-                  <v-icon>mdi-menu</v-icon>
-                </v-avatar>
-              </template>
-              <v-list>
-                <v-list-item @click="handleButtonClick(0)">
-                  <v-list-item-title>Login</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="handleButtonClick(1)">
-                  <v-list-item-title>Registrarme</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-col>
-        </v-row>
-      </v-container>
+      <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
     </header>
 
-    <!-- Contenido principal -->
     <main>
       <v-main :class="{ 'transition-effect': isTransitioning }">
         <v-container class="main-container">
           <v-row align="center">
-            <!-- Columna izquierda para el eslogan con efecto de paralaje -->
             <v-col cols="12" md="6" class="slogan-col">
               <div class="slogan-container">
                 <h1 class="slogan-text">
@@ -55,12 +22,11 @@
             <v-col cols="12" md="6">
               <v-sheet class="info-box" elevation="2">
                 <p>
-  <strong>CONÓCENOS</strong><br />
-  En HardwareSolutions, ofrecemos un servicio integral para la reparación de <strong>teléfonos móviles</strong>, <strong>computadoras y laptops</strong>, <strong>electrodomésticos</strong>, y <strong>televisores</strong>. Diagnósticos rápidos y soluciones efectivas para problemas como pantallas rotas, baterías defectuosas, fallos de hardware y software, y más.<br />
-  <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
-  <strong>Soporte Técnico:</strong> Brindamos asesoramiento y asistencia técnica para resolver cualquier duda que puedas tener.
-</p>
-
+                  <strong>CONÓCENOS</strong><br />
+                  En HardwareSolutions, ofrecemos un servicio integral para la reparación de <strong>teléfonos móviles</strong>, <strong>computadoras y laptops</strong>, <strong>electrodomésticos</strong>, y <strong>televisores</strong>. Diagnósticos rápidos y soluciones efectivas para problemas como pantallas rotas, baterías defectuosas, fallos de hardware y software, y más.<br />
+                  <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
+                  <strong>Soporte Técnico:</strong> Brindamos asesoramiento y asistencia técnica para resolver cualquier duda que puedas tener.
+                </p>
               </v-sheet>
             </v-col>
           </v-row>
@@ -70,69 +36,163 @@
 
     <!-- Pie de página -->
     <footer>
-      <v-footer app class="footer">
-        <v-container fluid>
-          <v-row>
-            <v-col class="text-center">
-              <p>© 2024 Hardware Solutions. Todos los derechos reservados.</p>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-footer>
+      <div class="container">
+        <v-row align="center" justify="start">
+          <v-col cols="12" md="8" class="text-center">
+            <br />
+            <v-row
+              style="position: absolute; top: 870px; left: 40px; color: aliceblue"
+              class="social-icons"
+            >
+              <v-btn
+                icon
+                class="mx-2"
+                href="https://www.facebook.com/profile.php?id=100054380206513"
+                target="_blank"
+              >
+                <font-awesome-icon :icon="['fab', 'facebook']" />
+                <v-img class="icon" :src="logo" contain></v-img>
+              </v-btn>
+              <v-btn icon class="mx-2" href="https://whatsapp.com" target="_blank">
+                <v-icon size="30" class="white--text">mi-whatsapp></v-icon>
+              </v-btn>
+              <v-btn icon class="mx-2" href="https://instagram.com" target="_blank">
+                <v-icon size="30" class="white--text">mdi-instagram</v-icon>
+              </v-btn>
+            </v-row>
+
+            <h5 class="my-4 white--text">
+              <h3
+                style="
+                  position: absolute;
+                  top: 495px;
+                  left: 100px;
+                  color: #ffad00;
+                  font-size: 90.0606px;
+                "
+              >
+                Hardware
+                <br />Solutions
+              </h3>
+              <!---MAPA-->
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.655566511074!2d-103.41784522489935!3d25.51653121869297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fdb87c9af3bab%3A0x48699817edaff153!2sLa%20Fuente!5e0!3m2!1ses-419!2smx!4v1722614399479!5m2!1ses-419!2smx"
+                width="600"
+                height="240"
+                style="border: 0; position: absolute; top: 495px; right: 80px"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+
+              <v-divider
+                class="border-opacity-200"
+                color="#E8EAF6"
+                style="
+                  width: 150vw;
+                  display: block;
+                  margin: 0 auto;
+                  position: relative;
+                  left: 50%;
+                  transform: translateX(-50%);
+                "
+              ></v-divider>
+
+              <v-btn
+                style="position: absolute; top: 850px; left: 400px; color: #ffad00"
+                class="transparent-btn"
+              >
+                Inicio
+              </v-btn>
+
+              <v-btn
+                style="position: absolute; top: 850px; left: 640px; color: #ffad00"
+                class="transparent-btn"
+                >Login</v-btn
+              >
+
+              <v-btn
+                style="position: absolute; top: 850px; left: 800px; color: #ffad00"
+                class="transparent-btn"
+                >Iniciar Secion</v-btn
+              >
+              <h3 style="position: absolute; top: 950px; left: 40px; color: aliceblue">
+                Telefono:8715265042
+              </h3>
+              <br />
+              <br />
+              <h3 style="position: absolute; top: 970px; left: 40px; color: aliceblue">
+                MundoElectronicoTRC@gmail.com
+              </h3>
+              <br />
+              <v-row style="position: absolute; top: 850px; left: 1020px; color: #ffad00">
+                <v-col cols="auto">
+                  <h3 style="color: #ffad00">Desarrolladores</h3>
+                </v-col>
+              </v-row>
+              <v-row
+                style="
+                  position: absolute;
+                  top: 850px;
+                  left: 1020px;
+                  color: #ffad00;
+                  font-size: 14px;
+                "
+              >
+                <v-col cols="auto">
+                  <h3 style="color: aliceblue">Carlos Centeno</h3>
+                </v-col>
+              </v-row>
+              <v-row style="position: absolute; top: 869px; left: 1020px; color: #ffad00">
+                <v-col cols="auto">
+                  <h3 style="color: aliceblue">Diana Ochoa</h3>
+                </v-col>
+              </v-row>
+              <v-row style="position: absolute; top: 889px; left: 1020px; color: #ffad00">
+                <v-col cols="auto">
+                  <h3 style="color: aliceblue">Marbella Perez</h3>
+                </v-col>
+              </v-row>
+              <v-row style="position: absolute; top: 910px; left: 1020px; color: #ffad00">
+                <v-col cols="auto">
+                  <h3 style="color: aliceblue">Edwin Lopez</h3>
+                </v-col>
+              </v-row>
+            </h5>
+            <v-row style="position: absolute; top: 850px; left: 1290px; color: #ffad00">
+              <v-col cols="auto">
+                <h4 style="color: #ffad00">Direccion</h4>
+              </v-col>
+            </v-row>
+            <v-row style="position: absolute; top: 850px; left: 1200px; color: #ffad00">
+              <v-col cols="auto">
+                <h4 style="color: aliceblue">
+                  Calle dia de la fuente No.1463 6 campestre la rosita , Torreón, Mexico
+                </h4>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </div>
     </footer>
   </v-app>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import anime from 'animejs'
+import { ref } from 'vue'
+import HeaderComponent from './components/Generales/navBlancoo.vue'
 
 // Estado y referencia a las rutas
 const isDarkMode = ref(false) // Estado para el tema oscuro
 const isTransitioning = ref(false) // Estado para controlar la animación
-const router = useRouter()
 
 // Manejo de clic en los botones de navegación
-const handleButtonClick = (index) => {
-  if (index === 0) {
-    router.push('/Login')
-  } else if (index === 1) {
-    router.push('/register')
-  }
-}
-
-// Animación de la bolita
-const animateBall = () => {
-  anime({
-    targets: '.red-ball',
-    scale: [
-      { value: 0.001, duration: 100 }, // Se reduce más
-      { value: 1.5, duration: 100 }, // Se agranda más
-      { value: 0.005, duration: 100 }, // Se reduce un poco
-      { value: 1, duration: 100 } // Vuelve al tamaño original
-    ],
-    easing: 'easeInOutSine',
-    loop: false
-  })
-}
-
-const resetBall = () => {
-  // Puedes añadir aquí cualquier animación que desees al salir del hover
-}
-
-// Ejecutar animación al montar el componente
-onMounted(() => {
-  // Aquí puedes añadir cualquier animación al montar el componente si es necesario
-})
+const menuItems = [
+  { name: 'Login', route: '/Login' },
+  { name: 'Registrarme', route: '/register' }
+]
 </script>
 
 <style scoped>
-:root {
-  --circle-top-right-out: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0);
-  --circle-bottom-right-in: polygon(50% 50%, 100% 100%, 0 100%, 0 0, 100% 0);
-}
-
 @keyframes in-circle-swoop {
   from {
     clip-path: var(--circle-top-right-out);
@@ -145,38 +205,48 @@ onMounted(() => {
 #inspire {
   position: relative;
   overflow: hidden;
-  font-family: 'Roboto', sans-serif; /* Fuente global */
+  font-family: 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Asegura que el contenido llene la altura completa de la ventana */
+  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
 }
 
-/* Estilos para la barra de navegación */
-.navbar {
-  box-shadow: none !important; /* Asegura que no haya sombra */
-  background-color: transparent !important; /* Asegura que el fondo sea transparente */
-  border-bottom: none !important; /* Elimina el borde inferior */
-  border-top: none !important; /* Elimina el borde superior si es necesario */
+.main-container {
+  padding: 20px; /* Ajusta según sea necesario */
+  flex: 1;
 }
 
-/* Estilos para el título de la barra de navegación */
-.navbar-title {
-  font-family: 'Roboto', sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--v-text-base); /* Color del texto dependiendo del tema */
+/* Asegúrate de que los estilos globales no afecten el espacio superior */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  flex: 1; /* Permite que el contenido principal crezca para llenar el espacio disponible */
 }
 
 header {
-  margin-top: 20px;
+  margin-top: 15px;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #11100e;
+  padding: 20px;
+  flex-shrink: 0; /* Evita que el footer se reduzca en tamaño */
 }
 
 .v-main {
   background-color: var(--v-background-base); /* Aplicar color de fondo del tema aquí */
 }
 
+/* Estilo del contenido principal */
 .main-container {
-  padding: 20px; /* Padding agregado al contenido principal */
+  padding: 20px;
   flex: 1; /* Permite que el contenedor principal crezca */
 }
 
@@ -193,17 +263,6 @@ header {
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease; /* Mantener transición suave si se usa también con anime.js */
-}
-
-/* Estilos para el pie de página */
-.footer {
-  background-color: var(--v-footer-background); /* Color de fondo del pie de página */
-  color: var(--v-footer-text); /* Color del texto del pie de página */
-  padding: 10px 0;
-}
-
-.main-container {
-  padding: 20px;
 }
 
 .slogan-col {
@@ -269,5 +328,33 @@ header {
   height: 8px; /* Grosor de la línea */
   background-color: rgb(8, 0, 255); /* Color de la línea */
   z-index: -1; /* Asegura que la línea esté detrás del texto */
+}
+
+/* Pie de pagina */
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #11100e;
+  padding: 20px;
+}
+
+.text {
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+  font-size: 30.0606px;
+  font-family: 'Calibri', sans-serif;
+}
+.white-text {
+  color: #000000;
+}
+.transparent-btn {
+  background-color: transparent;
+  color: currentColor; /* O puedes especificar un color aquí */
+  box-shadow: none; /* Elimina cualquier sombra que pueda tener el botón */
+  border: none; /* Elimina cualquier borde */
 }
 </style>
