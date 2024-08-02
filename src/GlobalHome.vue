@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" :class="{ 'dark-theme': isDarkMode }">
+  <v-app id="inspire" :class="{ 'dark-theme': isDarkMode }" style="height: 202vh; width: 100vw;">
     <!-- Encabezado -->
     <header>
       <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
@@ -27,24 +27,21 @@
   <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
   <strong>Soporte Técnico:</strong> Brindamos asesoramiento y asistencia técnica para resolver cualquier duda que puedas tener.
 </p>
-
               </v-sheet>
             </v-col>
           </v-row>
         </v-container>
       </v-main>
     </main>
-
     <!-- Pie de página -->
-    <footer>
+    <footer style="max-height: 750px; overflow: hidden;">
       <div class="container">
         <v-row align="center" justify="start">
           <v-col cols="12" md="8" class="text-center">
             <br />
             <v-row
-              style="position: absolute; top: 870px; left: 40px; color: aliceblue"
-              class="social-icons"
-            >
+              style="position: absolute; top: 1230px; left: 40px; color: aliceblue"
+              class="social-icons">
               <v-btn
                 icon
                 class="mx-2"
@@ -64,68 +61,58 @@
 
             <h5 class="my-4 white--text">
               <h3
-                style="
-                  position: absolute;
-                  top: 495px;
-                  left: 100px;
-                  color: #ffad00;
-                  font-size: 90.0606px;
-                "
-              >
+                style="position: absolute; top: 780px; left: 100px; color: #ffad00; font-size: 110px;">
                 Hardware
-                <br />Solutions
+                <br/>Solutions
               </h3>
               <!---MAPA-->
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.655566511074!2d-103.41784522489935!3d25.51653121869297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fdb87c9af3bab%3A0x48699817edaff153!2sLa%20Fuente!5e0!3m2!1ses-419!2smx!4v1722614399479!5m2!1ses-419!2smx"
                 width="600"
-                height="240"
-                style="border: 0; position: absolute; top: 495px; right: 80px"
+                height="270"
+                style="border: 0; position: absolute; top: 800px; right: 90px"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
               ></iframe>
-
               <v-divider
-                class="border-opacity-200"
-                color="#E8EAF6"
-                style="
-                  width: 150vw;
-                  display: block;
-                  margin: 0 auto;
-                  position: relative;
-                  left: 50%;
-                  transform: translateX(-50%);
-                "
-              ></v-divider>
+  color="#E8EAF6"
+  style="
+    width: 170vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px); /* Agregué un desplazamiento vertical de 20px */
+  "
+></v-divider>
+
 
               <v-btn
-                style="position: absolute; top: 850px; left: 400px; color: #ffad00"
+                style="position: absolute; top: 1297px; left: 400px; color: #ffad00"
                 class="transparent-btn"
               >
                 Inicio
               </v-btn>
 
               <v-btn
-                style="position: absolute; top: 850px; left: 640px; color: #ffad00"
+                style="position: absolute; top: 1297px; left: 640px; color: #ffad00"
                 class="transparent-btn"
                 >Login</v-btn
               >
 
               <v-btn
-                style="position: absolute; top: 850px; left: 800px; color: #ffad00"
+                style="position: absolute; top: 1297px; left: 800px; color: #ffad00"
                 class="transparent-btn"
                 >Iniciar Secion</v-btn
               >
-              <h3 style="position: absolute; top: 950px; left: 40px; color: aliceblue">
+              <h3 style="position: absolute; top: 1297px; left: 40px; color: aliceblue">
                 Telefono:8715265042
               </h3>
               <br />
               <br />
-              <h3 style="position: absolute; top: 970px; left: 40px; color: aliceblue">
+              <h3 style="position: absolute; top:  1320px; left: 40px; color: aliceblue">
                 MundoElectronicoTRC@gmail.com
               </h3>
               <br />
-              <v-row style="position: absolute; top: 850px; left: 1020px; color: #ffad00">
+              <v-row style="position: absolute; top:  1297px; left: 1020px; color: #ffad00">
                 <v-col cols="auto">
                   <h3 style="color: #ffad00">Desarrolladores</h3>
                 </v-col>
@@ -133,7 +120,7 @@
               <v-row
                 style="
                   position: absolute;
-                  top: 850px;
+                  top: 1297px;
                   left: 1020px;
                   color: #ffad00;
                   font-size: 14px;
@@ -143,28 +130,28 @@
                   <h3 style="color: aliceblue">Carlos Centeno</h3>
                 </v-col>
               </v-row>
-              <v-row style="position: absolute; top: 869px; left: 1020px; color: #ffad00">
+              <v-row style="position: absolute; top: 1320px; left: 1020px; color: #ffad00">
                 <v-col cols="auto">
                   <h3 style="color: aliceblue">Diana Ochoa</h3>
                 </v-col>
               </v-row>
-              <v-row style="position: absolute; top: 889px; left: 1020px; color: #ffad00">
+              <v-row style="position: absolute; top: 1340px; left: 1020px; color: #ffad00">
                 <v-col cols="auto">
                   <h3 style="color: aliceblue">Marbella Perez</h3>
                 </v-col>
               </v-row>
-              <v-row style="position: absolute; top: 910px; left: 1020px; color: #ffad00">
+              <v-row style="position: absolute; top: 1360px; left: 1020px; color: #ffad00">
                 <v-col cols="auto">
                   <h3 style="color: aliceblue">Edwin Lopez</h3>
                 </v-col>
               </v-row>
             </h5>
-            <v-row style="position: absolute; top: 850px; left: 1290px; color: #ffad00">
+            <v-row style="position: absolute; top: 1297px; left: 1290px; color: #ffad00">
               <v-col cols="auto">
                 <h4 style="color: #ffad00">Direccion</h4>
               </v-col>
             </v-row>
-            <v-row style="position: absolute; top: 850px; left: 1200px; color: #ffad00">
+            <v-row style="position: absolute; top: 1300px; left: 1190px; color: #ffad00">
               <v-col cols="auto">
                 <h4 style="color: aliceblue">
                   Calle dia de la fuente No.1463 6 campestre la rosita , Torreón, Mexico
@@ -333,13 +320,19 @@ footer {
 
 /* Pie de pagina */
 
-footer {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #11100e;
+  margin: 20px;
   padding: 20px;
+}
+
+.footer-container {
+  margin: 0px;
+  padding: 0%;
 }
 
 .text {

@@ -19,6 +19,7 @@
               md="5"
               class="d-flex flex-column align-center justify-center pa-4 fondoimg"
             >
+              <!-- Puedes agregar contenido de bienvenida aquí -->
             </v-col>
 
             <!-- Sección del formulario -->
@@ -59,11 +60,11 @@
                           />
                         </v-col>
                       </v-row>
-                      <v-btn color="primary" @click="nextStep" class="mt-4">Continuar</v-btn>
+                      <v-btn color="#FFAD00" @click="nextStep" class="mt-4">Continuar</v-btn>
                     </template>
                     <template v-else>
                       <v-row>
-                        <v-col cols="12">
+                        <v-col cols="12" class="pa-1">
                           <v-text-field
                             id="correo"
                             label="Correo"
@@ -73,7 +74,7 @@
                             class="minimalista mb-3"
                           />
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" class="pa-1">
                           <v-text-field
                             id="contraseña"
                             label="Contraseña"
@@ -84,7 +85,7 @@
                             class="minimalista mb-3"
                           />
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" class="pa-1">
                           <v-text-field
                             id="confirmarContraseña"
                             label="Confirmar Contraseña"
@@ -96,14 +97,15 @@
                           />
                         </v-col>
                       </v-row>
-                      <v-btn color="primary" @click="prevStep" class="mt-4 mr-2">Regresar</v-btn>
+                      <v-btn color="#FFAD00" @click="prevStep" class="mt-4 mr-2">Regresar</v-btn>
                       <v-btn
-                        color="primary"
+                        color="#FFAD00"
                         :disabled="!isFormComplete"
                         @click="registrarse"
                         class="mt-4"
-                        >Registrarse</v-btn
                       >
+                        Registrarse
+                      </v-btn>
                     </template>
                   </v-form>
                 </v-col>
@@ -137,8 +139,8 @@
     </v-main>
 
     <!-- Pie de página -->
-    <v-footer app padless>
-      <v-col class="text-center" cols="12" color="#11100e" dark>
+    <v-footer color="#11100e" dark>
+      <v-col class="text-center" cols="12">
         <v-typography variant="caption" class="white--text">
           © 2024 Mi Empresa. Todos los derechos reservados.
         </v-typography>
@@ -261,33 +263,27 @@ const menuItems = [
 </script>
 
 <style scoped>
-@keyframes in-circle-swoop {
+@keyframes swoop {
   from {
-    clip-path: var(--circle-top-right-out);
+    transform: scale(1);
   }
   to {
-    clip-path: var(--circle-bottom-right-in);
+    transform: scale(20);
+    background-color: var(--v-theme-light-primary);
   }
 }
 
 #inspire {
   position: relative;
   overflow: hidden;
-  font-family: 'Roboto', sans-serif; /* Fuente global */
+  font-family: 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Asegura que el contenido llene la altura completa de la ventana */
+  min-height: 100vh;
 }
 
 header {
   margin-top: 20px;
-}
-/* Estilos para la barra de navegación */
-.navbar {
-  box-shadow: none !important; /* Asegura que no haya sombra */
-  background-color: transparent !important; /* Asegura que el fondo sea transparente */
-  border-bottom: none !important; /* Elimina el borde inferior */
-  border-top: none !important; /* Elimina el borde superior si es necesario */
 }
 
 html,
@@ -303,7 +299,7 @@ body {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: var(--v-theme-light-background); /* Usa el color del fondo claro */
+  background: var(--v-theme-light-background);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -311,7 +307,7 @@ body {
   height: 100%;
   overflow: hidden;
   position: relative;
-  padding-top: 60px; /* Ajusta este valor según la altura del encabezado */
+  padding-top: 60px;
 }
 
 #particles-container {
@@ -323,9 +319,9 @@ body {
 }
 
 .fondoimg {
-  background: url('../assets/reparacion.webp');
+  background: url('../assets/blob-scene-haikei.png');
   background-size: cover;
-  color: var(--v-theme-light-text-primary); /* Color del texto del tema claro */
+  color: var(--v-theme-light-text-primary);
   width: 100%;
   max-height: 100%;
   display: flex;
@@ -343,7 +339,7 @@ body {
 }
 
 .white-card {
-  background: var(--v-theme-light-surface); /* Fondo del card en tema claro */
+  background: var(--v-theme-light-surface);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 12px var(--v-theme-light-shadow);
@@ -356,9 +352,9 @@ body {
 }
 
 .minimalista {
-  border: 1px solid var(--v-theme-light-border); /* Borde del input en tema claro */
+  border: 1px solid var(--v-theme-light-border);
   border-radius: 8px;
-  background-color: var(--v-theme-light-background); /* Fondo del input en tema claro */
+  background-color: var(--v-theme-light-background);
   box-shadow: 0 2px 4px var(--v-theme-light-shadow);
 }
 
@@ -366,8 +362,8 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--v-theme-light-shadow);
   text-transform: uppercase;
-  background-color: var(--v-theme-light-primary); /* Fondo del botón en tema claro */
-  color: var(--v-theme-light-on-primary); /* Color del texto del botón en tema claro */
+  background-color: var(--v-theme-light-primary);
+  color: var(--v-theme-light-on-primary);
 }
 
 .v-btn:hover {
@@ -382,29 +378,19 @@ body {
 .navbar-title {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--v-theme-light-primary); /* Color del texto del título en tema claro */
+  color: var(--v-theme-light-primary);
 }
 
 .red-ball {
   background-color: rgb(8, 0, 255);
-  border-radius: 50%; /* Forma circular */
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease; /* Mantener transición suave si se usa también con anime.js */
+  transition: transform 0.3s ease;
 }
 
 .red-ball.animate {
   animation: swoop 5s forwards;
-}
-
-@keyframes swoop {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(20);
-    background-color: var(--v-theme-light-primary); /* Mantener el color del fondo en animación */
-  }
 }
 </style>
