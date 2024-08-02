@@ -86,12 +86,11 @@ import {
 // Datos para los productos
 const products = [
   'Laptop',
-  'Smartphone',
+  'Celular',
   'Tablet',
   'Impresora',
   'Televisor',
-  'Auriculares',
-  'Cámara'
+  'Otros'
 ]
 
 const selectedDate = ref(null)

@@ -20,9 +20,9 @@ const vuetify = createVuetify({
       light: {
         colors: {
           background: '#ede8e6',
-          surface: '#FFFFFF',
-          headerBackground: '#ffffff',
-          headerText: '#333333',
+          surface: '#FFFFFF', /*color de nav  verde??*/
+          headerBackground: '#edbb5d',
+          headerText: '#000000', /**/ 
           primary: '#007acc',
           secondary: '#4CAF50',
           error: '#FF5252',
@@ -31,7 +31,7 @@ const vuetify = createVuetify({
           warning: '#FB8C00',
           textPrimary: '#333333',
           textSecondary: '#555555',
-          border: '#d1d1d1',
+          border: '#d1c9b9', /*color del bordo */
           shadow: '#000000',
           hover: '#add8e6',
           onHover: '#ffffff'

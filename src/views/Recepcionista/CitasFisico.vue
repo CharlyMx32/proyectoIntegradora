@@ -29,7 +29,7 @@
 
         <!-- Tabla de datos -->
         <div class="table-container">
-          <v-table density="compact">
+          <v-table density="compact" class="custom-table">
             <thead>
               <tr>
                 <th class="text-left">Nombre Cliente</th>
@@ -71,8 +71,8 @@
       <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Uso_Garantia }}</p>
-      <v-btn @click="usarGarantia" color="primary">USAR GARANTÍA</v-btn>
-      <v-btn @click="realizarPago" color="secondary">PAGO</v-btn>
+      <v-btn @click="usarGarantia" class="custom-btn">USAR GARANTÍA</v-btn>
+      <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
     </div>
   </v-container>
 </template>
@@ -135,7 +135,7 @@ const realizarPago = () => {
 }
 
 .my-card {
-  background-color: #f7f7f7;
+  background-color: #FFFFFF;
   border: 1px solid #d1d1d1;
 }
 
@@ -144,38 +144,38 @@ const realizarPago = () => {
   overflow-y: auto;
 }
 
-.v-table th,
-.v-table td {
+.custom-table th,
+.custom-table td {
   text-align: left;
   padding: 8px;
+  border-bottom: 1px solid #ddd; /* Añade bordes a las celdas */
 }
 
-.v-table th {
-  background-color: #49a3f8;
+.custom-table th {
+  background-color: #FFAD00; /* Color de fondo para el encabezado */
+  color: #fff; /* Color de texto para el encabezado */
 }
 
 .selected-row {
-  background-color: rgba(46, 61, 151, 0.2); /* Verde claro y semi-transparente */
+  background-color: rgba(206, 200, 200, 0.258); 
 }
 
 .additional-component-container {
   margin-top: 20px;
   padding: 10px;
-  background-color: #3961da; /* Fondo verde claro para el contenedor del componente adicional */
+  background-color: #3961da; 
   border: 1px solid #c8e6c9;
   border-radius: 4px;
 }
-.v-btn {
-  background-image: linear-gradient(to right, #1a2980 0%, #26d0ce 51%, #1a2980 100%);
-  color: #ffffff; /* Texto blanco */
+.custom-btn {
+  background-color: #FFAD00;
+  color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;
-  transition: background-position 0.5s ease;
-  background-size: 200% auto;
+  transition: background-color 0.5s ease;
 }
 
-.v-btn:hover {
-  background-position: right center; /* Cambia el fondo al hacer hover */
-  color: #ffffff; /* Texto blanco */
+.custom-btn:hover {
+  background-color: #e69700;
 }
 </style>
