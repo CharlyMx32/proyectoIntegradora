@@ -4,7 +4,7 @@
       <v-toolbar-title class="clickable-title" @click="home"> HardwareSolutions </v-toolbar-title>
       <v-spacer>
         <v-row justify="end" style="margin-right: 50px">
-          <v-btn color="white" @click="ClickBarra">Cita</v-btn>
+          <v-btn color="#0800ff" @click="ClickBarra">Cita</v-btn>
           <v-btn color="white" @click="ClickPedido">Periodo</v-btn>
           <v-btn color="white" @click="handleThirdButtonClick">{{ thirdButtonText }}</v-btn>
 
@@ -13,10 +13,6 @@
     </v-toolbar>
   </div>
 </template>
-
-
-
-
 
 <script setup>
 import { computed } from 'vue'
@@ -52,13 +48,13 @@ const handleThirdButtonClick = () => {
 
 <style scoped>
 .barra {
-  background:#ffad00
+  background:#FFAD00
 
 }
 
 .clickable-title {
   cursor: pointer;
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 24px;
   font-weight: bold;
   user-select: none;
