@@ -1,52 +1,73 @@
 <template>
   <v-app>
-    <v-container
-      class="fill-height d-flex align-center justify-center gradient-background pa-0"
-      fluid
-    >
-      <v-card class="rounded-lg card-size" elevation="10" flat>
-        <v-row no-gutters>
-          <!-- Sección de imagen -->
-          <v-col
-            cols="12"
-            md="5"
-            class="d-flex flex-column align-center justify-center pa-4 fondoimg"
-          >
-            <!-- Puedes reemplazar 'loginRegister.svg' con la imagen que desees -->
-          </v-col>
+    <!-- Encabezado -->
+    <header>
+      <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
+    </header>
 
-          <!-- Sección del formulario -->
-          <v-col cols="12" md="7" class="pa-4">
-            <v-card class="white-card" elevation="5" flat>
-              <v-card-title class="headline text-center">Login</v-card-title>
-              <v-divider class="my-2"></v-divider>
-              <v-card-text>
-                <v-form @submit.prevent="login">
-                  <v-text-field v-model="email" label="Email" required></v-text-field>
-                  <v-text-field
-                    v-model="password"
-                    label="Password"
-                    type="password"
-                    required
-                  ></v-text-field>
-                  <v-btn type="submit" color="red darken-2" dark block>Ingresar</v-btn>
-                </v-form>
-                <!-- Mensaje de error -->
-                <v-snackbar
-                  v-if="authStore.errorMessage"
-                  v-model="showErrorSnackbar"
-                  color="error"
-                  timeout="3000"
-                  @input="clearErrorMessage"
-                >
-                  {{ authStore.errorMessage }}
-                </v-snackbar>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-container>
+    <!-- Contenido principal -->
+    <v-main>
+      <v-container
+        class="fill-height d-flex align-center justify-center gradient-background pa-0"
+        fluid
+      >
+        <v-card class="rounded-lg card-size" elevation="10" flat>
+          <v-row no-gutters>
+            <!-- Sección de imagen -->
+            <v-col
+              cols="12"
+              md="5"
+              class="d-flex flex-column align-center justify-center pa-4 fondoimg"
+            >
+              <!-- Puedes reemplazar 'loginRegister.svg' con la imagen que desees -->
+            </v-col>
+
+            <!-- Sección del formulario -->
+            <v-col cols="12" md="7" class="pa-4">
+              <v-card class="white-card" elevation="5" flat>
+                <v-card-title class="headline text-center">Login</v-card-title>
+                <v-divider class="my-2"></v-divider>
+                <v-card-text>
+                  <v-form @submit.prevent="login">
+                    <v-text-field
+                      v-model="email"
+                      label="Email"
+                      required
+                      :rules="[emailRules]"
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="password"
+                      label="Password"
+                      type="password"
+                      required
+                      :rules="[passwordRules]"
+                    ></v-text-field>
+                    <v-btn type="submit" color="red darken-2" dark block>Ingresar</v-btn>
+                  </v-form>
+                  <!-- Mensaje de error -->
+                  <v-snackbar
+                    v-if="showErrorSnackbar"
+                    v-model="showErrorSnackbar"
+                    color="error"
+                    timeout="3000"
+                    @input="clearErrorMessage"
+                  >
+                    {{ errorMessage }}
+                  </v-snackbar>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-container>
+    </v-main>
+
+    <!-- Pie de página -->
+    <v-footer app color="primary" dark>
+      <v-col class="text-center">
+        <span>© 2024 Nombre de la Aplicación. Todos los derechos reservados.</span>
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
@@ -54,14 +75,29 @@
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
+import HeaderComponent from '@/components/Generales/navBlancoo.vue'
 
 const email = ref('')
 const password = ref('')
 const authStore = useAuthStore()
 const router = useRouter()
 const showErrorSnackbar = ref(false)
+const errorMessage = ref('')
+
+const emailRules = [
+  (v) => !!v || 'El email es requerido',
+  (v) => /.+@.+\..+/.test(v) || 'El email debe ser válido'
+]
+
+const passwordRules = [(v) => !!v || 'La contraseña es requerida']
 
 const login = async () => {
+  if (!email.value || !password.value) {
+    errorMessage.value = 'Por favor, complete todos los campos.'
+    showErrorSnackbar.value = true
+    return
+  }
+
   try {
     await authStore.login(email.value, password.value)
 
@@ -87,9 +123,20 @@ const login = async () => {
     }
   } catch (error) {
     console.error('Error en el inicio de sesión:', error)
+    errorMessage.value = 'Credenciales incorrectas. Inténtalo de nuevo.'
     showErrorSnackbar.value = true
   }
 }
+
+const clearErrorMessage = () => {
+  showErrorSnackbar.value = false
+  errorMessage.value = ''
+}
+
+const menuItems = [
+  { name: 'Home', route: '/Global' },
+  { name: 'Registrarme', route: '/register' }
+]
 </script>
 
 <style scoped>
