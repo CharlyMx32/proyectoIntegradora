@@ -18,170 +18,27 @@
               </div>
             </v-col>
 
-            <!-- Columna derecha para el texto de información del negocio -->
-            <v-col cols="12" md="6">
-              <v-sheet class="info-box" elevation="2">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas minus eos amet
-                  voluptatem labore, provident sint itaque, ut, rerum tenetur in. A veritatis
-                  explicabo quo accusantium porro quae mollitia suscipit. Lorem ipsum dolor sit
-                  amet, consectetur adipisicing elit. Dolore non eos dolorum eveniet, facilis quis
-                  facere pariatur suscipit aliquid? Dicta qui tempore ratione asperiores, provident
-                  temporibus eaque explicabo eveniet dignissimos. Lorem ipsum dolor sit, amet
-                  consectetur adipisicing elit. Beatae, amet earum voluptatem, totam, dolorem ea
-                  iusto ad non debitis praesentium numquam! Saepe, beatae fugit? Quasi ipsa
-                  laudantium repellendus repudiandae amet. Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Error quis, odio excepturi eaque rem voluptates nulla facilis
-                  veritatis inventore et at. Reprehenderit nemo voluptatum possimus illo quos
-                  repellat velit accusantium.
-                </p>
-              </v-sheet>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-main>
-    </main>
-
-    <!-- Pie de página -->
-    <footer>
-      <div class="container">
-        <v-row align="center" justify="start">
-          <v-col cols="12" md="8" class="text-center">
-            <br />
-            <v-row
-              style="position: absolute; top: 870px; left: 40px; color: aliceblue"
-              class="social-icons"
-            >
-              <v-btn
-                icon
-                class="mx-2"
-                href="https://www.facebook.com/profile.php?id=100054380206513"
-                target="_blank"
-              >
-                <font-awesome-icon :icon="['fab', 'facebook']" />
-                <v-img class="icon" :src="logo" contain></v-img>
-              </v-btn>
-              <v-btn icon class="mx-2" href="https://whatsapp.com" target="_blank">
-                <v-icon size="30" class="white--text">mi-whatsapp></v-icon>
-              </v-btn>
-              <v-btn icon class="mx-2" href="https://instagram.com" target="_blank">
-                <v-icon size="30" class="white--text">mdi-instagram</v-icon>
-              </v-btn>
-            </v-row>
-
-            <h5 class="my-4 white--text">
-              <h3
-                style="
-                  position: absolute;
-                  top: 495px;
-                  left: 100px;
-                  color: #ffad00;
-                  font-size: 90.0606px;
-                "
-              >
-                Hardware
-                <br />Solutions
-              </h3>
-              <!---MAPA-->
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.655566511074!2d-103.41784522489935!3d25.51653121869297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fdb87c9af3bab%3A0x48699817edaff153!2sLa%20Fuente!5e0!3m2!1ses-419!2smx!4v1722614399479!5m2!1ses-419!2smx"
-                width="600"
-                height="240"
-                style="border: 0; position: absolute; top: 495px; right: 80px"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-
-              <v-divider
-                class="border-opacity-200"
-                color="#E8EAF6"
-                style="
-                  width: 150vw;
-                  display: block;
-                  margin: 0 auto;
-                  position: relative;
-                  left: 50%;
-                  transform: translateX(-50%);
-                "
-              ></v-divider>
-
-              <v-btn
-                style="position: absolute; top: 850px; left: 400px; color: #ffad00"
-                class="transparent-btn"
-              >
-                Inicio
-              </v-btn>
-
-              <v-btn
-                style="position: absolute; top: 850px; left: 640px; color: #ffad00"
-                class="transparent-btn"
-                >Login</v-btn
-              >
-
-              <v-btn
-                style="position: absolute; top: 850px; left: 800px; color: #ffad00"
-                class="transparent-btn"
-                >Iniciar Secion</v-btn
-              >
-              <h3 style="position: absolute; top: 950px; left: 40px; color: aliceblue">
-                Telefono:8715265042
-              </h3>
-              <br />
-              <br />
-              <h3 style="position: absolute; top: 970px; left: 40px; color: aliceblue">
-                MundoElectronicoTRC@gmail.com
-              </h3>
-              <br />
-              <v-row style="position: absolute; top: 850px; left: 1020px; color: #ffad00">
-                <v-col cols="auto">
-                  <h3 style="color: #ffad00">Desarrolladores</h3>
-                </v-col>
-              </v-row>
-              <v-row
-                style="
-                  position: absolute;
-                  top: 850px;
-                  left: 1020px;
-                  color: #ffad00;
-                  font-size: 14px;
-                "
-              >
-                <v-col cols="auto">
-                  <h3 style="color: aliceblue">Carlos Centeno</h3>
-                </v-col>
-              </v-row>
-              <v-row style="position: absolute; top: 869px; left: 1020px; color: #ffad00">
-                <v-col cols="auto">
-                  <h3 style="color: aliceblue">Diana Ochoa</h3>
-                </v-col>
-              </v-row>
-              <v-row style="position: absolute; top: 889px; left: 1020px; color: #ffad00">
-                <v-col cols="auto">
-                  <h3 style="color: aliceblue">Marbella Perez</h3>
-                </v-col>
-              </v-row>
-              <v-row style="position: absolute; top: 910px; left: 1020px; color: #ffad00">
-                <v-col cols="auto">
-                  <h3 style="color: aliceblue">Edwin Lopez</h3>
-                </v-col>
-              </v-row>
-            </h5>
-            <v-row style="position: absolute; top: 850px; left: 1290px; color: #ffad00">
-              <v-col cols="auto">
-                <h4 style="color: #ffad00">Direccion</h4>
-              </v-col>
-            </v-row>
-            <v-row style="position: absolute; top: 850px; left: 1200px; color: #ffad00">
-              <v-col cols="auto">
-                <h4 style="color: aliceblue">
-                  Calle dia de la fuente No.1463 6 campestre la rosita , Torreón, Mexico
-                </h4>
-              </v-col>
-            </v-row>
+          <v-col cols>
+            <v-sheet ref="textoRef" min-height="70vh" rounded="lg" class="texto">
+              <p style="margin: 0 10px">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas minus eos amet
+                voluptatem labore, provident sint itaque, ut, rerum tenetur in. A veritatis
+                explicabo quo accusantium porro quae mollitia suscipit. Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit. Dolore non eos dolorum eveniet, facilis quis facere
+                pariatur suscipit aliquid? Dicta qui tempore ratione asperiores, provident
+                temporibus eaque explicabo eveniet dignissimos. Lorem ipsum dolor sit, amet
+                consectetur adipisicing elit. Beatae, amet earum voluptatem, totam, dolorem ea iusto
+                ad non debitis praesentium numquam! Saepe, beatae fugit? Quasi ipsa laudantium
+                repellendus repudiandae amet. Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Error quis, odio excepturi eaque rem voluptates nulla facilis veritatis
+                inventore et at. Reprehenderit nemo voluptatum possimus illo quos repellat velit
+                accusantium.
+              </p>
+            </v-sheet>
           </v-col>
         </v-row>
-      </div>
-    </footer>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 

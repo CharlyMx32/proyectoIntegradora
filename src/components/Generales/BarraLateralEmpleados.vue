@@ -16,34 +16,16 @@
         {{ item.title }}
       </v-list-item>
     </v-list>
-
-    <v-divider></v-divider>
-
-    <v-list dense="compact">
-      <v-list-item>
-        <v-switch v-model="isDarkMode" label="Modo oscuro" @change="toggleTheme"></v-switch>
-      </v-list-item>
-    </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useTheme } from 'vuetify'
-
 const props = defineProps({
   avatarUrl: String,
   subtitle: String,
   title: String,
   items: Array
 })
-
-const theme = useTheme()
-const isDarkMode = ref(theme.currentTheme === 'dark')
-
-function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
-}
 </script>
 
 <style scoped>
