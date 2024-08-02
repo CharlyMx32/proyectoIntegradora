@@ -15,9 +15,9 @@ const vuetify = createVuetify({
     themes: {
       light: {
         colors: {
-          background: '#ede8e6',
+          background: '#ede8e6',/**/
           surface: '#FFFFFF',
-          headerBackground: '#ffffff',
+          headerBackground: '#ffffff', /**/
           headerText: '#333333',
           primary: '#007acc',
           secondary: '#4CAF50',
