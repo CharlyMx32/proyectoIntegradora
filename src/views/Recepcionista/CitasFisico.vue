@@ -155,7 +155,7 @@ const realizarPago = () => {
 }
 
 .custom-table th {
-  background-color: #FFAD00; /* Color de fondo para el encabezado */
+  background-color: #0800ff; /* Color de fondo para el encabezado */
   color: #fff; /* Color de texto para el encabezado */
 }
 

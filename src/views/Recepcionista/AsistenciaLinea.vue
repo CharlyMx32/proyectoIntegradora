@@ -143,7 +143,8 @@ const markAsAttended = () => {
 }
 
 .v-table th {
-  background-color: #FFAD00;
+  background-color: #0800ff;
+  color: #fff;
 }
 
 .selected-row {
