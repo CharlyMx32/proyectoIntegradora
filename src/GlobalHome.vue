@@ -22,18 +22,16 @@
             <v-col cols="12" md="6">
               <v-sheet class="info-box" elevation="2">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas minus eos amet
-                  voluptatem labore, provident sint itaque, ut, rerum tenetur in. A veritatis
-                  explicabo quo accusantium porro quae mollitia suscipit. Lorem ipsum dolor sit
-                  amet, consectetur adipisicing elit. Dolore non eos dolorum eveniet, facilis quis
-                  facere pariatur suscipit aliquid? Dicta qui tempore ratione asperiores, provident
-                  temporibus eaque explicabo eveniet dignissimos. Lorem ipsum dolor sit, amet
-                  consectetur adipisicing elit. Beatae, amet earum voluptatem, totam, dolorem ea
-                  iusto ad non debitis praesentium numquam! Saepe, beatae fugit? Quasi ipsa
-                  laudantium repellendus repudiandae amet. Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Error quis, odio excepturi eaque rem voluptates nulla facilis
-                  veritatis inventore et at. Reprehenderit nemo voluptatum possimus illo quos
-                  repellat velit accusantium.
+                  <strong>CONÓCENOS</strong><br />
+                  En HardwareSolutions, ofrecemos un servicio integral para la reparación de
+                  <strong>teléfonos móviles</strong>, <strong>computadoras y laptops</strong>,
+                  <strong>electrodomésticos</strong>, y <strong>televisores</strong>. Diagnósticos
+                  rápidos y soluciones efectivas para problemas como pantallas rotas, baterías
+                  defectuosas, fallos de hardware y software, y más.<br />
+                  <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación
+                  cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
+                  <strong>Soporte Técnico:</strong> Brindamos asesoramiento y asistencia técnica
+                  para resolver cualquier duda que puedas tener.
                 </p>
               </v-sheet>
             </v-col>
