@@ -10,7 +10,6 @@ import Register from '@/views/RegistroFrom.vue'
 import DashBoardRecepcionista from '@/views/Recepcionista/DashBoardRecepcionista.vue'
 import DashBoardAdmin from '@/views/Admin/DashBoardAdmin.vue'
 import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
-import statusNegocio from '@/views/Admin/statusNegocio.vue'
 import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServiciosLinea.vue'
 import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
@@ -38,10 +37,7 @@ const routes = [
   { path: '/Global', name: 'Global', component: Global },
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
-  { path: '/TAS', name:'tareas', component: Tareas },
-
-
-
+  { path: '/TAS', name: 'tareas', component: Tareas },
 
   // Rutas para Cliente
   {
@@ -76,8 +72,7 @@ const routes = [
   {
     path: '/Tecnico',
     component: DashBoardTecnico,
-    meta: { requiresAuth: true, role: 4 },
-   
+    meta: { requiresAuth: true, role: 4 }
   },
 
   // Rutas para Admin
@@ -89,7 +84,6 @@ const routes = [
       { path: '/RU', component: registroUsuarios },
       { path: '/DS', component: detalleServicios },
       { path: '/UA', component: UsuariosAdmin },
-      { path: '/SN', component: statusNegocio },
       { path: '/ServiciosFisicos', component: detalleServiciosFisicos }
     ]
   }

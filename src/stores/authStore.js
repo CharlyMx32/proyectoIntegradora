@@ -1,9 +1,8 @@
 import apiClient from 'axios'
 import { defineStore } from 'pinia'
 
-// Define y exporta tu store de autenticación
 export const useAuthStore = defineStore({
-  id: 'auth', // Identificador único para tu store
+  id: 'auth',
   state: () => ({
     user: null,
     token: localStorage.getItem('token') || null
@@ -32,6 +31,24 @@ export const useAuthStore = defineStore({
       } catch (error) {
         console.error('Error en el inicio de sesión:', error)
       }
+    },
+    logout() {
+      this.user = null
+      this.token = null
+      localStorage.removeItem('token')
     }
   }
 })
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)

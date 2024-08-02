@@ -2,13 +2,13 @@
   <v-app class="fondo">
     <v-container class="d-flex justify-center align-center fill-height">
       <v-card-text>
-        <h1 class="title-header">Agendar una cita</h1>
+        <h1 class="title-header">Agenda tu Cita</h1>
         <v-form @submit.prevent="agendarCita">
           <v-row>
             <!-- Columna 1 -->
             <v-col cols="12" md="6">
               <v-card class="nested-card mb-4" :elevation="2">
-                <v-card-title class="title-card">Selecciona un Producto</v-card-title>
+                <v-card-title class="title-card">Selecciona tu tipo de Producto</v-card-title>
                 <v-card-text>
                   <v-select
                     v-model="selectedProduct"
@@ -19,7 +19,7 @@
                 </v-card-text>
               </v-card>
               <v-card class="nested-card mb-4" :elevation="2">
-                <v-card-title class="title-card">Detalles del Problema</v-card-title>
+                <v-card-title class="title-card">Detallanos tu Problema</v-card-title>
                 <v-card-text>
                   <v-textarea
                     v-model="problemDetails"
@@ -74,8 +74,14 @@ import { format, isSunday, isBefore, isAfter, addDays, eachMinuteOfInterval } fr
 
 // Datos para los productos
 const products = [
-  'Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros'
-];
+  'Laptop',
+  'Smartphone',
+  'Tablet',
+  'Impresora',
+  'Televisor',
+  'Auriculares',
+  'Cámara'
+]
 
 const selectedDate = ref(null);
 const selectedTime = ref(null);

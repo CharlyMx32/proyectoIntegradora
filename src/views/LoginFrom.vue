@@ -42,7 +42,7 @@
                       required
                       :rules="[passwordRules]"
                     ></v-text-field>
-                    <v-btn type="submit" color="red darken-2" dark block>Ingresar</v-btn>
+                    <v-btn type="submit" color="0800FF" dark block>Ingresar</v-btn>
                   </v-form>
                   <!-- Mensaje de error -->
                   <v-snackbar
@@ -63,9 +63,11 @@
     </v-main>
 
     <!-- Pie de página -->
-    <v-footer app color="primary" dark>
-      <v-col class="text-center">
-        <span>© 2024 Nombre de la Aplicación. Todos los derechos reservados.</span>
+    <v-footer class="small-footer" color="#11100e" dark>
+      <v-col class="text-center" cols="12">
+        <v-typography variant="caption" class="white--text">
+          © 2024 Mi Empresa. Todos los derechos reservados.
+        </v-typography>
       </v-col>
     </v-footer>
   </v-app>
@@ -206,16 +208,25 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--v-theme-shadow);
   text-transform: uppercase;
-  background-color: var(--v-theme-primary);
-  color: var(--v-theme-on-primary);
+  background-color: #0800FF; /* Color de fondo del botón */
+  color: #FFFFFF; /* Color del texto del botón */
 }
 
 .v-btn:hover {
-  background-color: var(--v-theme-primary-dark);
+  background-color: #0600CC; /* Color de fondo del botón al pasar el mouse */
   transition: background-color 0.3s;
 }
 
 .v-text-field:focus {
   box-shadow: 0 0 0 2px var(--v-theme-primary);
+}
+
+.small-footer {
+  height: 1%; /* Ajusta la altura del pie de página */
+  padding: 10px 0; /* Ajusta el padding según sea necesario */
+}
+
+.small-footer .v-typography {
+  font-size: 0.75rem; /* Ajusta el tamaño del texto */
 }
 </style>

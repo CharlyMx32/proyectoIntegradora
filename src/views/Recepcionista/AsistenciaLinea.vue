@@ -5,7 +5,7 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
+          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo ">
             Asistencia Citas En Linea
           </h3>
         </v-flex>
@@ -123,8 +123,12 @@ const markAsAttended = () => {
 }
 
 .my-card {
-  background-color: rgb(13, 13, 12);
+  background-color: #ffffff;
   border: 1px solid #d1d1d1;
+}
+.efecto-titulo {
+  color: #0800ff;
+  font-family: 'Calibre', sans-serif;
 }
 
 .table-container {
@@ -139,7 +143,7 @@ const markAsAttended = () => {
 }
 
 .v-table th {
-  background-color: rgb(247, 79, 77);
+  background-color: #FFAD00;
 }
 
 .selected-row {
