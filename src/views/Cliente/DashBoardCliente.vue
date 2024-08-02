@@ -1,22 +1,24 @@
 <template>
-  <div class="Fondo">
-    <barra-cliente />
+  <v-app>
+    <header>
+      <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
+    </header>
     <v-app>
       <v-content>
         <router-view />
       </v-content>
     </v-app>
-  </div>
+  </v-app>
 </template>
 
 <script setup>
-import BarraCliente from '@/components/CompCliente/BarraCliente.vue'
+import HeaderComponent from '@/components/Generales/navBlancoo.vue'
+
+// Manejo de clic en los botones de navegación
+const menuItems = [
+  { name: 'Agendar', route: '/Agendar' },
+  { name: 'Segimiento', route: '/Pedir' }
+]
 </script>
 
-<style scoped>
-.fondo {
-  background: url('../../assets/iii.svg') no-repeat center center fixed;
-  background-size: cover;
-}
-/* Aquí puedes agregar estilos específicos para el DashBoardCliente */
-</style>
+<style scoped></style>
