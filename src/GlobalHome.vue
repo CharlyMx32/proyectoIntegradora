@@ -1,125 +1,192 @@
 <template>
-  <v-app id="inspire">
-    <v-app-bar app flat>
-      <v-container class="py-0 fill-height">
-        <v-avatar class="mr-10" color="grey darken-1" size="32">HS</v-avatar>
-        <v-spacer></v-spacer>
-        <v-btn v-for="(link, index) in links" :key="link" text @click="handleButtonClick(index)">
-          {{ link }}
-        </v-btn>
-        <v-switch
-          v-model="theme"
-          :label="theme ? 'Modo Claro' : 'Modo Oscuro'"
-          @change="toggleDarkMode"
-        ></v-switch>
-      </v-container>
-    </v-app-bar>
-
+  <div class="container">
     <v-main>
-      <v-container>
-        <v-row>
-          <v-col cols="2">
-            <v-sheet rounded="lg">
-              <v-list color="transparent">
-                <v-list-item v-for="(role, index) in Roles" :key="index" link>
-                  <v-list-item-content>
-                    <v-list-item-title @click="redirectToPage(index + 1)">
-                      {{ role }}
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-sheet>
-          </v-col>
+      <!-- Contenido principal de la página -->
+    </v-main>
 
-          <v-col cols>
-            <v-sheet ref="textoRef" min-height="70vh" rounded="lg" class="texto">
-              <p style="margin: 0 10px">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas minus eos amet
-                voluptatem labore, provident sint itaque, ut, rerum tenetur in. A veritatis
-                explicabo quo accusantium porro quae mollitia suscipit. Lorem ipsum dolor sit amet,
-                consectetur adipisicing elit. Dolore non eos dolorum eveniet, facilis quis facere
-                pariatur suscipit aliquid? Dicta qui tempore ratione asperiores, provident
-                temporibus eaque explicabo eveniet dignissimos. Lorem ipsum dolor sit, amet
-                consectetur adipisicing elit. Beatae, amet earum voluptatem, totam, dolorem ea iusto
-                ad non debitis praesentium numquam! Saepe, beatae fugit? Quasi ipsa laudantium
-                repellendus repudiandae amet. Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Error quis, odio excepturi eaque rem voluptates nulla facilis veritatis
-                inventore et at. Reprehenderit nemo voluptatum possimus illo quos repellat velit
-                accusantium.
-              </p>
-            </v-sheet>
+    <v-row align="center" justify="start">
+      <v-col cols="12" md="8" class="text-center">
+        <br />
+        <v-row
+          style="position: absolute; top: 500px; left: 40px; color: aliceblue"
+          class="social-icons"
+        >
+          <v-btn
+            icon
+            class="mx-2"
+            href="https://www.facebook.com/profile.php?id=100054380206513"
+            target="_blank"
+          >
+            <font-awesome-icon :icon="['fab', 'facebook']" />
+            <v-img class="icon" :src="logo" contain></v-img>
+          </v-btn>
+          <v-btn icon class="mx-2" href="https://whatsapp.com" target="_blank">
+            <v-icon size="30" class="white--text">mi-whatsapp></v-icon>
+          </v-btn>
+          <v-btn icon class="mx-2" href="https://instagram.com" target="_blank">
+            <v-icon size="30" class="white--text">mdi-instagram</v-icon>
+          </v-btn>
+          
+                </v-row>
+
+        <h5 class="my-4 white--text">
+          <h3 style="position: absolute; top: 110px; left: 100px; color:blue; font-size:70.0606px;">
+            Hardware
+            <br>Solutions
+          </h3>
+          <!---MAPA-->
+          <div id="map" style="width: 800px; height: 600px;"></div>
+
+
+
+
+
+          <br />
+          <v-divider class="border-opacity-200" color="#E8EAF6"  style="width: 200%; display: block; margin: 0 auto;"></v-divider>
+          <br />
+          
+          <v-btn
+            style="position: absolute; top: 500px; left: 400px; color: aliceblue"
+            @click="clickAgenda"
+            class="transparent-btn"
+            text
+          >
+            Agendar Cita
+          </v-btn>
+
+          <v-btn
+            style="position: absolute; top: 500px; left: 640px; color: aliceblue"
+            @click="ClickPedido"
+            class="transparent-btn"
+            text
+            >Periodo</v-btn
+          >
+
+          <v-btn
+            style="position: absolute; top: 500px; left: 800px; color: aliceblue"
+            @click="ClickPedido"
+            class="transparent-btn"
+            text
+            >Cerrar Sesion</v-btn >
+          <h3 style="position: absolute; top: 610px; left: 40px; color: aliceblue"
+            >Telefono:8715265042</h3>
+            <br>
+            <br>
+          <h3 style="position: absolute; top: 630px; left: 40px; color: aliceblue"
+            >MundoElectronicoTRC@gmail.com</h3>
+<br>
+          <v-row style="position: absolute; top: 503px; left: 1020px; color: aliceblue">
+            <v-col cols="auto">
+              <h3
+                style="color: aliceblue">Desarrolladores
+              </h3>
+            </v-col>
+          </v-row>
+          <v-row style="position: absolute; top: 545px; left: 1020px; color: aliceblue;  font-size:14px;">
+            <v-col cols="auto">
+              <h3 style="color: aliceblue">Carlos Centeno
+              </h3>
+            </v-col>
+          </v-row>
+          <v-row style="position: absolute; top: 567px; left: 1020px; color: aliceblue">
+            <v-col cols="auto">
+              <h3
+                style="color: aliceblue">Diana Ochoa
+              </h3>
+            </v-col>
+          </v-row>
+          <v-row style="position: absolute; top: 590px; left: 1020px; color: aliceblue">
+            <v-col cols="auto">
+              <h3
+                style="color: aliceblue">Marbella Perez
+              </h3>
+            </v-col>
+          </v-row>
+          <v-row style="position: absolute; top: 520px; left: 1020px; color: aliceblue">
+            <v-col cols="auto">
+              <h3
+                 style="color: aliceblue">Edwin Lopez
+              </h3>
+            </v-col>
+          </v-row>
+        </h5>
+        <v-row style="position: absolute; top: 503px; left: 1290px; color: aliceblue">
+          <v-col cols="auto">
+            <h4
+            style="color: aliceblue">Direccion
+            </h4>
           </v-col>
         </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+        <v-row style="position: absolute; top: 520px; left: 1200px; color: aliceblue">
+          <v-col cols="auto">
+            <h4
+               style="color: aliceblue"
+                >Calle dia de la fuente No.1463 6 campestre la rosita , Torreón, Mexico
+            </h4>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useTheme } from 'vuetify'
-
-const links = ref(['Login', 'Registrarme'])
-const Roles = ref(['Admin', 'Cliente', 'Recepcionista', 'Tecnico'])
-const theme = useTheme()
-
-const router = useRouter()
-
-const redirectToPage = (roleIndex) => {
-  switch (roleIndex) {
-    case 1:
-      router.push('/Admin')
-      break
-    case 2:
-      router.push('/principal')
-      break
-    case 3:
-      router.push('/Recepcionista')
-      break
-    case 4:
-      router.push('/Tecnico')
-      break
-    default:
-      break
-  }
+<style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120vh;
+  background-color: #000;
 }
 
-const handleButtonClick = (index) => {
-  if (index === 0) {
-    router.push('/Login')
-  } else if (index === 1) {
-    router.push('/register')
-  }
+.text {
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+ 
+  font-size: 30.0606px;
+    font-family: 'Calibri', sans-serif;
+}
+.white-text {
+  color: rgb(0, 0, 0);
+}
+.transparent-btn {
+  background-color: transparent;
+  color: currentColor; /* O puedes especificar un color aquí */
+  box-shadow: none; /* Elimina cualquier sombra que pueda tener el botón */
+  border: none; /* Elimina cualquier borde */
 }
 
-const toggleDarkMode = () => {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+
+</style>
+
+<script>
+export default {
+  mounted() {
+    const styledMapType = new google.maps.StyledMapType([
+      // Aquí puedes agregar tus estilos personalizados
+      {
+        elementType: 'geometry',
+        stylers: [{ color: '#f5f5f5' }]
+      }
+    ], { name: 'Styled Map' });
+
+    const location = { lat: 34.164900, lng: -118.374825 };
+
+    const map = new google.maps.Map(document.getElementById('map'), {
+      center: location,
+      zoom: 17,
+      icon: true,
+      disableDefaultUI: true,
+      mapTypeControlOptions: {
+        mapTypeIds: ['roadmap', 'atellite', 'hybrid', 'terrain', 'tyled_map']
+      }
+    });
+
+    const marker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+  }
 }
 </script>
-
-<style scoped>
-#inspire {
-  position: relative;
-  overflow: hidden;
-}
-
-.animated-sphere {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* Asegura que el fondo esté detrás del contenido */
-}
-
-main {
-  background-color: var(--v-background-base);
-}
-
-.texto {
-  text-align: justify;
-  padding: 20px;
-}
-</style>
