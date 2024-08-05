@@ -60,7 +60,7 @@
             </v-col>
           </v-row>
           <div class="submit-container">
-            <v-btn type="submit" color="primary" style="width: 300px;">Agendar Cita</v-btn>
+            <v-btn type="submit" color="#ffad00" style="width: 300px;">Agendar Cita</v-btn>
           </div>
         </v-form>
       </v-card-text>
@@ -172,12 +172,12 @@ const agendarCita = async () => {
 
 <style scoped>
 .fondo {
-  background: url('../../assets/iii.svg') no-repeat center center fixed;
+  color:#ede8e6;
   background-size: cover;
   height: 100%;
 }
 .title-header {
-  color: #FFFFFF;
+  color:  rgb(8, 0, 255);;
   text-align: center;
   font-size: 50px;
 }
