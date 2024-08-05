@@ -222,8 +222,8 @@ body {
 }
 
 .small-footer {
-  height: 1%; /* Ajusta la altura del pie de página */
-  padding: 10px 0; /* Ajusta el padding según sea necesario */
+  height: 0; /* Ajusta la altura del pie de página */
+  padding: 0px 0; /* Ajusta el padding según sea necesario */
 }
 
 .small-footer .v-typography {
