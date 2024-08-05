@@ -137,15 +137,6 @@
         </v-snackbar>
       </v-container>
     </v-main>
-
-    <!-- Pie de página -->
-    <v-footer color="#11100e" dark>
-      <v-col class="text-center" cols="12">
-        <v-typography variant="caption" class="white--text">
-          © 2024 Mi Empresa. Todos los derechos reservados.
-        </v-typography>
-      </v-col>
-    </v-footer>
   </v-app>
 </template>
 

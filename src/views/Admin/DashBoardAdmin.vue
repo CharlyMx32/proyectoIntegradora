@@ -1,5 +1,5 @@
 <template>
-  <v-app class="fondo">
+  <v-app>
     <Welcome :userName="userName" v-if="showWelcome" />
     <v-container fluid v-show="!showWelcome">
       <v-row>
@@ -33,8 +33,7 @@ const navItems = [
   { title: 'Registro Usuarios', to: '/RU' },
   { title: 'Servicios Linea', to: '/DS' },
   { title: 'Servicios Fisicos', to: '/ServiciosFisicos' },
-  { title: 'Usuarios Admin', to: '/UA' },
-  
+  { title: 'Usuarios Admin', to: '/UA' }
 ]
 
 const mini = ref(false)

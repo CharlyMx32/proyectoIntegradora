@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" :class="{ 'dark-theme': isDarkMode }" style="height: 202vh; width: 100vw;">
+  <v-app id="inspire" :class="{ 'dark-theme': isDarkMode }" style="height: 202vh; width: 100vw">
     <!-- Encabezado -->
     <header>
       <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
@@ -22,11 +22,17 @@
             <v-col cols="12" md="6">
               <v-sheet class="info-box" elevation="2">
                 <p>
-  <strong>CONÓCENOS</strong><br />
-  En HardwareSolutions, ofrecemos un servicio integral para la reparación de <strong>teléfonos móviles</strong>, <strong>computadoras y laptops</strong>, <strong>electrodomésticos</strong>, y <strong>televisores</strong>. Diagnósticos rápidos y soluciones efectivas para problemas como pantallas rotas, baterías defectuosas, fallos de hardware y software, y más.<br />
-  <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
-  <strong>Soporte Técnico:</strong> Brindamos asesoramiento y asistencia técnica para resolver cualquier duda que puedas tener.
-</p>
+                  <strong>CONÓCENOS</strong><br />
+                  En HardwareSolutions, ofrecemos un servicio integral para la reparación de
+                  <strong>teléfonos móviles</strong>, <strong>computadoras y laptops</strong>,
+                  <strong>electrodomésticos</strong>, y <strong>televisores</strong>. Diagnósticos
+                  rápidos y soluciones efectivas para problemas como pantallas rotas, baterías
+                  defectuosas, fallos de hardware y software, y más.<br />
+                  <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación
+                  cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
+                  <strong>Soporte Técnico:</strong> Brindamos asesoramiento y asistencia técnica
+                  para resolver cualquier duda que puedas tener.
+                </p>
               </v-sheet>
             </v-col>
           </v-row>
@@ -34,14 +40,15 @@
       </v-main>
     </main>
     <!-- Pie de página -->
-    <footer style="max-height: 750px; overflow: hidden;">
+    <footer style="max-height: 750px; overflow: hidden">
       <div class="container">
         <v-row align="center" justify="start">
           <v-col cols="12" md="8" class="text-center">
             <br />
             <v-row
               style="position: absolute; top: 1230px; left: 40px; color: aliceblue"
-              class="social-icons">
+              class="social-icons"
+            >
               <v-btn
                 icon
                 class="mx-2"
@@ -61,9 +68,16 @@
 
             <h5 class="my-4 white--text">
               <h3
-                style="position: absolute; top: 780px; left: 100px; color: #ffad00; font-size: 110px;">
+                style="
+                  position: absolute;
+                  top: 780px;
+                  left: 100px;
+                  color: #ffad00;
+                  font-size: 110px;
+                "
+              >
                 Hardware
-                <br/>Solutions
+                <br />Solutions
               </h3>
               <!---MAPA-->
               <iframe
@@ -75,15 +89,14 @@
                 referrerpolicy="no-referrer-when-downgrade"
               ></iframe>
               <v-divider
-  color="#E8EAF6"
-  style="
-    width: 170vw;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%) translateY(60px); /* Agregué un desplazamiento vertical de 20px */
-  "
-></v-divider>
-
+                color="#E8EAF6"
+                style="
+                  width: 170vw;
+                  position: relative;
+                  left: 50%;
+                  transform: translateX(-50%) translateY(60px); /* Agregué un desplazamiento vertical de 20px */
+                "
+              ></v-divider>
 
               <v-btn
                 style="position: absolute; top: 1297px; left: 400px; color: #ffad00"
@@ -108,11 +121,11 @@
               </h3>
               <br />
               <br />
-              <h3 style="position: absolute; top:  1320px; left: 40px; color: aliceblue">
+              <h3 style="position: absolute; top: 1320px; left: 40px; color: aliceblue">
                 MundoElectronicoTRC@gmail.com
               </h3>
               <br />
-              <v-row style="position: absolute; top:  1297px; left: 1020px; color: #ffad00">
+              <v-row style="position: absolute; top: 1297px; left: 1020px; color: #ffad00">
                 <v-col cols="auto">
                   <h3 style="color: #ffad00">Desarrolladores</h3>
                 </v-col>

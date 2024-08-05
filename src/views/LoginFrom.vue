@@ -61,15 +61,6 @@
         </v-card>
       </v-container>
     </v-main>
-
-    <!-- Pie de página -->
-    <v-footer class="small-footer" color="#11100e" dark>
-      <v-col class="text-center" cols="12">
-        <v-typography variant="caption" class="white--text">
-          © 2024 Mi Empresa. Todos los derechos reservados.
-        </v-typography>
-      </v-col>
-    </v-footer>
   </v-app>
 </template>
 
@@ -208,12 +199,12 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--v-theme-shadow);
   text-transform: uppercase;
-  background-color: #0800FF; /* Color de fondo del botón */
-  color: #FFFFFF; /* Color del texto del botón */
+  background-color: #0800ff; /* Color de fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
 }
 
 .v-btn:hover {
-  background-color: #0600CC; /* Color de fondo del botón al pasar el mouse */
+  background-color: #0600cc; /* Color de fondo del botón al pasar el mouse */
   transition: background-color 0.3s;
 }
 
@@ -222,7 +213,7 @@ body {
 }
 
 .small-footer {
-  height: 1%; /* Ajusta la altura del pie de página */
+  height: 10px; /* Ajusta la altura del pie de página */
   padding: 10px 0; /* Ajusta el padding según sea necesario */
 }
 
