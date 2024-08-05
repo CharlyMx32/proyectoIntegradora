@@ -28,7 +28,7 @@
               tamaño.
             </p>
             <br />
-            <v-btn color="#ffad00" style="width: 200px" @click="clickAgenda">Agendar Cita</v-btn>
+            <v-btn color="#0800ff" style="width: 200px" @click="clickAgenda">Agendar Cita</v-btn>
           </v-col>
         </v-row>
       </v-container>
