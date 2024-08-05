@@ -8,7 +8,7 @@
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
-                <h3 class="mb-0">Por pagar</h3>
+                <h3 style="color:rgb(8, 0, 255);">Por pagar</h3>
               </v-col>
               <v-col class="d-flex justify-end">
                 <v-text-field
@@ -50,7 +50,7 @@
             </div>
           </v-card-text>
           <v-card-actions class="justify-end">
-            <v-btn @click="openDetailDialog" color="white" class="custom-btn">Pagar</v-btn>
+            <v-btn @click="openDetailDialog" color="#ffffff" class="custom-btn">Pagar</v-btn>
           </v-card-actions>
         </v-card>
 
@@ -59,7 +59,7 @@
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
-                <h3 class="mb-0">En Proceso</h3>
+                <h3 style="color:rgb(8, 0, 255);">En Proceso</h3>
               </v-col>
               <v-col class="d-flex justify-end">
                 <v-text-field
@@ -107,7 +107,7 @@
           <v-card-title>
             <v-row justify="space-between" align="center" class="w-100">
               <v-col>
-                <h3 class="mb-0">Completadas</h3>
+                <h3 style="color:rgb(8, 0, 255);">Completadas</h3>
               </v-col>
               <v-col class="d-flex justify-end">
                 <v-text-field
@@ -341,7 +341,7 @@ onMounted(() => {
 
 <style scoped>
 .fondo {
-  background-image: url('../../assets/iii.svg'); 
+  background-color: #ede8e6; 
   background-size: cover; 
   background-position: center; 
   background-repeat: no-repeat; 
@@ -401,8 +401,7 @@ onMounted(() => {
 }
 
 .custom-btn {
-  background-image: linear-gradient(to right, #1a2980 0%, #26d0ce 51%, #1a2980 100%);
-  color: #ffffff; 
+  background-color: #ffad00; 
   margin-left: 8px;
   border-radius: 4px;
   transition: background-position 0.5s ease;
@@ -413,6 +412,8 @@ onMounted(() => {
   background-position: right center; 
   color: #ffffff; 
 }
+
+
 /*-----------------------------------------------------------------------------------------*/
 
 
