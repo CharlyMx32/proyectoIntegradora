@@ -8,6 +8,7 @@
     <main>
       <v-main :class="{ 'transition-effect': isTransitioning }">
         <v-container class="main-container">
+          <!-- Contenedor para el eslogan y la información -->
           <v-row align="center" no-gutters>
             <v-col cols="12" md="6" class="slogan-col">
               <div class="slogan-container">
@@ -17,9 +18,8 @@
                 </h1>
               </div>
             </v-col>
-
-            <!-- Columna derecha para el texto de información del negocio -->
             <v-col cols="12" md="6">
+              <!-- Información del negocio -->
               <v-sheet class="info-box" elevation="2">
                 <p class="info-text">
                   <strong>CONÓCENOS</strong><br />
@@ -30,6 +30,20 @@
               </v-sheet>
             </v-col>
           </v-row>
+
+          <!-- Mapa -->
+          <v-row>
+            <v-col cols="12">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.655566511074!2d-103.41784522489935!3d25.51653121869297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fdb87c9af3bab%3A0x48699817edaff153!2sLa%20Fuente!5e0!3m2!1ses-419!2smx!4v1722614399479!5m2!1ses-419!2smx"
+                width="100%"
+                height="300"
+                style="border: 0; margin-top: 20px;"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </v-col>
+          </v-row>
         </v-container>
       </v-main>
     </main>
@@ -37,10 +51,32 @@
     <!-- Pie de página -->
     <footer>
       <v-container>
-        <v-row justify="center">
-          <v-col cols="12" sm="6" class="footer-text">
-            <p>&copy; 2024 HardwareSolutions. Todos los derechos reservados.</p>
-                       
+        <v-row>
+          <!-- Información de Contacto -->
+          <v-col cols="12" md="4" class="footer-info">
+            <h4>Contactos</h4>
+            <p>MundoElectronicoTRC@gmail.com</p>
+            <p>Teléfono: 8715265042</p>
+          </v-col>
+
+          <!-- Enlaces de Navegación -->
+          <v-col cols="12" md="4" class="footer-links">
+            <h4>Desarrolladores</h4>
+            <p>Edwin Lopez, Carlos Centeno</p>
+            <p>Diana Ochoa, Marbella Perez</p>
+          </v-col>
+
+          <!-- Iconos Sociales -->
+          <v-col cols="12" md="4" class="social-icons">
+            <v-btn icon href="https://www.facebook.com/profile.php?id=100054380206513" target="_blank" class="social-icon-btn">
+              <font-awesome-icon :icon="['fab', 'facebook']" />
+            </v-btn>
+            <v-btn icon href="https://wa.me/+1234567890" target="_blank" class="social-icon-btn">
+              <font-awesome-icon :icon="['fab', 'whatsapp']" />
+            </v-btn>
+            <v-btn icon href="https://instagram.com" target="_blank" class="social-icon-btn">
+              <font-awesome-icon :icon="['fab', 'instagram']" />
+            </v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -64,34 +100,47 @@ const menuItems = [
 </script>
 
 <style scoped>
-@keyframes in-circle-swoop {
-  from {
-    clip-path: var(--circle-top-right-out);
-  }
-  to {
-    clip-path: var(--circle-bottom-right-in);
-  }
+/* Asegura que html y body ocupen toda la altura del viewport */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
+/* Estilo principal para el contenedor del app */
 #inspire {
-  position: relative;
-  overflow: hidden;
-  font-family: 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
 }
 
+/* Estilo para el contenido principal */
 main {
-  flex: 1; /* Permite que el contenido principal crezca para llenar el espacio disponible */
+  flex: 1;
 }
 
-header {
-  margin-top: 15px;
+/* Estilo del pie de página */
+footer {
+  background-color: #11100e;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  flex-shrink: 0;
 }
 
-.v-main {
-  background-color: var(--v-background-base); /* Aplicar color de fondo del tema aquí */
+/* Estilos de los elementos del pie de página */
+.footer-info, .footer-links, .social-icons {
+  margin-bottom: 10px;
+}
+
+/* Estilo de los botones de iconos sociales */
+.social-icon-btn {
+  margin-right: 10px; /* Espacio entre los iconos */
+}
+
+.social-icon-btn:last-child {
+  margin-right: 0; /* Elimina el margen del último ícono */
 }
 
 /* Estilo del contenido principal */
@@ -99,86 +148,63 @@ header {
   padding: 20px;
 }
 
-.texto {
-  text-align: justify;
-  padding: 20px;
-}
-
+/* Estilo para la columna del eslogan */
 .slogan-col {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  margin-bottom: 40px; /* Añadir espacio debajo del eslogan */
 }
 
+/* Estilo del contenedor del eslogan */
 .slogan-container {
   position: relative;
   z-index: 1;
   text-align: center;
-  color: var(--v-text-base); /* Color del texto dependiendo del tema */
+  color: var(--v-text-base);
 }
 
 .slogan-text {
-  font-size: 3rem; /* Tamaño de fuente grande */
-  font-weight: bold; /* Negritas */
+  font-family: 'Calibre', Sans-serif;
+  font-size: 90.733px;
+  font-weight: bold;
   line-height: 1.2;
-  transform: translateZ(0);
+  position: relative;
+  padding: 0;
 }
 
-.info-box {
-  padding: 20px;
-  background-color: var(--v-background-base); /* Color de fondo del recuadro */
-  border-radius: 8px; /* Bordes redondeados */
-  color: var(--v-text-base); /* Color del texto dependiendo del tema */
-  text-align: center; /* Centra el texto dentro del recuadro */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px; /* Ajusta la altura mínima según el diseño */
-}
-
-.info-text {
-  text-align: center; /* Centra el texto dentro del contenedor */
-}
-
-.slogan-text {
-  font-family: 'Calibre', Sans-serif; /* Fuente Calibre */
-  font-size: 90.733px; /* Tamaño de fuente grande */
-  font-weight: bold; /* Negritas */
-  line-height: 1.2;
-  position: relative; /* Necesario para el posicionamiento del pseudo-elemento */
-  padding: 0; /* Elimina el padding para un ajuste preciso */
-}
-
+/* Añadir la subrayado al eslogan */
 .slogan-text::after {
   content: '';
   position: absolute;
-  left: 64px; /* Alinea la línea con el inicio del texto */
-  bottom: -2px; /* Ajusta la distancia de la línea desde la base del texto. Reduce este valor para subir la línea */
-  width: 79%; /* Ajusta el ancho de la línea al 100% del contenedor del texto */
-  height: 8px; /* Grosor de la línea */
-  background-color: rgb(8, 0, 255); /* Color de la línea */
-  z-index: -1; /* Asegura que la línea esté detrás del texto */
+  left: 50%;
+  bottom: -2px;
+  transform: translateX(-50%);
+  width: 79%;
+  height: 8px;
+  background-color: rgb(8, 0, 255);
+  z-index: -1;
 }
 
-/* Estilos para el pie de página */
-footer {
-  background-color: #11100e;
-  color: #fff;
-  padding: 20px 0;
+/* Estilo del contenedor de la información */
+.info-box {
+  padding: 20px;
+  background-color: var(--v-background-base);
+  border-radius: 8px;
+  color: var(--v-text-base);
   text-align: center;
-  flex-shrink: 0; /* Asegura que el pie de página no se reduzca */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  margin-top: 20px; /* Espacio superior para separar del eslogan */
 }
 
-.footer-text a {
-  color: #fff;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-.footer-text a:hover {
-  text-decoration: underline;
+/* Estilo del texto de información */
+.info-text {
+  text-align: center;
 }
 
 /* Media Queries */
@@ -189,6 +215,11 @@ footer {
 
   .info-box {
     padding: 10px;
+    margin-top: 15px; /* Ajustar el margen superior para pantallas pequeñas */
+  }
+
+  iframe {
+    height: 200px; /* Ajustar la altura del iframe para pantallas pequeñas */
   }
 }
 </style>
