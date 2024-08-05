@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" :class="{ 'dark-theme': isDarkMode }" style="height: 100vh; width: 100vw;">
+  <v-app id="inspire" :class="{ 'dark-theme': isDarkMode }" class="app-container">
     <!-- Encabezado -->
     <header>
       <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
@@ -8,9 +8,9 @@
     <main>
       <v-main :class="{ 'transition-effect': isTransitioning }">
         <v-container class="main-container">
-          <!-- Contenedor para el eslogan y la información -->
+          <!-- Contenedor para el eslogan -->
           <v-row align="center" no-gutters>
-            <v-col cols="12" md="6" class="slogan-col">
+            <v-col cols="12" class="slogan-col">
               <div class="slogan-container">
                 <h1 class="slogan-text">
                   Más que reparaciones,<br />
@@ -18,7 +18,11 @@
                 </h1>
               </div>
             </v-col>
-            <v-col cols="12" md="6">
+          </v-row>
+
+          <!-- Información del negocio y Mapa -->
+          <v-row>
+            <v-col cols="12" md="6" class="info-col">
               <!-- Información del negocio -->
               <v-sheet class="info-box" elevation="2">
                 <p class="info-text">
@@ -29,15 +33,12 @@
                 </p>
               </v-sheet>
             </v-col>
-          </v-row>
-
-          <!-- Mapa -->
-          <v-row>
-            <v-col cols="12">
+            <v-col cols="12" md="6">
+              <!-- Mapa -->
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.655566511074!2d-103.41784522489935!3d25.51653121869297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fdb87c9af3bab%3A0x48699817edaff153!2sLa%20Fuente!5e0!3m2!1ses-419!2smx!4v1722614399479!5m2!1ses-419!2smx"
                 width="100%"
-                height="300"
+                height="280"
                 style="border: 0; margin-top: 20px;"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
@@ -85,14 +86,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import HeaderComponent from './components/Generales/navBlancoo.vue'
+import { ref } from 'vue'
 
-// Estado y referencia a las rutas
 const isDarkMode = ref(false) // Estado para el tema oscuro
 const isTransitioning = ref(false) // Estado para controlar la animación
 
-// Manejo de clic en los botones de navegación
 const menuItems = [
   { name: 'Login', route: '/Login' },
   { name: 'Registrarme', route: '/register' }
@@ -175,17 +174,19 @@ footer {
   padding: 0;
 }
 
-/* Añadir la subrayado al eslogan */
-.slogan-text::after {
+.underline {
+  position: relative;
+  display: inline-block;
+}
+
+.underline::after {
   content: '';
   position: absolute;
-  left: 50%;
+  left: 0;
   bottom: -2px;
-  transform: translateX(-50%);
-  width: 79%;
+  width: 100%;
   height: 8px;
   background-color: rgb(8, 0, 255);
-  z-index: -1;
 }
 
 /* Estilo del contenedor de la información */
@@ -205,6 +206,13 @@ footer {
 /* Estilo del texto de información */
 .info-text {
   text-align: center;
+}
+
+/* Columna de la información y mapa */
+.info-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Media Queries */
