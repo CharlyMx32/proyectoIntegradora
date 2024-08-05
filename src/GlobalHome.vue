@@ -22,10 +22,10 @@
 
           <!-- Información del negocio y Mapa -->
           <v-row>
-            <v-col cols="12" md="6" class="info-col">
+            <v-col cols="12" md="6" class="info-col" >
               <!-- Información del negocio -->
-              <v-sheet class="info-box" elevation="2">
-                <p class="info-text">
+              <v-sheet class="info-box" elevation="2" >
+                <p class="info-text" >
                   <strong>CONÓCENOS</strong><br />
                   En HardwareSolutions, ofrecemos un servicio integral para la reparación de <strong>teléfonos móviles</strong>, <strong>computadoras y laptops</strong>, <strong>electrodomésticos</strong>, y <strong>televisores</strong>. Diagnósticos rápidos y soluciones efectivas para problemas como pantallas rotas, baterías defectuosas, fallos de hardware y software, y más.<br />
                   <strong>Servicio Rápido y Eficiente:</strong> Garantizamos tiempos de reparación cortos para que vuelvas a utilizar tus dispositivos sin demoras.<br />
@@ -55,14 +55,14 @@
         <v-row>
           <!-- Información de Contacto -->
           <v-col cols="12" md="4" class="footer-info">
-            <h4>Contactos</h4>
+            <h4 class="footer-title">Contactos</h4>
             <p>MundoElectronicoTRC@gmail.com</p>
             <p>Teléfono: 8715265042</p>
           </v-col>
 
           <!-- Enlaces de Navegación -->
           <v-col cols="12" md="4" class="footer-links">
-            <h4>Desarrolladores</h4>
+            <h4 class="footer-title">Desarrolladores</h4>
             <p>Edwin Lopez, Carlos Centeno</p>
             <p>Diana Ochoa, Marbella Perez</p>
           </v-col>
@@ -131,6 +131,11 @@ footer {
 /* Estilos de los elementos del pie de página */
 .footer-info, .footer-links, .social-icons {
   margin-bottom: 10px;
+}
+
+/* Estilo de los títulos del pie de página */
+.footer-title {
+  color: #FFAD00;
 }
 
 /* Estilo de los botones de iconos sociales */
