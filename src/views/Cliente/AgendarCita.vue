@@ -2,7 +2,7 @@
   <v-app class="fondo">
     <v-container class="d-flex justify-center align-center fill-height">
       <v-card-text>
-        <h1 class="title-header">Agenda tu Cita</h1>
+        <h3 class="title-header" style="color:  rgb(8, 0, 255); margin-top: -80px;">Agenda tu cita</h3>
         <v-form @submit.prevent="agendarCita">
           <v-row>
             <!-- Columna 1 -->
@@ -177,7 +177,7 @@ const agendarCita = async () => {
   height: 100%;
 }
 .title-header {
-  color:  rgb(8, 0, 255);;
+  color:  rgb(8, 0, 255);
   text-align: center;
   font-size: 50px;
 }
