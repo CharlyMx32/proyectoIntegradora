@@ -213,7 +213,7 @@ body {
 }
 
 .small-footer {
-  height: 10px; /* Ajusta la altura del pie de página */
+  height: 1%; /* Ajusta la altura del pie de página */
   padding: 10px 0; /* Ajusta el padding según sea necesario */
 }
 
