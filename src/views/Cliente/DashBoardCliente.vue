@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <Welcome :userName="userName" v-if="showWelcome" />
-
     <v-container fluid v-show="!showWelcome"> </v-container>
     <header>
       <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
@@ -22,10 +21,6 @@ import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticaci
 
 const authStore = useAuthStore()
 const showWelcome = ref(true)
-
-setTimeout(() => {
-  showWelcome.value = false
-}, 1500) // Duración de la animación en milisegundos
 
 const userName = computed(() => authStore.user?.nombre || 'Admin')
 
