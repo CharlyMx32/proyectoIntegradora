@@ -62,7 +62,7 @@
           <!-- Información de Contacto -->
           <v-col cols="12" md="4" class="footer-info">
             <h4 class="footer-title">Contactos</h4>
-            <p>MundoElectronicoTRC@gmail.com</p>
+            <p>Correo: MundoElectronicoTRC@gmail.com</p>
             <p>Teléfono: 8715265042</p>
           </v-col>
 
@@ -206,6 +206,19 @@ footer {
   z-index: 1;
   text-align: center;
   color: var(--v-text-base);
+  animation: fadeInUp 2s ease-out;
+}
+
+/* Animación del eslogan */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .slogan-text {
@@ -273,4 +286,6 @@ footer {
     height: 200px; /* Ajustar la altura del iframe para pantallas pequeñas */
   }
 }
+
+
 </style>
