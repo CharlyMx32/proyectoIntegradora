@@ -1,8 +1,6 @@
 <template>
   <v-app >
-
     <v-content>
-      <br>
       <v-sheet 
         :elevation="24" 
         :height="500" 
@@ -20,7 +18,9 @@
             <v-col cols="12" md="6" class="text-center">
               <p class="white-text">Bienvenido a <br> HardwareSolutions</p>
              
-              <br />
+              <br>
+              <br>
+              <br>
               <v-btn color="#ffad00" style="width: 200px" @click="clickAgenda">Agendar Cita</v-btn>
             </v-col>
           </v-row>
@@ -95,14 +95,12 @@ const clickAgenda = () => {
   background: #ede8e6
  
 }
-.white-text {
-  color: rgb(255, 255, 255);
-}
+
 .transparent-btn {
   background-color: transparent;
-  color: currentColor; /* O puedes especificar un color aquí */
-  box-shadow: none; /* Elimina cualquier sombra que pueda tener el botón */
-  border: none; /* Elimina cualquier borde */
+  color: currentColor; 
+  box-shadow: none; 
+  border: none; 
 }
 
 .social-icons .v-btn {
@@ -131,30 +129,27 @@ const clickAgenda = () => {
 
 .text {
   color: #000000;
-  font-family: sans-serif;
   text-align: center;
-  font-size: 20px; /* Cambiado a 70px */
-  font-family: 'Inter';
+  font-size: 20px; 
+  font-family:'Roboto', sans-serif;
 }
 .white-text {
   color: #fff;
-  font-family: inria-serif;
   text-align: center;
-  font-size: 70px; /* Cambiado a 70px */
-  font-family: 'Inter';
+  font-size: 40px; 
+  font-family:  'Roboto', sans-serif;
 }
 .subtitulo{
   color: #000000;
-  font-family: sans-serif;
   text-align: center;
-  font-size: 40px; /* Cambiado a 70px */
-  font-family: 'Inter';
+  font-size: 40px; 
+  font-family:  'Roboto', sans-serif;
 }
 .transparent-btn {
   background-color: transparent;
-  color: currentColor; /* O puedes especificar un color aquí */
-  box-shadow: none; /* Elimina cualquier sombra que pueda tener el botón */
-  border: none; /* Elimina cualquier borde */
+  color: currentColor; 
+  box-shadow: none; 
+  border: none; 
 }
 /*-------------PIE DE PAGINA---------------*/
 
@@ -178,11 +173,11 @@ const clickAgenda = () => {
 
 /* Estilo de los botones de iconos sociales */
 .social-icon-btn {
-  margin-right: 10px; /* Espacio entre los iconos */
+  margin-right: 10px;
 }
 
 .social-icon-btn:last-child {
-  margin-right: 0; /* Elimina el margen del último ícono */
+  margin-right: 0;
 }
 
 </style>
