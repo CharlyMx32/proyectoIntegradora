@@ -5,9 +5,9 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
+          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
             Citas Linea
-          </h3>
+          </h1>
         </v-flex>
       </v-card-title>
       <v-card-text class="p-6 space-y-6">
@@ -62,7 +62,7 @@
     <!-- Componente adicional -->
     <div v-if="selectedOrder" class="additional-component-container">
       <!-- Aquí colocas el contenido del componente adicional -->
-      <p>Detalles de la cita seleccionada:</p>
+      <h2 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">Detalles de la cita:</h2>
       <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
       <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
       <p>Producto: {{ selectedOrder.Producto }}</p>
@@ -167,9 +167,9 @@ const realizarPago = () => {
 .additional-component-container {
   margin-top: 20px;
   padding: 10px;
-  background-color: #3961da; /* Fondo verde claro para el contenedor del componente adicional */
-  border: 1px solid #c8e6c9;
+  background-color: #ffffff; /* Fondo verde claro para el contenedor del componente adicional */
   border-radius: 4px;
+  border: 1px solid #d1d1d1;
 }
 .custom-btn {
   background-color: #FFAD00;

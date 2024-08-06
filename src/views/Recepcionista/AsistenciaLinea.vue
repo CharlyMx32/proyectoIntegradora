@@ -6,7 +6,7 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo ">
-            Asistencia Citas En Linea
+            ASISTENCIA CITA
           </h3>
         </v-flex>
       </v-card-title>
@@ -55,19 +55,12 @@
               </tr>
             </tbody>
           </v-table>
+          <div>
+          <v-btn @click="markAsAttended">ASISTIÓ</v-btn>
+        </div>
         </div>
       </v-card-text>
     </v-card>
-
-    <!-- Componente adicional -->
-    <div v-if="selectedOrder" class="additional-component-container">
-      <p>CITA SELECCIONADA:</p>
-      <p>Nombre: {{ selectedOrder.Nombre_Cliente}}</p>
-      <p>Fecha Cita: {{ selectedOrder.Fecha }}</p>
-      <p>Hora: {{ selectedOrder.Hora }}</p>
-      <p>Producto: {{ selectedOrder.Producto }}</p>
-      <v-btn @click="markAsAttended" color="primary">ASISTIÓ</v-btn>
-    </div>
   </v-container>
 </template>
 
@@ -154,20 +147,19 @@ const markAsAttended = () => {
 .additional-component-container {
   margin-top: 20px;
   padding: 10px;
-  background-color: #49a3f8; /* Fondo verde claro para el contenedor del componente adicional */
+  background-color: #ffffff; /* Fondo verde claro para el contenedor del componente adicional */
   border-radius: 4px;
+  border: 1px solid #d1d1d1;
 }
 .v-btn {
-  background-image: linear-gradient(to right, #1a2980 0%, #26d0ce 51%, #1a2980 100%);
-  color: #ffffff; /* Texto blanco */
+  background-color: #FFAD00;
+  color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;
-  transition: background-position 0.5s ease;
-  background-size: 200% auto;
+  transition: background-color 0.5s ease;
 }
 
 .v-btn:hover {
-  background-position: right center; /* Cambia el fondo al hacer hover */
-  color: #ffffff; /* Texto blanco */
+  background-color: #e69700;
 }
 </style>

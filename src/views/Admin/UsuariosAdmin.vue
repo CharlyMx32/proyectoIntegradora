@@ -1,142 +1,182 @@
 <template>
-  <v-data-table-server
-    v-model:items-per-page="itemsPerPage"
-    :headers="headers"
-    :items="serverItems"
-    :items-length="totalItems"
-    :loading="loading"
-    :search="search"
-    item-value="name"
-    @update:options="loadItems"
-  >
-    <template v-slot:tfoot>
-      <tr>
-        <td>
-          <v-text-field
-            v-model="name"
-            class="ma-2"
-            density="compact"
-            placeholder="Search name..."
-            hide-details
-            
-          ></v-text-field>
-        </td>
-        <td>
-          <v-text-field
-            v-model="calories"
-            class="ma-2"
-            density="compact"
-            placeholder="Minimum calories"
-            type="number"
-            hide-details
-            
-          ></v-text-field>
-        </td>
-      </tr>
-    </template>
-  </v-data-table-server>
+  <v-container>
+    <!-- Tarjeta principal -->
+    <v-card
+      class="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-2xl my-card"
+    >
+      <v-card-title>
+        <div class="flex-col space-y-1.5 p-6">
+          <h3
+            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text"
+          >
+            Citas en línea
+          </h3>
+        </div>
+      </v-card-title>
+
+      <v-card-text class="p-6 space-y-6">
+        <v-form @submit.prevent="fetchData" class="mb-4 v-form">
+          <v-row>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="filters.nombre"
+                label="Nombre del Usuario"
+                placeholder="Ingrese el nombre del usuario"
+              />
+            </v-col>
+          </v-row>
+        </v-form>
+
+        <!-- Tabla de datos -->
+        <div class="table-container">
+          <v-table density="compact">
+            <thead>
+              <tr>
+                <th class="text-left">Nombre Usuario</th>
+                <th class="text-left">Rol</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="item in filteredOrders"
+                :key="item.id"
+                :class="{ 'selected-row': selectedOrder && selectedOrder.id === item.id }"
+                @click="selectOrder(item)"
+              >
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.rol }}</td>
+              </tr>
+            </tbody>
+          </v-table>
+        </div>
+
+        <!-- Botones para acciones adicionales -->
+        <div v-if="selectedOrder" class="button-container">
+          <v-btn @click="showDetailModal = true" style="background-color: #ffad00; color: white">
+            Ver Detalles
+          </v-btn>
+        </div>
+      </v-card-text>
+    </v-card>
+
+    <!-- Modal de Detalles -->
+    <v-dialog v-model="showDetailModal" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Detalles del Usuario</span>
+        </v-card-title>
+        <v-card-text>
+          <v-list>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Nombre:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.nombre }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Correo:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.correo }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Rol:</v-list-item-title>
+                <v-select v-model="selectedOrder.rol" :items="roles" label="Seleccione un rol" />
+              </v-list-item-content>
+            </v-list-item>
+
+            <!-- Añadir más campos si es necesario -->
+          </v-list>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" text @click="showDetailModal = false"> Cerrar </v-btn>
+          <v-btn color="primary" @click="updateUserRole"> Guardar Cambios </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-container>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
 
-const desserts = [
-  { name: 'Frozen Yogurt', calories: 159, fat: 6.0, carbs: 24, protein: 4.0, iron: '1' },
-  { name: 'Jelly bean', calories: 375, fat: 0.0, carbs: 94, protein: 0.0, iron: '0' },
-  { name: 'KitKat', calories: 518, fat: 26.0, carbs: 65, protein: 7, iron: '6' },
-  { name: 'Eclair', calories: 262, fat: 16.0, carbs: 23, protein: 6.0, iron: '7' },
-  { name: 'Gingerbread', calories: 356, fat: 16.0, carbs: 49, protein: 3.9, iron: '16' },
-  { name: 'Ice cream sandwich', calories: 237, fat: 9.0, carbs: 37, protein: 4.3, iron: '1' },
-  { name: 'Lollipop', calories: 392, fat: 0.2, carbs: 98, protein: 0, iron: '2' },
-  { name: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3, iron: '8' },
-  { name: 'Honeycomb', calories: 408, fat: 3.2, carbs: 87, protein: 6.5, iron: '45' },
-  { name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, iron: '22' }
-]
+const orders = ref([])
+const filters = ref({ nombre: '' })
+const selectedOrder = ref(null)
+const showDetailModal = ref(false)
+const roles = ref(['Admin', 'Cliente', 'Recepcionista', 'Tecnico']) // Los roles disponibles
 
-const FakeAPI = {
-  async fetch({ page, itemsPerPage, sortBy, search }) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const start = (page - 1) * itemsPerPage
-        const end = start + itemsPerPage
-        const items = desserts.slice().filter((item) => {
-          if (search.name && !item.name.toLowerCase().includes(search.name.toLowerCase())) {
-            return false
-          }
-
-          if (search.calories && !(item.calories >= Number(search.calories))) {
-            return false
-          }
-
-          return true
-        })
-
-        if (sortBy.length) {
-          const sortKey = sortBy[0].key
-          const sortOrder = sortBy[0].order
-          items.sort((a, b) => {
-            const aValue = a[sortKey]
-            const bValue = b[sortKey]
-            return sortOrder === 'desc' ? bValue - aValue : aValue - bValue
-          })
-        }
-
-        const paginated = items.slice(start, end)
-
-        resolve({ items: paginated, total: items.length })
-      }, 500)
-    })
+const fetchData = async () => {
+  try {
+    const { nombre } = filters.value
+    const response = await axios.get('http://hs.com/TU', { params: { nombre } })
+    console.log('Data fetched:', response.data)
+    orders.value = Array.isArray(response.data) ? response.data : []
+  } catch (error) {
+    console.error('Error fetching orders:', error)
   }
 }
 
-// Reactive variables
-const itemsPerPage = ref(5)
-const headers = [
-  { title: 'Dessert (100g serving)', align: 'start', sortable: false, key: 'name', class: 'header-text' },
-  { title: 'Calories', key: 'calories', align: 'end', class: 'header-text' },
-  { title: 'Fat (g)', key: 'fat', align: 'end', class: 'header-text' },
-  { title: 'Carbs (g)', key: 'carbs', align: 'end', class: 'header-text' },
-  { title: 'Protein (g)', key: 'protein', align: 'end', class: 'header-text' },
-  { title: 'Iron (%)', key: 'iron', align: 'end', class: 'header-text' }
-]
-const serverItems = ref([])
-const loading = ref(true)
-const totalItems = ref(0)
-const name = ref('')
-const calories = ref('')
-const search = ref('')
-
-// Watchers
-watch(name, () => {
-  search.value = String(Date.now())
-})
-watch(calories, () => {
-  search.value = String(Date.now())
-})
-
-// Methods
-const loadItems = ({ page, itemsPerPage, sortBy }) => {
-  loading.value = true
-  FakeAPI.fetch({
-    page,
-    itemsPerPage,
-    sortBy,
-    search: { name: name.value, calories: calories.value }
-  }).then(({ items, total }) => {
-    serverItems.value = items
-    totalItems.value = total
-    loading.value = false
+const filteredOrders = computed(() => {
+  return orders.value.filter((order) => {
+    return order.nombre.toLowerCase().includes(filters.value.nombre.toLowerCase())
   })
+})
+
+onMounted(() => {
+  fetchData()
+})
+
+const selectOrder = (order) => {
+  console.log('Order selected:', order)
+  selectedOrder.value = order
+  showDetailModal.value = true
+}
+
+const updateUserRole = async () => {
+  try {
+    const { id, rol } = selectedOrder.value
+    await axios.post('http://hs.com/update-role', { id, rol })
+    console.log('User role updated:', { id, rol })
+    showDetailModal.value = false
+    // Puedes actualizar la lista de pedidos si es necesario
+  } catch (error) {
+    console.error('Error updating user role:', error)
+  }
 }
 </script>
 
 <style scoped>
-.header-text {
-  color: #0800FF;
+.my-card {
+  background-color: #f7f7f7;
+  border: 1px solid #d1d1d1;
 }
 
-.search-field {
-  background-color: #FFAD00;
-  color: white;
+.table-container {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-top: 0px;
+}
+
+.v-table th,
+.v-table td {
+  text-align: left;
+  padding: 8px;
+}
+
+.v-table th {
+  background-color: #49a3f8;
+}
+
+.selected-row {
+  background-color: rgba(0, 38, 255, 0.658);
+}
+
+.title-text {
+  color: #0800ff;
 }
 </style>
