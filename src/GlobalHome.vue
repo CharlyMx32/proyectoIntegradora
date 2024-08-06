@@ -171,7 +171,7 @@ footer {
   z-index: 1;
   text-align: center;
   color: var(--v-text-base);
-  animation: fadeInUp 1s ease-out;
+  animation: fadeInUp 2.5s ease-out;
 }
 
 /* Animación del eslogan */
