@@ -40,9 +40,10 @@ import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticaci
 
 const navItems = [
   { title: 'Pagina Principal', to: '/PP' },
-  { title: 'Agendar Citas', to: '/AC' },
-  { title: 'Asistencia Linea', to: '/CPL' },
-  { title: 'Asignar Citas', to: '/ASC' },
+  { title: 'Agendar Citas', to: '/AGC' },
+  { title: 'Asistencia Linea', to: '/AL' },
+  { title: 'Asignar Cita', to: '/AC' },
+  { title: 'Asignar Cita Fisico', to: '/ACF' },
   { title: 'Citas Linea', to: '/CL' },
   { title: 'Citas Fisico', to: '/CF' }
 ]

@@ -28,6 +28,7 @@ import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
 import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
+import asignarCitaFisica from '@/views/Recepcionista/Asignar Cita Fisico.vue'
 import citasLinea from '@/views/Recepcionista/CitasLinea.vue'
 import CitasFisico from '@/views/Recepcionista/CitasFisico.vue'
 import asistenciaLinea from '@/views/Recepcionista/AsistenciaLinea.vue'
@@ -60,9 +61,10 @@ const routes = [
     children: [
       { path: '/PP', component: paginaPrincipal },
       { path: '', redirect: 'PP' },
-      { path: '/CPL', component: asistenciaLinea },
-      { path: '/AC', component: agendarCitas },
-      { path: '/ASC', component: asignarCita },
+      { path: '/AL', component: asistenciaLinea },
+      { path: '/AGC', component: agendarCitas },
+      { path: '/AC', component: asignarCita },
+      { path: '/ACf', component: asignarCitaFisica },
       { path: '/CL', component: citasLinea },
       { path: '/CF', component: CitasFisico }
     ]
