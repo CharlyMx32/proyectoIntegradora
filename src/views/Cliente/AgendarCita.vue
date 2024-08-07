@@ -112,13 +112,12 @@ import { format, isSunday, isBefore, isAfter, addDays, eachMinuteOfInterval } fr
 
 // Datos para los productos
 const products = [
-  'Laptop',
-  'Smartphone',
+ 'Laptop',
+  'Celular',
   'Tablet',
   'Impresora',
   'Televisor',
-  'Auriculares',
-  'Cámara'
+  'Otros'
 ]
 
 const selectedDate = ref(null);
