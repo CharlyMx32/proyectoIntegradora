@@ -5,7 +5,7 @@
         <!-- Fondo de la Página -->
         <v-sheet
           :elevation="24"
-          class="position-relative d-flex align-center justify-center"
+          class="position-relative d-flex align-center justify-center sheet-background"
           height="500"
           style="overflow: hidden;"
         >
@@ -158,6 +158,10 @@ footer {
   text-align: center;
 }
 
+.sheet-background {
+  background-color: #000000; /* Color de fondo del contenedor de la imagen */
+}
+
 @media (max-width: 600px) {
   .white-text {
     font-size: 30px;
@@ -165,14 +169,6 @@ footer {
 
   .subtitulo {
     font-size: 30px;
-  }
-
-  .text {
-    font-size: 16px;
-  }
-
-  .v-btn {
-    width: 100%;
   }
 }
 </style>
