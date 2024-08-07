@@ -30,16 +30,18 @@ export const useAuthStore = defineStore({
           localStorage.setItem('clienteId', data.data.clienteId) // También guardarlo en localStorage si es necesario
         } else {
           console.error('Usuario o token no encontrado en la respuesta:', data.data.message)
+          throw new Error(data.data.message) // Lanzar un error para manejarlo en el catch
         }
       } catch (error) {
         console.error('Error en el inicio de sesión:', error)
+        throw error // Re-lanzar el error si es necesario para manejarlo en el componente
       }
     },
     logout() {
       this.user = null
       this.token = null
       this.clienteId = null // Limpiar clienteId al cerrar sesión
-      localStorage.removeItem('Token')
+      localStorage.removeItem('token')
       localStorage.removeItem('clienteId') // También eliminar clienteId de localStorage
     },
     async checkAuth() {
