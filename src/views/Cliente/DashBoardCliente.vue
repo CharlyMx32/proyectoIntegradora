@@ -14,21 +14,35 @@
 </template>
 
 <script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticación en lugar del de usuario
 import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
 import HeaderComponent from '@/components/Generales/navBlancoo.vue'
-import { ref, computed } from 'vue'
-import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticación en lugar del de usuario
 
 const authStore = useAuthStore()
 const showWelcome = ref(true)
 
+// Obtener el nombre del usuario desde el store
 const userName = computed(() => authStore.user?.nombre || 'Admin')
 
 // Manejo de clic en los botones de navegación
 const menuItems = [
   { name: 'Agendar', route: '/Agendar' },
-  { name: 'Segimiento', route: '/Pedir' }
+  { name: 'Segimiento', route: '/Pedir' },
+  { name: 'Cerrar Sesion', route: '/' }
 ]
+
+// Verificar si la bienvenida ya se ha mostrado antes
+onMounted(() => {
+  const welcomeShown = localStorage.getItem('welcomeShown')
+  if (welcomeShown) {
+    showWelcome.value = false
+  } else {
+    // Mostrar la bienvenida y marcarla como mostrada en localStorage
+    showWelcome.value = true
+    localStorage.setItem('welcomeShown', 'true')
+  }
+})
 </script>
 
 <style scoped></style>
