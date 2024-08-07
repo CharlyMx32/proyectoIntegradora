@@ -114,4 +114,10 @@ router.beforeEach(async (to, from, next) => {
   }
 })
 
+router.afterEach((to) => {
+  if (to.meta.requiresAuth) {
+    history.pushState(null, null, location.href)
+  }
+})
+
 export default router
