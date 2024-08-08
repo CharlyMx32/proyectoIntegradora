@@ -84,6 +84,7 @@ const routes = [
     meta: { requiresAuth: true, role: 1 },
     children: [
       { path: '/RU', component: registroUsuarios },
+      { path: '', redirect: '/RU' },
       { path: '/DS', component: detalleServicios },
       { path: '/UA', component: UsuariosAdmin },
       { path: '/ServiciosFisicos', component: detalleServiciosFisicos }
