@@ -7,7 +7,6 @@
         Cerrar Sesión
       </v-btn>
     </v-row>
-
     <v-row justify="center" class="py-4">
       <v-col cols="12" md="10">
         <!-- ESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
