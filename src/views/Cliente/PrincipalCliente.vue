@@ -137,7 +137,7 @@ footer {
 }
 
 .v-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(39, 37, 37, 0.1);
 }
 
 .v-sheet {
