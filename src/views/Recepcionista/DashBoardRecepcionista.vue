@@ -39,7 +39,6 @@ import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticación en lugar del de usuario
 
 const navItems = [
-  { title: 'Pagina Principal', to: '/PP' },
   { title: 'Agendar Citas', to: '/AGC' },
   { title: 'Asistencia Linea', to: '/AL' },
   { title: 'Asignar Cita', to: '/AC' },

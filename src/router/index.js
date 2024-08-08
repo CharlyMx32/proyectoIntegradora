@@ -25,7 +25,6 @@ import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
 
 // mar lineas
-import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
 import asignarCitaFisica from '@/views/Recepcionista/Asignar Cita Fisico.vue'
@@ -59,10 +58,9 @@ const routes = [
     component: DashBoardRecepcionista,
     meta: { requiresAuth: true, role: 3 },
     children: [
-      { path: '/PP', component: paginaPrincipal },
-      { path: '', redirect: 'PP' },
       { path: '/AL', component: asistenciaLinea },
       { path: '/AGC', component: agendarCitas },
+      { path: '', redirect: 'AGC' },
       { path: '/AC', component: asignarCita },
       { path: '/ACf', component: asignarCitaFisica },
       { path: '/CL', component: citasLinea },
