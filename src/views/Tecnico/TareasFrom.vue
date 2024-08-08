@@ -1,8 +1,14 @@
 <template>
   <v-app class="fondo">
+    <!-- Botón de Cerrar Sesión -->
+    <v-row justify="end" class="py-2 px-4">
+      <v-btn @click="logout" class="custom-btn logout-btn">
+        <v-icon left>mdi-logout</v-icon>
+        Cerrar Sesión
+      </v-btn>
+    </v-row>
     <v-row justify="center" class="py-4">
       <v-col cols="12" md="10">
-
         <!-- ESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
         <v-card class="mb-6" outlined>
           <v-card-title>
@@ -270,9 +276,9 @@
     </v-row>
   </v-app>
 </template>
-
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router'; // Importar useRouter para redirección
 
 const filterText1 = ref('');
 const filterText2 = ref('');
@@ -295,6 +301,8 @@ const selectedStateFilter = ref(''); // Filtro por estado
 const tareasAsignadas = ref([]);
 const tareasEnProceso = ref([]);
 const tareasCompletadas = ref([]);
+
+const router = useRouter(); // Obtener instancia del enrutador
 
 const filteredItems1 = computed(() => {
   const filter = filterText1.value.toLowerCase();
@@ -380,6 +388,11 @@ const updateStatus = () => {
   }
 };
 
+const logout = () => {
+  // Aquí puedes implementar la lógica para cerrar sesión, como limpiar el estado del usuario y redirigir a la página de inicio de sesión
+  router.push('/login'); // Redirigir a la página de inicio de sesión
+};
+
 // SON LAS APIS CHAVALES, NO LES MUEVAN POR QUE ME TARDE UN MONTON  (T-T) //
 const fetchData = async () => {
   try {
@@ -412,7 +425,6 @@ onMounted(() => {
   fetchData();
 });
 </script>
-
 <style scoped>
 .fondo {
   background: rgb(237, 232, 230);
@@ -494,5 +506,15 @@ onMounted(() => {
 
 .custom-btn {
   margin-left: 8px;
+}
+
+/* Estilo para el botón de cerrar sesión */
+.logout-btn {
+  background-color: #FFAD00; /* Color de fondo igual a los otros botones */
+  color: #ffffff; /* Color del texto */
+}
+
+.logout-btn:hover {
+  background-color: #e0a800; /* Color de fondo en hover igual a los otros botones */
 }
 </style>

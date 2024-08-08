@@ -141,13 +141,12 @@ import { useAuthStore } from '@/stores/authStore' // Asegúrate de que este sea 
 
 // Datos para los productos
 const products = [
-  'Laptop',
-  'Smartphone',
+ 'Laptop',
+  'Celular',
   'Tablet',
   'Impresora',
   'Televisor',
-  'Auriculares',
-  'Cámara'
+  'Otros'
 ]
 
 const selectedDate = ref(null)
