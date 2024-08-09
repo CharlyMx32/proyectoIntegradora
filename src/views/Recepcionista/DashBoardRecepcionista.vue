@@ -47,7 +47,7 @@ const navItems = [
   { title: 'Citas Fisico', to: '/CF' }
 ]
 
-const mini = ref(false)
+const mini = ref(true)
 const authStore = useAuthStore()
 const showWelcome = ref(true)
 
