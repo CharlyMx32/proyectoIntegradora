@@ -106,23 +106,20 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue'
+import axios from 'axios'
+import dayjs from 'dayjs'
+import 'dayjs/locale/es'
 
-// Datos para los productos
-const products = [
-  'Laptop',
-  'Smartphone',
-  'Tablet',
-  'Impresora',
-  'Televisor',
-  'Auriculares',
-  'Cámara'
-]
+// Lista de productos disponibles
+const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
 
-const selectedDate = ref(null);
-const selectedTime = ref(null);
-const selectedProduct = ref(null);
-const problemDetails = ref('');
+// Variables reactivas para los datos seleccionados en el formulario
+const selectedDate = ref(null)
+const selectedTime = ref(null)
+const selectedProduct = ref(null)
+const problemDetails = ref('')
+const busyHours = ref([]) // Horas ocupadas
 
 // Validación de fechas permitidas
 const allowedDates = (date) => {
@@ -287,7 +284,6 @@ watch(selectedDate, async (newDate) => {
 }
 
 /*Pie de pagina */
-
 /* Estilo del pie de página */
 footer {
   background-color: #11100e;
