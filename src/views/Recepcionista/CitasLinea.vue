@@ -41,10 +41,10 @@
             <tbody>
               <tr
                 v-for="item in filteredOrders"
-                :key="item.id_orden_cita"
+                :key="item.id_detalle_linea"
                 :class="{
                   'selected-row':
-                    selectedOrder && selectedOrder.id_orden_cita === item.id_orden_cita
+                    selectedOrder && selectedOrder.id_detalle_linea === item.id_detalle_linea
                 }"
                 @click="selectOrder(item)"
               >
@@ -71,8 +71,22 @@
       <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Garantia }}</p>
-      <v-btn @click="usarGarantia" class="custom-btn">USAR GARANTÍA</v-btn>
-      <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
+
+      <v-btn
+  v-if="selectedOrder && selectedOrder.Garantia !== 'expirada' && selectedOrder.Garantia !== 'usada'"
+  @click="usarGarantia"
+  class="custom-btn"
+>
+  USAR GARANTÍA
+</v-btn>
+
+
+      <v-btn
+        @click="realizarPago"
+        class="custom-btn"
+      >
+        PAGO
+      </v-btn>
     </div>
   </v-container>
 </template>
@@ -115,14 +129,29 @@ const selectOrder = (order) => {
   selectedOrder.value = order
 }
 
-const usarGarantia = () => {
-  alert(`Uso la garantia el cliente ${selectedOrder.value.Nombre_Cliente}.`)
-  // Aquí puedes agregar la lógica para usar la garantía
+const usarGarantia = async () => {
+  try {
+    const response = await axios.post('http://hs.com/garantialinea', {
+      id_detalle_linea: selectedOrder.value.id_detalle_linea, // Enviamos el ID de la cita para identificar cuál usar
+    })
+    alert(`Garantía utilizada para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    console.log('Response:', response.data)
+  } catch (error) {
+    console.error('Error al usar la garantía:', error)
+  }
 }
 
-const realizarPago = () => {
-  alert(`Se realizo el pago del cliente ${selectedOrder.value.Nombre_Cliente}.`)
-  // Aquí puedes agregar la lógica para realizar el pago
+const realizarPago = async () => {
+  try {
+    const response = await axios.post('http://hs.com/pagolinea', {
+      id_detalle_linea: selectedOrder.value.id_detalle_linea, // Enviamos el ID de la cita para identificar cuál pagar
+      pago: 'Realizado' // Puedes enviar la información adicional que consideres necesaria
+    })
+    alert(`Pago realizado para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    console.log('Response:', response.data)
+  } catch (error) {
+    console.error('Error al realizar el pago:', error)
+  }
 }
 </script>
 

@@ -102,6 +102,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import axios from 'axios'
+
 const products = [
   'Laptop',
   'Celular',
@@ -110,6 +112,7 @@ const products = [
   'Televisor',
   'Otros'
 ]
+
 const form = ref({
   nombre: '',
   apellidoPaterno: '',
@@ -122,13 +125,31 @@ const form = ref({
 const showAgendarCita = ref(false)
 const isSubmitting = ref(false)
 
-const submitForm = () => {
+const submitForm = async () => {
   isSubmitting.value = true
-  // Aquí puedes agregar la lógica para enviar el formulario
-  setTimeout(() => {
+
+  try {
+    // Enviar la solicitud POST a la URL especificada con los datos del formulario
+    const response = await axios.post('http://hs.com/CitasFisicas', form.value)
+
+    // Aquí puedes manejar la respuesta si es necesario
+    console.log('Respuesta del servidor:', response.data)
+
+    // Restablecer el formulario y regresar a la página principal
+    form.value = {
+      nombre: '',
+      apellidoPaterno: '',
+      apellidoMaterno: '',
+      telefono: '',
+      producto: '',
+      articulo: ''
+    }
+    showAgendarCita.value = false
+  } catch (error) {
+    console.error('Error al enviar el formulario:', error)
+  } finally {
     isSubmitting.value = false
-    showAgendarCita.value = false // Regresar a la página principal después de enviar el formulario
-  }, 2000)
+  }
 }
 </script>
 

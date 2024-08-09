@@ -56,8 +56,8 @@
             </tbody>
           </v-table>
           <div>
-          <v-btn @click="markAsAttended">ASISTIÓ</v-btn>
-        </div>
+            <v-btn @click="markAsAttended">ASISTIÓ</v-btn>
+          </div>
         </div>
       </v-card-text>
     </v-card>
@@ -65,41 +65,41 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
 
-const orders = ref([])
+const orders = ref([]);
 const filters = ref({
   clientName: '',
-})
-const selectedOrder = ref(null)
+});
+const selectedOrder = ref(null);
 
 const fetchData = async () => {
   try {
-    const { clientName } = filters.value
+    const { clientName } = filters.value;
     const response = await axios.get('http://hs.com/AsistenciaCitas', {
       params: {
         client_name: clientName,
       }
-    })
+    });
 
-    orders.value = Array.isArray(response.data) ? response.data : []
+    orders.value = Array.isArray(response.data) ? response.data : [];
   } catch (error) {
-    console.error('Error fetching orders:', error)
+    console.error('Error fetching orders:', error);
   }
-}
+};
 
-onMounted(fetchData)
+onMounted(fetchData);
 
 const filteredOrders = computed(() => {
   return orders.value.filter(order =>
     order.Nombre_Cliente.toLowerCase().includes(filters.value.clientName.toLowerCase())
-  )
-})
+  );
+});
 
 const selectOrder = (order) => {
-  selectedOrder.value = order
-}
+  selectedOrder.value = order;
+};
 
 const markAsAttended = async () => {
   if (!selectedOrder.value) {
@@ -108,17 +108,17 @@ const markAsAttended = async () => {
   }
 
   try {
-    const response = await axios.post('http://hs.com/AsistenciaCitas', {
-      asistencia: true, // Suponiendo que "asistencia" es un valor booleano
+    await axios.post('http://hs.com/asistencia', {
       id_orden_cita: selectedOrder.value.id_orden_cita
-    })
-    alert(`El cliente ${selectedOrder.value.Nombre_Cliente} ha asistido a la cita.`)
-    // Aquí puedes agregar lógica adicional después de marcar la asistencia
+    });
+    alert(`El cliente ${selectedOrder.value.Nombre_Cliente} ha asistido a la cita.`);
+    fetchData(); // Refresca la lista de órdenes después de marcar la asistencia
   } catch (error) {
-    console.error('Error marcando la asistencia:', error)
+    console.error('Error marcando la asistencia:', error);
+    alert('Error al marcar la asistencia. Por favor, inténtelo de nuevo.');
   }
-}
-</script>
+};
+</script> 
 
 <style scoped>
 .my-input-class {
@@ -132,6 +132,7 @@ const markAsAttended = async () => {
   background-color: #ffffff;
   border: 1px solid #d1d1d1;
 }
+
 .efecto-titulo {
   color: #0800ff;
   font-family: 'Calibre', sans-serif;
@@ -164,6 +165,7 @@ const markAsAttended = async () => {
   border-radius: 4px;
   border: 1px solid #d1d1d1;
 }
+
 .v-btn {
   background-color: #FFAD00;
   color: #ffffff;
