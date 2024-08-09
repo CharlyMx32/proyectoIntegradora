@@ -41,10 +41,10 @@
             <tbody>
               <tr
                 v-for="item in filteredOrders"
-                :key="item.id_orden_cita"
+                :key="item.id_detalle_fisico"
                 :class="{
                   'selected-row':
-                    selectedOrder && selectedOrder.id_orden_fisica === item.id_orden_fisica
+                    selectedOrder && selectedOrder.id_detalle_fisico === item.id_detalle_fisico
                 }"
                 @click="selectOrder(item)"
               >
@@ -71,11 +71,18 @@
       <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Uso_Garantia }}</p>
-      <v-btn @click="usarGarantia" class="custom-btn">USAR GARANTÍA</v-btn>
+      <v-btn
+        v-if="selectedOrder && selectedOrder.Uso_Garantia !== 'expirada' && selectedOrder.Uso_Garantia !== 'u sada'"
+        @click="usarGarantia"
+        class="custom-btn"
+      >
+        USAR GARANTÍA
+      </v-btn>
       <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
     </div>
   </v-container>
 </template>
+>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
@@ -115,16 +122,35 @@ const selectOrder = (order) => {
   selectedOrder.value = order
 }
 
-const usarGarantia = () => {
-  alert(`Uso la garantia el cliente ${selectedOrder.value.Nombre_Cliente}.`)
-  // Aquí puedes agregar la lógica para usar la garantía
+const usarGarantia = async () => {
+  try {
+    const response = await axios.post('http://hs.com/garantiafisico', {
+      id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
+      cliente: selectedOrder.value.Nombre_Cliente
+      // Otros datos que necesites enviar
+    })
+    alert(`Garantía usada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    console.log('Response data:', response.data)
+  } catch (error) {
+    console.error('Error usando la garantía:', error)
+  }
 }
 
-const realizarPago = () => {
-  alert(`Se realizo el pago del cliente ${selectedOrder.value.Nombre_Cliente}.`)
-  // Aquí puedes agregar la lógica para realizar el pago
+const realizarPago = async () => {
+  try {
+    const response = await axios.post('http://hs.com/pagofisico', {
+      id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
+      cliente: selectedOrder.value.Nombre_Cliente
+      // Otros datos que necesites enviar
+    })
+    alert(`Pago realizado exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    console.log('Response data:', response.data)
+  } catch (error) {
+    console.error('Error realizando el pago:', error)
+  }
 }
 </script>
+
 
 <style scoped>
 .my-input-class {

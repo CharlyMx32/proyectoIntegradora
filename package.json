@@ -15,7 +15,7 @@
     "animejs": "^3.2.2",
     "axios": "^1.7.2",
     "date": "^2.0.5",
-    "date-fns": "^3.6.0",
+    "dayjs": "^1.11.12",
     "particlesjs": "^2.2.3",
     "pinia": "^2.2.0",
     "vee-validate": "^4.13.2",

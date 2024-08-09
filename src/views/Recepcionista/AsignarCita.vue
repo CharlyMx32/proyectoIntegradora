@@ -130,7 +130,7 @@ const filters = ref({
   technicianName: ''
 })
 const selectedOrder = ref(null)
-const selectedTechnician = ref(null) // Técnico seleccionado
+const selectedTechnician = ref(null)
 const technicianDetails = ref([])
 const showTechnicianTable = ref(false)
 const showDetailModal = ref(false)
@@ -171,24 +171,21 @@ const filteredOrders = computed(() => {
       .includes(filters.value.clientName.toLowerCase())
     const matchesTechnician = order.nombre_tecnico
       .toLowerCase()
- .includes(filters.value.technicianName.toLowerCase())
+      .includes(filters.value.technicianName.toLowerCase())
     return matchesClient && matchesTechnician 
   })
 })
 
-// Función para seleccionar una orden
 const selectOrder = (order) => {
   selectedOrder.value = order
   showTechnicianTable.value = false
   showDetailModal.value = false
 }
 
-// Función para seleccionar un técnico
 const selectTechnician = (technician) => {
   selectedTechnician.value = technician
 }
 
-// Función para asignar un técnico a una orden
 const assignTechnician = async () => {
   try {
     const orderId = selectedOrder.value?.id_orden_cita
@@ -201,7 +198,7 @@ const assignTechnician = async () => {
 
     console.log('Assigning technician:', { orderId, technicianId })
 
-    const response = await axios.post('http://hs.com/ATL', {
+    const response = await axios.post('http://hs.com/asignacionl', {
       orderId,
       technicianId
     })
