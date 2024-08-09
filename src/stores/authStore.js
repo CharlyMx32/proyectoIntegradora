@@ -7,7 +7,7 @@ export const useAuthStore = defineStore({
     user: null,
     token: localStorage.getItem('token') || null,
     clienteId: localStorage.getItem('clienteId') || null,
-    idTecnico: localStorage.getItem('id_tecnico') || null // Agregar id_tecnico aquí
+    idTecnico: localStorage.getItem('tecnicoId') || null // Agregar id_tecnico aquí
   }),
   actions: {
     async login(email, password) {
@@ -30,7 +30,7 @@ export const useAuthStore = defineStore({
           this.idTecnico = data.data.idTecnico // Guardar id_tecnico aquí
           localStorage.setItem('token', data.data.token)
           localStorage.setItem('clienteId', data.data.clienteId)
-          localStorage.setItem('id_tecnico', data.data.tecnicoId) // También guardarlo en localStorage
+          localStorage.setItem('tecnicoId', data.data.tecnicoId) // También guardarlo en localStorage
         } else {
           console.error('Usuario o token no encontrado en la respuesta:', data.data.message)
           throw new Error(data.data.message)
@@ -47,7 +47,7 @@ export const useAuthStore = defineStore({
       this.idTecnico = null // Limpiar id_tecnico al cerrar sesión
       localStorage.removeItem('token')
       localStorage.removeItem('clienteId')
-      localStorage.removeItem('id_tecnico') // También eliminar id_tecnico de localStorage
+      localStorage.removeItem('tecnicoId') // También eliminar id_tecnico de localStorage
     },
     async checkAuth() {
       const token = localStorage.getItem('token')
@@ -61,7 +61,7 @@ export const useAuthStore = defineStore({
             this.user = data.data.usuario
             this.token = token
             this.clienteId = localStorage.getItem('clienteId')
-            this.idTecnico = localStorage.getItem('id_tecnico') // Recuperar id_tecnico desde localStorage
+            this.idTecnico = localStorage.getItem('tecnicoId') // Recuperar id_tecnico desde localStorage
           } else {
             this.logout()
           }
