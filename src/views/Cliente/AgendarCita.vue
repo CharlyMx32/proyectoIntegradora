@@ -107,7 +107,6 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { format, isSunday, isBefore, isAfter, addDays, eachMinuteOfInterval } from 'date-fns';
 
 // Datos para los productos
 const products = [
