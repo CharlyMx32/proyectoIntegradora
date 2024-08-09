@@ -262,6 +262,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
+
 const filterText1 = ref('');
 const filterText2 = ref('');
 const filterText3 = ref('');
