@@ -1,18 +1,15 @@
-<!-- HeaderComponent.vue -->
 <template>
   <v-container class="py-0 fill-height" fluid>
     <v-row align="center" no-gutters class="navbar">
-      <!-- Título a la izquierda -->
       <v-col>
         <div class="navbar-title">{{ title }}</div>
       </v-col>
-      <!-- Espacio a la derecha con el ícono de bolita rojiza y texto alternativo -->
       <v-col cols="auto" class="d-flex justify-end">
         <div class="d-flex align-center">
           <v-avatar class="red-ball" size="40" @click="toggleText">
             <v-icon>mdi-menu</v-icon>
           </v-avatar>
-          <ul class="text-list">
+          <ul class="text-list" :class="{ visible: showText }">
             <li
               v-for="(item, index) in menuItems"
               :key="index"
@@ -20,6 +17,10 @@
               @click="handleMenuItemClick(item)"
             >
               {{ item.name }}
+            </li>
+            <!-- Ítem de Cerrar Sesión en la lista -->
+            <li v-if="showLogout && showText" class="logout-item" @click.stop="$emit('logout')">
+              Cerrar Sesión
             </li>
           </ul>
         </div>
@@ -42,6 +43,10 @@ const props = defineProps({
   menuItems: {
     type: Array,
     default: () => []
+  },
+  showLogout: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -61,6 +66,8 @@ const toggleText = () => {
 const handleMenuItemClick = (item) => {
   if (item.route) {
     router.push(item.route)
+  } else if (item.action) {
+    item.action()
   }
   showText.value = false // Ocultar texto después de hacer clic
 }
@@ -116,6 +123,10 @@ const animateBall = () => {
   transition: opacity 0.3s ease;
 }
 
+.text-list.visible {
+  display: flex;
+}
+
 .text-list li {
   margin-left: 10px;
   padding: 10px;
@@ -127,5 +138,11 @@ const animateBall = () => {
 /* Clase para ocultar el texto */
 .hidden {
   display: none;
+}
+
+/* Estilos para el ítem de Cerrar Sesión */
+.logout-item {
+  font-weight: bold;
+  color: red; /* Puedes ajustar el color según tu diseño */
 }
 </style>

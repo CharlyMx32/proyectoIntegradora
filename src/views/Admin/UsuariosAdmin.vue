@@ -33,6 +33,7 @@
             <thead>
               <tr>
                 <th class="text-left">Nombre Usuario</th>
+                <th class="text-left">Correo</th>
                 <th class="text-left">Rol</th>
               </tr>
             </thead>
@@ -44,6 +45,7 @@
                 @click="selectOrder(item)"
               >
                 <td>{{ item.nombre }}</td>
+                <td>{{ item.correo }}</td>
                 <td>{{ item.rol }}</td>
               </tr>
             </tbody>
@@ -140,7 +142,7 @@ const selectOrder = (order) => {
 const updateUserRole = async () => {
   try {
     const { id, rol } = selectedOrder.value
-    await axios.post('http://hs.com/update-role', { id, rol })
+    await axios.post('http://hs.com/RolCambio', { id, rol })
     console.log('User role updated:', { id, rol })
     showDetailModal.value = false
     // Puedes actualizar la lista de pedidos si es necesario

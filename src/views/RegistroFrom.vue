@@ -37,6 +37,10 @@
                             outlined
                             dense
                             class="minimalista"
+                            :rules="[
+                              v => !!v || 'Nombre es obligatorio',
+                              v => /^[a-zA-Z\s]+$/.test(v) || 'El nombre solo debe contener letras y espacios'
+                            ]"
                           />
                         </v-col>
                         <v-col cols="12" class="pa-1">
@@ -47,6 +51,10 @@
                             outlined
                             dense
                             class="minimalista"
+                            :rules="[
+                              v => !!v || 'Apellido Paterno es obligatorio',
+                              v => /^[a-zA-Z\s]+$/.test(v) || 'El apellido debe contener solo letras y espacios'
+                            ]"
                           />
                         </v-col>
                         <v-col cols="12" class="pa-1">
@@ -57,6 +65,10 @@
                             outlined
                             dense
                             class="minimalista"
+                            :rules="[
+                              v => !!v || 'Apellido Materno es obligatorio',
+                              v => /^[a-zA-Z\s]+$/.test(v) || 'El apellido debe contener solo letras y espacios'
+                            ]"
                           />
                         </v-col>
                       </v-row>
@@ -72,6 +84,10 @@
                             outlined
                             dense
                             class="minimalista mb-3"
+                            :rules="[
+                              v => !!v || 'Correo es obligatorio',
+                              v => /.+@.+\..+/.test(v) || 'Correo electrónico no válido'
+                            ]"
                           />
                         </v-col>
                         <v-col cols="12" class="pa-1">
@@ -83,6 +99,10 @@
                             outlined
                             dense
                             class="minimalista mb-3"
+                            :rules="[
+                              v => !!v || 'Contraseña es obligatoria',
+                              v => v.length >= 8 || 'La contraseña debe tener al menos 8 caracteres'
+                            ]"
                           />
                         </v-col>
                         <v-col cols="12" class="pa-1">
@@ -94,6 +114,10 @@
                             outlined
                             dense
                             class="minimalista mb-3"
+                            :rules="[
+                              v => !!v || 'Confirmar Contraseña es obligatoria',
+                              v => v === form.contraseña || 'Las contraseñas no coinciden'
+                            ]"
                           />
                         </v-col>
                       </v-row>
@@ -181,8 +205,17 @@ const isFormComplete = computed(() => {
 })
 
 function validarFormulario() {
+  // Expresión regular para solo letras
+  const soloLetras = /^[a-zA-Z\s]+$/
+
   if (!form.value.nombre || !form.value.apellido_paterno || !form.value.apellido_materno) {
     errorMessage.value = 'Todos los campos de nombre y apellidos son obligatorios.'
+    showErrorSnackbar.value = true
+    return false
+  }
+
+  if (!soloLetras.test(form.value.nombre) || !soloLetras.test(form.value.apellido_paterno) || !soloLetras.test(form.value.apellido_materno)) {
+    errorMessage.value = 'El nombre y los apellidos solo deben contener letras y espacios.'
     showErrorSnackbar.value = true
     return false
   }

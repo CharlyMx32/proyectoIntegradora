@@ -36,7 +36,7 @@ const navItems = [
   { title: 'Usuarios Admin', to: '/UA' }
 ]
 
-const mini = ref(false)
+const mini = ref(true)
 const authStore = useAuthStore()
 const showWelcome = ref(true)
 

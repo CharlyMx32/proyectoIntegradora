@@ -1,5 +1,5 @@
 <template>
-  <div class="welcome" v-if="showWelcome">
+  <div class="welcome" v-if="showWelcome" @click="closeWelcome">
     <div class="animation">
       <h1>Bienvenido! {{ userName }}</h1>
     </div>
@@ -18,6 +18,10 @@ const props = defineProps({
 
 const showWelcome = ref(true)
 
+const closeWelcome = () => {
+  showWelcome.value = false
+}
+
 onMounted(() => {
   setTimeout(() => {
     showWelcome.value = false
@@ -31,8 +35,16 @@ onMounted(() => {
     clip-path: circle(0%);
     background: rgb(255, 255, 255);
   }
-  40% {
-    clip-path: circle(40%);
+  30% {
+    clip-path: circle(30%);
+    background: rgb(255, 255, 255);
+  }
+  50% {
+    clip-path: circle(50%);
+    background: rgb(0, 0, 0);
+  }
+  70% {
+    clip-path: circle(70%);
     background: rgb(0, 0, 0);
   }
   100% {
@@ -59,5 +71,15 @@ onMounted(() => {
   color: #ffad00;
   font-size: 3rem;
   text-align: center;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

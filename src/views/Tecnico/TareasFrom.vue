@@ -1,8 +1,14 @@
 <template>
   <v-app class="fondo">
+    <!-- Botón de Cerrar Sesión -->
+    <v-row justify="end" class="py-2 px-4">
+      <v-btn @click="logout" class="custom-btn logout-btn">
+        <v-icon left>mdi-logout</v-icon>
+        Cerrar Sesión
+      </v-btn>
+    </v-row>
     <v-row justify="center" class="py-4">
       <v-col cols="12" md="10">
-
         <!-- ESTA ES LA TABLA DE LAS TAREAS ASIGNADAS -->
         <v-card class="mb-6" outlined>
           <v-card-title>
@@ -190,44 +196,40 @@
         </v-card>
 
         <!-- ESTE ES EL CUADRITO QUE SALE DESPUES DE DARLE AL BOTON DE DETALLAR -->
-        <v-dialog v-model="showDetailDialog" max-width="800px" class="dialog-custom">
-          <v-card>
-            <v-card-title class="dialog-title">
-              <span class="headline">Detalles del Cliente</span>
-            </v-card-title>
-            <v-card-text>
-              <v-row>
-                <v-col cols="12" md="6">
-                  <v-form>
-                    <v-text-field v-model="selectedItem.nombre_cliente" label="Nombre del Cliente" readonly />
-                    <v-text-field v-model="selectedItem.producto" label="Producto" readonly />
-                    <v-text-field v-model="selectedItem.problema" label="Problema" readonly />
-                    <v-text-field v-model="selectedItem.tipo_orden" label="Tipo de Orden" readonly />
-                    <!-- Nuevo campo Diagnóstico Línea -->
-                    <v-textarea v-model="nuevosDatos.diagnostico" label="Diagnóstico Línea" placeholder="Ingrese el diagnóstico aquí" />
-                  </v-form>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-form>
-                    <v-textarea v-model="nuevosDatos.cambios" label="Cambios" placeholder="Ingrese los cambios aquí" />
-                    <v-text-field v-model="nuevosDatos.costoChequeo" label="Costo de Chequeo" placeholder="Ingrese el costo de chequeo aquí" />
-                    <v-text-field v-model="nuevosDatos.costoReparacion" label="Costo de Reparación" placeholder="Ingrese el costo de reparación aquí" />
-                  </v-form>
-                </v-col>
-              </v-row>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn @click="guardarDatos" color="primary">
-                <v-icon left>mdi-content-save</v-icon>
-                Guardar Datos
-              </v-btn>
-              <v-btn @click="closeDetailDialog" color="secondary">
-                <v-icon left>mdi-close</v-icon>
-                Cerrar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+        <v-dialog v-model="showDetailDialog" max-width="600px">
+    <v-card>
+      <v-card-title>
+        <span class="headline">Detalles del Item</span>
+      </v-card-title>
+      <v-card-subtitle>
+        <v-text-field
+          v-model="nuevosDatos.cambios"
+          label="Cambios"
+        ></v-text-field>
+        <v-text-field
+          v-model="nuevosDatos.costoChequeo"
+          label="Costo de Chequeo"
+        ></v-text-field>
+        <v-text-field
+          v-model="nuevosDatos.costoReparacion"
+          label="Costo de Reparación"
+        ></v-text-field>
+        <v-text-field
+          v-model="nuevosDatos.diagnostico"
+          label="Diagnóstico"
+        ></v-text-field>
+      </v-card-subtitle>
+      <v-card-actions>
+        <v-btn @click="saveDetails" color="primary">
+          <v-icon left>mdi-content-save</v-icon>
+          Guardar Datos
+        </v-btn>
+        <v-btn @click="closeDetailDialog" color="secondary">
+          Cancelar
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 
         <!-- ESTE ES OTRO CUADRITO PERO PARA EL BOTON DE SEGUIMIENTO -->
         <v-dialog v-model="showSeguimientoDialog" max-width="600px">
@@ -270,9 +272,10 @@
     </v-row>
   </v-app>
 </template>
-
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 const filterText1 = ref('');
 const filterText2 = ref('');
@@ -284,17 +287,19 @@ const nuevosDatos = ref({
   cambios: '',
   costoChequeo: '',
   costoReparacion: '',
-  diagnostico: '' // Agregar nuevo campo para diagnóstico
+  diagnostico: ''
 });
 const selectedStatus = ref('');
 const statusOptions = ['Asignado a un técnico', 'En reparación', 'Con retraso', 'Completado'];
-const stateOptions = ['Aceptado', 'Rechazado', 'En Espera']; // Opciones de estados para el filtro
+const stateOptions = ['Aceptado', 'Rechazado', 'En Espera'];
 
-const selectedStateFilter = ref(''); // Filtro por estado
+const selectedStateFilter = ref('');
 
 const tareasAsignadas = ref([]);
 const tareasEnProceso = ref([]);
 const tareasCompletadas = ref([]);
+
+const router = useRouter();
 
 const filteredItems1 = computed(() => {
   const filter = filterText1.value.toLowerCase();
@@ -317,7 +322,7 @@ const filteredItems2 = computed(() => {
       item.tipo_orden.toLowerCase().includes(filter) ||
       item.estado.toLowerCase().includes(filter)
     )
-    .filter(item => stateFilter ? item.estado === stateFilter : true); // Aplicar filtro de estado
+    .filter(item => stateFilter ? item.estado === stateFilter : true);
 });
 
 const filteredItems3 = computed(() => {
@@ -341,7 +346,7 @@ const openDetailDialog = () => {
       cambios: '',
       costoChequeo: '',
       costoReparacion: '',
-      diagnostico: '' // Inicializar el nuevo campo para diagnóstico
+      diagnostico: ''
     };
   } else {
     console.log('No se ha seleccionado ningún item.');
@@ -352,9 +357,22 @@ const closeDetailDialog = () => {
   showDetailDialog.value = false;
 };
 
-const guardarDatos = () => {
-  console.log('Datos guardados:', nuevosDatos.value);
-  closeDetailDialog();
+const saveDetails = async () => {
+  if (selectedItem.value) {
+    try {
+      await axios.post('/api/guardar_detalles', {
+        item: selectedItem.value,
+        datos: nuevosDatos.value
+      });
+      alert('Datos guardados exitosamente.');
+      closeDetailDialog(); // Cierra el diálogo después de guardar
+    } catch (error) {
+      console.error('Error al guardar los detalles:', error);
+      alert('Hubo un problema al guardar los detalles.');
+    }
+  } else {
+    console.log('No se ha seleccionado ningún item.');
+  }
 };
 
 const openSeguimientoDialog = () => {
@@ -380,28 +398,26 @@ const updateStatus = () => {
   }
 };
 
-// SON LAS APIS CHAVALES, NO LES MUEVAN POR QUE ME TARDE UN MONTON  (T-T) //
+const logout = () => {
+  router.push('/login');
+};
+
 const fetchData = async () => {
   try {
     const [asignadasRes, enProcesoRes, completadasRes] = await Promise.all([
-      fetch('http://hs.com/orden'),
-      fetch('http://hs.com/TCorden'),
-      fetch('http://hs.com/TERorden')
-    ]);
-    const [asignadasJson, enProcesoJson, completadasJson] = await Promise.all([
-      asignadasRes.json(),
-      enProcesoRes.json(),
-      completadasRes.json()
+      axios.get('/TERorden'),
+      axios.get('/TCorden'),
+      axios.get('/orden')
     ]);
 
-    if (asignadasJson.status === 200) {
-      tareasAsignadas.value = asignadasJson.data;
+    if (asignadasRes.status === 200) {
+      tareasAsignadas.value = asignadasRes.data.data;
     }
-    if (enProcesoJson.status === 200) {
-      tareasEnProceso.value = enProcesoJson.data;
+    if (enProcesoRes.status === 200) {
+      tareasEnProceso.value = enProcesoRes.data.data;
     }
-    if (completadasJson.status === 200) {
-      tareasCompletadas.value = completadasJson.data;
+    if (completadasRes.status === 200) {
+      tareasCompletadas.value = completadasRes.data.data;
     }
   } catch (error) {
     console.error('Error al obtener datos:', error);
@@ -494,5 +510,15 @@ onMounted(() => {
 
 .custom-btn {
   margin-left: 8px;
+}
+
+/* Estilo para el botón de cerrar sesión */
+.logout-btn {
+  background-color: #FFAD00; /* Color de fondo igual a los otros botones */
+  color: #ffffff; /* Color del texto */
+}
+
+.logout-btn:hover {
+  background-color: #e0a800; /* Color de fondo en hover igual a los otros botones */
 }
 </style>

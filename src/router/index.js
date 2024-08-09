@@ -25,9 +25,9 @@ import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
 
 // mar lineas
-import paginaPrincipal from '@/views/Recepcionista/PaginaPrincipal.vue'
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
+import asignarCitaFisica from '@/views/Recepcionista/Asignar Cita Fisico.vue'
 import citasLinea from '@/views/Recepcionista/CitasLinea.vue'
 import CitasFisico from '@/views/Recepcionista/CitasFisico.vue'
 import asistenciaLinea from '@/views/Recepcionista/AsistenciaLinea.vue'
@@ -58,11 +58,11 @@ const routes = [
     component: DashBoardRecepcionista,
     meta: { requiresAuth: true, role: 3 },
     children: [
-      { path: '/PP', component: paginaPrincipal },
-      { path: '', redirect: 'PP' },
-      { path: '/CPL', component: asistenciaLinea },
-      { path: '/AC', component: agendarCitas },
-      { path: '/ASC', component: asignarCita },
+      { path: '/AL', component: asistenciaLinea },
+      { path: '/AGC', component: agendarCitas },
+      { path: '', redirect: 'AGC' },
+      { path: '/AC', component: asignarCita },
+      { path: '/ACf', component: asignarCitaFisica },
       { path: '/CL', component: citasLinea },
       { path: '/CF', component: CitasFisico }
     ]
@@ -82,6 +82,7 @@ const routes = [
     meta: { requiresAuth: true, role: 1 },
     children: [
       { path: '/RU', component: registroUsuarios },
+      { path: '', redirect: '/RU' },
       { path: '/DS', component: detalleServicios },
       { path: '/UA', component: UsuariosAdmin },
       { path: '/ServiciosFisicos', component: detalleServiciosFisicos }
@@ -111,6 +112,12 @@ router.beforeEach(async (to, from, next) => {
     next('/login') // O redirige a otra página adecuada
   } else {
     next()
+  }
+})
+
+router.afterEach((to) => {
+  if (to.meta.requiresAuth) {
+    history.pushState(null, null, location.href)
   }
 })
 

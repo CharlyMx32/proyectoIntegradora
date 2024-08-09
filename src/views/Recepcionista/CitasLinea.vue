@@ -6,7 +6,7 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
-            Citas Linea
+            CITAS LINEA
           </h1>
         </v-flex>
       </v-card-title>

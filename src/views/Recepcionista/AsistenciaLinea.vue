@@ -5,9 +5,9 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo ">
+          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo ">
             ASISTENCIA CITA
-          </h3>
+          </h1>
         </v-flex>
       </v-card-title>
       <v-card-text class="p-6 space-y-6">
@@ -101,9 +101,22 @@ const selectOrder = (order) => {
   selectedOrder.value = order
 }
 
-const markAsAttended = () => {
-  alert(`El cliente ${selectedOrder.value.Nombre_Cliente} ha asistido a la cita.`)
-  // Aquí puedes agregar la lógica para marcar la cita como asistida
+const markAsAttended = async () => {
+  if (!selectedOrder.value) {
+    alert('Por favor seleccione una orden de cita.');
+    return;
+  }
+
+  try {
+    const response = await axios.post('http://hs.com/AsistenciaCitas', {
+      asistencia: true, // Suponiendo que "asistencia" es un valor booleano
+      id_orden_cita: selectedOrder.value.id_orden_cita
+    })
+    alert(`El cliente ${selectedOrder.value.Nombre_Cliente} ha asistido a la cita.`)
+    // Aquí puedes agregar lógica adicional después de marcar la asistencia
+  } catch (error) {
+    console.error('Error marcando la asistencia:', error)
+  }
 }
 </script>
 
