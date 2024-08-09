@@ -11,11 +11,14 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@paypal/paypal-js": "^8.1.0",
+    "@stripe/stripe-js": "^4.2.0",
     "@vee-validate/rules": "^4.13.2",
+    "@vue-stripe/vue-stripe": "^4.5.0",
     "animejs": "^3.2.2",
     "axios": "^1.7.2",
     "date": "^2.0.5",
-    "dayjs": "^1.11.12",
+    "date-fns": "^3.6.0",
     "particlesjs": "^2.2.3",
     "pinia": "^2.2.0",
     "vee-validate": "^4.13.2",
