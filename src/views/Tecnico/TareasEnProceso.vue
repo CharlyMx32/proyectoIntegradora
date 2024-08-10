@@ -38,11 +38,11 @@
               :class="{ 'selected-row': selectedItem === item }"
               @click="selectItem(item)"
             >
-              <td>{{ item.nombre_cliente }}</td>
-              <td>{{ item.producto }}</td>
-              <td>{{ item.problema }}</td>
-              <td>{{ item.tecnico_asignado }}</td>
-              <td>{{ item.fecha_inicio }}</td>
+              <td class="py-2 px-3">{{ item.Nombre_Cliente }}</td>
+              <td class="py-2 px-3">{{ item.producto }}</td>
+              <td class="py-2 px-3">{{ item.diagnostico_linea }}</td>
+              <td class="py-2 px-3">{{ item.cambios }}</td>
+              <td class="py-2 px-3">{{ item.estado_del_pago }}</td>
             </tr>
             <tr v-if="!filteredItems.length">
               <td colspan="5" class="text-center py-4">
@@ -52,10 +52,9 @@
           </tbody>
         </v-simple-table>
       </div>
+      <!-- Mensaje de carga mientras se obtienen los datos -->
+      <div v-if="isLoading" class="text-center py-4">Cargando tareas...</div>
     </v-card-text>
-    <v-card-actions class="justify-end">
-      <v-btn @click="openProcessDialog" color="white" class="custom-btn">Actualizar Proceso</v-btn>
-    </v-card-actions>
 
     <!-- Modal para Actualizar Proceso -->
     <v-dialog v-model="showProcessDialog" max-width="600px">
@@ -64,83 +63,168 @@
           <span class="headline">Actualizar Proceso</span>
         </v-card-title>
         <v-card-subtitle>
-          <v-text-field v-model="nuevosDatos.estado" label="Estado"></v-text-field>
-          <v-text-field
-            v-model="nuevosDatos.fechaEstimada"
-            label="Fecha Estimada de Finalización"
-          ></v-text-field>
+          <v-combobox
+            v-model="nuevosDatos.seguimiento"
+            :items="seguimientos"
+            label="Seguimiento"
+            dense
+            outlined
+          ></v-combobox>
         </v-card-subtitle>
         <v-card-actions>
           <v-btn @click="saveProcessUpdate" color="primary">
             <v-icon left>mdi-content-save</v-icon>
             Guardar Cambios
           </v-btn>
-          <v-btn @click="closeProcessDialog" color="secondary"> Cancelar </v-btn>
+          <v-btn @click="closeProcessDialog" color="secondary">Cancelar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- Snackbar para mostrar mensajes -->
+    <v-snackbar v-model="snackbar.show" :timeout="snackbar.timeout" :color="snackbar.color">
+      {{ snackbar.message }}
+      <v-btn color="white" text @click="snackbar.show = false">Cerrar</v-btn>
+    </v-snackbar>
   </v-card>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import axios from 'axios'
+import { ref, computed, onMounted } from 'vue'
+import apiClient from '@/axiosconf'
 
 const filterText = ref('')
 const selectedItem = ref(null)
 const showProcessDialog = ref(false)
+const seguimientos = ref(['En progreso', 'Completado', 'Pendiente']) // Opciones de seguimiento
 const nuevosDatos = ref({
-  estado: '',
-  fechaEstimada: ''
+  seguimiento: ''
 })
 const tareasEnProceso = ref([])
+const isLoading = ref(true) // Estado de carga
+
+const snackbar = ref({
+  show: false,
+  message: '',
+  color: '',
+  timeout: 3000
+})
 
 const filteredItems = computed(() => {
-  const filter = filterText.value.toLowerCase()
-  return tareasEnProceso.value.filter(
-    (item) =>
-      item.nombre_cliente.toLowerCase().includes(filter) ||
-      item.producto.toLowerCase().includes(filter) ||
-      item.problema.toLowerCase().includes(filter) ||
-      item.tecnico_asignado.toLowerCase().includes(filter)
-  )
+  if (Array.isArray(tareasEnProceso.value)) {
+    const filter = filterText.value.toLowerCase()
+    return tareasEnProceso.value.filter(
+      (item) =>
+        (item.Nombre_Cliente && item.Nombre_Cliente.toLowerCase().includes(filter)) ||
+        (item.producto && item.producto.toLowerCase().includes(filter)) ||
+        (item.diagnostico_linea && item.diagnostico_linea.toLowerCase().includes(filter)) ||
+        (item.cambios && item.cambios.toLowerCase().includes(filter)) ||
+        (item.estado_del_pago && item.estado_del_pago.toLowerCase().includes(filter))
+    )
+  } else {
+    return []
+  }
 })
 
 const selectItem = (item) => {
   selectedItem.value = item
-}
-
-const openProcessDialog = () => {
-  if (selectedItem.value) {
-    showProcessDialog.value = true
-    nuevosDatos.value = {
-      estado: '',
-      fechaEstimada: ''
-    }
-  }
+  nuevosDatos.value.seguimiento = item.seguimiento || ''
+  showProcessDialog.value = true
 }
 
 const closeProcessDialog = () => {
   showProcessDialog.value = false
 }
 
+// Función para obtener las tareas desde el backend
+const fetchTareas = async () => {
+  try {
+    const response = await apiClient.get('obtener_tareas_en_proceso')
+    console.log('Respuesta del servidor:', response)
+    if (response.data.data && response.data.data.tareas) {
+      console.log('Tareas recibidas:', response.data.data.tareas)
+      tareasEnProceso.value = response.data.data.tareas
+    } else {
+      console.error('Error: La respuesta no contiene la clave "tareas"')
+      snackbar.value = {
+        show: true,
+        message: 'Hubo un problema al cargar las tareas.',
+        color: 'error'
+      }
+    }
+  } catch (error) {
+    console.error('Error al obtener las tareas:', error)
+    snackbar.value = {
+      show: true,
+      message: 'Hubo un problema al cargar las tareas.',
+      color: 'error'
+    }
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// Llamada a fetchTareas cuando se monta el componente
+onMounted(() => {
+  fetchTareas()
+})
+
 const saveProcessUpdate = async () => {
   if (selectedItem.value) {
     try {
-      await axios.post('/api/actualizar_proceso', {
-        item: selectedItem.value,
-        datos: nuevosDatos.value
+      const response = await apiClient.post('actualizar_proceso', {
+        idDetalleLinea: selectedItem.value.id_detalle_linea, // Verifica si este nombre es correcto
+        seguimiento: nuevosDatos.value.seguimiento
       })
-      alert('Proceso actualizado exitosamente.')
-      closeProcessDialog()
+
+      if (response.status === 200) {
+        snackbar.value = {
+          show: true,
+          message: response.data.message,
+          color: 'success'
+        }
+        closeProcessDialog()
+        fetchTareas() // Refrescar la lista de tareas
+      } else {
+        console.error('Error al actualizar el proceso:', response)
+        snackbar.value = {
+          show: true,
+          message: 'Hubo un problema al actualizar el proceso.',
+          color: 'error'
+        }
+      }
     } catch (error) {
       console.error('Error al actualizar el proceso:', error)
-      alert('Hubo un problema al actualizar el proceso.')
+      snackbar.value = {
+        show: true,
+        message: 'Hubo un problema al actualizar el proceso.',
+        color: 'error'
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-/* estilos específicos para este componente */
+/* Ajustar el padding para mejorar la visualización de la tabla */
+.custom-table th,
+.custom-table td {
+  padding: 10px 15px;
+  text-align: left;
+}
+
+/* Aumentar la separación entre filas */
+.custom-table tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Diferenciar la fila seleccionada */
+.selected-row {
+  background-color: #e3f2fd;
+}
+
+/* Alinear verticalmente el contenido de las celdas */
+.custom-table td {
+  vertical-align: middle;
+}
 </style>

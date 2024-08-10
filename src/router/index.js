@@ -27,7 +27,7 @@ import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
 // mar lineas
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
 import asignarCita from '@/views/Recepcionista/AsignarCita.vue'
-import asignarCitaFisica from '@/views/Recepcionista/Asignar Cita Fisico.vue'
+import asignarCitaFisica from '@/views/Recepcionista/AsignarCitaFisico.vue'
 import citasLinea from '@/views/Recepcionista/CitasLinea.vue'
 import CitasFisico from '@/views/Recepcionista/CitasFisico.vue'
 import asistenciaLinea from '@/views/Recepcionista/AsistenciaLinea.vue'

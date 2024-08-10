@@ -171,7 +171,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const form = ref(null)
 const valid = ref(false)
@@ -227,7 +227,7 @@ const submitForm = async () => {
     }
 
     try {
-      await axios.post('http://hs.com/AR', formData)
+      await apiClient.post('AR', formData)
       // Mostrar mensaje de éxito
       snackbar.value = {
         visible: true,

@@ -1,5 +1,5 @@
-import apiClient from 'axios'
 import { defineStore } from 'pinia'
+import apiClient from '@/axiosconf'
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -14,7 +14,7 @@ export const useAuthStore = defineStore({
       try {
         const credentials = { correo: email, contraseña: password }
 
-        const response = await apiClient.post('http://hs.com/login', credentials, {
+        const response = await apiClient.post('login', credentials, {
           headers: {
             'Content-Type': 'application/json'
           }
