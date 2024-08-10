@@ -110,7 +110,7 @@ const orders = ref([])
 const filters = ref({ nombre: '' })
 const selectedOrder = ref(null)
 const showDetailModal = ref(false)
-const roles = ref(['Admin', 'Cliente', 'Recepcionista', 'Tecnico']) // Los roles disponibles
+const roles = ref(['Admin', 'Recepcionista', 'Tecnico']) // Los roles disponibles
 
 const fetchData = async () => {
   try {
