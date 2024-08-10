@@ -76,11 +76,7 @@
                   </v-col>
                 </v-row>
                 <v-card-actions class="flex items-center p-6">
-                  <v-btn
-                    class="custom-btn"
-                    @click="submitForm"
-                    :disabled="isSubmitting"
-                  >
+                  <v-btn class="custom-btn" @click="submitForm" :disabled="isSubmitting">
                     AGENDAR
                   </v-btn>
                   <v-btn
@@ -102,16 +98,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
-const products = [
-  'Laptop',
-  'Celular',
-  'Tablet',
-  'Impresora',
-  'Televisor',
-  'Otros'
-]
+const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
 
 const form = ref({
   nombre: '',
@@ -130,7 +119,7 @@ const submitForm = async () => {
 
   try {
     // Enviar la solicitud POST a la URL especificada con los datos del formulario
-    const response = await axios.post('http://hs.com/CitasFisicas', form.value)
+    const response = await apiClient.post('http://hs.com/CitasFisicas', form.value)
 
     // Aquí puedes manejar la respuesta si es necesario
     console.log('Respuesta del servidor:', response.data)
@@ -162,7 +151,7 @@ const submitForm = async () => {
   max-width: 800px;
   width: 100%;
   margin: 20px auto; /* Centrar horizontalmente y agregar margen superior/inferior */
-  background-color: #ffffff; /*color azul #072b4d*/ 
+  background-color: #ffffff; /*color azul #072b4d*/
 }
 
 .efecto-titulo {
@@ -188,7 +177,7 @@ const submitForm = async () => {
 }
 
 .custom-btn {
-  background-color: #FFAD00;
+  background-color: #ffad00;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;
@@ -199,4 +188,3 @@ const submitForm = async () => {
   background-color: #e69700;
 }
 </style>
-

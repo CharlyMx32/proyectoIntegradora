@@ -78,7 +78,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const filterText = ref('')
 const selectedItem = ref(null)
@@ -91,8 +91,8 @@ const nuevosDatos = ref({
 // Inicializar tareasCompletadas como un arreglo vacío
 const tareasCompletadas = ref([])
 
-axios
-  .post('http://hs.com/Completados')
+apiClient
+  .post('Completados')
   .then((response) => {
     if (response && response.data) {
       // Ajustar para acceder a la estructura correcta de datos

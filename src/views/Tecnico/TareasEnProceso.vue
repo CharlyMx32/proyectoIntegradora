@@ -91,7 +91,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const filterText = ref('')
 const selectedItem = ref(null)
@@ -139,7 +139,7 @@ const closeProcessDialog = () => {
 // Función para obtener las tareas desde el backend
 const fetchTareas = async () => {
   try {
-    const response = await axios.get('http://hs.com/obtener_tareas_en_proceso')
+    const response = await apiClient.get('obtener_tareas_en_proceso')
     console.log('Respuesta del servidor:', response)
     if (response.data.data && response.data.data.tareas) {
       console.log('Tareas recibidas:', response.data.data.tareas)
@@ -172,7 +172,7 @@ onMounted(() => {
 const saveProcessUpdate = async () => {
   if (selectedItem.value) {
     try {
-      const response = await axios.post('http://hs.com/actualizar_proceso', {
+      const response = await apiClient.post('actualizar_proceso', {
         idDetalleLinea: selectedItem.value.id_detalle_linea, // Verifica si este nombre es correcto
         seguimiento: nuevosDatos.value.seguimiento
       })

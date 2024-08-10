@@ -91,7 +91,7 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 import { useAuthStore } from '@/stores/authStore'
 
 const store = useAuthStore()
@@ -116,7 +116,7 @@ const tareasAsignadas = ref([])
 
 const cargarTareasAsignadas = async () => {
   try {
-    const response = await axios.get('http://hs.com/tareas_asignadas', {
+    const response = await apiClient.get('tareas_asignadas', {
       headers: {
         Authorization: `Bearer ${store.token}`
       }
@@ -173,8 +173,8 @@ const closeDetailDialog = () => {
 const saveDetails = async () => {
   if (selectedItem.value) {
     try {
-      const response = await axios.post(
-        'http://hs.com/tecOrden',
+      const response = await apiClient.post(
+        'tecOrden',
         {
           id_asignacion_linea: selectedItem.value.id_asignacion_linea,
           diagnostico: nuevosDatos.value.diagnostico,

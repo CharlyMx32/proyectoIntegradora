@@ -104,7 +104,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const orders = ref([])
 const filters = ref({ nombre: '' })
@@ -115,7 +115,7 @@ const roles = ref(['Admin', 'Cliente', 'Recepcionista', 'Tecnico']) // Los roles
 const fetchData = async () => {
   try {
     const { nombre } = filters.value
-    const response = await axios.get('http://hs.com/TU', { params: { nombre } })
+    const response = await apiClient.get('TU', { params: { nombre } })
     console.log('Data fetched:', response.data)
     orders.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
@@ -142,7 +142,7 @@ const selectOrder = (order) => {
 const updateUserRole = async () => {
   try {
     const { id, rol } = selectedOrder.value
-    await axios.post('http://hs.com/RolCambio', { id, rol })
+    await apiClient.post('RolCambio', { id, rol })
     console.log('User role updated:', { id, rol })
     showDetailModal.value = false
     // Puedes actualizar la lista de pedidos si es necesario

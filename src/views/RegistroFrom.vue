@@ -38,8 +38,10 @@
                             dense
                             class="minimalista"
                             :rules="[
-                              v => !!v || 'Nombre es obligatorio',
-                              v => /^[a-zA-Z\s]+$/.test(v) || 'El nombre solo debe contener letras y espacios'
+                              (v) => !!v || 'Nombre es obligatorio',
+                              (v) =>
+                                /^[a-zA-Z\s]+$/.test(v) ||
+                                'El nombre solo debe contener letras y espacios'
                             ]"
                           />
                         </v-col>
@@ -52,8 +54,10 @@
                             dense
                             class="minimalista"
                             :rules="[
-                              v => !!v || 'Apellido Paterno es obligatorio',
-                              v => /^[a-zA-Z\s]+$/.test(v) || 'El apellido debe contener solo letras y espacios'
+                              (v) => !!v || 'Apellido Paterno es obligatorio',
+                              (v) =>
+                                /^[a-zA-Z\s]+$/.test(v) ||
+                                'El apellido debe contener solo letras y espacios'
                             ]"
                           />
                         </v-col>
@@ -66,8 +70,10 @@
                             dense
                             class="minimalista"
                             :rules="[
-                              v => !!v || 'Apellido Materno es obligatorio',
-                              v => /^[a-zA-Z\s]+$/.test(v) || 'El apellido debe contener solo letras y espacios'
+                              (v) => !!v || 'Apellido Materno es obligatorio',
+                              (v) =>
+                                /^[a-zA-Z\s]+$/.test(v) ||
+                                'El apellido debe contener solo letras y espacios'
                             ]"
                           />
                         </v-col>
@@ -85,8 +91,8 @@
                             dense
                             class="minimalista mb-3"
                             :rules="[
-                              v => !!v || 'Correo es obligatorio',
-                              v => /.+@.+\..+/.test(v) || 'Correo electrónico no válido'
+                              (v) => !!v || 'Correo es obligatorio',
+                              (v) => /.+@.+\..+/.test(v) || 'Correo electrónico no válido'
                             ]"
                           />
                         </v-col>
@@ -100,8 +106,9 @@
                             dense
                             class="minimalista mb-3"
                             :rules="[
-                              v => !!v || 'Contraseña es obligatoria',
-                              v => v.length >= 8 || 'La contraseña debe tener al menos 8 caracteres'
+                              (v) => !!v || 'Contraseña es obligatoria',
+                              (v) =>
+                                v.length >= 8 || 'La contraseña debe tener al menos 8 caracteres'
                             ]"
                           />
                         </v-col>
@@ -115,8 +122,8 @@
                             dense
                             class="minimalista mb-3"
                             :rules="[
-                              v => !!v || 'Confirmar Contraseña es obligatoria',
-                              v => v === form.contraseña || 'Las contraseñas no coinciden'
+                              (v) => !!v || 'Confirmar Contraseña es obligatoria',
+                              (v) => v === form.contraseña || 'Las contraseñas no coinciden'
                             ]"
                           />
                         </v-col>
@@ -166,7 +173,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import axios from '../axiosconf'
+import apiClient from '@/axiosconf'
+
 import HeaderComponent from '@/components/Generales/navBlancoo.vue'
 
 const step = ref(1)
@@ -214,7 +222,11 @@ function validarFormulario() {
     return false
   }
 
-  if (!soloLetras.test(form.value.nombre) || !soloLetras.test(form.value.apellido_paterno) || !soloLetras.test(form.value.apellido_materno)) {
+  if (
+    !soloLetras.test(form.value.nombre) ||
+    !soloLetras.test(form.value.apellido_paterno) ||
+    !soloLetras.test(form.value.apellido_materno)
+  ) {
     errorMessage.value = 'El nombre y los apellidos solo deben contener letras y espacios.'
     showErrorSnackbar.value = true
     return false
@@ -249,8 +261,8 @@ function registrarse() {
     id_rol: idRolCliente
   }
 
-  axios
-    .post('http://hs.com/registro', datosRegistro)
+  apiClient
+    .post('registro', datosRegistro)
     .then((response) => {
       if (response.data.status === 200 && response.data.msg === 'success') {
         successMessage.value = 'Registro exitoso. Ahora puede iniciar sesión.'
