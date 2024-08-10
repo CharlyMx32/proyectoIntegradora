@@ -80,7 +80,6 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import imagen from '@/assets/imgfondo.jpg'
 
 const router = useRouter()
 
