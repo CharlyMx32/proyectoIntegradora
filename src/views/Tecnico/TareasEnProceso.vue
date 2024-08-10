@@ -63,6 +63,7 @@
           <span class="headline">Actualizar Proceso</span>
         </v-card-title>
         <v-card-subtitle>
+
           <v-combobox
             v-model="nuevosDatos.seguimiento"
             :items="seguimientos"
@@ -90,6 +91,7 @@
 </template>
 
 <script setup>
+
 import { ref, computed, onMounted } from 'vue'
 import apiClient from '@/axiosconf'
 
@@ -128,6 +130,7 @@ const filteredItems = computed(() => {
 
 const selectItem = (item) => {
   selectedItem.value = item
+
   nuevosDatos.value.seguimiento = item.seguimiento || ''
   showProcessDialog.value = true
 }
@@ -176,6 +179,7 @@ const saveProcessUpdate = async () => {
         idDetalleLinea: selectedItem.value.id_detalle_linea, // Verifica si este nombre es correcto
         seguimiento: nuevosDatos.value.seguimiento
       })
+
 
       if (response.status === 200) {
         snackbar.value = {
@@ -228,3 +232,4 @@ const saveProcessUpdate = async () => {
   vertical-align: middle;
 }
 </style>
+s
