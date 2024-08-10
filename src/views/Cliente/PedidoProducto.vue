@@ -1,378 +1,122 @@
 <template>
-  <v-app class="fondo">
-    <v-row justify="center" class="py-4">
-      <v-col cols="14" md="10">
-        
-        <!-- tabla 1 -->
-        <v-card class="mb-6 custom-card" outlined>
-          <v-card-title>
-            <v-row justify="space-between" align="center" class="w-100">
-              <v-col>
-                <h3 style="color:rgb(8, 0, 255);">Por pagar</h3>
-              </v-col>
-              <v-col class="d-flex justify-end">
-                <v-text-field
-                  v-model="filterText1"
-                  label="Buscar"
-                  outlined
-                  dense
-                  hide-details
-                  class="filter-field"
-                  prepend-icon="mdi-magnify"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-card-title>
-          <v-card-text>
-            <div class="table-container custom-table-container">
-              <v-simple-table dense class="custom-table">
-                <thead>
-                  <tr>
-                    <th class="text-left">Producto</th>
-                    <th class="text-left">Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(item, idx) in filteredItems1"
-                    :key="'asignadas_' + idx"
-                    :class="{ 'selected-row': selectedItem === item }"
-                    @click="selectItem(item)"
-                  >
-                    <td>{{ item.producto }}</td>
-                    <td>{{ item.estado }}</td>
-                  </tr>
-                  <tr v-if="!filteredItems1.length">
-                    <td colspan="2" class="text-center py-4">No tienes pagos pendientes.</td>
-                  </tr>
-                </tbody>
-              </v-simple-table>
-            </div>
-          </v-card-text>
-          <v-card-actions class="justify-end">
-            <v-btn @click="openDetailDialog" color="#ffffff" class="custom-btn">Pagar</v-btn>
-          </v-card-actions>
-        </v-card>
-
-        <!-- tabla 2 -->
-        <v-card class="mb-6 custom-card" outlined>
-          <v-card-title>
-            <v-row justify="space-between" align="center" class="w-100">
-              <v-col>
-                <h3 style="color:rgb(8, 0, 255);">En Proceso</h3>
-              </v-col>
-              <v-col class="d-flex justify-end">
-                <v-text-field
-                  v-model="filterText2"
-                  label="Buscar"
-                  outlined
-                  dense
-                  hide-details
-                  class="filter-field"
-                  prepend-icon="mdi-magnify"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-card-title>
-          <v-card-text>
-            <div class="table-container custom-table-container">
-              <v-simple-table dense class="custom-table">
-                <thead>
-                  <tr>
-                    <th class="text-left">Producto</th>
-                    <th class="text-left">Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(item, idx) in filteredItems2"
-                    :key="'proceso_' + idx"
-                    :class="{ 'selected-row': selectedItem === item }"
-                    @click="selectItem(item)"
-                  >
-                    <td>{{ item.producto }}</td>
-                    <td>{{ item.estado }}</td>
-                  </tr>
-                  <tr v-if="!filteredItems2.length">
-                    <td colspan="2" class="text-center py-4">No tienes ningun producto pendiente.</td>
-                  </tr>
-                </tbody>
-              </v-simple-table>
-            </div>
-          </v-card-text>
-        </v-card>
-
-        <!-- tabla 3-->
-        <v-card class="mb-6 custom-card" outlined>
-          <v-card-title>
-            <v-row justify="space-between" align="center" class="w-100">
-              <v-col>
-                <h3 style="color:rgb(8, 0, 255);">Completadas</h3>
-              </v-col>
-              <v-col class="d-flex justify-end">
-                <v-text-field
-                  v-model="filterText3"
-                  label="Buscar"
-                  outlined
-                  dense
-                  hide-details
-                  class="filter-field"
-                  prepend-icon="mdi-magnify"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-card-title>
-          <v-card-text>
-            <div class="table-container custom-table-container">
-              <v-simple-table dense class="custom-table">
-                <thead>
-                  <tr>
-                    <th class="text-left">Nombre Cliente</th>
-                    <th class="text-left">Producto</th>
-                    <th class="text-left">Problema</th>
-                    <th class="text-left">Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(item, idx) in filteredItems3"
-                    :key="'completadas_' + idx"
-                    :class="{ 'selected-row': selectedItem === item }"
-                    @click="selectItem(item)"
-                  >
-                    <td>{{ item.nombre_cliente }}</td>
-                    <td>{{ item.producto }}</td>
-                    <td>{{ item.problema }}</td>
-                    <td>{{ item.estado }}</td>
-                  </tr>
-                  <tr v-if="!filteredItems3.length">
-                    <td colspan="4" class="text-center py-4">No hay productos.</td>
-                  </tr>
-                </tbody>
-              </v-simple-table>
-            </div>
-          </v-card-text>
-          <v-card-actions class="justify-end">
-            <v-btn @click="openSeguimientoDialog" color="white" class="custom-btn">Detalle</v-btn>
-          </v-card-actions>
-        </v-card>
-
-        <!-- Detalle del producto - Por pagar -->
-        <v-dialog v-model="showDetailDialog" max-width="800px" class="dialog-custom">
-          <v-card>
-            <v-card-title class="dialog-title">
-              <span class="headline">Detalles del Cliente</span>
-            </v-card-title>
-            <v-card-text>
-              <v-row>
-                <v-col cols="12" md="6">
-                  <v-form>
-                    <v-text-field v-model="selectedItem.producto" label="Producto" readonly />
-                    <v-text-field v-model="selectedItem.diagnostico" label="Diagnóstico en Línea" readonly />
-                  </v-form>
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-form>
-                    <v-textarea v-model="nuevosDatos.cambios" label="Cambios" placeholder="Ingrese los cambios aquí" />
-                    <v-text-field v-model="nuevosDatos.costoChequeo" label="Costo de Chequeo" placeholder="Ingrese el costo de chequeo aquí" />
-                    <v-text-field v-model="nuevosDatos.costoReparacion" label="Costo de Reparación" placeholder="Ingrese el costo de reparación aquí" />
-                  </v-form>
-                </v-col>
-              </v-row>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn @click="guardarDatos" color="primary">
-                <v-icon left>mdi-content-save</v-icon>
-                Guardar Datos
-              </v-btn>
-              <v-btn @click="closeDetailDialog" color="secondary">
-                <v-icon left>mdi-close</v-icon>
-                Cancelar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
-        <!-- Detalle del producto - Completadas -->
-        <v-dialog v-model="showSeguimientoDialog" max-width="600px">
-          <v-card>
-            <v-card-title>
-              <span class="headline">Mi Estado</span>
-            </v-card-title>
-            <v-card-text>
-              <v-row>
-                <v-col cols="12">
-                  <v-form>
-                    <v-text-field v-model="selectedItem.nombre_cliente" label="Nombre del Cliente" readonly />
-                    <v-text-field v-model="selectedItem.producto" label="Producto" readonly />
-                    <v-text-field v-model="selectedItem.problema" label="Problema" readonly />
-                    <v-text-field v-model="selectedItem.estado" label="Estado" readonly />
-                  </v-form>
-                </v-col>
-              </v-row>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn @click="closeSeguimientoDialog" color="secondary">
-                <v-icon left>mdi-close</v-icon>
-                Cerrar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-col>
-    </v-row>
-    <footer>
-      <v-container>
-        <v-row>
-          <!-- Información de Contacto -->
-          <v-col cols="12" md="4" class="footer-info">
-            <h4 class="footer-title">Contactos</h4>
-            <p>MundoElectronicoTRC@gmail.com</p>
-            <p>Teléfono: 8715265042</p>
-          </v-col>
+  <v-app>
   
-          <!-- Enlaces de Navegación -->
-          <v-col cols="12" md="4" class="footer-links">
-            <h4 class="footer-title">Desarrolladores</h4>
-            <p>Edwin Lopez, Carlos Centeno</p>
-            <p>Diana Ochoa, Marbella Perez</p>
-          </v-col>
-  
-          <!-- Iconos Sociales -->
-          <v-col cols="12" md="4" class="social-icons">
-            <v-btn icon href="https://www.facebook.com/profile.php?id=100054380206513" target="_blank" class="social-icon-btn">
-              <!-- Icono de Facebook -->
-              <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" id="facebook" data-name="Flat Color" xmlns="http://www.w3.org/2000/svg" class="icon flat-color">
-                <path d="M14,6h3a1,1,0,0,0,1-1V3a1,1,0,0,0-1-1H14A5,5,0,0,0,9,7v3H7a1,1,0,0,0-1,1v2a1,1,0,0,0,1,1H9v7a1,1,0,0,0,1,1h2a1,1,0,0,0,1-1V14h2.22a1,1,0,0,0,1-.76l.5-2a1,1,0,0,0-1-1.24H13V7A1,1,0,0,1,14,6Z" style="fill: rgb(0, 0, 0);"></path>
-              </svg>
-            </v-btn>
-            <v-btn icon href="https://instagram.com" target="_blank" class="social-icon-btn">
-              <!-- Icono de Instagram -->
-              <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1">
-                <path d="M17.34,5.46h0a1.2,1.2,0,1,0,1.2,1.2A1.2,1.2,0,0,0,17.34,5.46Zm4.6,2.42a7.59,7.59,0,0,0-.46-2.43,4.94,4.94,0,0,0-1.16-1.77,4.7,4.7,0,0,0-1.77-1.15,7.3,7.3,0,0,0-2.43-.47C15.06,2,14.72,2,12,2s-3.06,0-4.12.06a7.3,7.3,0,0,0-2.43.47A4.78,4.78,0,0,0,3.68,3.68,4.7,4.7,0,0,0,2.53,5.45a7.3,7.3,0,0,0-.47,2.43C2,8.94,2,9.28,2,12s0,3.06.06,4.12a7.3,7.3,0,0,0,.47,2.43,4.7,4.7,0,0,0,1.15,1.77,4.78,4.78,0,0,0,1.77,1.15,7.3,7.3,0,0,0,2.43.47C8.94,22,9.28,22,12,22s3.06,0,4.12-.06a7.3,7.3,0,0,0,2.43-.47,4.7,4.7,0,0,0,1.77-1.15,4.85,4.85,0,0,0,1.16-1.77,7.59,7.59,0,0,0,.46-2.43c0-1.06.06-1.4.06-4.12S22,8.94,21.94,7.88ZM20.14,16a5.61,5.61,0,0,1-.34,1.86,3.06,3.06,0,0,1-.75,1.15,3.19,3.19,0,0,1-1.15.75,5.61,5.61,0,0,1-1.86.34c-1,.05-1.37.06-4,.06s-3,0-4-.06A5.73,5.73,0,0,1,6.1,19.8,3.27,3.27,0,0,1,5,19.05a3,3,0,0,1-.74-1.15A5.54,5.54,0,0,1,3.86,16c0-1-.06-1.37-.06-4s0-3,.06-4A5.54,5.54,0,0,1,4.21,6.1,3,3,0,0,1,5,5,3.14,3.14,0,0,1,6.1,4.2,5.73,5.73,0,0,1,8,3.86c1,0,1.37-.06,4-.06s3,0,4,.06a5.61,5.61,0,0,1,1.86.34A3.06,3.06,0,0,1,19.05,5,3.06,3.06,0,0,1,19.8,6.1,5.61,5.61,0,0,1,20.14,8c.05,1,.06,1.37.06,4S20.19,15,20.14,16ZM12,6.87A5.13,5.13,0,1,0,17.14,12,5.12,5.12,0,0,0,12,6.87Zm0,8.46A3.33,3.33,0,1,1,15.33,12,3.33,3.33,0,0,1,12,15.33Z"/>
-              </svg>
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </footer>
+      <!-- Componente Table1 -->
+      <TablaUno
+        :filterText="filterText"
+        :filteredItems="filteredItems1"
+        :selectedItem="selectedItem1"
+        @selectItem="selectItem1"
+        @openDetalleLog="openDetalleLog"
+      />
+
+      <!-- Componente Table2 -->
+      <TablaDos
+        :filterText="filterText"
+        :filteredItems="filteredItems2"
+        :selectedItem="selectedItem2"
+        @selectItem="selectItem2"
+      />
+
+      <!-- Componente Table3 -->
+      <TablaTres
+        :filterText="filterText"
+        :filteredItems="filteredItems3"
+        :selectedItem="selectedItem3"
+        @selectItem="selectItem3"
+        @openSeguimientoLog="openSeguimientoLog"
+      />
+    
+      <!-- Diálogo de Detalles -->
+<br>
+<br>
+<br>
+      <!-- Pie de Página -->
+      <footer>
+        <v-container>
+          <v-row>
+            <!-- Información de Contacto -->
+            <v-col cols="12" md="4">
+              <div class="footer-info">
+                <h4 class="footer-title">Contactos</h4>
+                <p>MundoElectronicoTRC@gmail.com</p>
+                <p>Teléfono: 8715265042</p>
+              </div>
+            </v-col>
+    
+            <!-- Enlaces de Navegación -->
+            <v-col cols="12" md="4">
+              <div class="footer-links">
+                <h4 class="footer-title">Desarrolladores</h4>
+                <p>Edwin Lopez, Carlos Centeno</p>
+                <p>Diana Ochoa, Marbella Perez</p>
+              </div>
+            </v-col>
+    
+            <!-- Iconos Sociales -->
+            <v-col cols="12" md="4">
+              <div class="social-icons">
+                <v-btn icon href="https://www.facebook.com/profile.php?id=100054380206513" target="_blank" class="social-icon-btn">
+                  <!-- Icono de Facebook -->
+                  <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" id="facebook" data-name="Flat Color" xmlns="http://www.w3.org/2000/svg" class="icon flat-color">
+                    <path d="M14,6h3a1,1,0,0,0,1-1V3a1,1,0,0,0-1-1H14A5,5,0,0,0,9,7v3H7a1,1,0,0,0-1,1v2a1,1,0,0,0,1,1H9v7a1,1,0,0,0,1,1h2a1,1,0,0,0,1-1V14h2.22a1,1,0,0,0,1-.76l.5-2a1,1,0,0,0-1-1.24H13V7A1,1,0,0,1,14,6Z" style="fill: rgb(0, 0, 0);"></path>
+                  </svg>
+                </v-btn>
+                <v-btn icon href="https://instagram.com" target="_blank" class="social-icon-btn">
+                  <!-- Icono de Instagram -->
+                  <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1">
+                    <path d="M17.34,5.46h0a1.2,1.2,0,1,0,1.2,1.2A1.2,1.2,0,0,0,17.34,5.46Zm4.6,2.42a7.59,7.59,0,0,0-.46-2.43,4.94,4.94,0,0,0-1.16-1.77,4.7,4.7,0,0,0-1.77-1.15,7.3,7.3,0,0,0-2.43-.47C15.06,2,14.72,2,12,2s-3.06,0-4.12.06a7.3,7.3,0,0,0-2.43.47A4.78,4.78,0,0,0,3.68,3.68,4.7,4.7,0,0,0,2.53,5.45a7.3,7.3,0,0,0-.47,2.43C2,8.94,2,9.28,2,12s0,3.06.06,4.12a7.3,7.3,0,0,0,.47,2.43,4.7,4.7,0,0,0,1.15,1.77,4.78,4.78,0,0,0,1.77,1.15,7.3,7.3,0,0,0,2.43.47C8.94,22,9.28,22,12,22s3.06,0,4.12-.06a7.3,7.3,0,0,0,2.43-.47,4.7,4.7,0,0,0,1.77-1.15,4.85,4.85,0,0,0,1.16-1.77,7.59,7.59,0,0,0,.46-2.43c0-1.06.06-1.4.06-4.12S22,8.94,21.94,7.88ZM20.14,16a5.61,5.61,0,0,1-.34,1.86,3.06,3.06,0,0,1-.75,1.15,3.19,3.19,0,0,1-1.15.75,5.61,5.61,0,0,1-1.86.34c-1,.05-1.37.06-4,.06s-3,0-4-.06A5.73,5.73,0,0,1,6.1,19.8,3.27,3.27,0,0,1,5,19.05a3,3,0,0,1-.74-1.15A5.54,5.54,0,0,1,3.86,16c0-1-.06-1.37-.06-4s0-3,.06-4A5.54,5.54,0,0,1,4.21,6.1,3,3,0,0,1,5,5,3.14,3.14,0,0,1,6.1,4.2,5.73,5.73,0,0,1,8,3.86c1,0,1.37-.06,4-.06s3,0,4,.06a5.61,5.61,0,0,1,1.86.34A3.06,3.06,0,0,1,19.05,5,3.06,3.06,0,0,1,19.8,6.1,5.61,5.61,0,0,1,20.14,8c.05,1,.06,1.37.06,4S20.19,15,20.14,16ZM12,6.87A5.13,5.13,0,1,0,17.14,12,5.12,5.12,0,0,0,12,6.87Zm0,8.46A3.33,3.33,0,1,1,15.33,12,3.33,3.33,0,0,1,12,15.33Z"/>
+                  </svg>
+                </v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </footer>
   </v-app>
 </template>
 
+
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref } from 'vue';
+import TablaUno from '@/components/CompCliente/TablaUno.vue';
+import TablaDos from '@/components/CompCliente/TablaDos.vue';
+import TablaTres from '@/components/CompCliente/TablaTres.vue';
 
 
-const filterText1 = ref('');
-const filterText2 = ref('');
-const filterText3 = ref('');
-const selectedItem = ref(null);
-const showDetailDialog = ref(false);
-const showSeguimientoDialog = ref(false);
-const nuevosDatos = ref({
-  cambios: '',
-  costoChequeo: '',
-  costoReparacion: ''
-});
+// Definir las variables reactivas
+const filterText = ref('');
+const filteredItems1 = ref([]);
+const filteredItems2 = ref([]);
+const filteredItems3 = ref([]);
+const selectedItem1 = ref(null);
+const selectedItem2 = ref(null);
+const selectedItem3 = ref(null);
+const showDetalleLog = ref(false);
+const showSeguimientoLog = ref(false);
 
-const tareasAsignadas = ref([]);
-const tareasEnProceso = ref([]);
-const tareasCompletadas = ref([]);
 
-const filteredItems1 = computed(() => {
-  const filter = filterText1.value.toLowerCase();
-  return tareasAsignadas.value.filter(item =>
-    item.producto.toLowerCase().includes(filter) ||
-    item.estado.toLowerCase().includes(filter)
-  );
-});
-
-const filteredItems2 = computed(() => {
-  const filter = filterText2.value.toLowerCase();
-  return tareasEnProceso.value.filter(item =>
-    item.producto.toLowerCase().includes(filter) ||
-    item.estado.toLowerCase().includes(filter)
-  );
-});
-
-const filteredItems3 = computed(() => {
-  const filter = filterText3.value.toLowerCase();
-  return tareasCompletadas.value.filter(item =>
-    item.nombre_cliente.toLowerCase().includes(filter) ||
-    item.producto.toLowerCase().includes(filter) ||
-    item.problema.toLowerCase().includes(filter) ||
-    item.estado.toLowerCase().includes(filter)
-  );
-});
-
-const selectItem = (item) => {
-  selectedItem.value = item;
+// Métodos para manejar selección de items
+const selectItem1 = (item) => {
+  selectedItem1.value = item;
 };
 
-const openDetailDialog = () => {
-  if (selectedItem.value) {
-    showDetailDialog.value = true;
-    nuevosDatos.value = {
-      cambios: '',
-      costoChequeo: '',
-      costoReparacion: ''
-    };
-  } else {
-    console.log('No se ha seleccionado ningún item.');
-  }
+const selectItem2 = (item) => {
+  selectedItem2.value = item;
 };
 
-const closeDetailDialog = () => {
-  showDetailDialog.value = false;
+const selectItem3 = (item) => {
+  selectedItem3.value = item;
 };
 
-const guardarDatos = () => {
-  console.log('Datos guardados:', nuevosDatos.value);
-  closeDetailDialog();
+// Métodos para manejar la apertura de diálogos
+const openDetalleLog = () => {
+  showDetalleLog.value = true;
 };
 
-const openSeguimientoDialog = () => {
-  if (selectedItem.value) {
-    showSeguimientoDialog.value = true;
-  } else {
-    console.log('No se ha seleccionado ningún item.');
-  }
+const openSeguimientoLog = () => {
+  showSeguimientoLog.value = true;
 };
-
-const closeSeguimientoDialog = () => {
-  showSeguimientoDialog.value = false;
-};
-
-const fetchData = async () => {
-  try {
-    const [asignadasRes, enProcesoRes, completadasRes] = await Promise.all([
-      fetch('http://hs.com/orden'),
-      fetch('http://hs.com/TCorden'),
-      fetch('http://hs.com/TERorden')
-    ]);
-    const [asignadasJson, enProcesoJson, completadasJson] = await Promise.all([
-      asignadasRes.json(),
-      enProcesoRes.json(),
-      completadasRes.json()
-    ]);
-
-    if (asignadasJson.status === 200) {
-      tareasAsignadas.value = asignadasJson.data;
-    }
-    if (enProcesoJson.status === 200) {
-      tareasEnProceso.value = enProcesoJson.data;
-    }
-    if (completadasJson.status === 200) {
-      tareasCompletadas.value = completadasJson.data;
-    }
-  } catch (error) {
-    console.error('Error al obtener datos:', error);
-  }
-};
-
-onMounted(() => {
-  fetchData();
-});
 </script>
 
 <style scoped>
@@ -449,9 +193,7 @@ onMounted(() => {
   color: #ffffff; 
 }
 
-
 /*-----------------------------------------------------------------------------------------*/
-
 
 .custom-table {
   font-size: 0.875rem; /* Tamaño de fuente más pequeño */
@@ -503,29 +245,57 @@ onMounted(() => {
 
 /* Estilo del pie de página */
 footer {
-  background-color: #11100e;
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
+  background-color: #11100e; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  padding: 20px 0; /* Espaciado superior e inferior */
+  text-align: center; /* Centrar el texto */
 }
 
-/* Estilos de los elementos del pie de página */
-.footer-info, .footer-links, .social-icons {
-  margin-bottom: 10px;
+/* Contenedor del pie de página */
+footer .v-container {
+  max-width: 1200px; /* Ancho máximo del contenedor */
+  margin: 0 auto; /* Centrar el contenedor horizontalmente */
 }
 
-/* Estilo de los títulos del pie de página */
+/* Estilo de las columnas en el pie de página */
+.footer-info,
+.footer-links,
+.social-icons {
+  margin-bottom: 20px; /* Espacio inferior */
+}
+
+/* Estilo de los títulos en el pie de página */
 .footer-title {
-  color: #FFAD00;
+  color: #ffad00; /* Color del título */
+  margin-bottom: 10px; /* Espacio inferior del título */
+  font-size: 18px; /* Tamaño de fuente del título */
+  font-weight: bold; /* Negrita para el título */
 }
 
-/* Estilo de los botones de iconos sociales */
+/* Estilo de los íconos sociales */
+.social-icons {
+  display: flex; /* Usar flexbox para alinear los íconos */
+  justify-content: center; /* Centrar los íconos horizontalmente */
+  gap: 10px; /* Espacio entre íconos */
+}
+
+/* Estilo de los botones de íconos sociales */
 .social-icon-btn {
-  margin-right: 10px; /* Espacio entre los iconos */
+  color: #fff; /* Color del ícono */
+  transition: color 0.3s; /* Transición de color */
 }
 
-.social-icon-btn:last-child {
-  margin-right: 0; /* Elimina el margen del último ícono */
+/* Cambio de color al pasar el ratón sobre los íconos */
+.social-icon-btn:hover {
+  color: #ffad00; /* Color del ícono al pasar el ratón */
 }
+
+/* Tamaño de los íconos */
+.social-icon-btn svg {
+  width: 24px; /* Ancho del ícono */
+  height: 24px; /* Alto del ícono */
+}
+
 
 </style>
+
