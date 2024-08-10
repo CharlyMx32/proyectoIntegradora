@@ -64,10 +64,16 @@
           <span class="headline">Actualizar Proceso</span>
         </v-card-title>
         <v-card-subtitle>
-          <v-text-field v-model="nuevosDatos.estado" label="Estado"></v-text-field>
+          <v-select
+            v-model="nuevosDatos.estado"
+            :items="estados"
+            label="Estado"
+            outlined
+          ></v-select>
           <v-text-field
             v-model="nuevosDatos.fechaEstimada"
             label="Fecha Estimada de Finalización"
+            outlined
           ></v-text-field>
         </v-card-subtitle>
         <v-card-actions>
@@ -83,17 +89,18 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, } from 'vue'
 import axios from 'axios'
 
 const filterText = ref('')
 const selectedItem = ref(null)
 const showProcessDialog = ref(false)
 const nuevosDatos = ref({
-  estado: '',
+  estado: 'En reparación',  // Estado predeterminado
   fechaEstimada: ''
 })
 const tareasEnProceso = ref([])
+const estados = ['En reparación', 'Con retraso', 'Completado']
 
 const filteredItems = computed(() => {
   const filter = filterText.value.toLowerCase()
@@ -108,15 +115,18 @@ const filteredItems = computed(() => {
 
 const selectItem = (item) => {
   selectedItem.value = item
+  // Configura el estado predeterminado en el modal según el estado del item seleccionado
+  if (item) {
+    nuevosDatos.value = {
+      estado: item.estado || 'En reparación',
+      fechaEstimada: item.fechaEstimada || ''
+    }
+  }
 }
 
 const openProcessDialog = () => {
   if (selectedItem.value) {
     showProcessDialog.value = true
-    nuevosDatos.value = {
-      estado: '',
-      fechaEstimada: ''
-    }
   }
 }
 
@@ -131,6 +141,12 @@ const saveProcessUpdate = async () => {
         item: selectedItem.value,
         datos: nuevosDatos.value
       })
+      // Actualiza el item en tareasEnProceso
+      const index = tareasEnProceso.value.findIndex(item => item === selectedItem.value);
+      if (index !== -1) {
+        tareasEnProceso.value[index] = { ...tareasEnProceso.value[index], ...nuevosDatos.value };
+      }
+
       alert('Proceso actualizado exitosamente.')
       closeProcessDialog()
     } catch (error) {
@@ -144,3 +160,4 @@ const saveProcessUpdate = async () => {
 <style scoped>
 /* estilos específicos para este componente */
 </style>
+s
