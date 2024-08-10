@@ -117,6 +117,18 @@
         </div>
       </v-card-text>
     </v-card>
+
+    <!-- Snackbar para éxito -->
+    <v-snackbar v-model="showSuccessSnackbar" color="green" timeout="3000">
+      {{ successMessage }}
+      <v-btn text @click="showSuccessSnackbar = false">Cerrar</v-btn>
+    </v-snackbar>
+
+    <!-- Snackbar para errores -->
+    <v-snackbar v-model="showErrorSnackbar" color="red" timeout="3000">
+      {{ errorMessage }}
+      <v-btn text @click="showErrorSnackbar = false">Cerrar</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -133,7 +145,12 @@ const selectedOrder = ref(null)
 const selectedTechnician = ref(null)
 const technicianDetails = ref([])
 const showTechnicianTable = ref(false)
-const showDetailModal = ref(false)
+
+// Snackbar variables
+const showSuccessSnackbar = ref(false)
+const successMessage = ref('')
+const showErrorSnackbar = ref(false)
+const errorMessage = ref('')
 
 const fetchData = async () => {
   try {
@@ -179,7 +196,6 @@ const filteredOrders = computed(() => {
 const selectOrder = (order) => {
   selectedOrder.value = order
   showTechnicianTable.value = false
-  showDetailModal.value = false
 }
 
 const selectTechnician = (technician) => {
@@ -206,15 +222,19 @@ const assignTechnician = async () => {
     console.log('Server response:', response.data)
 
     if (response.data.status === 'success') {
-      console.log('Technician assigned successfully')
+      successMessage.value = 'Técnico asignado exitosamente.'
+      showSuccessSnackbar.value = true
       await fetchData()
       showTechnicianTable.value = false
       selectedOrder.value = null
       selectedTechnician.value = null
     } else {
-      console.error('Error:', response.data.message)
+      errorMessage.value = 'Error al asignar el técnico.'
+      showErrorSnackbar.value = true
     }
   } catch (error) {
+    errorMessage.value = 'Error al asignar el técnico.'
+    showErrorSnackbar.value = true
     console.error('Error assigning technician:', error)
   }
 }
