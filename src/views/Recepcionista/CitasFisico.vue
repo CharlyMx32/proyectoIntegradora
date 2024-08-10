@@ -5,7 +5,9 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
+          <h1
+            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
+          >
             CITAS FISICO
           </h1>
         </v-flex>
@@ -62,7 +64,11 @@
     <!-- Componente adicional -->
     <div v-if="selectedOrder" class="additional-component-container">
       <!-- Aquí colocas el contenido del componente adicional -->
-      <h2 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">Detalles de la cita:</h2>
+      <h2
+        class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
+      >
+        Detalles de la cita:
+      </h2>
       <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
       <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
       <p>Producto: {{ selectedOrder.Producto }}</p>
@@ -72,7 +78,11 @@
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Uso_Garantia }}</p>
       <v-btn
-        v-if="selectedOrder && selectedOrder.Uso_Garantia !== 'expirada' && selectedOrder.Uso_Garantia !== 'u sada'"
+        v-if="
+          selectedOrder &&
+          selectedOrder.Uso_Garantia !== 'expirada' &&
+          selectedOrder.Uso_Garantia !== 'u sada'
+        "
         @click="usarGarantia"
         class="custom-btn"
       >
@@ -86,20 +96,20 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const orders = ref([])
 const filters = ref({
-  clientName: '',
+  clientName: ''
 })
 const selectedOrder = ref(null)
 
 const fetchData = async () => {
   try {
     const { clientName } = filters.value
-    const response = await axios.get('http://hs.com/CitasFisico', {
+    const response = await apiClient.get('CitasFisico', {
       params: {
-        client_name: clientName,
+        client_name: clientName
       }
     })
 
@@ -113,7 +123,7 @@ const fetchData = async () => {
 onMounted(fetchData)
 
 const filteredOrders = computed(() => {
-  return orders.value.filter(order =>
+  return orders.value.filter((order) =>
     order.Nombre_Cliente.toLowerCase().includes(filters.value.clientName.toLowerCase())
   )
 })
@@ -124,7 +134,7 @@ const selectOrder = (order) => {
 
 const usarGarantia = async () => {
   try {
-    const response = await axios.post('http://hs.com/garantiafisico', {
+    const response = await apiClient.post('http://hs.com/garantiafisico', {
       id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
       cliente: selectedOrder.value.Nombre_Cliente
       // Otros datos que necesites enviar
@@ -138,7 +148,7 @@ const usarGarantia = async () => {
 
 const realizarPago = async () => {
   try {
-    const response = await axios.post('http://hs.com/pagofisico', {
+    const response = await apiClient.post('http://hs.com/pagofisico', {
       id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
       cliente: selectedOrder.value.Nombre_Cliente
       // Otros datos que necesites enviar
@@ -151,7 +161,6 @@ const realizarPago = async () => {
 }
 </script>
 
-
 <style scoped>
 .my-input-class {
   background-color: #f9f9f9;
@@ -161,7 +170,7 @@ const realizarPago = async () => {
 }
 
 .my-card {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1px solid #d1d1d1;
 }
 .efecto-titulo {
@@ -186,7 +195,7 @@ const realizarPago = async () => {
 }
 
 .selected-row {
-  background-color: rgba(206, 200, 200, 0.258); 
+  background-color: rgba(206, 200, 200, 0.258);
 }
 
 .additional-component-container {
@@ -197,7 +206,7 @@ const realizarPago = async () => {
   border: 1px solid #d1d1d1;
 }
 .custom-btn {
-  background-color: #FFAD00;
+  background-color: #ffad00;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;

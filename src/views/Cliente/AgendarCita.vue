@@ -111,7 +111,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 
@@ -186,7 +186,7 @@ const filteredTimeSlots = computed(() => {
 // Obtener horas ocupadas desde el backend
 async function fetchHorasOcupadas(fechaCita) {
   try {
-    const response = await axios.post('http://hs.com/obtener_horas_ocupadas', {
+    const response = await apiClient.post('obtener_horas_ocupadas', {
       fecha_cita: fechaCita
     })
     if (response.status === 200) {
@@ -225,7 +225,7 @@ const agendarCita = async () => {
         problema: problemDetails.value
       }
 
-      const response = await axios.post('http://hs.com/agendar', data)
+      const response = await apiClient.post('agendar', data)
 
       if (
         response.status === 200 &&
