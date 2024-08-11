@@ -6,7 +6,8 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
-            CITAS FISICO
+            CITAS CLIENTE FÍSICO
+
           </h1>
         </v-flex>
       </v-card-title>
@@ -61,8 +62,8 @@
 
     <!-- Componente adicional -->
     <div v-if="selectedOrder" class="additional-component-container">
-      <!-- Aquí colocas el contenido del componente adicional -->
       <h2 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">Detalles de la cita:</h2>
+
       <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
       <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
       <p>Producto: {{ selectedOrder.Producto }}</p>
@@ -72,7 +73,8 @@
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Uso_Garantia }}</p>
       <v-btn
-        v-if="selectedOrder && selectedOrder.Uso_Garantia !== 'expirada' && selectedOrder.Uso_Garantia !== 'u sada'"
+        v-if="selectedOrder && selectedOrder.Uso_Garantia !== 'expirada' && selectedOrder.Uso_Garantia !== 'usada'"
+
         @click="usarGarantia"
         class="custom-btn"
       >
@@ -80,26 +82,49 @@
       </v-btn>
       <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
     </div>
+
+    <!-- Snackbar para mensajes de éxito -->
+    <v-snackbar
+      v-model="successSnackbar"
+      :timeout="3000"
+      color="green"
+      top
+    >
+      {{ successMessage }}
+    </v-snackbar>
+
+    <!-- Snackbar para mensajes de error -->
+    <v-snackbar
+      v-model="errorSnackbar"
+      :timeout="3000"
+      color="red"
+      top
+    >
+      {{ errorMessage }}
+    </v-snackbar>
   </v-container>
 </template>
->
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const orders = ref([])
 const filters = ref({
-  clientName: '',
+  clientName: ''
 })
 const selectedOrder = ref(null)
+const successSnackbar = ref(false)
+const errorSnackbar = ref(false)
+const successMessage = ref('')
+const errorMessage = ref('')
 
 const fetchData = async () => {
   try {
     const { clientName } = filters.value
-    const response = await axios.get('http://hs.com/CitasFisico', {
+    const response = await apiClient.get('CitasFisico', {
       params: {
-        client_name: clientName,
+        client_name: clientName
       }
     })
 
@@ -113,7 +138,7 @@ const fetchData = async () => {
 onMounted(fetchData)
 
 const filteredOrders = computed(() => {
-  return orders.value.filter(order =>
+  return orders.value.filter((order) =>
     order.Nombre_Cliente.toLowerCase().includes(filters.value.clientName.toLowerCase())
   )
 })
@@ -124,33 +149,38 @@ const selectOrder = (order) => {
 
 const usarGarantia = async () => {
   try {
-    const response = await axios.post('http://hs.com/garantiafisico', {
+    const response = await apiClient.post('http://hs.com/garantiafisico', {
       id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
       cliente: selectedOrder.value.Nombre_Cliente
       // Otros datos que necesites enviar
     })
-    alert(`Garantía usada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    successMessage.value = `Garantía usada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successSnackbar.value = true
     console.log('Response data:', response.data)
   } catch (error) {
+    errorMessage.value = 'Error usando la garantía: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
     console.error('Error usando la garantía:', error)
   }
 }
 
 const realizarPago = async () => {
   try {
-    const response = await axios.post('http://hs.com/pagofisico', {
+    const response = await apiClient.post('http://hs.com/pagofisico', {
       id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
       cliente: selectedOrder.value.Nombre_Cliente
       // Otros datos que necesites enviar
     })
-    alert(`Pago realizado exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    successMessage.value = `Pago realizado exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successSnackbar.value = true
     console.log('Response data:', response.data)
   } catch (error) {
+    errorMessage.value = 'Error realizando el pago: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
     console.error('Error realizando el pago:', error)
   }
 }
 </script>
-
 
 <style scoped>
 .my-input-class {
@@ -161,13 +191,15 @@ const realizarPago = async () => {
 }
 
 .my-card {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1px solid #d1d1d1;
 }
+
 .efecto-titulo {
   color: #0800ff;
   font-family: 'Calibre', sans-serif;
 }
+
 .table-container {
   max-height: 200px; /* Ajuste de altura para el contenedor de la tabla */
   overflow-y: auto;
@@ -186,18 +218,19 @@ const realizarPago = async () => {
 }
 
 .selected-row {
-  background-color: rgba(206, 200, 200, 0.258); 
+  background-color: rgba(206, 200, 200, 0.258);
 }
 
 .additional-component-container {
   margin-top: 20px;
   padding: 10px;
-  background-color: #ffffff; /* Fondo verde claro para el contenedor del componente adicional */
+  background-color: #ffffff; /* Fondo blanco para el contenedor del componente adicional */
   border-radius: 4px;
   border: 1px solid #d1d1d1;
 }
+
 .custom-btn {
-  background-color: #FFAD00;
+  background-color: #ffad00;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;

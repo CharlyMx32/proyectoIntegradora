@@ -5,7 +5,7 @@
       <v-row no-gutters>
         <v-col cols="12" md="12" class="pa-4">
           <v-col cols="12" class="pa-4">
-            <v-form>
+            <v-form v-model="isFormValid">
               <template v-if="!showAgendarCita">
                 <v-row>
                   <v-col cols="12" class="pa-1">
@@ -16,6 +16,7 @@
                       outlined
                       dense
                       class="minimalista"
+                      :rules="[rules.required]"
                     />
                   </v-col>
                   <v-col cols="12" class="pa-1">
@@ -26,6 +27,7 @@
                       outlined
                       dense
                       class="minimalista"
+                      :rules="[rules.required]"
                     />
                   </v-col>
                   <v-col cols="12" class="pa-1">
@@ -36,6 +38,7 @@
                       outlined
                       dense
                       class="minimalista"
+                      :rules="[rules.required]"
                     />
                   </v-col>
                   <v-col cols="12" class="pa-1">
@@ -46,10 +49,17 @@
                       outlined
                       dense
                       class="minimalista"
+                      :rules="[rules.required, rules.phone]"
+                      maxlength="10"
                     />
                   </v-col>
                 </v-row>
-                <v-btn @click="showAgendarCita = true" class="mt-4 custom-btn">SIGUIENTE</v-btn>
+                <v-btn 
+                  @click="showAgendarCita = true" 
+                  class="mt-4 custom-btn"
+                  :disabled="!isFormValid">
+                  SIGUIENTE
+                </v-btn>
               </template>
 
               <template v-else>
@@ -57,30 +67,28 @@
                   <v-col cols="12" class="pa-4 efecto-titulo">
                     <h1>¿Cuál es el producto?</h1>
                     <v-select
-                      v-model="selectedProduct"
+                      v-model="form.producto"
                       :items="products"
                       label="Selecciona un producto"
                       full-width
-                    ></v-select>
+                      :rules="[rules.required]"
+                    />
                     <h1>Detalle sobre su artículo</h1>
                     <v-container fluid>
                       <v-textarea
                         id="articulo"
                         label="Detalle del Artículo"
-                        v-model="form.articulo"
+                        v-model="form.problema"
                         outlined
                         dense
                         class="minimalista"
+                        :rules="[rules.required]"
                       />
                     </v-container>
                   </v-col>
                 </v-row>
                 <v-card-actions class="flex items-center p-6">
-                  <v-btn
-                    class="custom-btn"
-                    @click="submitForm"
-                    :disabled="isSubmitting"
-                  >
+                  <v-btn class="custom-btn" @click="submitForm" :disabled="isSubmitting">
                     AGENDAR
                   </v-btn>
                   <v-btn
@@ -97,21 +105,17 @@
         </v-col>
       </v-row>
     </v-card>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="3000" top right>
+      {{ snackbar.message }}
+    </v-snackbar>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
-const products = [
-  'Laptop',
-  'Celular',
-  'Tablet',
-  'Impresora',
-  'Televisor',
-  'Otros'
-]
+const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
 
 const form = ref({
   nombre: '',
@@ -119,34 +123,65 @@ const form = ref({
   apellidoMaterno: '',
   telefono: '',
   producto: '',
-  articulo: ''
+  problema: ''
 })
 
+const isFormValid = ref(false)
+const snackbar = ref({ show: false, message: '', color: '' })
 const showAgendarCita = ref(false)
 const isSubmitting = ref(false)
 
+const rules = {
+  required: value => !!value || 'Este campo es obligatorio',
+  phone: value => {
+    const isNumeric = /^\d+$/.test(value);
+    return (isNumeric && value.length === 10) || 'El teléfono debe tener 10 dígitos y solo debe contener números';
+  }
+}
+
+
 const submitForm = async () => {
+  if (!isFormValid.value) {
+    return
+  }
+
   isSubmitting.value = true
 
   try {
-    // Enviar la solicitud POST a la URL especificada con los datos del formulario
-    const response = await axios.post('http://hs.com/CitasFisicas', form.value)
 
-    // Aquí puedes manejar la respuesta si es necesario
-    console.log('Respuesta del servidor:', response.data)
+    const payload = {
+      nombre: form.value.nombre,
+      apellido_paterno: form.value.apellidoPaterno,
+      apellido_materno: form.value.apellidoMaterno,
+      contacto: form.value.telefono,
+      producto: form.value.producto,
+      problema: form.value.problema
+    }
 
-    // Restablecer el formulario y regresar a la página principal
+
+    const response = await axios.post('http://hs.com/citasfisicas', payload)
+
+    snackbar.value = {
+      show: true,
+      message: 'Se agendó la cita correctamente.',
+      color: 'green'
+    }
+
     form.value = {
       nombre: '',
       apellidoPaterno: '',
       apellidoMaterno: '',
       telefono: '',
       producto: '',
-      articulo: ''
+      problema: ''
     }
     showAgendarCita.value = false
   } catch (error) {
-    console.error('Error al enviar el formulario:', error)
+    snackbar.value = {
+      show: true,
+      message: 'Hubo un error al agendar la cita. Por favor, intenta nuevamente.',
+      color: 'red'
+    }
   } finally {
     isSubmitting.value = false
   }
@@ -155,23 +190,20 @@ const submitForm = async () => {
 
 <style scoped>
 .main-container {
-  margin-top: 20px; /* Espacio superior para no pegarse a la barra de navegación */
+  margin-top: 20px;
 }
 
 .card-size {
   max-width: 800px;
   width: 100%;
-  margin: 20px auto; /* Centrar horizontalmente y agregar margen superior/inferior */
-  background-color: #ffffff; /*color azul #072b4d*/ 
+  margin: 20px auto;
+  background-color: #ffffff;
+
 }
 
 .efecto-titulo {
   color: #0800ff;
   font-family: 'Calibre', sans-serif;
-}
-
-.white-card {
-  background-color: white;
 }
 
 .minimalista {
@@ -181,14 +213,8 @@ const submitForm = async () => {
   color: #333333;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .custom-btn {
-  background-color: #FFAD00;
+  background-color: #ffad00;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;
@@ -199,4 +225,3 @@ const submitForm = async () => {
   background-color: #e69700;
 }
 </style>
-

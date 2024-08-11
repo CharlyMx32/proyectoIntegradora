@@ -102,14 +102,17 @@
         </v-row>
       </v-container>
     </footer>
+    <v-snackbar v-model="snackbar.visible" :color="snackbar.color" timeout="3000">
+      {{ snackbar.message }}
+    </v-snackbar>
   </v-app>
 </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import axios from 'axios'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
+import apiClient from '@/axiosconf'
 
 // Lista de productos disponibles
 const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
@@ -120,6 +123,11 @@ const selectedTime = ref(null)
 const selectedProduct = ref(null)
 const problemDetails = ref('')
 const busyHours = ref([]) // Horas ocupadas
+const snackbar = ref({
+  visible: false,
+  message: '',
+  color: 'success' // Puedes cambiar a 'error' según sea necesario
+})
 
 // Validación de fechas permitidas
 const allowedDates = (date) => {
@@ -180,11 +188,13 @@ const filteredTimeSlots = computed(() => {
 })
 
 // Obtener horas ocupadas desde el backend
+// Obtener horas ocupadas desde el backend
 async function fetchHorasOcupadas(fechaCita) {
   try {
-    const response = await axios.post('http://hs.com/obtener_horas_ocupadas', {
+    const response = await apiClient.post('obtener_horas_ocupadas', {
       fecha_cita: fechaCita
     })
+    console.log('Respuesta de obtener horas ocupadas:', response)
     if (response.status === 200) {
       return response.data // Ajusta esto según la estructura de tu respuesta
     } else {
@@ -192,10 +202,12 @@ async function fetchHorasOcupadas(fechaCita) {
       return []
     }
   } catch (error) {
-    console.error('Error en la solicitud:', error)
+    console.error('Error en la solicitud de obtener horas ocupadas:', error)
     return []
   }
 }
+
+// Función para agendar una cita
 
 // Actualiza las horas ocupadas y las horas disponibles
 async function updateAvailableTimes(selectedDate) {
@@ -211,6 +223,16 @@ const onDateChange = async (date) => {
 }
 
 // Función para agendar una cita
+// Función para mostrar mensajes en el snackbar
+const showSnackbar = (message, color = 'success') => {
+  snackbar.value = {
+    visible: true,
+    message,
+    color
+  }
+}
+
+// Función para agendar una cita
 const agendarCita = async () => {
   if (selectedDate.value && selectedTime.value && selectedProduct.value && problemDetails.value) {
     try {
@@ -221,14 +243,16 @@ const agendarCita = async () => {
         problema: problemDetails.value
       }
 
-      const response = await axios.post('http://hs.com/agendar', data)
+      const response = await apiClient.post('agendar', data)
+
+      console.log('Respuesta del servidor:', response.data)
 
       if (
         response.status === 200 &&
         response.data.status === 200 &&
         response.data.msg === 'success'
       ) {
-        alert('Cita agendada exitosamente')
+        showSnackbar('Cita agendada exitosamente', 'success')
 
         // Limpiar los campos del formulario
         selectedDate.value = null
@@ -238,13 +262,32 @@ const agendarCita = async () => {
         busyHours.value = [] // Limpiar las horas ocupadas
         generateTimeSlots() // Regenerar los slots para la fecha actual
       } else {
-        alert('Error al agendar la cita')
+        showSnackbar(
+          'Error al agendar la cita: ' + (response.data.message || 'Desconocido'),
+          'error'
+        )
       }
     } catch (error) {
-      alert('Error al agendar la cita')
+      console.error('Error en la solicitud:', error)
+
+      let errorMessage = 'Error al agendar la cita: Desconocido'
+
+      // Verificar la respuesta del error para determinar el mensaje adecuado
+      if (error.response && error.response.data) {
+        const errorData = error.response.data
+        if (errorData.msg === 'cita_existente') {
+          errorMessage = 'Ya existe una cita para esta fecha y hora'
+        } else {
+          errorMessage = errorData.msg || error.message || 'Desconocido'
+        }
+      } else {
+        errorMessage = error.message || 'Desconocido'
+      }
+
+      showSnackbar(errorMessage, 'error')
     }
   } else {
-    alert('Faltan datos')
+    showSnackbar('Faltan datos', 'error')
   }
 }
 
@@ -265,6 +308,9 @@ watch(selectedDate, async (newDate) => {
   color: #ede8e6;
   background-size: cover;
   height: 100%;
+}
+.v-snackbar {
+  font-size: 16px;
 }
 .title-header {
   color: rgb(8, 0, 255);
@@ -290,13 +336,6 @@ footer {
   color: #fff;
   padding: 20px 0;
   text-align: center;
-}
-
-/* Estilos de los elementos del pie de página */
-.footer-info,
-.footer-links,
-.social-icons {
-  margin-bottom: 10px;
 }
 
 /* Estilo de los títulos del pie de página */

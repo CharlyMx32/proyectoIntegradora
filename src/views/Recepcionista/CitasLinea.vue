@@ -6,7 +6,8 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
-            CITAS LINEA
+            CITAS CLIENTE LÍNEA
+
           </h1>
         </v-flex>
       </v-card-title>
@@ -62,7 +63,11 @@
     <!-- Componente adicional -->
     <div v-if="selectedOrder" class="additional-component-container">
       <!-- Aquí colocas el contenido del componente adicional -->
-      <h2 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">Detalles de la cita:</h2>
+      <h2
+        class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
+      >
+        Detalles de la cita:
+      </h2>
       <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
       <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
       <p>Producto: {{ selectedOrder.Producto }}</p>
@@ -73,40 +78,65 @@
       <p>Garantia: {{ selectedOrder.Garantia }}</p>
 
       <v-btn
-  v-if="selectedOrder && selectedOrder.Garantia !== 'expirada' && selectedOrder.Garantia !== 'usada'"
-  @click="usarGarantia"
-  class="custom-btn"
->
-  USAR GARANTÍA
-</v-btn>
-
+        v-if="selectedOrder && selectedOrder.Garantia !== 'expirada' && selectedOrder.Garantia !== 'usada'"
+        @click="usarGarantia"
+        class="custom-btn"
+      >
+        USAR GARANTÍA
+      </v-btn>
 
       <v-btn
         @click="realizarPago"
         class="custom-btn"
       >
-        PAGO
+        USAR GARANTÍA
       </v-btn>
+
+      <v-btn @click="realizarPago" class="custom-btn"> PAGO </v-btn>
     </div>
+
+    <!-- Snackbar para mensajes de éxito -->
+    <v-snackbar
+      v-model="successSnackbar"
+      :timeout="3000"
+      color="green"
+      top
+    >
+      {{ successMessage }}
+    </v-snackbar>
+
+    <!-- Snackbar para mensajes de error -->
+    <v-snackbar
+      v-model="errorSnackbar"
+      :timeout="3000"
+      color="red"
+      top
+    >
+      {{ errorMessage }}
+    </v-snackbar>
   </v-container>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const orders = ref([])
 const filters = ref({
-  clientName: '',
+  clientName: ''
 })
 const selectedOrder = ref(null)
+const successSnackbar = ref(false)
+const errorSnackbar = ref(false)
+const successMessage = ref('')
+const errorMessage = ref('')
 
 const fetchData = async () => {
   try {
     const { clientName } = filters.value
-    const response = await axios.get('http://hs.com/CitasLinea', {
+    const response = await apiClient.get('CitasLinea', {
       params: {
-        client_name: clientName,
+        client_name: clientName
       }
     })
 
@@ -120,7 +150,7 @@ const fetchData = async () => {
 onMounted(fetchData)
 
 const filteredOrders = computed(() => {
-  return orders.value.filter(order =>
+  return orders.value.filter((order) =>
     order.Nombre_Cliente.toLowerCase().includes(filters.value.clientName.toLowerCase())
   )
 })
@@ -131,25 +161,31 @@ const selectOrder = (order) => {
 
 const usarGarantia = async () => {
   try {
-    const response = await axios.post('http://hs.com/garantialinea', {
-      id_detalle_linea: selectedOrder.value.id_detalle_linea, // Enviamos el ID de la cita para identificar cuál usar
+    const response = await apiClient.post('garantialinea', {
+      id_detalle_linea: selectedOrder.value.id_detalle_linea // Enviamos el ID de la cita para identificar cuál usar
     })
-    alert(`Garantía utilizada para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    successMessage.value = `Garantía utilizada para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successSnackbar.value = true
     console.log('Response:', response.data)
   } catch (error) {
+    errorMessage.value = 'Error al usar la garantía: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
     console.error('Error al usar la garantía:', error)
   }
 }
 
 const realizarPago = async () => {
   try {
-    const response = await axios.post('http://hs.com/pagolinea', {
+    const response = await apiClient.post('pagolinea', {
       id_detalle_linea: selectedOrder.value.id_detalle_linea, // Enviamos el ID de la cita para identificar cuál pagar
       pago: 'Realizado' // Puedes enviar la información adicional que consideres necesaria
     })
-    alert(`Pago realizado para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    successMessage.value = `Pago realizado para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successSnackbar.value = true
     console.log('Response:', response.data)
   } catch (error) {
+    errorMessage.value = 'Error al realizar el pago: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
     console.error('Error al realizar el pago:', error)
   }
 }
@@ -164,7 +200,7 @@ const realizarPago = async () => {
 }
 
 .my-card {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1px solid #d1d1d1;
 }
 
@@ -201,7 +237,7 @@ const realizarPago = async () => {
   border: 1px solid #d1d1d1;
 }
 .custom-btn {
-  background-color: #FFAD00;
+  background-color: #ffad00;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;

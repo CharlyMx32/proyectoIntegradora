@@ -6,7 +6,8 @@
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
           <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text">
-            ASIGNACION LINEA
+            ASIGNACIÓN LÍNEA
+
           </h1>
         </v-flex>
       </v-card-title>
@@ -66,7 +67,7 @@
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showTechnicianTable = true"
             class="mr-2"
-            style="background-color: #FFAD00; color: white;"
+            style="background-color: #ffad00; color: white"
           >
             Asignar Técnico
           </v-btn>
@@ -108,21 +109,30 @@
           </tbody>
         </v-table>
         <div v-if="selectedTechnician" class="mt-4">
-          <v-btn
-            @click="assignTechnician"
-            style="background-color: #FFAD00; color: white;"
-          >
+          <v-btn @click="assignTechnician" style="background-color: #ffad00; color: white">
             Asignar
           </v-btn>
         </div>
       </v-card-text>
     </v-card>
+
+    <!-- Snackbar para éxito -->
+    <v-snackbar v-model="showSuccessSnackbar" color="green" timeout="3000">
+      {{ successMessage }}
+      <v-btn text @click="showSuccessSnackbar = false">Cerrar</v-btn>
+    </v-snackbar>
+
+    <!-- Snackbar para errores -->
+    <v-snackbar v-model="showErrorSnackbar" color="red" timeout="3000">
+      {{ errorMessage }}
+      <v-btn text @click="showErrorSnackbar = false">Cerrar</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const orders = ref([])
 const filters = ref({
@@ -133,12 +143,17 @@ const selectedOrder = ref(null)
 const selectedTechnician = ref(null)
 const technicianDetails = ref([])
 const showTechnicianTable = ref(false)
-const showDetailModal = ref(false)
+
+// Snackbar variables
+const showSuccessSnackbar = ref(false)
+const successMessage = ref('')
+const showErrorSnackbar = ref(false)
+const errorMessage = ref('')
 
 const fetchData = async () => {
   try {
     const { clientName, technicianName } = filters.value
-    const response = await axios.get('http://hs.com/RAsignacionLinea', {
+    const response = await apiClient.get('RAsignacionLinea', {
       params: {
         client_name: clientName,
         technician_name: technicianName
@@ -152,7 +167,7 @@ const fetchData = async () => {
 
 const fetchTechnicianDetails = async () => {
   try {
-    const response = await axios.get('http://hs.com/citasTecnico')
+    const response = await apiClient.get('citasTecnico')
     technicianDetails.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
     console.error('Error fetching technician details:', error)
@@ -172,14 +187,13 @@ const filteredOrders = computed(() => {
     const matchesTechnician = order.nombre_tecnico
       .toLowerCase()
       .includes(filters.value.technicianName.toLowerCase())
-    return matchesClient && matchesTechnician 
+    return matchesClient && matchesTechnician
   })
 })
 
 const selectOrder = (order) => {
   selectedOrder.value = order
   showTechnicianTable.value = false
-  showDetailModal.value = false
 }
 
 const selectTechnician = (technician) => {
@@ -198,7 +212,7 @@ const assignTechnician = async () => {
 
     console.log('Assigning technician:', { orderId, technicianId })
 
-    const response = await axios.post('http://hs.com/asignacionl', {
+    const response = await apiClient.post('asignacionl', {
       orderId,
       technicianId
     })
@@ -206,15 +220,19 @@ const assignTechnician = async () => {
     console.log('Server response:', response.data)
 
     if (response.data.status === 'success') {
-      console.log('Technician assigned successfully')
+      successMessage.value = 'Técnico asignado exitosamente.'
+      showSuccessSnackbar.value = true
       await fetchData()
       showTechnicianTable.value = false
       selectedOrder.value = null
       selectedTechnician.value = null
     } else {
-      console.error('Error:', response.data.message)
+      errorMessage.value = 'Error al asignar el técnico.'
+      showErrorSnackbar.value = true
     }
   } catch (error) {
+    errorMessage.value = 'Error al asignar el técnico.'
+    showErrorSnackbar.value = true
     console.error('Error assigning technician:', error)
   }
 }
@@ -270,6 +288,6 @@ const assignTechnician = async () => {
 }
 
 .title-text {
-  color: #0800FF;
+  color: #0800ff;
 }
 </style>

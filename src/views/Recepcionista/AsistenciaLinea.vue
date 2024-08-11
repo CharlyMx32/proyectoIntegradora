@@ -5,7 +5,9 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo ">
+          <h1
+            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
+          >
             ASISTENCIA CITA
           </h1>
         </v-flex>
@@ -61,64 +63,104 @@
         </div>
       </v-card-text>
     </v-card>
+
+    <!-- Snackbar -->
+    <v-snackbar
+      v-model="snackbar.visible"
+      :color="snackbar.color"
+      top
+      right
+    >
+      {{ snackbar.message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="snackbar.visible = false"
+        >
+          Cerrar
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
+import { ref, computed, onMounted } from 'vue'
+import apiClient from '@/axiosconf'
 
-const orders = ref([]);
+const orders = ref([])
 const filters = ref({
-  clientName: '',
+  clientName: ''
+})
+const selectedOrder = ref(null)
+
+const snackbar = ref({
+  visible: false,
+  message: '',
+  color: '',
 });
-const selectedOrder = ref(null);
 
 const fetchData = async () => {
   try {
-    const { clientName } = filters.value;
-    const response = await axios.get('http://hs.com/AsistenciaCitas', {
+    const { clientName } = filters.value
+    const response = await apiClient.get('AsistenciaCitas', {
       params: {
-        client_name: clientName,
+        client_name: clientName
       }
-    });
+    })
 
-    orders.value = Array.isArray(response.data) ? response.data : [];
+    orders.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
-    console.error('Error fetching orders:', error);
+    console.error('Error fetching orders:', error)
   }
-};
+}
 
-onMounted(fetchData);
+onMounted(fetchData)
 
 const filteredOrders = computed(() => {
-  return orders.value.filter(order =>
+  return orders.value.filter((order) =>
     order.Nombre_Cliente.toLowerCase().includes(filters.value.clientName.toLowerCase())
-  );
-});
+  )
+})
 
 const selectOrder = (order) => {
-  selectedOrder.value = order;
-};
+  selectedOrder.value = order
+}
 
 const markAsAttended = async () => {
   if (!selectedOrder.value) {
-    alert('Por favor seleccione una orden de cita.');
+    snackbar.value = {
+      visible: true,
+      message: 'Por favor seleccione una orden de cita.',
+      color: 'red',
+    };
     return;
+
   }
 
   try {
-    await axios.post('http://hs.com/asistencia', {
+    await apiClient.post('asistencia', {
       id_orden_cita: selectedOrder.value.id_orden_cita
     });
-    alert(`El cliente ${selectedOrder.value.Nombre_Cliente} ha asistido a la cita.`);
+    snackbar.value = {
+      visible: true,
+      message: `El cliente ${selectedOrder.value.Nombre_Cliente} ha asistido a la cita.`,
+      color: 'green',
+    };
     fetchData(); // Refresca la lista de órdenes después de marcar la asistencia
   } catch (error) {
     console.error('Error marcando la asistencia:', error);
-    alert('Error al marcar la asistencia. Por favor, inténtelo de nuevo.');
+    snackbar.value = {
+      visible: true,
+      message: 'Error al marcar la asistencia. Por favor, inténtelo de nuevo.',
+      color: 'red',
+    };
   }
 };
-</script> 
+
+</script>
 
 <style scoped>
 .my-input-class {
@@ -139,7 +181,7 @@ const markAsAttended = async () => {
 }
 
 .table-container {
-  max-height: 200px; /* Ajuste de altura para el contenedor de la tabla */
+  max-height: 400px; /* Ajuste de altura para el contenedor de la tabla */
   overflow-y: auto;
 }
 
@@ -167,7 +209,7 @@ const markAsAttended = async () => {
 }
 
 .v-btn {
-  background-color: #FFAD00;
+  background-color: #ffad00;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;

@@ -69,8 +69,8 @@
           <!-- Enlaces de Navegación -->
           <v-col cols="12" md="4" class="footer-links">
             <h4 class="footer-title">Desarrolladores</h4>
-            <p>Edwin Lopez, Carlos Centeno</p>
-            <p>Diana Ochoa, Marbella Perez</p>
+            <p>Edwin López, Carlos Centeno</p>
+            <p>Diana Ochoa, Marbella Pérez</p>
           </v-col>
 
           <!-- Iconos Sociales -->

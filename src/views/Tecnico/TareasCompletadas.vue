@@ -35,14 +35,15 @@
             <tr
               v-for="(item, idx) in filteredItems"
               :key="'completadas_' + idx"
-              :class="{ 'selected-row': selectedItem === item }"
               @click="selectItem(item)"
+              :class="{ 'selected-row': selectedItem === item }"
             >
-              <td>{{ item.nombre_cliente }}</td>
+              <td>{{ item.Nombre_Cliente }}</td>
               <td>{{ item.producto }}</td>
-              <td>{{ item.problema }}</td>
-              <td>{{ item.tecnico_asignado }}</td>
-              <td>{{ item.fecha_finalizacion }}</td>
+              <td>{{ item.diagnostico_linea }}</td>
+              <td>{{ item.cambios }}</td>
+              <td>{{ item.costo_chequeo }}</td>
+              <td>{{ item.costo_reparacion }}</td>
             </tr>
             <tr v-if="!filteredItems.length">
               <td colspan="5" class="text-center py-4">
@@ -77,7 +78,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const filterText = ref('')
 const selectedItem = ref(null)
@@ -86,16 +87,39 @@ const nuevosDatos = ref({
   observaciones: '',
   costoTotal: ''
 })
+
+// Inicializar tareasCompletadas como un arreglo vacío
 const tareasCompletadas = ref([])
+
+apiClient
+  .post('Completados')
+  .then((response) => {
+    if (response && response.data) {
+      // Ajustar para acceder a la estructura correcta de datos
+      if (response.data.status === 200 && response.data.data && response.data.data.tareas) {
+        tareasCompletadas.value = response.data.data.tareas
+      } else {
+        console.error('La respuesta no tiene la estructura esperada')
+        tareasCompletadas.value = [] // Set to an empty array to avoid errors
+      }
+    } else {
+      console.error('No response data')
+      tareasCompletadas.value = [] // Set to an empty array to avoid errors
+    }
+  })
+  .catch((error) => {
+    console.error('Error al obtener las tareas completadas:', error)
+    tareasCompletadas.value = [] // Set to an empty array to avoid errors
+  })
 
 const filteredItems = computed(() => {
   const filter = filterText.value.toLowerCase()
   return tareasCompletadas.value.filter(
     (item) =>
-      item.nombre_cliente.toLowerCase().includes(filter) ||
+      item.Nombre_Cliente.toLowerCase().includes(filter) ||
       item.producto.toLowerCase().includes(filter) ||
-      item.problema.toLowerCase().includes(filter) ||
-      item.tecnico_asignado.toLowerCase().includes(filter)
+      item.diagnostico_linea.toLowerCase().includes(filter) ||
+      item.cambios.toLowerCase().includes(filter) // Adjusted field names
   )
 })
 
@@ -107,8 +131,8 @@ const openCompleteDialog = () => {
   if (selectedItem.value) {
     showCompleteDialog.value = true
     nuevosDatos.value = {
-      observaciones: '',
-      costoTotal: ''
+      observaciones: selectedItem.value.observaciones || '',
+      costoTotal: selectedItem.value.costoTotal || ''
     }
   }
 }
@@ -120,4 +144,7 @@ const closeCompleteDialog = () => {
 
 <style scoped>
 /* estilos específicos para este componente */
+.selected-row {
+  background-color: #f0f0f0;
+}
 </style>

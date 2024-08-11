@@ -55,6 +55,6 @@ setTimeout(() => {
   showWelcome.value = false
 }, 1500) // Duración de la animación en milisegundos
 
-const userName = computed(() => authStore.user?.nombre || 'Admin')
+const userName = computed(() => authStore.user?.nombre || 'Recepcionista')
 const userEmail = computed(() => authStore.user?.correo || 'correo@example.com')
 </script>
