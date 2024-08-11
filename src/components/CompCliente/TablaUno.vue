@@ -45,7 +45,7 @@
       </div>
     </v-card-text>
     <v-card-actions class="justify-end">
-      <v-btn @click="openDialog" color="#ffffff" class="custom-btn">Ir a pagar</v-btn>
+      <v-btn @click="processPayment" color="#ffffff" class="custom-btn">Ir a pagar</v-btn>
     </v-card-actions>
   </v-card>
 
@@ -53,40 +53,42 @@
   <v-dialog v-model="dialog" max-width="800px">
     <v-card>
       <v-card-title>
-        <span class="headline">Detalles</span>
+        <span class="headline title">Detalles</span>
       </v-card-title>
       <v-card-subtitle>
         <v-row>
           <v-col cols="6">
-            <v-text-field v-model="itemDetails.cambios" label="Cambios" readonly></v-text-field>
-            <v-text-field
-              v-model="itemDetails.costoChequeo"
-              label="Costo de Chequeo"
-              readonly
-            ></v-text-field>
-            <v-text-field
-              v-model="itemDetails.costoReparacion"
-              label="Costo de Reparación"
-              readonly
-            ></v-text-field>
+            <div class="detail-item"><strong>Producto:</strong> {{ itemDetails.producto }}</div>
+            <div class="detail-item"><strong>Problema:</strong> {{ itemDetails.problema }}</div>
+            <div class="detail-item">
+              <strong>Costo de Chequeo:</strong> {{ itemDetails.costoChequeo }}
+            </div>
+            <div class="detail-item">
+              <strong>Costo de Reparación:</strong> {{ itemDetails.costoReparacion }}
+            </div>
           </v-col>
           <v-col cols="6">
-            <v-text-field
-              v-model="itemDetails.diagnostico"
-              label="Diagnóstico"
-              readonly
-            ></v-text-field>
-            <!-- Añade más campos de detalle aquí si es necesario -->
+            <div class="detail-item">
+              <strong>Diagnóstico:</strong> {{ itemDetails.diagnostico }}
+            </div>
           </v-col>
         </v-row>
       </v-card-subtitle>
       <v-card-actions>
-        <v-btn text @click="closeDialog">Pagar</v-btn>
+        <v-btn text @click="confirmPayment">Rechazar Pago</v-btn>
         <v-btn text @click="closeDialog">Cancelar</v-btn>
+        <v-btn text @click="confirmPayment">Confirmar Pago</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
+
+  <!-- Snackbar for selection warning -->
+  <v-snackbar v-model="snackbar.visible" :color="snackbar.color" timeout="3000">
+    {{ snackbar.message }}
+    <v-btn text @click="snackbar.visible = false">Cerrar</v-btn>
+  </v-snackbar>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import apiCliente from '@/axiosconf'
@@ -95,6 +97,7 @@ const localFilterText = ref('')
 const filteredItems = ref([])
 const selectedItem = ref(null)
 const dialog = ref(false)
+const snackbar = ref({ visible: false, message: '', color: 'error' })
 const itemDetails = ref({
   producto: '',
   problema: '',
@@ -138,12 +141,25 @@ const openDialog = () => {
     }
     dialog.value = true
   } else {
-    console.warn('No item selected')
+    snackbar.value = { visible: true, message: 'Primero selecciona un servicio.', color: 'error' }
   }
 }
 
 const closeDialog = () => {
   dialog.value = false
+}
+
+const processPayment = () => {
+  if (!selectedItem.value) {
+    snackbar.value = { visible: true, message: 'Primero selecciona un servicio.', color: 'error' }
+    return
+  }
+  openDialog()
+}
+
+const confirmPayment = () => {
+  // Lógica para confirmar el pago
+  closeDialog()
 }
 </script>
 
@@ -154,15 +170,15 @@ const closeDialog = () => {
 }
 
 .title {
-  color: rgb(8, 0, 255);
+  color: #0000ff; /* Azul para el título */
   font-size: 24px;
   font-weight: bold;
 }
 
 .table-container {
+  width: 100%; /* Asegura que la tabla ocupe todo el ancho del card */
   max-height: 400px; /* Ajusta la altura según tus necesidades */
   overflow-y: auto; /* Agrega scroll vertical si el contenido excede la altura */
-  overflow-x: hidden; /* Opcional: Oculta el scroll horizontal si no es necesario */
 }
 
 .custom-table {
@@ -204,5 +220,14 @@ const closeDialog = () => {
 
 .v-dialog .v-card {
   padding: 16px;
+}
+
+.detail-item {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.detail-item strong {
+  color: #0000ff; /* Azul para las etiquetas */
 }
 </style>
