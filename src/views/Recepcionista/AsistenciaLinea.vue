@@ -63,6 +63,26 @@
         </div>
       </v-card-text>
     </v-card>
+
+    <!-- Snackbar -->
+    <v-snackbar
+      v-model="snackbar.visible"
+      :color="snackbar.color"
+      top
+      right
+    >
+      {{ snackbar.message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="snackbar.visible = false"
+        >
+          Cerrar
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -75,6 +95,12 @@ const filters = ref({
   clientName: ''
 })
 const selectedOrder = ref(null)
+
+const snackbar = ref({
+  visible: false,
+  message: '',
+  color: '',
+});
 
 const fetchData = async () => {
   try {
@@ -105,21 +131,35 @@ const selectOrder = (order) => {
 
 const markAsAttended = async () => {
   if (!selectedOrder.value) {
-    alert('Por favor seleccione una orden de cita.')
-    return
+    snackbar.value = {
+      visible: true,
+      message: 'Por favor seleccione una orden de cita.',
+      color: 'red',
+    };
+    return;
+
   }
 
   try {
     await apiClient.post('asistencia', {
       id_orden_cita: selectedOrder.value.id_orden_cita
-    })
-    alert(`El cliente ${selectedOrder.value.Nombre_Cliente} ha asistido a la cita.`)
-    fetchData() // Refresca la lista de órdenes después de marcar la asistencia
+    });
+    snackbar.value = {
+      visible: true,
+      message: `El cliente ${selectedOrder.value.Nombre_Cliente} ha asistido a la cita.`,
+      color: 'green',
+    };
+    fetchData(); // Refresca la lista de órdenes después de marcar la asistencia
   } catch (error) {
-    console.error('Error marcando la asistencia:', error)
-    alert('Error al marcar la asistencia. Por favor, inténtelo de nuevo.')
+    console.error('Error marcando la asistencia:', error);
+    snackbar.value = {
+      visible: true,
+      message: 'Error al marcar la asistencia. Por favor, inténtelo de nuevo.',
+      color: 'red',
+    };
   }
-}
+};
+
 </script>
 
 <style scoped>
@@ -141,7 +181,7 @@ const markAsAttended = async () => {
 }
 
 .table-container {
-  max-height: 200px; /* Ajuste de altura para el contenedor de la tabla */
+  max-height: 400px; /* Ajuste de altura para el contenedor de la tabla */
   overflow-y: auto;
 }
 

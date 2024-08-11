@@ -4,6 +4,7 @@
       <v-row justify="space-between" align="center" class="w-100">
         <v-col>
           <h3 class="title">Por pagar</h3>
+
         </v-col>
         <v-col class="d-flex justify-end">
           <v-text-field
@@ -31,6 +32,7 @@
             <tr
               v-for="(item, idx) in filteredItems"
               :key="'asignadas_' + idx"
+
               :class="{ 'selected-row': selectedItem === item }"
               @click="selectItem(item)"
             >
@@ -39,6 +41,7 @@
             </tr>
             <tr v-if="!filteredItems.length">
               <td colspan="2" class="text-center py-4">No tienes pagos pendientes.</td>
+
             </tr>
           </tbody>
         </v-simple-table>
@@ -161,6 +164,7 @@ const confirmPayment = () => {
   // Lógica para confirmar el pago
   closeDialog()
 }
+=======
 </script>
 
 <style scoped>
@@ -171,6 +175,7 @@ const confirmPayment = () => {
 
 .title {
   color: #0000ff; /* Azul para el título */
+
   font-size: 24px;
   font-weight: bold;
 }
@@ -179,6 +184,7 @@ const confirmPayment = () => {
   width: 100%; /* Asegura que la tabla ocupe todo el ancho del card */
   max-height: 400px; /* Ajusta la altura según tus necesidades */
   overflow-y: auto; /* Agrega scroll vertical si el contenido excede la altura */
+
 }
 
 .custom-table {
@@ -230,4 +236,5 @@ const confirmPayment = () => {
 .detail-item strong {
   color: #0000ff; /* Azul para las etiquetas */
 }
+
 </style>

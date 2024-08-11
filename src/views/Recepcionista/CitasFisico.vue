@@ -5,10 +5,9 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h1
-            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
-          >
-            CITAS FISICO
+          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
+            CITAS CLIENTE FÍSICO
+
           </h1>
         </v-flex>
       </v-card-title>
@@ -63,12 +62,8 @@
 
     <!-- Componente adicional -->
     <div v-if="selectedOrder" class="additional-component-container">
-      <!-- Aquí colocas el contenido del componente adicional -->
-      <h2
-        class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
-      >
-        Detalles de la cita:
-      </h2>
+      <h2 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">Detalles de la cita:</h2>
+
       <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
       <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
       <p>Producto: {{ selectedOrder.Producto }}</p>
@@ -78,11 +73,8 @@
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Uso_Garantia }}</p>
       <v-btn
-        v-if="
-          selectedOrder &&
-          selectedOrder.Uso_Garantia !== 'expirada' &&
-          selectedOrder.Uso_Garantia !== 'u sada'
-        "
+        v-if="selectedOrder && selectedOrder.Uso_Garantia !== 'expirada' && selectedOrder.Uso_Garantia !== 'usada'"
+
         @click="usarGarantia"
         class="custom-btn"
       >
@@ -90,9 +82,28 @@
       </v-btn>
       <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
     </div>
+
+    <!-- Snackbar para mensajes de éxito -->
+    <v-snackbar
+      v-model="successSnackbar"
+      :timeout="3000"
+      color="green"
+      top
+    >
+      {{ successMessage }}
+    </v-snackbar>
+
+    <!-- Snackbar para mensajes de error -->
+    <v-snackbar
+      v-model="errorSnackbar"
+      :timeout="3000"
+      color="red"
+      top
+    >
+      {{ errorMessage }}
+    </v-snackbar>
   </v-container>
 </template>
->
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
@@ -103,6 +114,10 @@ const filters = ref({
   clientName: ''
 })
 const selectedOrder = ref(null)
+const successSnackbar = ref(false)
+const errorSnackbar = ref(false)
+const successMessage = ref('')
+const errorMessage = ref('')
 
 const fetchData = async () => {
   try {
@@ -139,9 +154,12 @@ const usarGarantia = async () => {
       cliente: selectedOrder.value.Nombre_Cliente
       // Otros datos que necesites enviar
     })
-    alert(`Garantía usada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    successMessage.value = `Garantía usada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successSnackbar.value = true
     console.log('Response data:', response.data)
   } catch (error) {
+    errorMessage.value = 'Error usando la garantía: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
     console.error('Error usando la garantía:', error)
   }
 }
@@ -153,9 +171,12 @@ const realizarPago = async () => {
       cliente: selectedOrder.value.Nombre_Cliente
       // Otros datos que necesites enviar
     })
-    alert(`Pago realizado exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`)
+    successMessage.value = `Pago realizado exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successSnackbar.value = true
     console.log('Response data:', response.data)
   } catch (error) {
+    errorMessage.value = 'Error realizando el pago: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
     console.error('Error realizando el pago:', error)
   }
 }
@@ -173,10 +194,12 @@ const realizarPago = async () => {
   background-color: #ffffff;
   border: 1px solid #d1d1d1;
 }
+
 .efecto-titulo {
   color: #0800ff;
   font-family: 'Calibre', sans-serif;
 }
+
 .table-container {
   max-height: 200px; /* Ajuste de altura para el contenedor de la tabla */
   overflow-y: auto;
@@ -201,10 +224,11 @@ const realizarPago = async () => {
 .additional-component-container {
   margin-top: 20px;
   padding: 10px;
-  background-color: #ffffff; /* Fondo verde claro para el contenedor del componente adicional */
+  background-color: #ffffff; /* Fondo blanco para el contenedor del componente adicional */
   border-radius: 4px;
   border: 1px solid #d1d1d1;
 }
+
 .custom-btn {
   background-color: #ffad00;
   color: #ffffff;
