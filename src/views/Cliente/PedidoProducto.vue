@@ -2,12 +2,11 @@
   <v-container>
     <!-- Componente Table1 -->
     <TablaUno
-      :filterText="filterText"
-      :filteredItems="filteredItems1"
-      :selectedItem="selectedItem1"
-      @selectItem="selectItem1"
-      @openDetalleLog="openDetalleLog"
-    />
+    :filterText="filterText"
+    :filteredItems="filteredItems1"
+    :selectedItem="selectedItem1"
+    @selectItem="selectItem1"
+  />
 
     <!-- Componente Table2 -->
     <TablaDos
