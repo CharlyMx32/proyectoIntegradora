@@ -1,8 +1,12 @@
 <template>
   <v-app class="fondo">
     <v-container class="d-flex justify-center align-center fill-height">
+      <br />
+      <br />
       <v-card-text>
-        <h3 class="title-header" style="color: rgb(8, 0, 255)">Agenda tu cita</h3>
+        <h3 class="title-header" style="color: rgb(8, 0, 255); margin-top: -80px">
+          Agenda tu cita
+        </h3>
         <v-form @submit.prevent="agendarCita">
           <v-row>
             <!-- Columna 1 -->
@@ -34,14 +38,11 @@
                 <v-card-text>
                   <v-select
                     v-model="selectedTime"
-                    :items="timeSlots"
+                    :items="filteredTimeSlots"
                     label="Selecciona una hora"
-                    :disabled="isTimeSlotDisabledFn"
-                  >
-                    <template v-slot:item="{ item }">
-                      <div :class="{ ocupado: busyHours.includes(item) }">{{ item }}</div>
-                    </template>
-                  </v-select>
+                    item-value="value"
+                    item-text="value"
+                  />
                 </v-card-text>
               </v-card>
             </v-col>
@@ -96,49 +97,22 @@
               class="social-icon-btn"
             >
               <!-- Icono de Facebook -->
-              <svg
-                fill="#000000"
-                width="24px"
-                height="24px"
-                viewBox="0 0 24 24"
-                id="facebook"
-                data-name="Flat Color"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon flat-color"
-              >
-                <path
-                  d="M14,6h3a1,1,0,0,0,1-1V3a1,1,0,0,0-1-1H14A5,5,0,0,0,9,7v3H7a1,1,0,0,0-1,1v2a1,1,0,0,0,1,1H9v7a1,1,0,0,0,1,1h2a1,1,0,0,0,1-1V14h2.22a1,1,0,0,0,1-.76l.5-2a1,1,0,0,0-1-1.24H13V7A1,1,0,0,1,14,6Z"
-                  style="fill: rgb(0, 0, 0)"
-                ></path>
-              </svg>
-            </v-btn>
-            <v-btn icon href="https://instagram.com" target="_blank" class="social-icon-btn">
-              <!-- Icono de Instagram -->
-              <svg
-                fill="#000000"
-                width="24px"
-                height="24px"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                data-name="Layer 1"
-              >
-                <path
-                  d="M17.34,5.46h0a1.2,1.2,0,1,0,1.2,1.2A1.2,1.2,0,0,0,17.34,5.46Zm4.6,2.42a7.59,7.59,0,0,0-.46-2.43,4.94,4.94,0,0,0-1.16-1.77,4.7,4.7,0,0,0-1.77-1.15,7.3,7.3,0,0,0-2.43-.47C15.06,2,14.72,2,12,2s-3.06,0-4.12.06a7.3,7.3,0,0,0-2.43.47A4.78,4.78,0,0,0,3.68,3.68,4.7,4.7,0,0,0,2.53,5.45a7.3,7.3,0,0,0-.47,2.43C2,8.94,2,9.28,2,12s0,3.06.06,4.12a7.3,7.3,0,0,0,.47,2.43,4.7,4.7,0,0,0,1.15,1.77,4.78,4.78,0,0,0,1.77,1.15,7.3,7.3,0,0,0,2.43.47C8.94,22,9.28,22,12,22s3.06,0,4.12-.06a7.3,7.3,0,0,0,2.43-.47,4.7,4.7,0,0,0,1.77-1.15,4.85,4.85,0,0,0,1.16-1.77,7.59,7.59,0,0,0,.46-2.43c0-1.06.06-1.4.06-4.12S22,8.94,21.94,7.88ZM20.14,16a5.61,5.61,0,0,1-.34,1.86,3.06,3.06,0,0,1-.75,1.15,3.19,3.19,0,0,1-1.15.75,5.61,5.61,0,0,1-1.86.34c-1,.05-1.37.06-4,.06s-3,0-4-.06A5.73,5.73,0,0,1,6.1,19.8,3.27,3.27,0,0,1,5,19.05a3,3,0,0,1-.74-1.15A5.54,5.54,0,0,1,3.86,16c0-1-.06-1.37-.06-4s0-3,.06-4A5.54,5.54,0,0,1,4.21,6.1,3,3,0,0,1,5,5,3.14,3.14,0,0,1,6.1,4.2,5.73,5.73,0,0,1,8,3.86c1,0,1.37-.06,4-.06s3,0,4,.06a5.61,5.61,0,0,1,1.86.34A3.06,3.06,0,0,1,19.05,5,3.06,3.06,0,0,1,19.8,6.1,5.61,5.61,0,0,1,20.14,8c.05,1,.06,1.37.06,4S20.19,15,20.14,16ZM12,6.87A5.13,5.13,0,1,0,17.14,12,5.12,5.12,0,0,0,12,6.87Zm0,8.46A3.33,3.33,0,1,1,15.33,12,3.33,3.33,0,0,1,12,15.33Z"
-                />
-              </svg>
             </v-btn>
           </v-col>
         </v-row>
       </v-container>
     </footer>
+    <v-snackbar v-model="snackbar.visible" :color="snackbar.color" timeout="3000">
+      {{ snackbar.message }}
+    </v-snackbar>
   </v-app>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import apiClient from '@/axiosconf'
+import { ref, computed, watch } from 'vue'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
+import apiClient from '@/axiosconf'
 
 // Lista de productos disponibles
 const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
@@ -148,7 +122,12 @@ const selectedDate = ref(null)
 const selectedTime = ref(null)
 const selectedProduct = ref(null)
 const problemDetails = ref('')
-const busyHours = ref([]) // Asegúrate de que esto esté inicializado
+const busyHours = ref([]) // Horas ocupadas
+const snackbar = ref({
+  visible: false,
+  message: '',
+  color: 'success' // Puedes cambiar a 'error' según sea necesario
+})
 
 // Validación de fechas permitidas
 const allowedDates = (date) => {
@@ -172,57 +151,84 @@ const generateTimeSlots = () => {
   const afternoonStart = date.hour(15).minute(0)
   const afternoonEnd = date.hour(16).minute(0)
 
-  const allSlots = []
-
+  const morningSlots = []
   let slot = morningStart
   while (slot.isBefore(morningEnd)) {
-    allSlots.push(slot.format('HH:mm'))
+    morningSlots.push(slot.format('HH:mm'))
     slot = slot.add(30, 'minute')
   }
 
+  const afternoonSlots = []
   slot = afternoonStart
   while (slot.isBefore(afternoonEnd)) {
-    allSlots.push(slot.format('HH:mm'))
+    afternoonSlots.push(slot.format('HH:mm'))
     slot = slot.add(30, 'minute')
   }
 
-  // Filtrar horas ocupadas
-  timeSlots.value = allSlots.filter((slot) => !busyHours.value.includes(slot))
-
-  console.log('allSlots:', allSlots)
-  console.log('busyHours:', busyHours.value)
-  console.log('timeSlots:', timeSlots.value)
-}
-
-const onDateChange = async (date) => {
-  selectedDate.value = date // Asigna directamente la fecha seleccionada
-  selectedTime.value = null
-  console.log('Fecha seleccionada:', selectedDate.value)
-  await updateAvailableTimes(selectedDate.value)
-  generateTimeSlots() // Llama a generateTimeSlots después de actualizar las horas ocupadas
+  timeSlots.value = [...morningSlots, ...afternoonSlots]
 }
 
 // Computed para filtrar las horas disponibles, excluyendo las horas ocupadas
-async function updateAvailableTimes(selectedDate) {
-  busyHours.value = await fetchHorasOcupadas(selectedDate)
-}
+const filteredTimeSlots = computed(() => {
+  if (!selectedDate.value) return []
+
+  const availableSlots = timeSlots.value.filter((slot) => !busyHours.value.includes(slot))
+
+  // Filtrar horas pasadas si es el mismo día
+  const now = dayjs()
+  const selectedDateObj = dayjs(selectedDate.value).startOf('day')
+  const isToday = selectedDateObj.isSame(now, 'day')
+
+  if (isToday) {
+    const currentTime = now.format('HH:mm')
+    return availableSlots.filter((slot) => slot > currentTime)
+  }
+
+  return availableSlots
+})
 
 // Obtener horas ocupadas desde el backend
 // Obtener horas ocupadas desde el backend
 async function fetchHorasOcupadas(fechaCita) {
   try {
     const response = await apiClient.post('obtener_horas_ocupadas', {
-      fecha: fechaCita
+      fecha_cita: fechaCita
     })
+    console.log('Respuesta de obtener horas ocupadas:', response)
     if (response.status === 200) {
-      return response.data.occupiedHours || [] // Asegúrate de devolver un array
+      return response.data // Ajusta esto según la estructura de tu respuesta
     } else {
       console.error('Error al obtener horas ocupadas:', response.data.msg)
-      return [] // Devuelve un array vacío en caso de error
+      return []
     }
   } catch (error) {
-    console.error('Error en la solicitud:', error)
-    return [] // Devuelve un array vacío en caso de error
+    console.error('Error en la solicitud de obtener horas ocupadas:', error)
+    return []
+  }
+}
+
+// Función para agendar una cita
+
+// Actualiza las horas ocupadas y las horas disponibles
+async function updateAvailableTimes(selectedDate) {
+  busyHours.value = await fetchHorasOcupadas(selectedDate)
+}
+
+// Evento que se ejecuta al cambiar la fecha
+const onDateChange = async (date) => {
+  selectedDate.value = dayjs(date).format('YYYY-MM-DD')
+  selectedTime.value = null
+  generateTimeSlots()
+  await updateAvailableTimes(selectedDate.value)
+}
+
+// Función para agendar una cita
+// Función para mostrar mensajes en el snackbar
+const showSnackbar = (message, color = 'success') => {
+  snackbar.value = {
+    visible: true,
+    message,
+    color
   }
 }
 
@@ -231,45 +237,57 @@ const agendarCita = async () => {
   if (selectedDate.value && selectedTime.value && selectedProduct.value && problemDetails.value) {
     try {
       const data = {
-        producto: selectedProduct.value,
-        problema: problemDetails.value,
         fecha_cita: dayjs(selectedDate.value).format('YYYY-MM-DD'),
-        hora_cita: selectedTime.value
+        fecha_hora: selectedTime.value,
+        producto: selectedProduct.value,
+        problema: problemDetails.value
       }
 
-      // Obtener el token de autenticación
-      const token = localStorage.getItem('authToken')
+      const response = await apiClient.post('agendar', data)
 
-      const response = await apiClient.post('agendar', data, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      console.log('Respuesta del servidor:', response.data)
 
-      if (response.status === 200 && response.data.success) {
-        // Manejo de éxito
-        // Mostrar un mensaje de éxito (puedes reemplazarlo por Snackbar)
-        alert('Cita agendada exitosamente')
-
-        // Añadir la hora agendada a la lista de horas ocupadas
-        busyHours.value.push(selectedTime.value)
-
-        // Regenerar los slots de tiempo para la fecha actual
-        generateTimeSlots()
+      if (
+        response.status === 200 &&
+        response.data.status === 200 &&
+        response.data.msg === 'success'
+      ) {
+        showSnackbar('Cita agendada exitosamente', 'success')
 
         // Limpiar los campos del formulario
         selectedDate.value = null
         selectedTime.value = null
         selectedProduct.value = null
         problemDetails.value = ''
+        busyHours.value = [] // Limpiar las horas ocupadas
+        generateTimeSlots() // Regenerar los slots para la fecha actual
       } else {
-        alert('Error al agendar la cita: ' + response.data.message)
+        showSnackbar(
+          'Error al agendar la cita: ' + (response.data.message || 'Desconocido'),
+          'error'
+        )
       }
     } catch (error) {
-      alert('Error al agendar la cita: ' + error.message)
+      console.error('Error en la solicitud:', error)
+
+      let errorMessage = 'Error al agendar la cita: Desconocido'
+
+      // Verificar la respuesta del error para determinar el mensaje adecuado
+      if (error.response && error.response.data) {
+        const errorData = error.response.data
+        if (errorData.msg === 'cita_existente') {
+          errorMessage = 'Ya existe una cita para esta fecha y hora'
+        } else {
+          errorMessage = errorData.msg || error.message || 'Desconocido'
+        }
+      } else {
+        errorMessage = error.message || 'Desconocido'
+      }
+
+      showSnackbar(errorMessage, 'error')
     }
   } else {
-    alert('Faltan datos')
+    showSnackbar('Faltan datos', 'error')
   }
 }
 
@@ -291,9 +309,8 @@ watch(selectedDate, async (newDate) => {
   background-size: cover;
   height: 100%;
 }
-.ocupado {
-  color: #ccc;
-  text-decoration: line-through;
+.v-snackbar {
+  font-size: 16px;
 }
 .title-header {
   color: rgb(8, 0, 255);
@@ -319,13 +336,6 @@ footer {
   color: #fff;
   padding: 20px 0;
   text-align: center;
-}
-
-/* Estilos de los elementos del pie de página */
-.footer-info,
-.footer-links,
-.social-icons {
-  margin-bottom: 10px;
 }
 
 /* Estilo de los títulos del pie de página */
