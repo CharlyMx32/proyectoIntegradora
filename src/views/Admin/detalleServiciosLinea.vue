@@ -105,8 +105,9 @@
           <thead>
             <tr>
               <th class="text-left">Técnico</th>
-              <th class="text-left">Tipo de Técnico</th>
-              <th class="text-left">Cantidad de citas</th>
+              <th class="text-left">Citas Linea</th>
+              <th class="text-left">Citas Fisicas</th>
+              <th class="text-left">Citas totales</th>
             </tr>
           </thead>
           <tbody>
@@ -120,8 +121,9 @@
               @click="selectTechnician(item)"
             >
               <td>{{ item.Tecnico }}</td>
-              <td>{{ item.tipo_tecnico }}</td>
-              <td>{{ item.cantidad_citas_asignada }}</td>
+              <td>{{ item.citas_agendadas_linea }}</td>
+              <td>{{ item.citas_agendadas_fisica }}</td>
+              <td>{{ item.total_agendadas }}</td>
             </tr>
           </tbody>
         </v-table>
