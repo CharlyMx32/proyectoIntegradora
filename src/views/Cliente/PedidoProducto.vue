@@ -1,5 +1,7 @@
 <template>
   <v-app>
+    <main>
+      
     <v-container fluid class="main-container">
       <v-row>
         <!-- Componente Table1 -->
@@ -48,47 +50,11 @@
       <!-- Agrega aquí el contenido del diálogo -->
     </v-dialog>
 
-    <!-- Pie de Página -->
-    <footer>
-      <v-container>
-        <v-row>
-          <v-col cols="12" md="4">
-            <div class="footer-info">
-              <h4 class="footer-title">Contactos</h4>
-              <p>MundoElectronicoTRC@gmail.com</p>
-              <p>Teléfono: 8715265042</p>
-            </div>
-          </v-col>
-
-          <v-col cols="12" md="4">
-            <div class="footer-links">
-              <h4 class="footer-title">Desarrolladores</h4>
-              <p>Edwin Lopez, Carlos Centeno</p>
-              <p>Diana Ochoa, Marbella Perez</p>
-            </div>
-          </v-col>
-
-          <v-col cols="12" md="4">
-            <div class="social-icons">
-              <v-btn
-                icon
-                href="https://www.facebook.com/profile.php?id=100054380206513"
-                target="_blank"
-              >
-                <!-- Icono de Facebook -->
-                <v-icon>mdi-facebook</v-icon>
-              </v-btn>
-              <v-btn icon href="https://instagram.com" target="_blank">
-                <!-- Icono de Instagram -->
-                <v-icon>mdi-instagram</v-icon>
-              </v-btn>
-            </div>
-          </v-col>
-        </v-row>
-        <v-divider></v-divider>
-      </v-container>
-    </footer>
+  </main>
+  
+    <FooterComponent />
   </v-app>
+  
 </template>
 
 <script setup>
@@ -96,6 +62,7 @@ import { ref } from 'vue'
 import TablaUno from '@/components/CompCliente/TablaUno.vue'
 import TablaDos from '@/components/CompCliente/TablaDos.vue'
 import TablaTres from '@/components/CompCliente/TablaTres.vue'
+import FooterComponent from '@/components/Generales/FooterComponent.vue'
 
 // Definir las variables reactivas
 const filterText = ref('')

@@ -70,41 +70,10 @@
         </v-form>
       </v-card-text>
     </v-container>
-
-    <footer>
-      <v-container>
-        <v-row>
-          <!-- Información de Contacto -->
-          <v-col cols="12" md="4" class="footer-info">
-            <h4 class="footer-title">Contactos</h4>
-            <p>MundoElectronicoTRC@gmail.com</p>
-            <p>Teléfono: 8715265042</p>
-          </v-col>
-
-          <!-- Enlaces de Navegación -->
-          <v-col cols="12" md="4" class="footer-links">
-            <h4 class="footer-title">Desarrolladores</h4>
-            <p>Edwin Lopez, Carlos Centeno</p>
-            <p>Diana Ochoa, Marbella Perez</p>
-          </v-col>
-
-          <!-- Iconos Sociales -->
-          <v-col cols="12" md="4" class="social-icons">
-            <v-btn
-              icon
-              href="https://www.facebook.com/profile.php?id=100054380206513"
-              target="_blank"
-              class="social-icon-btn"
-            >
-              <!-- Icono de Facebook -->
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </footer>
     <v-snackbar v-model="snackbar.visible" :color="snackbar.color" timeout="3000">
       {{ snackbar.message }}
     </v-snackbar>
+    <FooterComponent />
   </v-app>
 </template>
 
@@ -113,6 +82,7 @@ import { ref, computed, watch } from 'vue'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import apiClient from '@/axiosconf'
+import FooterComponent from '@/components/Generales/FooterComponent.vue'
 
 // Lista de productos disponibles
 const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
@@ -330,25 +300,4 @@ watch(selectedDate, async (newDate) => {
 }
 
 /*Pie de pagina */
-/* Estilo del pie de página */
-footer {
-  background-color: #11100e;
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
-}
-
-/* Estilo de los títulos del pie de página */
-.footer-title {
-  color: #ffad00;
-}
-
-/* Estilo de los botones de iconos sociales */
-.social-icon-btn {
-  margin-right: 10px; /* Espacio entre los iconos */
-}
-
-.social-icon-btn:last-child {
-  margin-right: 0; /* Elimina el margen del último ícono */
-}
 </style>
