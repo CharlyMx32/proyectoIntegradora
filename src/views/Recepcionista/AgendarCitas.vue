@@ -144,8 +144,12 @@ const isSubmitting = ref(false)
 
 const rules = {
   required: value => !!value || 'Este campo es obligatorio',
-  phone: value => value.length === 10 || 'El teléfono debe tener 10 dígitos'
+  phone: value => {
+    const isNumeric = /^\d+$/.test(value);
+    return (isNumeric && value.length === 10) || 'El teléfono debe tener 10 dígitos y solo debe contener números';
+  }
 }
+
 
 const submitForm = async () => {
   if (!isFormValid.value) {

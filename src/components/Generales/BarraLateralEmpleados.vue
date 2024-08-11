@@ -63,14 +63,17 @@ const logout = () => {
   color: #fff; /* Color de texto del encabezado */
 }
 
-.nav-item {
-  color: #fff; /* Color de texto blanco */
-  padding: 10px 15px;
-  border-radius: 4px; /* Bordes redondeados para los ítems */
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease; /* Transiciones suaves */
+.nav {
+  background-color: #333;
+  color: #fff;
+  border-right: 1px solid #444;
+  width: 250px;
+  height: 100vh; /* Ajusta la altura al 100% del viewport */
+  overflow-y: auto; /* Permite el desplazamiento si es necesario */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
+
 
 .nav-item:hover {
   background-color: #555; /* Fondo en hover más claro */
