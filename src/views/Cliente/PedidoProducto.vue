@@ -1,48 +1,32 @@
 <template>
-  <v-app>
-  
-      <!-- Componente Table1 -->
-      <TablaUno
-        :filterText="filterText"
-        :filteredItems="filteredItems1"
-        :selectedItem="selectedItem1"
-        @selectItem="selectItem1"
-        @openDetalleLog="openDetalleLog"
-      />
+  <v-container>
+    <!-- Componente Table1 -->
+    <TablaUno
+    :filterText="filterText"
+    :filteredItems="filteredItems1"
+    :selectedItem="selectedItem1"
+    @selectItem="selectItem1"
+  />
 
-      <!-- Componente Table2 -->
-      <TablaDos
-        :filterText="filterText"
-        :filteredItems="filteredItems2"
-        :selectedItem="selectedItem2"
-        @selectItem="selectItem2"
-      />
+    <!-- Componente Table2 -->
+    <TablaDos
+      :filterText="filterText"
+      :filteredItems="filteredItems2"
+      :selectedItem="selectedItem2"
+      @selectItem="selectItem2"
+    />
 
-      <!-- Componente Table3 -->
-      <TablaTres
-        :filterText="filterText"
-        :filteredItems="filteredItems3"
-        :selectedItem="selectedItem3"
-        @selectItem="selectItem3"
-        @openSeguimientoLog="openSeguimientoLog"
-      />
-    
-      <!-- Diálogo de Detalles -->
-<br>
-<br>
-<br>
-      <!-- Pie de Página -->
-      <footer>
-        <v-container>
-          <v-row>
-            <!-- Información de Contacto -->
-            <v-col cols="12" md="4">
-              <div class="footer-info">
-                <h4 class="footer-title">Contactos</h4>
-                <p>MundoElectronicoTRC@gmail.com</p>
-                <p>Teléfono: 8715265042</p>
-              </div>
-            </v-col>
+    <!-- Componente Table3 -->
+    <TablaTres
+      :filterText="filterText"
+      :filteredItems="filteredItems3"
+      :selectedItem="selectedItem3"
+      @selectItem="selectItem3"
+      @openSeguimientoLog="openSeguimientoLog"
+    />
+
+    <!-- Diálogo de Detalles -->
+
     
             <!-- Enlaces de Navegación -->
             <v-col cols="12" md="4">
