@@ -33,7 +33,6 @@
           </v-row>
         </v-form>
 
-        <!-- Tabla de datos -->
         <div class="table-container">
           <v-table density="compact">
             <thead>
@@ -63,7 +62,6 @@
           </v-table>
         </div>
 
-        <!-- Botón para asignar técnico -->
         <div v-if="selectedOrder" class="button-container">
           <v-btn
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
@@ -91,7 +89,6 @@
       </v-card-text>
     </v-card>
 
-    <!-- Componente adicional de técnicos -->
     <v-card
       v-if="showTechnicianTable"
       class="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-2xl my-card mt-4"
@@ -132,14 +129,12 @@
       </v-card-text>
     </v-card>
 
-    <!-- Modal para mostrar más detalles de la cita -->
     <v-dialog v-model="showDetailModal" max-width="600px">
       <v-card>
         <v-card-title>
           <span class="text-h5" style="color: #0800ff">Detalles de la Cita</span>
         </v-card-title>
         <v-card-text>
-          <!-- Aquí puedes agregar más detalles de la cita -->
           <div v-if="selectedOrder">
             <p><strong>Nombre Cliente:</strong> {{ selectedOrder.nombre_cliente }}</p>
             <p><strong>Producto:</strong> {{ selectedOrder.producto }}</p>
@@ -168,7 +163,7 @@ const filters = ref({
   technicianName: ''
 })
 const selectedOrder = ref(null)
-const selectedTechnician = ref(null) // Técnico seleccionado
+const selectedTechnician = ref(null)
 const technicianDetails = ref([])
 const showTechnicianTable = ref(false)
 const showDetailModal = ref(false)
