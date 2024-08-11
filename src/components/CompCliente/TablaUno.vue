@@ -3,7 +3,8 @@
     <v-card-title>
       <v-row justify="space-between" align="center" class="w-100">
         <v-col>
-          <h3 class="title">En Proceso</h3>
+          <h3 class="title">Por pagar</h3>
+
         </v-col>
         <v-col class="d-flex justify-end">
           <v-text-field
@@ -24,104 +25,146 @@
           <thead>
             <tr>
               <th class="text-left">Producto</th>
-              <th class="text-left">Diagnóstico Línea</th>
-              <th class="text-left">Cambios</th>
-              <th class="text-left">Costo Chequeo</th>
-              <th class="text-left">Costo Reparación</th>
-              <th class="text-left">Costo Total</th>
-              <th class="text-left">Seguimiento</th>
+              <th class="text-left">Problema</th>
             </tr>
           </thead>
           <tbody>
             <tr
               v-for="(item, idx) in filteredItems"
-              :key="'Pagadas' + idx"
+              :key="'asignadas_' + idx"
+
               :class="{ 'selected-row': selectedItem === item }"
               @click="selectItem(item)"
             >
               <td>{{ item.producto }}</td>
-              <td>{{ item.diagnostico_linea}}</td>
-              <td>{{ item.cambios }}</td>
-              <td>{{ item.costo_chequeo }}</td>
-              <td>{{ item.costo_reparacion }}</td>
-              <td>{{ item.total_costo}}</td>
-              <td>{{ item.seguimiento }}</td>
+              <td>{{ item.problema }}</td>
             </tr>
             <tr v-if="!filteredItems.length">
-              <td colspan="7" class="text-center py-4">No tienes pagos pendientes.</td>
+              <td colspan="2" class="text-center py-4">No tienes pagos pendientes.</td>
+
             </tr>
           </tbody>
         </v-simple-table>
       </div>
     </v-card-text>
+    <v-card-actions class="justify-end">
+      <v-btn @click="processPayment" color="#ffffff" class="custom-btn">Ir a pagar</v-btn>
+    </v-card-actions>
   </v-card>
+
+  <!-- Dialog for item details -->
+  <v-dialog v-model="dialog" max-width="800px">
+    <v-card>
+      <v-card-title>
+        <span class="headline title">Detalles</span>
+      </v-card-title>
+      <v-card-subtitle>
+        <v-row>
+          <v-col cols="6">
+            <div class="detail-item"><strong>Producto:</strong> {{ itemDetails.producto }}</div>
+            <div class="detail-item"><strong>Problema:</strong> {{ itemDetails.problema }}</div>
+            <div class="detail-item">
+              <strong>Costo de Chequeo:</strong> {{ itemDetails.costoChequeo }}
+            </div>
+            <div class="detail-item">
+              <strong>Costo de Reparación:</strong> {{ itemDetails.costoReparacion }}
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div class="detail-item">
+              <strong>Diagnóstico:</strong> {{ itemDetails.diagnostico }}
+            </div>
+          </v-col>
+        </v-row>
+      </v-card-subtitle>
+      <v-card-actions>
+        <v-btn text @click="confirmPayment">Rechazar Pago</v-btn>
+        <v-btn text @click="closeDialog">Cancelar</v-btn>
+        <v-btn text @click="confirmPayment">Confirmar Pago</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <!-- Snackbar for selection warning -->
+  <v-snackbar v-model="snackbar.visible" :color="snackbar.color" timeout="3000">
+    {{ snackbar.message }}
+    <v-btn text @click="snackbar.visible = false">Cerrar</v-btn>
+  </v-snackbar>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
-import { useAuthStore } from '@/stores/authStore'; // Asegúrate de que esta ruta sea correcta
+import { ref, onMounted } from 'vue'
+import apiCliente from '@/axiosconf'
 
-const store = useAuthStore(); // Accede a la store de autenticación
+const localFilterText = ref('')
+const filteredItems = ref([])
+const selectedItem = ref(null)
+const dialog = ref(false)
+const snackbar = ref({ visible: false, message: '', color: 'error' })
+const itemDetails = ref({
+  producto: '',
+  problema: '',
+  costoChequeo: '',
+  costoReparacion: '',
+  diagnostico: ''
+})
 
-const localFilterText = ref('');
-const selectedItem = ref(null);
-
- 
-const TablaUno = ref([]); // Inicializar como array vacío
-
-// Función para cargar las tareas asignadas desde la API
-const cargarPagos = async () => {
+const fetchItems = async () => {
   try {
-    const response = await axios.get('/Pago', {
-      headers: {
-        Authorization: `Bearer ${store.token}` // Enviar el token de autenticación
+    const token = localStorage.getItem('token') // Obtén el token almacenado
+    const response = await apiCliente.post(
+      `ClienteCitas`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
-    });
-    console.log('Datos recibidos:', response.data); // Verifica el contenido de los datos
-    if (Array.isArray(response.data)) {
-      TablaUno.value = response.data;
-    } else {
-      console.error('La respuesta no es un array:', response.data);
-      TablaUno.value = [];
-    }
+    )
+    filteredItems.value = response.data.data.citas // Asigna los datos a `filteredItems`
   } catch (error) {
-    console.error('Error al cargar las tareas asignadas:', error);
-    TablaUno.value = [];
+    console.error('Error fetching items:', error)
   }
-};
+}
 
+onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
 
-// Cargar las tareas asignadas cuando el componente se monta
-onMounted(() => {
-  cargarPagos();
-});
-
-// Filtrar los elementos basados en el texto de búsqueda
-const filteredItems = computed(() => {
-  console.log('Texto de búsqueda:', localFilterText.value); // Imprime el texto de búsqueda
-  const filter = localFilterText.value.toLowerCase();
-  const filtered = TablaUno .value.filter(
-    (item) =>
-      item.producto.toLowerCase().includes(filter) ||
-      item.diagnostico_linea.toLowerCase().includes(filter) ||
-      item.cambios.toLowerCase().includes(filter) ||
-      item.costo_chequeo.toString().toLowerCase().includes(filter) ||
-      item.costo_reparacion.toString().toLowerCase().includes(filter) ||
-      item.total_costo.toString().toLowerCase().includes(filter) ||
-      item.seguimiento.toLowerCase().includes(filter)
-  );
-  console.log('Items filtrados:', filtered); // Imprime los elementos filtrados
-  return filtered;
-});
-
-// Función para seleccionar un ítem
 const selectItem = (item) => {
-  selectedItem.value = item;
-};
+  selectedItem.value = item
+}
 
-// Función para abrir el diálogo de detalles
+const openDialog = () => {
+  if (selectedItem.value) {
+    itemDetails.value = {
+      producto: selectedItem.value.producto,
+      problema: selectedItem.value.problema,
+      costoChequeo: selectedItem.value.costo_chequeo,
+      costoReparacion: selectedItem.value.costo_reparacion,
+      diagnostico: selectedItem.value.diagnostico
+    }
+    dialog.value = true
+  } else {
+    snackbar.value = { visible: true, message: 'Primero selecciona un servicio.', color: 'error' }
+  }
+}
 
+const closeDialog = () => {
+  dialog.value = false
+}
+
+const processPayment = () => {
+  if (!selectedItem.value) {
+    snackbar.value = { visible: true, message: 'Primero selecciona un servicio.', color: 'error' }
+    return
+  }
+  openDialog()
+}
+
+const confirmPayment = () => {
+  // Lógica para confirmar el pago
+  closeDialog()
+}
+=======
 </script>
 
 <style scoped>
@@ -131,14 +174,17 @@ const selectItem = (item) => {
 }
 
 .title {
-  color: rgb(8, 0, 255);
+  color: #0000ff; /* Azul para el título */
+
   font-size: 24px;
   font-weight: bold;
 }
 
 .table-container {
-  max-height: 400px;
-  overflow-y: auto;
+  width: 100%; /* Asegura que la tabla ocupe todo el ancho del card */
+  max-height: 400px; /* Ajusta la altura según tus necesidades */
+  overflow-y: auto; /* Agrega scroll vertical si el contenido excede la altura */
+
 }
 
 .custom-table {
@@ -177,4 +223,18 @@ const selectItem = (item) => {
 .custom-btn:hover {
   background-color: #1976d2;
 }
+
+.v-dialog .v-card {
+  padding: 16px;
+}
+
+.detail-item {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.detail-item strong {
+  color: #0000ff; /* Azul para las etiquetas */
+}
+
 </style>
