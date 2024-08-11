@@ -98,48 +98,66 @@
 
 <script setup>
 import { ref } from 'vue'
-import apiClient from '@/axiosconf'
+import axios from 'axios'
 
-const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
+const products = [
+  'Laptop',
+  'Celular',
+  'Tablet',
+  'Impresora',
+  'Televisor',
+  'Otros'
+]
 
 const form = ref({
   nombre: '',
   apellidoPaterno: '',
   apellidoMaterno: '',
-  telefono: '',
+  contacto: '',
   producto: '',
   articulo: ''
 })
 
 const showAgendarCita = ref(false)
 const isSubmitting = ref(false)
-
 const submitForm = async () => {
-  isSubmitting.value = true
+  isSubmitting.value = true;
 
   try {
-    // Enviar la solicitud POST a la URL especificada con los datos del formulario
-    const response = await apiClient.post('http://hs.com/CitasFisicas', form.value)
+    // Mapeo de campos
+    const payload = {
+      nombre: form.value.nombre,
+      apellido_paterno: form.value.apellidoPaterno,
+      apellido_materno: form.value.apellidoMaterno,
+      contacto: form.value.telefono,
+      producto: form.value.producto,
+      problema: form.value.problema
+    };
 
-    // Aquí puedes manejar la respuesta si es necesario
-    console.log('Respuesta del servidor:', response.data)
+    // Enviar la solicitud POST con los datos del formulario
+    const response = await axios.post('http://hs.com/citasfisicas', payload);
 
-    // Restablecer el formulario y regresar a la página principal
+    // Mensaje de éxito
+    console.log('Se agendó la cita:', response.data);
+    alert('Se agendó la cita correctamente.');
+
+    // Restablecer el formulario
     form.value = {
       nombre: '',
       apellidoPaterno: '',
       apellidoMaterno: '',
       telefono: '',
       producto: '',
-      articulo: ''
-    }
-    showAgendarCita.value = false
+      problema: ''
+    };
+    showAgendarCita.value = false;
   } catch (error) {
-    console.error('Error al enviar el formulario:', error)
+    console.error('Error al enviar el formulario:', error);
+    alert('Hubo un error al agendar la cita. Por favor, intenta nuevamente.');
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
-}
+};
 </script>
 
 <style scoped>
