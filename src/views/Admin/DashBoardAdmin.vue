@@ -42,7 +42,7 @@ const showWelcome = ref(true)
 
 setTimeout(() => {
   showWelcome.value = false
-}, 1500) // Duración de la animación en milisegundos
+}, 1500)
 
 const userName = computed(() => authStore.user?.nombre || 'Admin')
 const userEmail = computed(() => authStore.user?.correo || 'correo@example.com')
@@ -50,15 +50,15 @@ const userEmail = computed(() => authStore.user?.correo || 'correo@example.com')
 
 <style scoped>
 .sidebar {
-  height: 100vh; /* Altura completa de la ventana */
-  position: fixed; /* Fijar la barra lateral */
+  height: 100vh;
+  position: fixed;
   top: 0;
   left: 0;
-  overflow-y: auto; /* Permitir desplazamiento si la barra lateral tiene mucho contenido */
+  overflow-y: auto;
 }
 
 .content {
-  height: 100vh; /* Altura completa de la ventana */
-  overflow-y: auto; /* Permitir desplazamiento en el área de contenido */
+  height: 100vh;
+  overflow-y: auto;
 }
 </style>
