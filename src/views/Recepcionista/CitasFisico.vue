@@ -149,7 +149,7 @@ const selectOrder = (order) => {
 
 const usarGarantia = async () => {
   try {
-    const response = await apiClient.post('http://hs.com/garantiafisico', {
+    const response = await apiClient.post('garantiafisico', {
       id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
       cliente: selectedOrder.value.Nombre_Cliente
       // Otros datos que necesites enviar
@@ -166,7 +166,7 @@ const usarGarantia = async () => {
 
 const realizarPago = async () => {
   try {
-    const response = await apiClient.post('http://hs.com/pagofisico', {
+    const response = await apiClient.post('pagofisico', {
       id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
       cliente: selectedOrder.value.Nombre_Cliente
       // Otros datos que necesites enviar

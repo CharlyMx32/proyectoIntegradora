@@ -119,9 +119,9 @@ const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otro
 
 const form = ref({
   nombre: '',
-  apellidoPaterno: '',
-  apellidoMaterno: '',
-  telefono: '',
+  apellido_paterno: '',
+  apellido_materno: '',
+  contacto: '',
   producto: '',
   problema: ''
 })
@@ -159,8 +159,8 @@ const submitForm = async () => {
     }
 
 
-    const response = await axios.post('http://hs.com/citasfisicas', payload)
-
+    const response = await apiClient.post('citasfisicas', payload)
+    console.log(response);
     snackbar.value = {
       show: true,
       message: 'Se agendó la cita correctamente.',
@@ -169,9 +169,9 @@ const submitForm = async () => {
 
     form.value = {
       nombre: '',
-      apellidoPaterno: '',
-      apellidoMaterno: '',
-      telefono: '',
+      apellido_paterno: '',
+      apellido_materno: '',
+      contacto: '',
       producto: '',
       problema: ''
     }
