@@ -27,7 +27,7 @@
         <v-simple-table dense class="custom-table">
           <thead>
             <tr>
-              <th class="text-left">Nombre Cliente</th>
+              <th class="text-left">Cliente</th>
               <th class="text-left">Producto</th>
               <th class="text-left">Problema</th>
               <th class="text-left">Tipo de Orden</th>
@@ -56,7 +56,7 @@
     </v-card-text>
 
     <!-- Botón de acciones -->
-    <v-card-actions class="justify-start">
+    <v-card-actions class="justify-end">
       <v-btn @click="openDetailDialog" color="primary"> Detallar </v-btn>
     </v-card-actions>
 

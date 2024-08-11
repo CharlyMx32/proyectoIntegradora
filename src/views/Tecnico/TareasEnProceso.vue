@@ -24,10 +24,10 @@
         <v-simple-table dense class="custom-table">
           <thead>
             <tr>
-              <th class="text-left">Nombre Cliente</th>
+              <th class="text-left">Cliente</th>
               <th class="text-left">Producto</th>
               <th class="text-left">Problema</th>
-              <th class="text-left">Técnico Asignado</th>
+              <th class="text-left">Seguimiento</th>
               <th class="text-left">Fecha de Inicio</th>
             </tr>
           </thead>
@@ -55,7 +55,7 @@
       <!-- Mensaje de carga mientras se obtienen los datos -->
       <div v-if="isLoading" class="text-center py-4">Cargando tareas...</div>
     </v-card-text>
-
+    
     <!-- Modal para Actualizar Proceso -->
     <v-dialog v-model="showProcessDialog" max-width="600px">
       <v-card>
@@ -231,5 +231,33 @@ const saveProcessUpdate = async () => {
 .custom-table td {
   vertical-align: middle;
 }
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.custom-table th {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.custom-table tr.selected-row {
+  background-color: #d0e8ff;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f0faff;
+  cursor: pointer;
+}
+
+.text-left {
+  text-align: left;
+}
+
 </style>
-s

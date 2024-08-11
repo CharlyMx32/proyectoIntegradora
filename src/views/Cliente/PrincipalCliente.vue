@@ -173,3 +173,14 @@ footer {
   margin-right: 0; /* Elimina el margen del último ícono */
 }
 </style>
+<script>
+import imagen from '@/assets/imgfondo.jpg'
+
+export default {
+  data() {
+    return {
+      imagen
+    }
+  }
+}
+</script>

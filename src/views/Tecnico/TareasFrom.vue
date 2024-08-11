@@ -1,7 +1,7 @@
 <template>
   <v-app class="fondo">
     <v-row justify="end" class="py-2 px-4">
-      <v-btn @click="logout" class="custom-btn logout-btn">
+      <v-btn @click="logout" class="custom-btn logout-btn" style="color: red;" >
         <v-icon left>mdi-logout</v-icon>
         Cerrar Sesión
       </v-btn>
@@ -25,10 +25,10 @@ import TareasCompletadas from '@/views/Tecnico/TareasCompletadas.vue'
 const router = useRouter()
 
 const logout = () => {
-  router.push('/login')
+  router.push('/')
 }
 </script>
 
 <style scoped>
-/* estilos globales */
+
 </style>

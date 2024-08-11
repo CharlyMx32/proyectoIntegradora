@@ -184,14 +184,10 @@
   }
   
   .custom-btn {
-    background-color: #2196f3;
+    background-color: #ffad00;
     color: #ffffff;
   }
-  
-  .custom-btn:hover {
-    background-color: #1976d2;
-  }
-  
+   
   .v-dialog .v-card {
     padding: 16px;
   }

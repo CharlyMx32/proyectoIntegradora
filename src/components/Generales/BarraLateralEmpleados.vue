@@ -47,24 +47,24 @@ const logout = () => {
 <style scoped>
 /* Estilos para personalizar la apariencia de la barra lateral */
 .nav {
-  background-color: #333; /* Fondo oscuro para diferenciar del fondo de la página */
+  background-color: #FFAD00; /* Fondo de la barra lateral */
   color: #fff; /* Color de texto blanco */
-  border-right: 1px solid #444; /* Borde de color más claro */
+  border-right: 1px solid #e68a00; /* Borde del color de la barra lateral */
   width: 250px; /* Ancho de la barra lateral */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
   transition: background-color 0.3s ease; /* Transición suave para cambios de fondo */
 }
 
 .list-item-header {
-  border-bottom: 1px solid #444; /* Separador debajo del encabezado */
+  border-bottom: 1px solid #e68a00; /* Separador debajo del encabezado */
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #444; /* Fondo del encabezado */
-  color: #fff; /* Color de texto del encabezado */
+  background-color: #e68a00; /* Fondo del encabezado */
+  color: black; /* Color de texto del encabezado */
 }
 
 .nav-item {
-  color: #fff; /* Color de texto blanco */
+  color: black; /* Color de texto de los ítems del menú */
   padding: 10px 15px;
   border-radius: 4px; /* Bordes redondeados para los ítems */
   transition:
@@ -79,7 +79,7 @@ const logout = () => {
 
 .logout-item {
   font-weight: bold;
-  color: red; /* Ajusta el color según tu diseño */
+  color:  #0800ff; /* Color del ítem de cerrar sesión */
   cursor: pointer;
   margin-bottom: auto; /* Empuja el ítem hacia abajo */
 }

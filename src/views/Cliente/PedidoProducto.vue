@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  
   
       <!-- Componente Table1 -->
       <TablaUno
@@ -31,6 +31,8 @@
 <br>
 <br>
 <br>
+<br>
+
       <!-- Pie de Página -->
       <footer>
         <v-container>
@@ -73,7 +75,7 @@
           </v-row>
         </v-container>
       </footer>
-  </v-app>
+  
 </template>
 
 
@@ -247,22 +249,13 @@ const openSeguimientoLog = () => {
 footer {
   background-color: #11100e; /* Color de fondo */
   color: #fff; /* Color del texto */
-  padding: 20px 0; /* Espaciado superior e inferior */
   text-align: center; /* Centrar el texto */
+  padding: 20px 0; /* Espaciado superior e inferior, ajustable */
+  width: 100%; /* Asegura que el footer ocupe todo el ancho del contenedor padre */
+  margin: 0; /* Elimina el margen predeterminado del navegador, si es necesario */
 }
 
-/* Contenedor del pie de página */
-footer .v-container {
-  max-width: 1200px; /* Ancho máximo del contenedor */
-  margin: 0 auto; /* Centrar el contenedor horizontalmente */
-}
 
-/* Estilo de las columnas en el pie de página */
-.footer-info,
-.footer-links,
-.social-icons {
-  margin-bottom: 20px; /* Espacio inferior */
-}
 
 /* Estilo de los títulos en el pie de página */
 .footer-title {
