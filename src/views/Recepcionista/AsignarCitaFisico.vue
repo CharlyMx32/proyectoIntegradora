@@ -7,6 +7,7 @@
         <v-flex class="flex-col space-y-1.5 p-6">
           <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text">
             ASIGNACIÓN FÍSICOS
+
           </h1>
         </v-flex>
       </v-card-title>
@@ -67,6 +68,7 @@
             @click="showTechnicianTable = true"
             class="mr-2"
             style="background-color: #FFAD00; color: white;"
+
           >
             Asignar Técnico
           </v-btn>
@@ -112,6 +114,7 @@
             @click="assignTechnician"
             style="background-color: #FFAD00; color: white;"
           >
+
             Asignar
           </v-btn>
         </div>
@@ -137,12 +140,13 @@
         </v-btn>
       </template>
     </v-snackbar>
+
   </v-container>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const orders = ref([])
 const filters = ref({
@@ -160,10 +164,11 @@ const snackbar = ref({
   color: '',
 })
 
+
 const fetchData = async () => {
   try {
     const { clientName, technicianName } = filters.value
-    const response = await axios.get('http://hs.com/RAsignacionFisica', {
+    const response = await apiClient.get('RAsignacionFisica', {
       params: {
         client_name: clientName,
         technician_name: technicianName
@@ -177,12 +182,13 @@ const fetchData = async () => {
       message: 'Error al cargar las asignaciones físicas. Por favor, inténtelo de nuevo.',
       color: 'red',
     };
+
   }
 }
 
 const fetchTechnicianDetails = async () => {
   try {
-    const response = await axios.get('http://hs.com/citasTecnico')
+    const response = await apiClient.get('citasTecnico')
     technicianDetails.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
     console.error('Error fetching technician details:', error)
@@ -191,6 +197,7 @@ const fetchTechnicianDetails = async () => {
       message: 'Error al cargar los detalles del técnico. Por favor, inténtelo de nuevo.',
       color: 'red',
     };
+
   }
 }
 
@@ -208,6 +215,7 @@ const filteredOrders = computed(() => {
       .toLowerCase()
       .includes(filters.value.technicianName.toLowerCase())
     return matchesClient && matchesTechnician 
+
   })
 })
 
@@ -215,6 +223,7 @@ const filteredOrders = computed(() => {
 const selectOrder = (order) => {
   selectedOrder.value = order
   showTechnicianTable.value = false
+
 }
 
 // Función para seleccionar un técnico
@@ -237,7 +246,8 @@ const assignTechnician = async () => {
       return
     }
 
-    const response = await axios.post('http://hs.com/asignacionf', {
+    const response = await apiClient.post('asignacionf', {
+
       orderId,
       technicianId
     })
@@ -248,6 +258,7 @@ const assignTechnician = async () => {
         message: 'Técnico asignado exitosamente.',
         color: 'green',
       };
+
       await fetchData()
       showTechnicianTable.value = false
       selectedOrder.value = null
@@ -266,6 +277,7 @@ const assignTechnician = async () => {
       message: 'Error al asignar técnico. Por favor, inténtelo de nuevo.',
       color: 'red',
     };
+
   }
 }
 </script>
@@ -321,5 +333,6 @@ const assignTechnician = async () => {
 
 .title-text {
   color: #0800FF;
+
 }
 </style>

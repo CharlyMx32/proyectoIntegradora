@@ -5,7 +5,9 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo ">
+          <h1
+            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
+          >
             ASISTENCIA CITA
           </h1>
         </v-flex>
@@ -85,14 +87,14 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
+import { ref, computed, onMounted } from 'vue'
+import apiClient from '@/axiosconf'
 
-const orders = ref([]);
+const orders = ref([])
 const filters = ref({
-  clientName: '',
-});
-const selectedOrder = ref(null);
+  clientName: ''
+})
+const selectedOrder = ref(null)
 
 const snackbar = ref({
   visible: false,
@@ -102,30 +104,30 @@ const snackbar = ref({
 
 const fetchData = async () => {
   try {
-    const { clientName } = filters.value;
-    const response = await axios.get('http://hs.com/AsistenciaCitas', {
+    const { clientName } = filters.value
+    const response = await apiClient.get('AsistenciaCitas', {
       params: {
-        client_name: clientName,
+        client_name: clientName
       }
-    });
+    })
 
-    orders.value = Array.isArray(response.data) ? response.data : [];
+    orders.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
-    console.error('Error fetching orders:', error);
+    console.error('Error fetching orders:', error)
   }
-};
+}
 
-onMounted(fetchData);
+onMounted(fetchData)
 
 const filteredOrders = computed(() => {
-  return orders.value.filter(order =>
+  return orders.value.filter((order) =>
     order.Nombre_Cliente.toLowerCase().includes(filters.value.clientName.toLowerCase())
-  );
-});
+  )
+})
 
 const selectOrder = (order) => {
-  selectedOrder.value = order;
-};
+  selectedOrder.value = order
+}
 
 const markAsAttended = async () => {
   if (!selectedOrder.value) {
@@ -135,10 +137,11 @@ const markAsAttended = async () => {
       color: 'red',
     };
     return;
+
   }
 
   try {
-    await axios.post('http://hs.com/asistencia', {
+    await apiClient.post('asistencia', {
       id_orden_cita: selectedOrder.value.id_orden_cita
     });
     snackbar.value = {
@@ -156,6 +159,7 @@ const markAsAttended = async () => {
     };
   }
 };
+
 </script>
 
 <style scoped>
@@ -205,7 +209,7 @@ const markAsAttended = async () => {
 }
 
 .v-btn {
-  background-color: #FFAD00;
+  background-color: #ffad00;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;

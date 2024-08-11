@@ -161,7 +161,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const orders = ref([])
 const filters = ref({
@@ -177,7 +177,7 @@ const showDetailModal = ref(false)
 const fetchData = async () => {
   try {
     const { clientName, technicianName } = filters.value
-    const response = await axios.get('http://hs.com/DSA', {
+    const response = await apiClient.get('DSA', {
       params: {
         client_name: clientName,
         technician_name: technicianName
@@ -191,7 +191,7 @@ const fetchData = async () => {
 
 const fetchTechnicianDetails = async () => {
   try {
-    const response = await axios.get('http://hs.com/citasTecnico')
+    const response = await apiClient.get('citasTecnico')
     technicianDetails.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
     console.error('Error fetching technician details:', error)
@@ -241,7 +241,7 @@ const assignTechnician = async () => {
 
     console.log('Assigning technician:', { orderId, technicianId })
 
-    const response = await axios.post('http://hs.com/ATL', {
+    const response = await apiClient.post('ATL', {
       orderId,
       technicianId
     })

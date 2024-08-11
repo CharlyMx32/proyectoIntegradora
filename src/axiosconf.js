@@ -1,14 +1,13 @@
+// apiClient.js
 import axios from 'axios'
 
 const apiClient = axios.create({
   baseURL: 'http://hs.com/',
   headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('token')}`
+    'Content-Type': 'application/json'
   }
 })
 
-// Puedes agregar un interceptor para incluir el token en todas las solicitudes
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token')

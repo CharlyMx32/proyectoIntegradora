@@ -56,8 +56,8 @@
     </v-card-text>
 
     <!-- Botón de acciones -->
-    <v-card-actions class="justify-end">
-      <v-btn @click="openDetailDialog" color="white" class="custom-btn">Detallar</v-btn>
+    <v-card-actions class="justify-start">
+      <v-btn @click="openDetailDialog" color="primary"> Detallar </v-btn>
     </v-card-actions>
 
     <!-- Modal para Detalles -->
@@ -67,13 +67,13 @@
           <span class="headline">Detalles del Item</span>
         </v-card-title>
         <v-card-subtitle>
+          <v-text-field v-model="nuevosDatos.diagnostico" label="Diagnóstico Línea"></v-text-field>
           <v-text-field v-model="nuevosDatos.cambios" label="Cambios"></v-text-field>
-          <v-text-field v-model="nuevosDatos.costoChequeo" label="Costo de Chequeo"></v-text-field>
+          <v-text-field v-model="nuevosDatos.costo_chequeo" label="Costo de Chequeo"></v-text-field>
           <v-text-field
-            v-model="nuevosDatos.costoReparacion"
+            v-model="nuevosDatos.costo_reparacion"
             label="Costo de Reparación"
           ></v-text-field>
-          <v-text-field v-model="nuevosDatos.diagnostico" label="Diagnóstico"></v-text-field>
         </v-card-subtitle>
         <v-card-actions>
           <v-btn @click="saveDetails" color="primary">
@@ -84,45 +84,52 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="snackbar.visible" :color="snackbar.color" top timeout="3000">
+      {{ snackbar.message }}
+    </v-snackbar>
   </v-card>
 </template>
-
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
-import { useAuthStore } from '@/stores/authStore' // Importar la store
+import apiClient from '@/axiosconf'
+import { useAuthStore } from '@/stores/authStore'
 
-const store = useAuthStore() // Acceder a la store
+const store = useAuthStore()
 
 const filterText = ref('')
 const selectedItem = ref(null)
 const showDetailDialog = ref(false)
-const nuevosDatos = ref({
-  cambios: '',
-  costoChequeo: '',
-  costoReparacion: '',
-  diagnostico: ''
+const snackbar = ref({
+  visible: false,
+  message: '',
+  color: 'success'
 })
-const tareasAsignadas = ref([]) // Inicializar como array vacío
 
-// Cargar las tareas asignadas al técnico en el montaje del componente
+const nuevosDatos = ref({
+  diagnostico: '',
+  cambios: '',
+  costo_chequeo: '',
+  costo_reparacion: ''
+})
+
+const tareasAsignadas = ref([])
+
 const cargarTareasAsignadas = async () => {
   try {
-    const response = await axios.get('/tareas_asignadas', {
+    const response = await apiClient.get('tareas_asignadas', {
       headers: {
         Authorization: `Bearer ${store.token}`
       }
     })
-    // Verifica si la respuesta es un array antes de asignarla
-    if (Array.isArray(response.data)) {
-      tareasAsignadas.value = response.data
+
+    if (response.data && response.data.status === 200) {
+      tareasAsignadas.value = response.data.data
     } else {
-      console.error('La respuesta no es un array:', response.data)
-      tareasAsignadas.value = [] // O manejar el error de forma apropiada
+      tareasAsignadas.value = []
     }
   } catch (error) {
-    console.error('Error al cargar las tareas asignadas:', error)
-    tareasAsignadas.value = [] // Asignar un array vacío en caso de error
+    tareasAsignadas.value = []
+    showSnackbar('Error al cargar las tareas asignadas', 'error')
   }
 }
 
@@ -149,11 +156,13 @@ const openDetailDialog = () => {
   if (selectedItem.value) {
     showDetailDialog.value = true
     nuevosDatos.value = {
+      diagnostico: '',
       cambios: '',
-      costoChequeo: '',
-      costoReparacion: '',
-      diagnostico: ''
+      costo_chequeo: '',
+      costo_reparacion: ''
     }
+  } else {
+    showSnackbar('Por favor, seleccione una tarea para detallar.', 'warning')
   }
 }
 
@@ -164,20 +173,53 @@ const closeDetailDialog = () => {
 const saveDetails = async () => {
   if (selectedItem.value) {
     try {
-      await axios.post('/TECorden', {
-        item: selectedItem.value,
-        datos: nuevosDatos.value
-      })
-      alert('Datos guardados exitosamente.')
-      closeDetailDialog()
+      const response = await apiClient.post(
+        'tecOrden',
+        {
+          id_asignacion_linea: selectedItem.value.id_asignacion_linea,
+          diagnostico: nuevosDatos.value.diagnostico,
+          cambios: nuevosDatos.value.cambios,
+          costo_chequeo: nuevosDatos.value.costo_chequeo,
+          costo_reparacion: nuevosDatos.value.costo_reparacion
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${store.token}`
+          }
+        }
+      )
+
+      if (response.data.msg === 'success') {
+        showSnackbar('Datos guardados exitosamente.', 'success')
+        const index = tareasAsignadas.value.findIndex(
+          (item) => item.id_asignacion_linea === selectedItem.value.id_asignacion_linea
+        )
+        if (index !== -1) {
+          tareasAsignadas.value.splice(index, 1)
+        }
+        closeDetailDialog()
+      } else {
+        showSnackbar('Hubo un problema al guardar los detalles: ' + response.data.msg, 'error')
+      }
     } catch (error) {
-      console.error('Error al guardar los detalles:', error)
-      alert('Hubo un problema al guardar los detalles.')
+      if (error.response && error.response.data) {
+        showSnackbar(
+          'Hubo un problema al guardar los detalles: ' + error.response.data.msg,
+          'error'
+        )
+      } else {
+        showSnackbar('Hubo un problema al guardar los detalles.', 'error')
+      }
     }
   }
 }
-</script>
 
+const showSnackbar = (message, color = 'success') => {
+  snackbar.value.message = message
+  snackbar.value.color = color
+  snackbar.value.visible = true
+}
+</script>
 <style scoped>
 .table-container {
   max-height: 400px;
@@ -206,5 +248,10 @@ const saveDetails = async () => {
 
 .text-left {
   text-align: left;
+}
+
+.custom-btn {
+  font-size: 16px;
+  font-weight: bold;
 }
 </style>

@@ -7,6 +7,7 @@
         <v-flex class="flex-col space-y-1.5 p-6">
           <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text">
             ASIGNACIÓN LÍNEA
+
           </h1>
         </v-flex>
       </v-card-title>
@@ -66,7 +67,7 @@
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showTechnicianTable = true"
             class="mr-2"
-            style="background-color: #FFAD00; color: white;"
+            style="background-color: #ffad00; color: white"
           >
             Asignar Técnico
           </v-btn>
@@ -108,10 +109,7 @@
           </tbody>
         </v-table>
         <div v-if="selectedTechnician" class="mt-4">
-          <v-btn
-            @click="assignTechnician"
-            style="background-color: #FFAD00; color: white;"
-          >
+          <v-btn @click="assignTechnician" style="background-color: #ffad00; color: white">
             Asignar
           </v-btn>
         </div>
@@ -134,7 +132,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import apiClient from '@/axiosconf'
 
 const orders = ref([])
 const filters = ref({
@@ -155,7 +153,7 @@ const errorMessage = ref('')
 const fetchData = async () => {
   try {
     const { clientName, technicianName } = filters.value
-    const response = await axios.get('http://hs.com/RAsignacionLinea', {
+    const response = await apiClient.get('RAsignacionLinea', {
       params: {
         client_name: clientName,
         technician_name: technicianName
@@ -169,7 +167,7 @@ const fetchData = async () => {
 
 const fetchTechnicianDetails = async () => {
   try {
-    const response = await axios.get('http://hs.com/citasTecnico')
+    const response = await apiClient.get('citasTecnico')
     technicianDetails.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
     console.error('Error fetching technician details:', error)
@@ -189,7 +187,7 @@ const filteredOrders = computed(() => {
     const matchesTechnician = order.nombre_tecnico
       .toLowerCase()
       .includes(filters.value.technicianName.toLowerCase())
-    return matchesClient && matchesTechnician 
+    return matchesClient && matchesTechnician
   })
 })
 
@@ -214,7 +212,7 @@ const assignTechnician = async () => {
 
     console.log('Assigning technician:', { orderId, technicianId })
 
-    const response = await axios.post('http://hs.com/asignacionl', {
+    const response = await apiClient.post('asignacionl', {
       orderId,
       technicianId
     })
@@ -290,6 +288,6 @@ const assignTechnician = async () => {
 }
 
 .title-text {
-  color: #0800FF;
+  color: #0800ff;
 }
 </style>
