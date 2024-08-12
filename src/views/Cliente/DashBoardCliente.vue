@@ -45,14 +45,14 @@ const updateMenuItems = () => {
     case '/principal':
       menuItems.value = [
         { name: 'Agendar', route: '/Agendar' },
-        { name: 'Segimiento', route: '/Pedir' }
+        { name: 'Seguimiento', route: '/Pedir' }
       ]
       showLogout.value = true
       break
     case '/Agendar':
       menuItems.value = [
         { name: 'Home', route: '/principal' },
-        { name: 'Segimiento', route: '/Pedir' }
+        { name: 'Segu imiento', route: '/Pedir' }
       ]
       showLogout.value = false
       break

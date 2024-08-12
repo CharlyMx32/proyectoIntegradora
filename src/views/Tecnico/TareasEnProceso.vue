@@ -26,9 +26,9 @@
             <tr>
               <th class="text-left">Nombre Cliente</th>
               <th class="text-left">Producto</th>
-              <th class="text-left">Problema</th>
-              <th class="text-left">Técnico Asignado</th>
-              <th class="text-left">Fecha de Inicio</th>
+              <th class="text-left">Diagnostico</th>
+              <th class="text-left">TCambios</th>
+              <th class="text-left">Seguimiento</th>
             </tr>
           </thead>
           <tbody>
@@ -42,7 +42,7 @@
               <td class="py-2 px-3">{{ item.producto }}</td>
               <td class="py-2 px-3">{{ item.diagnostico_linea }}</td>
               <td class="py-2 px-3">{{ item.cambios }}</td>
-              <td class="py-2 px-3">{{ item.estado_del_pago }}</td>
+              <td class="py-2 px-3">{{ item.seguimiento }}</td>
             </tr>
             <tr v-if="!filteredItems.length">
               <td colspan="5" class="text-center py-4">
@@ -98,7 +98,7 @@ import apiClient from '@/axiosconf'
 const filterText = ref('')
 const selectedItem = ref(null)
 const showProcessDialog = ref(false)
-const seguimientos = ref(['En progreso', 'Completado', 'Pendiente']) // Opciones de seguimiento
+const seguimientos = ref(['Completado', 'Con retraso']) // Opciones de seguimiento
 const nuevosDatos = ref({
   seguimiento: ''
 })
