@@ -7,7 +7,6 @@
         <v-flex class="flex-col space-y-1.5 p-6">
           <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
             CITAS CLIENTE LÍNEA
-
           </h1>
         </v-flex>
       </v-card-title>
@@ -69,11 +68,11 @@
         Detalles de la cita:
       </h2>
       <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
-      <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
       <p>Producto: {{ selectedOrder.Producto }}</p>
       <p>Costo Chequeo: {{ selectedOrder.CostoChequeo }}</p>
       <p>Costo Reparacion: {{ selectedOrder.CostoReparacion }}</p>
       <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
+      <p>Entregado: {{ selectedOrder.Entregado }}</p>
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Garantia }}</p>
 
@@ -85,7 +84,10 @@
         USAR GARANTÍA
       </v-btn>
       
-      <v-btn @click="realizarPago" class="custom-btn"> PAGO </v-btn>
+      <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
+
+      <v-btn  v-if="selectedOrder && selectedOrder.Entregado !== 'Si'"
+       @click="marcarEntregado" class="custom-btn">ENTREGADO</v-btn>
     </div>
 
     <!-- Snackbar para mensajes de éxito -->
@@ -180,6 +182,21 @@ const realizarPago = async () => {
     errorMessage.value = 'Error al realizar el pago: ' + (error.response?.data?.message || error.message)
     errorSnackbar.value = true
     console.error('Error al realizar el pago:', error)
+  }
+}
+
+const marcarEntregado = async () => {
+  try {
+    const response = await apiClient.post('entregalinea', {
+      id_detalle_linea: selectedOrder.value.id_detalle_linea // Enviamos el ID de la cita para marcarla como entregada
+    })
+    successMessage.value = `Producto entregado para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successSnackbar.value = true
+    console.log('Response:', response.data)
+  } catch (error) {
+    errorMessage.value = 'Error al marcar como entregado: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
+    console.error('Error al marcar como entregado:', error)
   }
 }
 </script>

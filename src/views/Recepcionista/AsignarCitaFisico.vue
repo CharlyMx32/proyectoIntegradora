@@ -89,8 +89,8 @@
           <thead>
             <tr>
               <th class="text-left">Técnico</th>
-              <th class="text-left">Tipo de Técnico</th>
               <th class="text-left">Cantidad de citas</th>
+              <th class="text-left">Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -103,9 +103,9 @@
               }"
               @click="selectTechnician(item)"
             >
-              <td>{{ item.Tecnico }}</td>
-              <td>{{ item.tipo_tecnico }}</td>
-              <td>{{ item.cantidad_citas_asignada }}</td>
+              <td>{{ item.nombre_tecnico }}</td>
+              <td>{{ item.cantidad_citas }}</td>
+              <td>{{ item.estado }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -188,7 +188,7 @@ const fetchData = async () => {
 
 const fetchTechnicianDetails = async () => {
   try {
-    const response = await apiClient.get('citasTecnico')
+    const response = await apiClient.get('estadotec')
     technicianDetails.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
     console.error('Error fetching technician details:', error)
@@ -247,17 +247,17 @@ const assignTechnician = async () => {
     }
 
     const response = await apiClient.post('asignacionf', {
-
       orderId,
       technicianId
     })
 
-    if (response.data.status === 'success') {
+    if (response.data.status === '200') {
       snackbar.value = {
         visible: true,
-        message: 'Técnico asignado exitosamente.',
-        color: 'green',
+        message: 'Error al asignar técnico. Por favor, inténtelo de nuevo.',
+        color: 'red',
       };
+    
 
       await fetchData()
       showTechnicianTable.value = false
@@ -266,8 +266,8 @@ const assignTechnician = async () => {
     } else {
       snackbar.value = {
         visible: true,
-        message: 'Error al asignar técnico. Por favor, inténtelo de nuevo.',
-        color: 'red',
+        message: 'Técnico asignado exitosamente.',
+        color: 'green',
       };
     }
   } catch (error) {
