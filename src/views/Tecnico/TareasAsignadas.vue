@@ -174,7 +174,7 @@ const saveDetails = async () => {
   if (selectedItem.value) {
     try {
       const response = await apiClient.post(
-        'tecOrden',
+        'tecnicOrden',
         {
           id_asignacion_linea: selectedItem.value.id_asignacion_linea,
           diagnostico: nuevosDatos.value.diagnostico,

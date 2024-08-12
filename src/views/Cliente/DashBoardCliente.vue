@@ -52,7 +52,7 @@ const updateMenuItems = () => {
     case '/Agendar':
       menuItems.value = [
         { name: 'Home', route: '/principal' },
-        { name: 'Segu imiento', route: '/Pedir' }
+        { name: 'Seguimiento', route: '/Pedir' }
       ]
       showLogout.value = false
       break
