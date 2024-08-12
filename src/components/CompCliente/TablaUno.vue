@@ -126,7 +126,6 @@ const fetchItems = async () => {
 
 const showPaymentInfo = async () => {
   try {
-    // Verificar si el id_detalle_linea está presente
     if (!selectedItem.value || !selectedItem.value.id_detalle_linea) {
       snackbar.value = {
         visible: true,
