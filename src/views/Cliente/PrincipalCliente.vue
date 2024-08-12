@@ -1,32 +1,37 @@
 <template>
-  <v-main>
-    <v-sheet :elevation="24" :height="500" :width="1700" border rounded>
-      <v-img :src="imagen" :height="500" :width="1500" cover />
-      <v-container fluid fill-height style="position: absolute; top: 0; left: 0; padding: 100px">
-        <v-row justify="center" align="center">
-          <v-col cols="12" md="6" class="text-center">
-            <p class="white-text">Tu reparación, nuestra misión. ¡Bienvenido!</p>
-            <br /><br />
-            <v-btn color="#ffad00" style="width: 200px" @click="clickAgenda"> Agendar Cita </v-btn>
-          </v-col>
-        </v-row>
+  <v-app>
+    <v-main>
+      <v-sheet :elevation="24" class="main-sheet" border rounded>
+        <v-img :src="imagen" class="main-img" cover />
+        <v-container fluid fill-height class="overlay-container">
+          <v-row justify="center" align="center">
+            <v-col cols="12" md="6" class="text-center">
+              <p class="white-text">Tu reparación, nuestra misión. ¡Bienvenido!</p>
+              <br /><br />
+              <v-btn color="#ffad00" class="schedule-btn" @click="clickAgenda">
+                Agendar Cita
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-sheet>
+
+      <v-container class="info-container">
+        <p class="subtitulo">Nosotros</p>
+        <p class="text">
+          En HardwareSolutions, somos tu solución integral <br />para la reparación de todos tus
+          electrodomésticos y dispositivos electrónicos. <br />Con un equipo de expertos altamente
+          capacitados, <br />ofrecemos servicios de reparación confiable y rápido para una amplia
+          gama <br />
+          de productos, desde teléfonos móviles hasta televisores y electrodomésticos <br />de gran
+          tamaño.
+        </p>
       </v-container>
-    </v-sheet>
+    </v-main>
 
-    <br /><br />
-    <p class="subtitulo">Nosotros</p>
-    <p class="text">
-      En HardwareSolutions, somos tu solución integral <br />para la reparación de todos tus
-      electrodomésticos y dispositivos electrónicos. <br />Con un equipo de expertos altamente
-      capacitados, <br />ofrecemos servicios de reparación confiable y rápido para una amplia gama
-      <br />
-      de productos, desde teléfonos móviles hasta televisores y electrodomésticos <br />de gran
-      tamaño.
-    </p>
-  </v-main>
-
-  <!-- Pie de página -->
-  <FooterComponent />
+    <!-- Pie de página -->
+    <FooterComponent />
+  </v-app>
 </template>
 
 <script setup>
@@ -46,13 +51,28 @@ const clickAgenda = () => {
   background: #ede8e6;
 }
 
-.social-icons .v-btn {
-  background-color: white;
-  transition: background-color 0.3s ease;
+.main-sheet {
+  height: 500px;
+  width: 100%;
+  max-width: 1700px;
+  position: relative;
+  overflow: hidden;
 }
 
-.social-icons .v-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.main-img {
+  height: 100%;
+  width: 100%;
+}
+
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5% 10%;
+}
+
+.schedule-btn {
+  width: 200px;
 }
 
 .text {
@@ -99,5 +119,50 @@ footer {
 
 .social-icon-btn:last-child {
   margin-right: 0; /* Elimina el margen del último ícono */
+}
+
+/* Consultas de medios para hacer el diseño responsivo */
+@media (max-width: 768px) {
+  .overlay-container {
+    padding: 5% 2%;
+  }
+
+  .schedule-btn {
+    width: 150px;
+  }
+
+  .white-text {
+    font-size: 30px;
+  }
+
+  .subtitulo {
+    font-size: 30px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay-container {
+    padding: 5% 1%;
+  }
+
+  .schedule-btn {
+    width: 100%;
+  }
+
+  .white-text {
+    font-size: 24px;
+  }
+
+  .subtitulo {
+    font-size: 24px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
 }
 </style>

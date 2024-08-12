@@ -50,6 +50,7 @@
   </v-card>
 
   <!-- Dialog for item details -->
+  <!-- Dialog for item details -->
   <v-dialog v-model="dialog" max-width="800px">
     <v-card>
       <v-card-title>
@@ -75,9 +76,8 @@
         </v-row>
       </v-card-subtitle>
       <v-card-actions>
-        <v-btn text @click="confirmPayment">Rechazar Pago</v-btn>
+        <v-btn text @click="showPaymentInfo">Confirmar</v-btn>
         <v-btn text @click="closeDialog">Cancelar</v-btn>
-        <v-btn text @click="confirmPayment">Confirmar Pago</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -124,6 +124,35 @@ const fetchItems = async () => {
   }
 }
 
+const showPaymentInfo = async () => {
+  try {
+    // Verificar si el id_detalle_linea está presente
+    if (!selectedItem.value || !selectedItem.value.id_detalle_linea) {
+      snackbar.value = {
+        visible: true,
+        message: 'Primero debes seleccionar un servicio.',
+        color: 'warning'
+      }
+      return
+    }
+
+    console.log('ID Detalle Linea:', selectedItem.value.id_detalle_linea)
+
+    const response = await apiCliente.post('actualizarPago', {
+      id_detalle_linea: selectedItem.value.id_detalle_linea
+    })
+
+    // Lógica de respuesta...
+  } catch (error) {
+    snackbar.value = {
+      visible: true,
+      message: 'Error al actualizar el estado del pago.',
+      color: 'error'
+    }
+    console.error('Error al actualizar el estado del pago:', error)
+  }
+}
+
 onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
 
 const selectItem = (item) => {
@@ -155,11 +184,6 @@ const processPayment = () => {
     return
   }
   openDialog()
-}
-
-const confirmPayment = () => {
-  // Lógica para confirmar el pago
-  closeDialog()
 }
 </script>
 
