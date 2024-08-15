@@ -48,9 +48,11 @@
     </v-main>
 
     <!-- Pie de página -->
+
     <footer>
       <FooterComponent />
     </footer>
+
   </v-app>
 </template>
 
@@ -107,6 +109,7 @@ const services = [
 .main-carousel {
   border-radius: 16px;
   overflow: hidden;
+
 }
 
 /* Estilo de los ítems del carrusel */
@@ -229,5 +232,50 @@ footer {
   color: #ffffff;
   padding: 20px;
   text-align: center;
+}
+
+/* Consultas de medios para hacer el diseño responsivo */
+@media (max-width: 768px) {
+  .overlay-container {
+    padding: 5% 2%;
+  }
+
+  .schedule-btn {
+    width: 150px;
+  }
+
+  .white-text {
+    font-size: 30px;
+  }
+
+  .subtitulo {
+    font-size: 30px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay-container {
+    padding: 5% 1%;
+  }
+
+  .schedule-btn {
+    width: 100%;
+  }
+
+  .white-text {
+    font-size: 24px;
+  }
+
+  .subtitulo {
+    font-size: 24px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
 }
 </style>

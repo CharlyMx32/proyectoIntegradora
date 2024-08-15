@@ -124,6 +124,7 @@ const form = ref({
   contacto: '',
   producto: '',
   problema: ''
+  
 })
 
 const isFormValid = ref(false)
@@ -156,6 +157,8 @@ const submitForm = async () => {
       contacto: form.value.telefono,
       producto: form.value.producto,
       problema: form.value.problema
+      
+      
     }
 
 
@@ -174,6 +177,7 @@ const submitForm = async () => {
       contacto: '',
       producto: '',
       problema: ''
+      
     }
     showAgendarCita.value = false
   } catch (error) {
