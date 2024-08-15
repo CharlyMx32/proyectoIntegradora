@@ -4,7 +4,7 @@
       <br />
       <br />
       <v-card-text>
-        <h3 class="title-header" style="color: rgb(8, 0, 255); margin-top: -80px">
+        <h3 class="title-header" style="color:  #34495E; margin-top: -80px">
           Agenda tu cita
         </h3>
         <v-form @submit.prevent="agendarCita">
@@ -215,7 +215,7 @@ const agendarCita = async () => {
 
       const response = await apiClient.post('agendar', data)
 
-      console.log('Respuesta del servidor:', response.data)
+    
 
       if (
         response.status === 200 &&
@@ -274,11 +274,7 @@ watch(selectedDate, async (newDate) => {
 </script>
 
 <style scoped>
-.fondo {
-  color: #ede8e6;
-  background-size: cover;
-  height: 100%;
-}
+
 .v-snackbar {
   font-size: 16px;
 }

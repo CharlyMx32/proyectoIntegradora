@@ -68,7 +68,7 @@
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showTechnicianTable = true"
             class="mr-2"
-            style="background-color: #ffad00; color: white"
+            style="background-color: #34495E; color: white"
           >
             Asignar Técnico
           </v-btn>
@@ -242,7 +242,7 @@ const assignTechnician = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #f7f7f7;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
@@ -259,7 +259,7 @@ const assignTechnician = async () => {
 }
 
 .v-table th {
-  background-color: #0800ff;
+  background-color:  #BDC3C7;
   color: #fff;
 }
 
@@ -290,6 +290,6 @@ const assignTechnician = async () => {
 }
 
 .title-text {
-  color: #0800ff;
+  color: #34495E;
 }
 </style>

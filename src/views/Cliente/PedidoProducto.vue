@@ -1,60 +1,61 @@
 <template>
-  <v-app>
-    <main>
-      
-    <v-container fluid class="main-container">
-      <v-row>
-        <!-- Componente Table1 -->
-        <v-col cols="12" md="4">
-          <div class="table-wrapper">
-            <TablaUno
-              :filterText="filterText"
-              :filteredItems="filteredItems1"
-              :selectedItem="selectedItem1"
-              @selectItem="selectItem1"
-              @openDetalleLog="openDetalleLog"
-            />
-          </div>
-        </v-col>
+<app>
+    
+      <v-container fluid class="main-container">
+        <v-row>
+          <!-- Componente Table1 -->
+          <v-col cols="12" sm="6" md="4">
+            <div class="table-wrapper">
+              <TablaUno
+                :filterText="filterText"
+                :filteredItems="filteredItems1"
+                :selectedItem="selectedItem1"
+                @selectItem="selectItem1"
+                @openDetalleLog="openDetalleLog"
+              />
+            </div>
+          </v-col>
 
-        <!-- Componente Table2 -->
-        <v-col cols="12" md="4">
-          <div class="table-wrapper">
-            <TablaDos
-              :filterText="filterText"
-              :filteredItems="filteredItems2"
-              :selectedItem="selectedItem2"
-              @selectItem="selectItem2"
-              @openDetalleLog="openDetalleLog"
-            />
-          </div>
-        </v-col>
+          <!-- Componente Table2 -->
+          <v-col cols="12" sm="6" md="4">
+            <div class="table-wrapper">
+              <TablaDos
+                :filterText="filterText"
+                :filteredItems="filteredItems2"
+                :selectedItem="selectedItem2"
+                @selectItem="selectItem2"
+                @openDetalleLog="openDetalleLog"
+              />
+            </div>
+          </v-col>
 
-        <!-- Componente Table3 -->
-        <v-col cols="12" md="4">
-          <div class="table-wrapper">
-            <TablaTres
-              :filterText="filterText"
-              :filteredItems="filteredItems3"
-              :selectedItem="selectedItem3"
-              @selectItem="selectItem3"
-              @openSeguimientoLog="openSeguimientoLog"
-            />
-          </div>
-        </v-col>
-      </v-row>
-    </v-container>
+          <!-- Componente Table3 -->
+          <v-col cols="12" sm="6" md="4">
+            <div class="table-wrapper">
+              <TablaTres
+                :filterText="filterText"
+                :filteredItems="filteredItems3"
+                :selectedItem="selectedItem3"
+                @selectItem="selectItem3"
+                @openSeguimientoLog="openSeguimientoLog"
+              />
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
 
-    <!-- Diálogo de Detalles -->
-    <v-dialog v-model="showDetalleLog" max-width="800px">
-      <!-- Agrega aquí el contenido del diálogo -->
-    </v-dialog>
+      <!-- Diálogo de Detalles -->
+      <v-dialog v-model="showDetalleLog" max-width="800px">
+        <!-- Agrega aquí el contenido del diálogo -->
+      </v-dialog>
 
-  </main>
-  
-    <FooterComponent />
-  </v-app>
-  
+      <v-dialog v-model="showSeguimientoLog" max-width="800px">
+        <!-- Agrega aquí el contenido del diálogo -->
+      </v-dialog>
+
+
+</app>
+<FooterComponent />
 </template>
 
 <script setup>
@@ -99,11 +100,15 @@ const openSeguimientoLog = () => {
 </script>
 
 <style scoped>
+
+
+
 .table-wrapper {
-  min-height: 300px; /* Establece una altura mínima */
+  min-height: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra el contenido verticalmente */
+  justify-content: center;
+  margin-bottom: 16px; /* Añadido para espacio entre las columnas */
 }
 
 .table-container {
@@ -118,7 +123,7 @@ const openSeguimientoLog = () => {
 }
 
 .footer-title {
-  color: #ffad00;
+  color: #2c3e50;
   margin-bottom: 10px;
   font-size: 18px;
   font-weight: bold;
@@ -135,13 +140,53 @@ const openSeguimientoLog = () => {
 }
 
 .social-icon-btn:hover {
-  color: #ffad00;
+  color: #2c3e50;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
 }
 
 footer {
-  background-color: #11100e;
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
+  margin-top: auto; /* Empuja el footer al final del contenedor */
+}
+
+/* Consultas de medios para hacer el diseño responsivo */
+@media (max-width: 1024px) {
+  .table-wrapper {
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-wrapper {
+    min-height: 200px;
+  }
+
+  .footer-info,
+  .footer-links,
+  .social-icons {
+    margin-bottom: 10px;
+  }
+
+  .footer-title {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-wrapper {
+    min-height: 150px;
+  }
+
+  .footer-title {
+    font-size: 14px;
+  }
 }
 </style>

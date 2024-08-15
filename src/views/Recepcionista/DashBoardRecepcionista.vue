@@ -27,7 +27,7 @@
 
 <style scoped>
 .fondo {
-  background: rgb(237, 232, 230);
+  background: #F5F5F5;
   background-size: cover;
 }
 </style>

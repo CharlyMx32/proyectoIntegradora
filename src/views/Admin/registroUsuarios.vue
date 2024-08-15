@@ -7,7 +7,7 @@
         <v-flex class="flex-col space-y-1.5 p-6">
           <h3
             class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight"
-            style="color: #0800ff"
+            style="color: #34495E"
           >
             Registrar Usuarios
           </h3>
@@ -297,8 +297,8 @@ const getRoleId = (roleName) => {
 /* Estilo unificado para todos los botones */
 .v-btn,
 .custom-btn {
-  background-color: #ffad00; /* Color de fondo */
-  color: #ffffff; /* Color del texto */
+  background-color: #34495E ; /* Color de fondo */
+  color:  #E0E0E0; /* Color del texto */
   border-radius: 4px;
   transition:
     background-color 0.3s ease,
@@ -307,12 +307,12 @@ const getRoleId = (roleName) => {
 
 .v-btn:hover,
 .custom-btn:hover {
-  background-color: #e0a800; /* Color de fondo en hover */
+  background-color: #BDC3C7; /* Color de fondo en hover */
   color: #ffffff; /* Color del texto en hover */
 }
 
 .my-card {
-  background-color: #f7f7f7; /* Gris muy claro */
+  background-color: #E0E0E0; /* Gris muy claro */
   border: 1px solid #d1d1d1; /* Borde gris medio */
 }
 </style>

@@ -51,10 +51,13 @@
             </tr>
           </tbody>
         </v-simple-table>
+       
       </div>
       <!-- Mensaje de carga mientras se obtienen los datos -->
       <div v-if="isLoading" class="text-center py-4">Cargando tareas...</div>
+      
     </v-card-text>
+
 
     <!-- Modal para Actualizar Proceso -->
     <v-dialog v-model="showProcessDialog" max-width="600px">
@@ -210,25 +213,37 @@ const saveProcessUpdate = async () => {
 
 <style scoped>
 /* Ajustar el padding para mejorar la visualización de la tabla */
-.custom-table th,
-.custom-table td {
-  padding: 10px 15px;
-  text-align: left;
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
 }
 
-/* Aumentar la separación entre filas */
-.custom-table tr {
+.custom-table th,
+.custom-table td {
+  padding: 8px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-/* Diferenciar la fila seleccionada */
-.selected-row {
-  background-color: #e3f2fd;
+.custom-table th {
+  background-color: #f5f5f5;
+  color: #333;
 }
 
-/* Alinear verticalmente el contenido de las celdas */
-.custom-table td {
-  vertical-align: middle;
+.custom-table tr.selected-row {
+  background-color: #d0e8ff;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f0faff;
+  cursor: pointer;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.custom-btn {
+  font-size: 16px;
+  font-weight: bold;
 }
 </style>
-s

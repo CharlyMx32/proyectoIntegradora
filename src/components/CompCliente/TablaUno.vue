@@ -240,7 +240,7 @@ const processPayment = () => {
 }
 
 .title {
-  color: #0000ff; /* Azul para el título */
+  color:  #DC143C; /* Azul para el título */
   font-size: 24px;
   font-weight: bold;
 }
@@ -257,7 +257,7 @@ const processPayment = () => {
 }
 
 .custom-table thead {
-  background-color: #f5f5f5;
+  background-color: #E8E8E8;
 }
 
 .custom-table th,
@@ -280,7 +280,7 @@ const processPayment = () => {
 }
 
 .custom-btn {
-  background-color: #2196f3;
+  background-color: #ffad00;
   color: #ffffff;
 }
 

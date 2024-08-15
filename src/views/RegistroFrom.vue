@@ -40,7 +40,7 @@
                             :rules="[
                               (v) => !!v || 'Nombre es obligatorio',
                               (v) =>
-                                /^[a-zA-Z\s]+$/.test(v) ||
+                                /^[a-zA-ZÀ-ÿ\s]+$/.test(v) ||
                                 'El nombre solo debe contener letras y espacios'
                             ]"
                           />
@@ -56,7 +56,7 @@
                             :rules="[
                               (v) => !!v || 'Apellido Paterno es obligatorio',
                               (v) =>
-                                /^[a-zA-Z\s]+$/.test(v) ||
+                                /^[a-zA-ZÀ-ÿ\s]+$/.test(v) ||
                                 'El apellido debe contener solo letras y espacios'
                             ]"
                           />
@@ -72,13 +72,13 @@
                             :rules="[
                               (v) => !!v || 'Apellido Materno es obligatorio',
                               (v) =>
-                                /^[a-zA-Z\s]+$/.test(v) ||
+                                /^[a-zA-ZÀ-ÿ\s]+$/.test(v) ||
                                 'El apellido debe contener solo letras y espacios'
                             ]"
                           />
                         </v-col>
                       </v-row>
-                      <v-btn color="#FFAD00" @click="nextStep" class="mt-4">Continuar</v-btn>
+                      <v-btn color="#34495E" @click="nextStep" class="mt-4">Continuar</v-btn>
                     </template>
                     <template v-else>
                       <v-row>
@@ -128,9 +128,9 @@
                           />
                         </v-col>
                       </v-row>
-                      <v-btn color="#FFAD00" @click="prevStep" class="mt-4 mr-2">Regresar</v-btn>
+                      <v-btn color="#34495E" @click="prevStep" class="mt-4 mr-2">Regresar</v-btn>
                       <v-btn
-                        color="#FFAD00"
+                        color="#34495E"
                         :disabled="!isFormComplete"
                         @click="registrarse"
                         class="mt-4"
@@ -213,8 +213,8 @@ const isFormComplete = computed(() => {
 })
 
 function validarFormulario() {
-  // Expresión regular para solo letras
-  const soloLetras = /^[a-zA-Z\s]+$/
+  // Expresión regular para solo letras con acentos
+  const soloLetrasConAcentos = /^[a-zA-ZÀ-ÿ\s]+$/
 
   if (!form.value.nombre || !form.value.apellido_paterno || !form.value.apellido_materno) {
     errorMessage.value = 'Todos los campos de nombre y apellidos son obligatorios.'
@@ -223,11 +223,11 @@ function validarFormulario() {
   }
 
   if (
-    !soloLetras.test(form.value.nombre) ||
-    !soloLetras.test(form.value.apellido_paterno) ||
-    !soloLetras.test(form.value.apellido_materno)
+    !soloLetrasConAcentos.test(form.value.nombre) ||
+    !soloLetrasConAcentos.test(form.value.apellido_paterno) ||
+    !soloLetrasConAcentos.test(form.value.apellido_materno)
   ) {
-    errorMessage.value = 'El nombre y los apellidos solo deben contener letras y espacios.'
+    errorMessage.value = 'El nombre y los apellidos solo deben contener letras, espacios y caracteres acentuados.'
     showErrorSnackbar.value = true
     return false
   }
@@ -355,7 +355,7 @@ body {
 }
 
 .fondoimg {
-  background: url('../assets/blob-scene-haikei.png');
+  background: url('../assets/registro.svg');
   background-size: cover;
   color: var(--v-theme-light-text-primary);
   width: 100%;

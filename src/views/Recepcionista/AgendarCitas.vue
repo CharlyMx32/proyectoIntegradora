@@ -201,12 +201,12 @@ const submitForm = async () => {
   max-width: 800px;
   width: 100%;
   margin: 20px auto;
-  background-color: #ffffff;
+  background-color: #E0E0E0;
 
 }
 
 .efecto-titulo {
-  color: #0800ff;
+  color:  #34495E;
   font-family: 'Calibre', sans-serif;
 }
 
@@ -218,7 +218,7 @@ const submitForm = async () => {
 }
 
 .custom-btn {
-  background-color: #ffad00;
+  background-color:  #34495E;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;
@@ -226,6 +226,6 @@ const submitForm = async () => {
 }
 
 .custom-btn:hover {
-  background-color: #e69700;
+  background-color: #BDC3C7;
 }
 </style>

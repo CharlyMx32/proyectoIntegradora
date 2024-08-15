@@ -1,124 +1,237 @@
 <template>
   <v-app>
     <v-main>
-      <v-sheet :elevation="24" class="main-sheet" border rounded>
-        <v-img :src="imagen" class="main-img" cover />
-        <v-container fluid fill-height class="overlay-container">
-          <v-row justify="center" align="center">
-            <v-col cols="12" md="6" class="text-center">
-              <p class="white-text">Tu reparación, nuestra misión. ¡Bienvenido!</p>
-              <br /><br />
-              <v-btn color="#ffad00" class="schedule-btn" @click="clickAgenda">
-                Agendar Cita
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
+      <!-- Carrusel de imágenes mejorado -->
+      <v-sheet :elevation="24" class="main-sheet" rounded tile>
+        <v-carousel
+          cycle
+          hide-delimiters
+          hide-delimiter-background
+          class="main-carousel"
+          interval="5000"
+          @change="updateIndex"
+          height="700px"
+        >
+          <v-carousel-item
+            v-for="(image, index) in images"
+            :key="index"
+            :src="image"
+            class="carousel-item"
+          >
+            <v-container fill-height class="carousel-content">
+              <v-row align="center" justify="center">
+                <v-col class="text-center">
+                  <h2 class="carousel-title">{{ titles[index] }}</h2>
+                  <p class="carousel-description">{{ descriptions[index] }}</p>
+                  <v-btn class="cta-btn" @click="navigateToCitas">Agenda tu Cita</v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-carousel-item>
+        </v-carousel>
       </v-sheet>
 
-      <v-container class="info-container">
-        <p class="subtitulo">Nosotros</p>
-        <p class="text">
-          En HardwareSolutions, somos tu solución integral <br />para la reparación de todos tus
-          electrodomésticos y dispositivos electrónicos. <br />Con un equipo de expertos altamente
-          capacitados, <br />ofrecemos servicios de reparación confiable y rápido para una amplia
-          gama <br />
-          de productos, desde teléfonos móviles hasta televisores y electrodomésticos <br />de gran
-          tamaño.
-        </p>
+      <!-- Sección de Servicios mejorada -->
+      <v-container class="services-section">
+        <v-row>
+          <v-col cols="12" md="4" v-for="(service, index) in services" :key="index">
+            <v-hover v-slot:default="{ isHovering }">
+              <v-card :class="{'service-card-hover': isHovering}" class="service-card">
+                <v-img :src="service.image" class="service-image" />
+                <v-card-title class="service-title">{{ service.title }}</v-card-title>
+                <v-card-subtitle class="service-description">{{ service.description }}</v-card-subtitle>
+              </v-card>
+            </v-hover>
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
 
     <!-- Pie de página -->
-    <FooterComponent />
+
+    <footer>
+      <FooterComponent />
+    </footer>
+
   </v-app>
 </template>
 
 <script setup>
 import FooterComponent from '@/components/Generales/FooterComponent.vue'
 import { useRouter } from 'vue-router'
-import imagen from '@/assets/imgfondo.jpg'
+import img1 from '/img/ima.jpg';
+import img2 from '/img/ma.jpg';
+import img3 from '/img/pis.png';
 
-const router = useRouter()
+const router = useRouter();
 
-const clickAgenda = () => {
-  router.push('/Agendar')
+const images = [img1, img2, img3];
+const titles = [
+  "Soluciones Rápidas",
+  "Confianza en Cada Servicio",
+  "Servicio Integral"
+];
+
+const descriptions = [
+  "Repara tu tecnología con eficiencia y rapidez.",
+  "Expertos en reparación de hardware y software.",
+  "Desde diagnóstico hasta reparación, te tenemos cubierto."
+];
+
+const navigateToCitas = () => {
+  router.push('/Agendar');
 }
+
+const services = [
+  { title: 'Contamos con:', description: 'Soluciones rápidas y efectivas.', image: img1 },
+  { title: '¿Problemas?', description: 'Agenda, mejora tus productos', image: img2 },
+  { title: 'Tenemos:', description: 'las mejores reparaciones', image: img3 }
+];
 </script>
 
 <style scoped>
+/* Estilos globales */
 .v-application {
-  background: #ede8e6;
+  background: #f3f4f6;
+  font-family: 'Roboto', sans-serif;
 }
 
+/* Estilo del contenedor principal */
 .main-sheet {
-  height: 500px;
   width: 100%;
-  max-width: 1700px;
-  position: relative;
+  max-width: 1600px;
+  margin: auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo del carrusel */
+.main-carousel {
+  border-radius: 16px;
   overflow: hidden;
+
 }
 
-.main-img {
-  height: 100%;
-  width: 100%;
+/* Estilo de los ítems del carrusel */
+.carousel-item {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
 }
 
-.overlay-container {
+/* Estilo del contenido sobre la imagen */
+.carousel-content {
   position: absolute;
-  top: 0;
-  left: 0;
-  padding: 5% 10%;
-}
-
-.schedule-btn {
-  width: 200px;
-}
-
-.text {
-  color: #000000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
+  color: #ffffff;
+  padding: 20px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.carousel-content-enter-active, .carousel-content-leave-active {
+  opacity: 0;
+}
+
+.carousel-content-enter, .carousel-content-leave-to {
+  transform: translateY(10%);
+}
+
+/* Estilo del título en el carrusel */
+.carousel-title {
+  font-size: 48px;
+  font-weight: 700;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  margin: 0;
+  color: #fff;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.carousel-description {
   font-size: 20px;
-  font-family: 'Roboto', sans-serif;
+  margin-top: 10px;
+  color: #ddd;
+  transition: color 0.3s, transform 0.3s;
 }
 
-.white-text {
+/* Estilo del botón de llamada a la acción */
+.cta-btn {
+  width: 240px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-size: 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  background-color: #2c3e50;
   color: #fff;
-  font-size: 40px;
-  font-family: 'Roboto', sans-serif;
 }
 
-.subtitulo {
-  color: #000;
-  font-size: 40px;
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
+.cta-btn:hover {
+  background-color: #ffad00;
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4), 0 0 20px #ffad00;
 }
 
+/* Estilos para la sección de Servicios */
+.services-section {
+  margin: 80px auto;
+  max-width: 1400px;
+}
+
+/* Estilo de la tarjeta de servicio */
+.service-card {
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(255, 128, 0, 0.3);
+  padding: 30px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background: #fff;
+}
+
+/* Efecto de hover en la tarjeta de servicio */
+.service-card-hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(255, 128, 0, 0.5);
+}
+
+/* Estilo del título en la tarjeta de servicio */
+.service-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-top: 20px;
+}
+
+/* Estilo de la descripción en la tarjeta de servicio */
+.service-description {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin-top: 10px;
+}
+
+/* Estilo de la imagen de servicio */
+.service-image {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Estilos para el pie de página */
 footer {
-  background-color: #11100e;
-  color: #fff;
-  padding: 20px 0;
+  background-color: #2c3e50;
+  color: #ffffff;
+  padding: 20px;
   text-align: center;
-  margin: 0px;
-}
-
-.footer-info,
-.footer-links,
-.social-icons {
-  margin-bottom: 10px;
-}
-
-.footer-title {
-  color: #ffad00;
-}
-
-.social-icon-btn {
-  margin-right: 10px; /* Espacio entre los iconos */
-}
-
-.social-icon-btn:last-child {
-  margin-right: 0; /* Elimina el margen del último ícono */
 }
 
 /* Consultas de medios para hacer el diseño responsivo */

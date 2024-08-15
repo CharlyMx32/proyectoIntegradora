@@ -215,12 +215,12 @@ const marcarEntregado = async () => {
 }
 
 .my-card {
-  background-color: #ffffff;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
 .efecto-titulo {
-  color: #0800ff;
+  color: #34495E;
   font-family: 'Calibre', sans-serif;
 }
 
@@ -236,7 +236,7 @@ const marcarEntregado = async () => {
 }
 
 .v-table th {
-  background-color: #0800ff;
+  background-color: #BDC3C7;
   color: #fff;
 }
 
