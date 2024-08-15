@@ -53,7 +53,7 @@ export const useAuthStore = defineStore({
       const token = localStorage.getItem('token')
       if (token) {
         try {
-          const response = await apiClient.get('http://hs.com/auth', {
+          const response = await apiClient.get('auth', {
             headers: { Authorization: `Bearer ${token}` }
           })
           const data = response.data
