@@ -138,28 +138,26 @@ const showPaymentInfo = async () => {
       id_detalle_linea: selectedItem.value.id_detalle_linea
     })
 
-    if (response.data.success) {
+    console.log('Respuesta del servidor:', response) // Para depuración
+
+    if (response.status === 200 && response.data && response.data.success) {
       snackbar.value = {
         visible: true,
         message: 'El pago ha sido confirmado exitosamente.',
         color: 'success'
       }
+      dialog.value = false
+      await fetchItems() // Actualiza la lista de items
     } else {
-      snackbar.value = {
-        visible: true,
-        message: 'Hubo un problema al confirmar el pago.',
-        color: 'error'
-      }
+      throw new Error(response.data.message || 'Error desconocido al confirmar el pago')
     }
   } catch (error) {
+    console.error('Error detallado:', error) // Para depuración
     snackbar.value = {
       visible: true,
-      message: 'Error al actualizar el estado del pago.',
+      message: `Error al confirmar el pago: ${error.message}`,
       color: 'error'
     }
-    console.error('Error al actualizar el estado del pago:', error)
-  } finally {
-    dialog.value = false
   }
 }
 
@@ -178,33 +176,29 @@ const rejectPayment = async () => {
       id_detalle_linea: selectedItem.value.id_detalle_linea
     })
 
-    if (response.data.success) {
+    console.log('Respuesta del servidor:', response) // Para depuración
+
+    if (response.status === 200 && response.data && response.data.success) {
       snackbar.value = {
         visible: true,
-        message: 'El pago ha sido rechazado.',
+        message: 'El pago ha sido rechazado exitosamente.',
         color: 'success'
       }
+      dialog.value = false
+      await fetchItems() // Actualiza la lista de items
     } else {
-      snackbar.value = {
-        visible: true,
-        message: 'Hubo un problema al rechazar el pago.',
-        color: 'error'
-      }
+      throw new Error(response.data.message || 'Error desconocido al rechazar el pago')
     }
   } catch (error) {
+    console.error('Error detallado:', error) // Para depuración
     snackbar.value = {
       visible: true,
-      message: 'Error al rechazar el pago.',
+      message: `Error al rechazar el pago: ${error.message}`,
       color: 'error'
     }
-    console.error('Error al rechazar el pago:', error)
-  } finally {
-    if (!response.data.success) {
-      dialog.value = false
-    }
-  }
-}
 
+  }
+  }
 onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
 
 const selectItem = (item) => {
@@ -218,7 +212,7 @@ const openDialog = () => {
       problema: selectedItem.value.problema,
       costoChequeo: selectedItem.value.costo_chequeo,
       costoReparacion: selectedItem.value.costo_reparacion,
-      diagnostico: selectedItem.value.diagnostico
+      diagnostico: selectedItem.value.diagnostico_linea
     }
     dialog.value = true
   } else {
