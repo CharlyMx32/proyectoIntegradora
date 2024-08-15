@@ -1,175 +1,281 @@
 <template>
   <v-app>
     <v-main>
-      <v-sheet
-        :elevation="24"
-        :height="500"
-        :width="1700"
-        border
-        rounded
-      >
-        <v-img
-          :src="imagen"
-          :height="500"
-          :width="1500"
-          cover
-        />
-        <v-container
-          fluid
-          fill-height
-          style="position: absolute; top: 0; left: 0; padding: 100px"
+      <!-- Carrusel de imágenes mejorado -->
+      <v-sheet :elevation="24" class="main-sheet" rounded tile>
+        <v-carousel
+          cycle
+          hide-delimiters
+          hide-delimiter-background
+          class="main-carousel"
+          interval="5000"
+          @change="updateIndex"
+          height="700px"
         >
-          <v-row justify="center" align="center">
-            <v-col cols="12" md="6" class="text-center">
-              <p class="white-text">Tu reparación, nuestra misión. ¡Bienvenido!</p>
-              <br><br>
-              <v-btn
-                color="#ffad00"
-                style="width: 200px"
-                @click="clickAgenda"
-              >
-                Agendar Cita
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
+          <v-carousel-item
+            v-for="(image, index) in images"
+            :key="index"
+            :src="image"
+            class="carousel-item"
+          >
+            <v-container fill-height class="carousel-content">
+              <v-row align="center" justify="center">
+                <v-col class="text-center">
+                  <h2 class="carousel-title">{{ titles[index] }}</h2>
+                  <p class="carousel-description">{{ descriptions[index] }}</p>
+                  <v-btn class="cta-btn" @click="navigateToCitas">Agenda tu Cita</v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-carousel-item>
+        </v-carousel>
       </v-sheet>
 
-      <br><br>
-      <p class="subtitulo">Nosotros</p>
-      <p class="text">
-        En HardwareSolutions, somos tu solución integral <br>para la reparación de todos tus
-        electrodomésticos y dispositivos electrónicos. <br>Con un equipo de expertos altamente
-        capacitados, <br>ofrecemos servicios de reparación confiable y rápido para una amplia gama <br>
-        de productos, desde teléfonos móviles hasta televisores y electrodomésticos <br>de gran
-        tamaño.
-      </p>
+      <!-- Sección de Servicios mejorada -->
+      <v-container class="services-section">
+        <v-row>
+          <v-col cols="12" md="4" v-for="(service, index) in services" :key="index">
+            <v-hover v-slot:default="{ isHovering }">
+              <v-card :class="{'service-card-hover': isHovering}" class="service-card">
+                <v-img :src="service.image" class="service-image" />
+                <v-card-title class="service-title">{{ service.title }}</v-card-title>
+                <v-card-subtitle class="service-description">{{ service.description }}</v-card-subtitle>
+              </v-card>
+            </v-hover>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
 
+    <!-- Pie de página -->
+
     <footer>
-      <v-container>
-      <v-row>
-        <!-- Información de Contacto -->
-        <v-col cols="12" md="4" class="footer-info">
-          <h4 class="footer-title">Contactos</h4>
-          <p>MundoElectronicoTRC@gmail.com</p>
-          <p>Teléfono: 8715265042</p>
-        </v-col>
-
-        <!-- Enlaces de Navegación -->
-        <v-col cols="12" md="4" class="footer-links">
-          <h4 class="footer-title">Desarrolladores</h4>
-          <p>Edwin Lopez, Carlos Centeno</p>
-          <p>Diana Ochoa, Marbella Perez</p>
-        </v-col>
-
-        <!-- Iconos Sociales -->
-        <v-col cols="12" md="4" class="social-icons">
-          <v-btn
-            icon
-            href="https://www.facebook.com/profile.php?id=100054380206513"
-            target="_blank"
-            class="social-icon-btn"
-          >
-            <svg
-              fill="#000000"
-              width="24px"
-              height="24px"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M14,6h3a1,1,0,0,0,1-1V3a1,1,0,0,0-1-1H14A5,5,0,0,0,9,7v3H7a1,1,0,0,0-1,1v2a1,1,0,0,0,1,1H9v7a1,1,0,0,0,1,1h2a1,1,0,0,0,1-1V14h2.22a1,1,0,0,0,1-.76l.5-2a1,1,0,0,0-1-1.24H13V7A1,1,0,0,1,14,6Z"></path>
-            </svg>
-          </v-btn>
-          <v-btn
-            icon
-            href="https://instagram.com"
-            target="_blank"
-            class="social-icon-btn"
-          >
-            <svg
-              fill="#000000"
-              width="24px"
-              height="24px"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M17.34,5.46h0a1.2,1.2,0,1,0,1.2,1.2A1.2,1.2,0,0,0,17.34,5.46Zm4.6,2.42a7.59,7.59,0,0,0-.46-2.43,4.94,4.94,0,0,0-1.16-1.77,4.7,4.7,0,0,0-1.77-1.15,7.3,7.3,0,0,0-2.43-.47C15.06,2,14.72,2,12,2s-3.06,0-4.12.06a7.3,7.3,0,0,0-2.43.47A4.78,4.78,0,0,0,3.68,3.68,4.7,4.7,0,0,0,2.53,5.45a7.3,7.3,0,0,0-.47,2.43C2,8.94,2,9.28,2,12s0,3.06.06,4.12a7.3,7.3,0,0,0,.47,2.43,4.7,4.7,0,0,0,1.15,1.77,4.78,4.78,0,0,0,1.77,1.15,7.3,7.3,0,0,0,2.43.47C8.94,22,9.28,22,12,22s3.06,0,4.12-.06a7.3,7.3,0,0,0,2.43-.47,4.7,4.7,0,0,0,1.77-1.15,4.85,4.85,0,0,0,1.16-1.77,7.59,7.59,0,0,0,.46-2.43c0-1.06.06-1.4.06-4.12S22,8.94,21.94,7.88ZM20.14,16a5.61,5.61,0,0,1-.34,1.86,3.06,3.06,0,0,1-.75,1.15,3.19,3.19,0,0,1-1.15.75,5.61,5.61,0,0,1-1.86.34c-1,.05-1.37.06-4,.06s-3,0-4-.06A5.73,5.73,0,0,1,6.1,19.8,3.27,3.27,0,0,1,5,19.05a3,3,0,0,1-.74-1.15A5.54,5.54,0,0,1,3.86,16c0-1-.06-1.37-.06-4s0-3,.06-4A5.54,5.54,0,0,1,4.21,6.1,3,3,0,0,1,5,5,3.14,3.14,0,0,1,6.1,4.2,5.73,5.73,0,0,1,8,3.86c1,0,1.37-.06,4-.06s3,0,4,.06a5.61,5.61,0,0,1,1.86.34A3.06,3.06,0,0,1,19.05,5,3.06,3.06,0,0,1,19.8,6.1,5.61,5.61,0,0,1,20.14,8c.05,1,.06,1.37.06,4S20.19,15,20.14,16ZM12,6.87A5.13,5.13,0,1,0,17.14,12,5.12,5.12,0,0,0,12,6.87Zm0,8.46A3.33,3.33,0,1,1,15.33,12,3.33,3.33,0,0,1,12,15.33Z"></path>
-            </svg>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
+      <FooterComponent />
     </footer>
+
   </v-app>
 </template>
 
 <script setup>
+import FooterComponent from '@/components/Generales/FooterComponent.vue'
 import { useRouter } from 'vue-router'
+import img1 from '@/assets/ima.jpg';
+import img2 from '@/assets/ma.jpg';
+import img3 from '@/assets/pis.png';
 
-const router = useRouter()
+const router = useRouter();
 
-const clickAgenda = () => {
-  router.push('/Agendar')
+const images = [img1, img2, img3];
+const titles = [
+  "Soluciones Rápidas",
+  "Confianza en Cada Servicio",
+  "Servicio Integral"
+];
+
+const descriptions = [
+  "Repara tu tecnología con eficiencia y rapidez.",
+  "Expertos en reparación de hardware y software.",
+  "Desde diagnóstico hasta reparación, te tenemos cubierto."
+];
+
+const navigateToCitas = () => {
+  router.push('/Agendar');
 }
+
+const services = [
+  { title: 'Contamos con:', description: 'Soluciones rápidas y efectivas.', image: img1 },
+  { title: '¿Problemas?', description: 'Agenda, mejora tus productos', image: img2 },
+  { title: 'Tenemos:', description: 'las mejores reparaciones', image: img3 }
+];
 </script>
 
 <style scoped>
+/* Estilos globales */
 .v-application {
-  background: #ede8e6;
-}
-
-.social-icons .v-btn {
-  background-color: white;
-  transition: background-color 0.3s ease;
-}
-
-.social-icons .v-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.text {
-  color: #000000;
-  text-align: center;
-  font-size: 20px; 
+  background: #f3f4f6;
   font-family: 'Roboto', sans-serif;
 }
 
-.white-text {
+/* Estilo del contenedor principal */
+.main-sheet {
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo del carrusel */
+.main-carousel {
+  border-radius: 16px;
+  overflow: hidden;
+
+}
+
+/* Estilo de los ítems del carrusel */
+.carousel-item {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
+
+/* Estilo del contenido sobre la imagen */
+.carousel-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #ffffff;
+  padding: 20px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.carousel-content-enter-active, .carousel-content-leave-active {
+  opacity: 0;
+}
+
+.carousel-content-enter, .carousel-content-leave-to {
+  transform: translateY(10%);
+}
+
+/* Estilo del título en el carrusel */
+.carousel-title {
+  font-size: 48px;
+  font-weight: 700;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  margin: 0;
   color: #fff;
-  font-size: 40px;
-  font-family: 'Roboto', sans-serif;
+  transition: color 0.3s, transform 0.3s;
 }
 
-.subtitulo {
-  color: #000;
-  font-size: 40px;
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
+.carousel-description {
+  font-size: 20px;
+  margin-top: 10px;
+  color: #ddd;
+  transition: color 0.3s, transform 0.3s;
 }
 
+/* Estilo del botón de llamada a la acción */
+.cta-btn {
+  width: 240px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-size: 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  background-color: #2c3e50;
+  color: #fff;
+}
+
+.cta-btn:hover {
+  background-color: #ffad00;
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4), 0 0 20px #ffad00;
+}
+
+/* Estilos para la sección de Servicios */
+.services-section {
+  margin: 80px auto;
+  max-width: 1400px;
+}
+
+/* Estilo de la tarjeta de servicio */
+.service-card {
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(255, 128, 0, 0.3);
+  padding: 30px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background: #fff;
+}
+
+/* Efecto de hover en la tarjeta de servicio */
+.service-card-hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(255, 128, 0, 0.5);
+}
+
+/* Estilo del título en la tarjeta de servicio */
+.service-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-top: 20px;
+}
+
+/* Estilo de la descripción en la tarjeta de servicio */
+.service-description {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin-top: 10px;
+}
+
+/* Estilo de la imagen de servicio */
+.service-image {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Estilos para el pie de página */
 footer {
-  background-color: #11100e;
-  color: #fff;
-  padding: 20px 0;
+  background-color: #2c3e50;
+  color: #ffffff;
+  padding: 20px;
   text-align: center;
 }
 
-.footer-info,
-.footer-links,
-.social-icons {
-  margin-bottom: 10px;
+/* Consultas de medios para hacer el diseño responsivo */
+@media (max-width: 768px) {
+  .overlay-container {
+    padding: 5% 2%;
+  }
+
+  .schedule-btn {
+    width: 150px;
+  }
+
+  .white-text {
+    font-size: 30px;
+  }
+
+  .subtitulo {
+    font-size: 30px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
 }
 
-.footer-title {
-  color: #ffad00;
-}
+@media (max-width: 480px) {
+  .overlay-container {
+    padding: 5% 1%;
+  }
 
-.social-icon-btn {
-  margin-right: 10px; /* Espacio entre los iconos */
-}
+  .schedule-btn {
+    width: 100%;
+  }
 
-.social-icon-btn:last-child {
-  margin-right: 0; /* Elimina el margen del último ícono */
+  .white-text {
+    font-size: 24px;
+  }
+
+  .subtitulo {
+    font-size: 24px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
 }
 </style>

@@ -5,9 +5,10 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text">
+          <h1
+            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text"
+          >
             ASIGNACIÓN FÍSICOS
-
           </h1>
         </v-flex>
       </v-card-title>
@@ -67,8 +68,7 @@
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showTechnicianTable = true"
             class="mr-2"
-            style="background-color: #FFAD00; color: white;"
-
+            style="background-color: #ffad00; color: white"
           >
             Asignar Técnico
           </v-btn>
@@ -89,8 +89,8 @@
           <thead>
             <tr>
               <th class="text-left">Técnico</th>
-              <th class="text-left">Tipo de Técnico</th>
               <th class="text-left">Cantidad de citas</th>
+              <th class="text-left">Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -103,18 +103,17 @@
               }"
               @click="selectTechnician(item)"
             >
-              <td>{{ item.Tecnico }}</td>
-              <td>{{ item.tipo_tecnico }}</td>
-              <td>{{ item.cantidad_citas_asignada }}</td>
+              <td>{{ item.nombre_tecnico }}</td>
+              <td>{{ item.cantidad_citas }}</td>
+              <td>{{ item.estado }}</td>
             </tr>
           </tbody>
         </v-table>
         <div v-if="selectedTechnician" class="mt-4">
           <v-btn
             @click="assignTechnician"
-            style="background-color: #FFAD00; color: white;"
+            style="background-color: #34495E; color: white;"
           >
-
             Asignar
           </v-btn>
         </div>
@@ -122,25 +121,12 @@
     </v-card>
 
     <!-- Snackbar -->
-    <v-snackbar
-      v-model="snackbar.visible"
-      :color="snackbar.color"
-      top
-      right
-    >
+    <v-snackbar v-model="snackbar.visible" :color="snackbar.color" top right>
       {{ snackbar.message }}
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="white"
-          text
-          v-bind="attrs"
-          @click="snackbar.visible = false"
-        >
-          Cerrar
-        </v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="snackbar.visible = false"> Cerrar </v-btn>
       </template>
     </v-snackbar>
-
   </v-container>
 </template>
 
@@ -161,9 +147,8 @@ const showTechnicianTable = ref(false)
 const snackbar = ref({
   visible: false,
   message: '',
-  color: '',
+  color: ''
 })
-
 
 const fetchData = async () => {
   try {
@@ -180,24 +165,22 @@ const fetchData = async () => {
     snackbar.value = {
       visible: true,
       message: 'Error al cargar las asignaciones físicas. Por favor, inténtelo de nuevo.',
-      color: 'red',
-    };
-
+      color: 'red'
+    }
   }
 }
 
 const fetchTechnicianDetails = async () => {
   try {
-    const response = await apiClient.get('citasTecnico')
+    const response = await apiClient.get('estadotec')
     technicianDetails.value = Array.isArray(response.data) ? response.data : []
   } catch (error) {
     console.error('Error fetching technician details:', error)
     snackbar.value = {
       visible: true,
       message: 'Error al cargar los detalles del técnico. Por favor, inténtelo de nuevo.',
-      color: 'red',
-    };
-
+      color: 'red'
+    }
   }
 }
 
@@ -214,8 +197,7 @@ const filteredOrders = computed(() => {
     const matchesTechnician = order.nombre_tecnico
       .toLowerCase()
       .includes(filters.value.technicianName.toLowerCase())
-    return matchesClient && matchesTechnician 
-
+    return matchesClient && matchesTechnician
   })
 })
 
@@ -223,7 +205,6 @@ const filteredOrders = computed(() => {
 const selectOrder = (order) => {
   selectedOrder.value = order
   showTechnicianTable.value = false
-
 }
 
 // Función para seleccionar un técnico
@@ -241,23 +222,22 @@ const assignTechnician = async () => {
       snackbar.value = {
         visible: true,
         message: 'Seleccione una orden y un técnico antes de asignar.',
-        color: 'red',
-      };
+        color: 'red'
+      }
       return
     }
 
     const response = await apiClient.post('asignacionf', {
-
       orderId,
       technicianId
     })
 
-    if (response.data.status === 'success') {
+    if (response.data.status === '200') {
       snackbar.value = {
         visible: true,
-        message: 'Técnico asignado exitosamente.',
-        color: 'green',
-      };
+        message: 'Error al asignar técnico. Por favor, inténtelo de nuevo.',
+        color: 'red'
+      }
 
       await fetchData()
       showTechnicianTable.value = false
@@ -266,25 +246,24 @@ const assignTechnician = async () => {
     } else {
       snackbar.value = {
         visible: true,
-        message: 'Error al asignar técnico. Por favor, inténtelo de nuevo.',
-        color: 'red',
-      };
+        message: 'Técnico asignado exitosamente.',
+        color: 'green'
+      }
     }
   } catch (error) {
     console.error('Error assigning technician:', error)
     snackbar.value = {
       visible: true,
       message: 'Error al asignar técnico. Por favor, inténtelo de nuevo.',
-      color: 'red',
-    };
-
+      color: 'red'
+    }
   }
 }
 </script>
 
 <style scoped>
 .my-card {
-  background-color: #f7f7f7;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
@@ -301,7 +280,7 @@ const assignTechnician = async () => {
 }
 
 .v-table th {
-  background-color: #0800ff;
+  background-color: #BDC3C7;
   color: #fff;
 }
 
@@ -332,7 +311,7 @@ const assignTechnician = async () => {
 }
 
 .title-text {
-  color: #0800FF;
+  color: #34495E;
 
 }
 </style>

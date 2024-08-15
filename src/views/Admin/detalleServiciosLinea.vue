@@ -8,7 +8,7 @@
           <h3
             class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text"
           >
-            Citas en línea
+            Citas en Línea
           </h3>
         </v-flex>
       </v-card-title>
@@ -70,14 +70,14 @@
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showTechnicianTable = true"
             class="mr-2"
-            style="background-color: #ffad00; color: white"
+            style="background-color: #34495E; color: white"
           >
             Asignar Técnico
           </v-btn>
           <v-btn
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showDetailModal = true"
-            style="background-color: #ffad00; color: white"
+            style="background-color: #34495E; color: white"
           >
             Ver Detalles
           </v-btn>
@@ -152,7 +152,7 @@
           </div>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="showDetailModal = false" style="background-color: #ffad00; color: white">
+          <v-btn @click="showDetailModal = false" style="background-color: #34495E; color: white">
             Cerrar
           </v-btn>
         </v-card-actions>
@@ -267,7 +267,7 @@ const assignTechnician = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #f7f7f7;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
@@ -284,7 +284,7 @@ const assignTechnician = async () => {
 }
 
 .v-table th {
-  background-color: #49a3f8;
+  background-color: #BDC3C7;
 }
 
 .selected-row {
@@ -294,7 +294,7 @@ const assignTechnician = async () => {
 .additional-component-container {
   margin-top: 10px;
   padding: 10px;
-  background-color: #f7f7f7;
+  background-color: #E0E0E0;
   border: 1px solid #c8e6c9;
   border-radius: 4px;
 }
@@ -314,6 +314,6 @@ const assignTechnician = async () => {
 }
 
 .title-text {
-  color: #0800ff;
+  color:  #34495E;
 }
 </style>

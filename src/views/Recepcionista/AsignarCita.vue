@@ -5,9 +5,10 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text">
+          <h1
+            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text"
+          >
             ASIGNACIÓN LÍNEA
-
           </h1>
         </v-flex>
       </v-card-title>
@@ -67,7 +68,7 @@
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showTechnicianTable = true"
             class="mr-2"
-            style="background-color: #ffad00; color: white"
+            style="background-color: #34495E; color: white"
           >
             Asignar Técnico
           </v-btn>
@@ -88,8 +89,8 @@
           <thead>
             <tr>
               <th class="text-left">Técnico</th>
-              <th class="text-left">Tipo de Técnico</th>
               <th class="text-left">Cantidad de citas</th>
+              <th class="text-left">Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -102,9 +103,9 @@
               }"
               @click="selectTechnician(item)"
             >
-              <td>{{ item.Tecnico }}</td>
-              <td>{{ item.tipo_tecnico }}</td>
-              <td>{{ item.cantidad_citas_asignada }}</td>
+              <td>{{ item.nombre_tecnico }}</td>
+              <td>{{ item.cantidad_citas }}</td>
+              <td>{{ item.estado }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -167,8 +168,9 @@ const fetchData = async () => {
 
 const fetchTechnicianDetails = async () => {
   try {
-    const response = await apiClient.get('citasTecnico')
+    const response = await apiClient.get('estadotec')
     technicianDetails.value = Array.isArray(response.data) ? response.data : []
+    console.log('Technician details:', technicianDetails.value) // Verifica aquí
   } catch (error) {
     console.error('Error fetching technician details:', error)
   }
@@ -219,7 +221,7 @@ const assignTechnician = async () => {
 
     console.log('Server response:', response.data)
 
-    if (response.data.status === 'success') {
+    if (response.data.status === '200') {
       successMessage.value = 'Técnico asignado exitosamente.'
       showSuccessSnackbar.value = true
       await fetchData()
@@ -240,7 +242,7 @@ const assignTechnician = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #f7f7f7;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
@@ -257,7 +259,7 @@ const assignTechnician = async () => {
 }
 
 .v-table th {
-  background-color: #0800ff;
+  background-color:  #BDC3C7;
   color: #fff;
 }
 
@@ -288,6 +290,6 @@ const assignTechnician = async () => {
 }
 
 .title-text {
-  color: #0800ff;
+  color: #34495E;
 }
 </style>

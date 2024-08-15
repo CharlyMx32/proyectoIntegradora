@@ -182,7 +182,7 @@ onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
 }
 
 .title {
-  color: rgb(8, 0, 255);
+  color: #FFC30B;
   font-size: 24px;
   font-weight: bold;
 }
@@ -199,7 +199,7 @@ onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
 }
 
 .custom-table thead {
-  background-color: #f5f5f5;
+  background-color: #E8E8E8;
 }
 
 .custom-table th,
@@ -222,7 +222,7 @@ onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
 }
 
 .custom-btn {
-  background-color: #2196f3;
+  background-color:  #ffad00;
   color: #ffffff;
 }
 
