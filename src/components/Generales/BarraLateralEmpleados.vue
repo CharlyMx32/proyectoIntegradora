@@ -59,13 +59,13 @@ const logout = () => {
   border-bottom: 1px solid #444; /* Separador debajo del encabezado */
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #49a3f8; /* Fondo del encabezado */
+  background-color: #BDC3C7; /* Fondo del encabezado */
   color: black; /* Color de texto del encabezado */
 }
 
 .nav {
-  background-color: #FFAD00;
-  color: black;
+  background-color:  #34495E;
+  color: white;
   border-right: 1px solid #444;
   width: 250px;
   height: 100vh; /* Ajusta la altura al 100% del viewport */
@@ -76,13 +76,13 @@ const logout = () => {
 
 
 .nav-item:hover {
-  background-color: #49a3f8 ; /* Fondo en hover más claro */
+  background-color: #BDC3C7 ; /* Fondo en hover más claro */
   color: #fff; /* Texto en hover blanco */
 }
 
 .logout-item {
   font-weight: bold;
-  color: #0800ff; /* Ajusta el color según tu diseño */
+  color: #ffad00; /* Ajusta el color según tu diseño */
   cursor: pointer;
   margin-bottom: auto; /* Empuja el ítem hacia abajo */
 }

@@ -147,4 +147,37 @@ const closeCompleteDialog = () => {
 .selected-row {
   background-color: #f0f0f0;
 }
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.custom-table th {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.custom-table tr.selected-row {
+  background-color: #d0e8ff;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f0faff;
+  cursor: pointer;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.custom-btn {
+  font-size: 16px;
+  font-weight: bold;
+}
 </style>

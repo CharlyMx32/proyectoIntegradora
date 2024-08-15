@@ -1,9 +1,23 @@
 <template>
   <v-container class="py-0 fill-height" fluid>
     <v-row align="center" no-gutters class="navbar">
+      <!-- Columna para el Logo -->
+      <v-col cols="auto" class="d-flex align-center">
+        <v-img
+          src="/src/assets/HS.png" 
+          alt="Logo"
+          width="40"
+          height="40"
+          class="logo"
+        ></v-img>
+      </v-col>
+
+      <!-- Columna para el Título -->
       <v-col>
         <div class="navbar-title">{{ title }}</div>
       </v-col>
+
+      <!-- Columna para el Menú -->
       <v-col cols="auto" class="d-flex justify-end">
         <div class="d-flex align-center">
           <span :class="{ hidden: showText }" class="menu-text" @click="toggleText">Menú</span>
@@ -35,7 +49,6 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import anime from 'animejs'
 
-// Props para el componente
 const props = defineProps({
   title: {
     type: String,
@@ -51,29 +64,23 @@ const props = defineProps({
   }
 })
 
-const showText = ref(false) // Cambiar a false para que el menú esté cerrado al inicio
-
-// Router para redireccionar
+const showText = ref(false)
 const router = useRouter()
 
-// Alternar la visibilidad del texto
-// Alternar la visibilidad del texto y animar el texto "Menú"
 const toggleText = () => {
   showText.value = !showText.value
   animateBall()
 }
 
-// Manejo de clic en los ítems del menú
 const handleMenuItemClick = (item) => {
   if (item.route) {
     router.push(item.route)
   } else if (item.action) {
     item.action()
   }
-  showText.value = false // Ocultar texto después de hacer clic
+  showText.value = false
 }
 
-// Animación de la bolita (opcional)
 const animateBall = () => {
   anime({
     targets: '.red-ball',
@@ -93,19 +100,23 @@ const animateBall = () => {
 .navbar {
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--v-divider); /* Línea divisoria */
+  border-bottom: 1px solid var(--v-divider);
 }
 
 .navbar-title {
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
   font-weight: bold;
-  color: var(--v-text-base); /* Color del texto dependiendo del tema */
+  color: var(--v-text-base);
 }
 
-/* Estilos para la bolita roja */
+.logo {
+  margin-right: 10px;
+  max-height: 40px; /* Asegúrate de que el alto sea suficiente */
+}
+
 .red-ball {
-  background-color: rgb(8, 0, 255);
+  background-color: #34495E;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -114,7 +125,6 @@ const animateBall = () => {
   transition: transform 0.3s ease;
 }
 
-/* Estilos para la lista de texto */
 .text-list {
   list-style: none;
   margin: 0;
@@ -136,19 +146,16 @@ const animateBall = () => {
   transition: opacity 0.3s ease;
 }
 
-/* Clase para ocultar el texto */
 .hidden {
   display: none;
 }
 
-/* Estilos para el texto Menu */
 .menu-text {
   margin-right: 10px;
-} /*MENU A LADO DEL BOTON */
+}
 
-/* Estilos para el ítem de Cerrar Sesión */
 .logout-item {
   font-weight: bold;
-  color: red; /* Puedes ajustar el color según tu diseño */
+  color: red;
 }
 </style>

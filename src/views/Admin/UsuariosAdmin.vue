@@ -9,7 +9,7 @@
           <h3
             class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight title-text"
           >
-            Citas en línea
+            Empleados
           </h3>
         </div>
       </v-card-title>
@@ -54,7 +54,7 @@
 
         <!-- Botones para acciones adicionales -->
         <div v-if="selectedOrder" class="button-container">
-          <v-btn @click="showDetailModal = true" style="background-color: #ffad00; color: white">
+          <v-btn @click="showDetailModal = true" style="background-color: #34495E; color: white">
             Ver Detalles
           </v-btn>
         </div>
@@ -94,8 +94,8 @@
           </v-list>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" text @click="showDetailModal = false"> Cerrar </v-btn>
-          <v-btn color="primary" @click="updateUserRole"> Guardar Cambios </v-btn>
+          <v-btn color="#34495E" text @click="showDetailModal = false"> Cerrar </v-btn>
+          <v-btn color="#34495E" @click="updateUserRole"> Guardar Cambios </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -154,7 +154,7 @@ const updateUserRole = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #f7f7f7;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
@@ -171,14 +171,14 @@ const updateUserRole = async () => {
 }
 
 .v-table th {
-  background-color: #49a3f8;
+  background-color: #BDC3C7;
 }
 
 .selected-row {
-  background-color: rgba(0, 38, 255, 0.658);
+  background-color: #c8e6c9;
 }
 
 .title-text {
-  color: #0800ff;
+  color: #34495E;
 }
 </style>

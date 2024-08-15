@@ -56,7 +56,7 @@
     </v-card-text>
 
     <!-- Botón de acciones -->
-    <v-card-actions class="justify-start">
+    <v-card-actions class="justify-end">
       <v-btn @click="openDetailDialog" color="primary"> Detallar </v-btn>
     </v-card-actions>
 

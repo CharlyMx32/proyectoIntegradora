@@ -7,7 +7,7 @@
         <v-flex class="flex-col space-y-1.5 p-6">
           <h3
             class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight"
-            style="color: #0800ff"
+            style="color: #34495E"
           >
             Citas Físicas
           </h3>
@@ -122,7 +122,7 @@
           </tbody>
         </v-table>
         <div v-if="selectedTechnician" class="mt-4">
-          <v-btn @click="assignTechnician" style="background-color: #0800ff; color: #ffffff"
+          <v-btn @click="assignTechnician" style="background-color: #0800ff; color: #34495E"
             >Asignar</v-btn
           >
         </div>
@@ -132,7 +132,7 @@
     <v-dialog v-model="showDetailModal" max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5" style="color: #0800ff">Detalles de la Cita</span>
+          <span class="text-h5" style="color: #34495E">Detalles de la Cita</span>
         </v-card-title>
         <v-card-text>
           <div v-if="selectedOrder">
@@ -144,7 +144,7 @@
           </div>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="showDetailModal = false" style="background-color: #0800ff; color: #ffffff"
+          <v-btn @click="showDetailModal = false" style="background-color: #0800ff; color: #34495E"
             >Cerrar</v-btn
           >
         </v-card-actions>
@@ -235,7 +235,7 @@ const assignTechnician = async () => {
       technicianId
     })
 
-    console.log('Server response:', response.data)
+    
 
     if (response.data.status === 'success') {
       await fetchData()
@@ -253,7 +253,7 @@ const assignTechnician = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #f7f7f7;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
@@ -270,7 +270,7 @@ const assignTechnician = async () => {
 }
 
 .v-table th {
-  background-color: #49a3f8;
+  background-color: #BDC3C7;
 }
 
 .selected-row {
@@ -280,7 +280,7 @@ const assignTechnician = async () => {
 .additional-component-container {
   margin-top: 10px;
   padding: 10px;
-  background-color: #f7f7f7;
+  background-color: #BDC3C7;
   border: 1px solid #c8e6c9;
   border-radius: 4px;
 }

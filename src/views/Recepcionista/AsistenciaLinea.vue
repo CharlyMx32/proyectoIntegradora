@@ -171,12 +171,12 @@ const markAsAttended = async () => {
 }
 
 .my-card {
-  background-color: #ffffff;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
 .efecto-titulo {
-  color: #0800ff;
+  color: #34495E;
   font-family: 'Calibre', sans-serif;
 }
 
@@ -192,7 +192,7 @@ const markAsAttended = async () => {
 }
 
 .v-table th {
-  background-color: #0800ff;
+  background-color: #BDC3C7;
   color: #fff;
 }
 
@@ -209,7 +209,7 @@ const markAsAttended = async () => {
 }
 
 .v-btn {
-  background-color: #ffad00;
+  background-color: #34495E;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;

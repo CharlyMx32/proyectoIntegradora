@@ -175,7 +175,7 @@ onMounted(fetchItems)
 }
 
 .title {
-  color: rgb(8, 0, 255);
+  color: #93C572;
   font-size: 24px;
   font-weight: bold;
 }
@@ -191,7 +191,7 @@ onMounted(fetchItems)
 }
 
 .custom-table thead {
-  background-color: #f5f5f5;
+  background-color: #E8E8E8;
 }
 
 .custom-table th,
@@ -214,7 +214,7 @@ onMounted(fetchItems)
 }
 
 .custom-btn {
-  background-color: #2196f3;
+  background-color:  #ffad00;
   color: #ffffff;
 }
 

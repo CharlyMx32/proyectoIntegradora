@@ -68,7 +68,7 @@
 <style scoped>
 /* Estilo del pie de página */
 footer {
-  background-color: #000; /* Fondo negro */
+  background-color: #34495E; /* Fondo negro */
   color: #fff;
   padding: 20px 0;
   text-align: center;
