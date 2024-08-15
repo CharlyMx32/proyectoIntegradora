@@ -5,9 +5,10 @@
     >
       <v-card-title>
         <v-flex class="flex-col space-y-1.5 p-6">
-          <h1 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo">
+          <h1
+            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
+          >
             CITAS CLIENTE LÍNEA
-
           </h1>
         </v-flex>
       </v-card-title>
@@ -69,49 +70,43 @@
         Detalles de la cita:
       </h2>
       <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
-      <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
       <p>Producto: {{ selectedOrder.Producto }}</p>
       <p>Costo Chequeo: {{ selectedOrder.CostoChequeo }}</p>
       <p>Costo Reparacion: {{ selectedOrder.CostoReparacion }}</p>
       <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
+      <p>Entregado: {{ selectedOrder.Entregado }}</p>
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Garantia }}</p>
 
       <v-btn
-        v-if="selectedOrder && selectedOrder.Garantia !== 'expirada' && selectedOrder.Garantia !== 'usada'"
+        v-if="
+          selectedOrder &&
+          selectedOrder.Garantia !== 'expirada' &&
+          selectedOrder.Garantia !== 'usada'
+        "
         @click="usarGarantia"
         class="custom-btn"
       >
         USAR GARANTÍA
       </v-btn>
 
-      <v-btn
-        @click="realizarPago"
-        class="custom-btn"
-      >
-        USAR GARANTÍA
-      </v-btn>
+      <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
 
-      <v-btn @click="realizarPago" class="custom-btn"> PAGO </v-btn>
+      <v-btn
+        v-if="selectedOrder && selectedOrder.Entregado !== 'Si'"
+        @click="marcarEntregado"
+        class="custom-btn"
+        >ENTREGADO</v-btn
+      >
     </div>
 
     <!-- Snackbar para mensajes de éxito -->
-    <v-snackbar
-      v-model="successSnackbar"
-      :timeout="3000"
-      color="green"
-      top
-    >
+    <v-snackbar v-model="successSnackbar" :timeout="3000" color="green" top>
       {{ successMessage }}
     </v-snackbar>
 
     <!-- Snackbar para mensajes de error -->
-    <v-snackbar
-      v-model="errorSnackbar"
-      :timeout="3000"
-      color="red"
-      top
-    >
+    <v-snackbar v-model="errorSnackbar" :timeout="3000" color="red" top>
       {{ errorMessage }}
     </v-snackbar>
   </v-container>
@@ -164,11 +159,13 @@ const usarGarantia = async () => {
     const response = await apiClient.post('garantialinea', {
       id_detalle_linea: selectedOrder.value.id_detalle_linea // Enviamos el ID de la cita para identificar cuál usar
     })
-    successMessage.value = `Garantía utilizada para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successMessage.value =
+      ' Garantía utilizada para el cliente ${selectedOrder.value.Nombre_Cliente}.'
     successSnackbar.value = true
     console.log('Response:', response.data)
   } catch (error) {
-    errorMessage.value = 'Error al usar la garantía: ' + (error.response?.data?.message || error.message)
+    errorMessage.value =
+      'Error al usar la garantía: ' + (error.response?.data?.message || error.message)
     errorSnackbar.value = true
     console.error('Error al usar la garantía:', error)
   }
@@ -180,13 +177,31 @@ const realizarPago = async () => {
       id_detalle_linea: selectedOrder.value.id_detalle_linea, // Enviamos el ID de la cita para identificar cuál pagar
       pago: 'Realizado' // Puedes enviar la información adicional que consideres necesaria
     })
-    successMessage.value = `Pago realizado para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successMessage.value = 'Pago realizado para el cliente ${selectedOrder.value.Nombre_Cliente}.'
     successSnackbar.value = true
     console.log('Response:', response.data)
   } catch (error) {
-    errorMessage.value = 'Error al realizar el pago: ' + (error.response?.data?.message || error.message)
+    errorMessage.value =
+      'Error al realizar el pago: ' + (error.response?.data?.message || error.message)
     errorSnackbar.value = true
     console.error('Error al realizar el pago:', error)
+  }
+}
+
+const marcarEntregado = async () => {
+  try {
+    const response = await apiClient.post('entregalinea', {
+      id_detalle_linea: selectedOrder.value.id_detalle_linea // Enviamos el ID de la cita para marcarla como entregada
+    })
+    successMessage.value =
+      'Producto entregado para el cliente ${selectedOrder.value.Nombre_Cliente}.'
+    successSnackbar.value = true
+    console.log('Response:', response.data)
+  } catch (error) {
+    errorMessage.value =
+      'Error al marcar como entregado: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
+    console.error('Error al marcar como entregado:', error)
   }
 }
 </script>
@@ -200,12 +215,12 @@ const realizarPago = async () => {
 }
 
 .my-card {
-  background-color: #ffffff;
+  background-color: #E0E0E0;
   border: 1px solid #d1d1d1;
 }
 
 .efecto-titulo {
-  color: #0800ff;
+  color: #34495E;
   font-family: 'Calibre', sans-serif;
 }
 
@@ -221,7 +236,7 @@ const realizarPago = async () => {
 }
 
 .v-table th {
-  background-color: #0800ff;
+  background-color: #BDC3C7;
   color: #fff;
 }
 

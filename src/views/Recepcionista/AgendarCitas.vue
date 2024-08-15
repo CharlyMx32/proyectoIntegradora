@@ -119,11 +119,12 @@ const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otro
 
 const form = ref({
   nombre: '',
-  apellidoPaterno: '',
-  apellidoMaterno: '',
-  telefono: '',
+  apellido_paterno: '',
+  apellido_materno: '',
+  contacto: '',
   producto: '',
   problema: ''
+  
 })
 
 const isFormValid = ref(false)
@@ -156,11 +157,13 @@ const submitForm = async () => {
       contacto: form.value.telefono,
       producto: form.value.producto,
       problema: form.value.problema
+      
+      
     }
 
 
-    const response = await axios.post('http://hs.com/citasfisicas', payload)
-
+    const response = await apiClient.post('citasfisicas', payload)
+    console.log(response);
     snackbar.value = {
       show: true,
       message: 'Se agendó la cita correctamente.',
@@ -169,11 +172,12 @@ const submitForm = async () => {
 
     form.value = {
       nombre: '',
-      apellidoPaterno: '',
-      apellidoMaterno: '',
-      telefono: '',
+      apellido_paterno: '',
+      apellido_materno: '',
+      contacto: '',
       producto: '',
       problema: ''
+      
     }
     showAgendarCita.value = false
   } catch (error) {
@@ -197,12 +201,12 @@ const submitForm = async () => {
   max-width: 800px;
   width: 100%;
   margin: 20px auto;
-  background-color: #ffffff;
+  background-color: #E0E0E0;
 
 }
 
 .efecto-titulo {
-  color: #0800ff;
+  color:  #34495E;
   font-family: 'Calibre', sans-serif;
 }
 
@@ -214,7 +218,7 @@ const submitForm = async () => {
 }
 
 .custom-btn {
-  background-color: #ffad00;
+  background-color:  #34495E;
   color: #ffffff;
   margin-left: 8px;
   border-radius: 4px;
@@ -222,6 +226,6 @@ const submitForm = async () => {
 }
 
 .custom-btn:hover {
-  background-color: #e69700;
+  background-color: #BDC3C7;
 }
 </style>

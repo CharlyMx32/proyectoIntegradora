@@ -96,7 +96,6 @@ const login = async () => {
 
     // Después de la autenticación, redirige basado en el rol del usuario
     const userRole = authStore.user?.id_rol
-    console.log('Rol del usuario:', userRole)
 
     switch (userRole) {
       case 1:
@@ -115,7 +114,6 @@ const login = async () => {
         router.push({ path: '/login' })
     }
   } catch (error) {
-    console.error('Error en el inicio de sesión:', error)
     errorMessage.value = 'Credenciales incorrectas. Inténtalo de nuevo.'
     showErrorSnackbar.value = true
   }
@@ -156,7 +154,7 @@ body {
 }
 
 .fondoimg {
-  background: url('../assets/loginRegister.svg');
+  background: url('../assets/login.svg');
   background-size: cover;
   color: var(--v-theme-text-primary);
   width: 100%;
@@ -199,12 +197,12 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--v-theme-shadow);
   text-transform: uppercase;
-  background-color: #0800ff; /* Color de fondo del botón */
+  background-color:#34495E; /* Color de fondo del botón */
   color: #ffffff; /* Color del texto del botón */
 }
 
 .v-btn:hover {
-  background-color: #0600cc; /* Color de fondo del botón al pasar el mouse */
+  background-color: #BDC3C7; /* Color de fondo del botón al pasar el mouse */
   transition: background-color 0.3s;
 }
 

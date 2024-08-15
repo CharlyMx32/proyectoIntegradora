@@ -75,9 +75,8 @@
         </v-row>
       </v-card-subtitle>
       <v-card-actions>
-        <v-btn text @click="confirmPayment">Rechazar Pago</v-btn>
-        <v-btn text @click="closeDialog">Cancelar</v-btn>
-        <v-btn text @click="confirmPayment">Confirmar Pago</v-btn>
+        <v-btn text @click="showPaymentInfo">Confirmar</v-btn>
+        <v-btn text @click="rejectPayment">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -124,6 +123,88 @@ const fetchItems = async () => {
   }
 }
 
+const showPaymentInfo = async () => {
+  try {
+    if (!selectedItem.value || !selectedItem.value.id_detalle_linea) {
+      snackbar.value = {
+        visible: true,
+        message: 'Primero debes seleccionar un servicio.',
+        color: 'warning'
+      }
+      return
+    }
+
+    const response = await apiCliente.post('lineaaceptado', {
+      id_detalle_linea: selectedItem.value.id_detalle_linea
+    })
+
+    if (response.data.success) {
+      snackbar.value = {
+        visible: true,
+        message: 'El pago ha sido confirmado exitosamente.',
+        color: 'success'
+      }
+    } else {
+      snackbar.value = {
+        visible: true,
+        message: 'Hubo un problema al confirmar el pago.',
+        color: 'error'
+      }
+    }
+  } catch (error) {
+    snackbar.value = {
+      visible: true,
+      message: 'Error al actualizar el estado del pago.',
+      color: 'error'
+    }
+    console.error('Error al actualizar el estado del pago:', error)
+  } finally {
+    dialog.value = false
+  }
+}
+
+const rejectPayment = async () => {
+  try {
+    if (!selectedItem.value || !selectedItem.value.id_detalle_linea) {
+      snackbar.value = {
+        visible: true,
+        message: 'Primero debes seleccionar un servicio.',
+        color: 'warning'
+      }
+      return
+    }
+
+    const response = await apiCliente.post('linearechazado', {
+      id_detalle_linea: selectedItem.value.id_detalle_linea
+    })
+
+    if (response.data.success) {
+      snackbar.value = {
+        visible: true,
+        message: 'El pago ha sido rechazado.',
+        color: 'success'
+      }
+    } else {
+      snackbar.value = {
+        visible: true,
+        message: 'Hubo un problema al rechazar el pago.',
+        color: 'error'
+      }
+    }
+  } catch (error) {
+    snackbar.value = {
+      visible: true,
+      message: 'Error al rechazar el pago.',
+      color: 'error'
+    }
+    console.error('Error al rechazar el pago:', error)
+  } finally {
+    if (!response.data.success) {
+      dialog.value = false
+    }
+  }
+}
+
 onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
 
 const selectItem = (item) => {
@@ -156,11 +237,6 @@ const processPayment = () => {
   }
   openDialog()
 }
-
-const confirmPayment = () => {
-  // Lógica para confirmar el pago
-  closeDialog()
-}
 </script>
 
 <style scoped>
@@ -170,8 +246,7 @@ const confirmPayment = () => {
 }
 
 .title {
-  color: #0000ff; /* Azul para el título */
-
+  color:  #DC143C; /* Azul para el título */
   font-size: 24px;
   font-weight: bold;
 }
@@ -188,7 +263,7 @@ const confirmPayment = () => {
 }
 
 .custom-table thead {
-  background-color: #f5f5f5;
+  background-color: #E8E8E8;
 }
 
 .custom-table th,
@@ -211,7 +286,7 @@ const confirmPayment = () => {
 }
 
 .custom-btn {
-  background-color: #2196f3;
+  background-color: #ffad00;
   color: #ffffff;
 }
 

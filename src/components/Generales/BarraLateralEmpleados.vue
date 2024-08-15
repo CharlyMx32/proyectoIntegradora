@@ -48,7 +48,7 @@ const logout = () => {
 /* Estilos para personalizar la apariencia de la barra lateral */
 .nav {
   background-color: #333; /* Fondo oscuro para diferenciar del fondo de la página */
-  color: #fff; /* Color de texto blanco */
+  color: black; /* Color de texto blanco */
   border-right: 1px solid #444; /* Borde de color más claro */
   width: 250px; /* Ancho de la barra lateral */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
@@ -59,13 +59,13 @@ const logout = () => {
   border-bottom: 1px solid #444; /* Separador debajo del encabezado */
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #444; /* Fondo del encabezado */
-  color: #fff; /* Color de texto del encabezado */
+  background-color: #BDC3C7; /* Fondo del encabezado */
+  color: black; /* Color de texto del encabezado */
 }
 
 .nav {
-  background-color: #333;
-  color: #fff;
+  background-color:  #34495E;
+  color: white;
   border-right: 1px solid #444;
   width: 250px;
   height: 100vh; /* Ajusta la altura al 100% del viewport */
@@ -76,13 +76,13 @@ const logout = () => {
 
 
 .nav-item:hover {
-  background-color: #555; /* Fondo en hover más claro */
+  background-color: #BDC3C7 ; /* Fondo en hover más claro */
   color: #fff; /* Texto en hover blanco */
 }
 
 .logout-item {
   font-weight: bold;
-  color: red; /* Ajusta el color según tu diseño */
+  color: #ffad00; /* Ajusta el color según tu diseño */
   cursor: pointer;
   margin-bottom: auto; /* Empuja el ítem hacia abajo */
 }

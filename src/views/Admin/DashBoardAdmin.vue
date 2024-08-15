@@ -60,5 +60,6 @@ const userEmail = computed(() => authStore.user?.correo || 'correo@example.com')
 .content {
   height: 100vh;
   overflow-y: auto;
+  background-color: #F5F5F5;
 }
 </style>
