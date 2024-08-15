@@ -11,7 +11,7 @@
         <v-row no-gutters>
           <v-col cols="12" class="main-image-container">
             <v-img
-              src="src/assets/imgfondo.jpg"
+              src="/img/imgfondo.jpg"
               alt="Imagen Principal"
               class="main-image"
               contain
@@ -51,7 +51,7 @@
                     </p>
                   </v-col>
                   <v-col cols="12" md="6" class="about-us-image-col">
-                    <v-img src="src/assets/about-us-image.jpg" class="about-us-image" />
+                    <v-img src="public/img/about-us-image.jpg" class="about-us-image" />
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -63,7 +63,7 @@
         <v-row class="services-section" justify="center">
           <v-col cols="12" sm="6" md="4" class="service-item">
             <v-card class="service-card">
-              <v-img src="src/assets/chetos.png" class="service-img" />
+              <v-img src="/img/chetos.png" class="service-img" />
               <v-card-title class="service-title">Reparaciones Rápidas</v-card-title>
               <v-card-subtitle class="service-subtitle">Eficiente Trabajo</v-card-subtitle>
               <v-card-text class="service-text">
@@ -73,7 +73,7 @@
           </v-col>
           <v-col cols="12" sm="6" md="4" class="service-item">
             <v-card class="service-card">
-              <v-img src="src/assets/pupu.png" class="service-img" />
+              <v-img src="/img/pupu.png" class="service-img" />
               <v-card-title class="service-title">Soporte Técnico</v-card-title>
               <v-card-subtitle class="service-subtitle">Asistencia Experta</v-card-subtitle>
               <v-card-text class="service-text">
@@ -83,7 +83,7 @@
           </v-col>
           <v-col cols="12" sm="6" md="4" class="service-item">
             <v-card class="service-card">
-              <v-img src="src/assets/papa.png" class="service-img" />
+              <v-img src="/img/papa.png" class="service-img" />
               <v-card-title class="service-title">Empleados Capacitados</v-card-title>
               <v-card-subtitle class="service-subtitle">Asesoría a Medida</v-card-subtitle>
               <v-card-text class="service-text">
