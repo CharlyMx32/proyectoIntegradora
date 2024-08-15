@@ -84,14 +84,7 @@
       >
         USAR GARANTÍA
       </v-btn>
-
-      <v-btn
-        @click="realizarPago"
-        class="custom-btn"
-      >
-        USAR GARANTÍA
-      </v-btn>
-
+      
       <v-btn @click="realizarPago" class="custom-btn"> PAGO </v-btn>
     </div>
 
