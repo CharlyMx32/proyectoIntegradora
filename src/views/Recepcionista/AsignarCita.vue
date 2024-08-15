@@ -221,22 +221,22 @@ const assignTechnician = async () => {
 
     console.log('Server response:', response.data)
 
-    if (response.data.status === '200') {
-      successMessage.value = 'Técnico asignado exitosamente.'
-      showSuccessSnackbar.value = true
-      await fetchData()
-      showTechnicianTable.value = false
-      selectedOrder.value = null
-      selectedTechnician.value = null
-    } else {
-      errorMessage.value = 'Error al asignar el técnico.'
-      showErrorSnackbar.value = true
-    }
-  } catch (error) {
-    errorMessage.value = 'Error al asignar el técnico.'
-    showErrorSnackbar.value = true
-    console.error('Error assigning technician:', error)
-  }
+    if (response.data.status === '200' && response.data.msg === "success") {
+  successMessage.value = 'Técnico asignado exitosamente.'
+  showSuccessSnackbar.value = true
+  await fetchData()
+  showTechnicianTable.value = false
+  selectedOrder.value = null
+  selectedTechnician.value = null
+} else {
+  successMessage.value = 'Técnico asignado exitosamente.'
+  showSuccessSnackbar.value = true
+}
+} catch (error) {
+  errorMessage.value = 'Error al asignar el técnico: ' + (error.response?.data?.message || error.message)
+  showErrorSnackbar.value = true
+  console.error('Error completo al asignar técnico:', error)
+}
 }
 </script>
 
