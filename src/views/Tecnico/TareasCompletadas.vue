@@ -3,7 +3,7 @@
     <v-card-title>
       <v-row justify="space-between" align="center" class="w-100">
         <v-col>
-          <h3 class="mb-0" style="color: #00b300">Tareas Completadas</h3>
+          <h3 class="mb-0" style="color: #93C572">Tareas Completadas</h3>
         </v-col>
         <v-col class="d-flex justify-end">
           <v-text-field
@@ -159,7 +159,7 @@ const closeCompleteDialog = () => {
 }
 
 .custom-table th {
-  background-color: #f5f5f5;
+  background-color: #BDC3C7;
   color: #333;
 }
 

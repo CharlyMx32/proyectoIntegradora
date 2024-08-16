@@ -3,7 +3,7 @@
     <v-card-title>
       <v-row justify="space-between" align="center" class="w-100">
         <v-col>
-          <h3 class="mb-0" style="color: #ff8000">Tareas en Proceso</h3>
+          <h3 class="mb-0" style="color: #FFC30B">Tareas en Proceso</h3>
         </v-col>
         <v-col class="d-flex justify-end">
           <v-text-field
@@ -225,7 +225,7 @@ const saveProcessUpdate = async () => {
 }
 
 .custom-table th {
-  background-color: #f5f5f5;
+  background-color: #BDC3C7;
   color: #333;
 }
 

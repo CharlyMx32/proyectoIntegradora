@@ -13,6 +13,7 @@ import UsuariosAdmin from '@/views/Admin/UsuariosAdmin.vue'
 import registroUsuarios from '@/views/Admin/registroUsuarios.vue'
 import detalleServicios from '@/views/Admin/detalleServiciosLinea.vue'
 import detalleServiciosFisicos from '@/views/Admin/detalleServiciosFisicos.vue'
+import EstadisticaAdmi from '@/views/Admin/EstadisticaAdmi.vue'
 
 // Cheche lineas
 import DashBoardTecnico from '@/views/Tecnico/DashBoardTecnico.vue'
@@ -39,6 +40,7 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
   { path: '/TAS', name: 'tareas', component: Tareas },
+  
 
   // Rutas para Cliente
   {
@@ -87,7 +89,8 @@ const routes = [
       { path: '', redirect: '/RU' },
       { path: '/DS', component: detalleServicios },
       { path: '/UA', component: UsuariosAdmin },
-      { path: '/ServiciosFisicos', component: detalleServiciosFisicos }
+      { path: '/ServiciosFisicos', component: detalleServiciosFisicos },
+      { path: '/ES', component: EstadisticaAdmi }
     ]
   }
 ]

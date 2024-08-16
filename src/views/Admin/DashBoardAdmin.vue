@@ -24,16 +24,18 @@
 </template>
 
 <script setup>
+import '@mdi/font/css/materialdesignicons.css'
 import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue'
 import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
 import { ref, computed } from 'vue'
-import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticación en lugar del de usuario
+import { useAuthStore } from '@/stores/authStore'
 
 const navItems = [
-  { title: 'Registro Usuarios', to: '/RU' },
-  { title: 'Servicios Linea', to: '/DS' },
-  { title: 'Servicios Fisicos', to: '/ServiciosFisicos' },
-  { title: 'Usuarios Admin', to: '/UA' }
+  { title: 'Registro Usuarios', to: '/RU', icon: 'mdi-account' },
+  { title: 'Servicios Línea', to: '/DS', icon: 'mdi-laptop' },
+  { title: 'Servicios Físicos', to: '/ServiciosFisicos', icon: 'mdi-store' },
+  { title: 'Usuarios Admin', to: '/UA', icon: 'mdi-shield-account' },
+  { title: 'Ganancias', to: '/ES', icon: 'mdi-chart-bar' }
 ]
 
 const mini = ref(true)
@@ -60,6 +62,6 @@ const userEmail = computed(() => authStore.user?.correo || 'correo@example.com')
 .content {
   height: 100vh;
   overflow-y: auto;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 </style>

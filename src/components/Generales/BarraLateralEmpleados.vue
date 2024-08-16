@@ -1,7 +1,15 @@
 <template>
-  <v-navigation-drawer expand-on-hover rail :mini-variant="mini" class="nav">
+  <v-navigation-drawer
+    expand-on-hover
+    rail
+    :mini-variant="mini"
+    class="nav"
+  >
     <v-list>
       <v-list-item class="list-item-header">
+        <v-list-item-avatar>
+          <v-img :src="avatarUrl" v-if="avatarUrl"></v-img>
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ title }}</v-list-item-title>
           <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
@@ -12,14 +20,36 @@
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item v-for="(item, index) in items" :key="index" :to="item.to" class="nav-item">
-        {{ item.title }}
+      <v-list-item
+        v-for="(item, index) in items"
+        :key="index"
+        :to="item.to"
+        class="nav-item"
+      >
+        <v-list-item-icon>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content v-if="!mini">
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item-content>
       </v-list-item>
     </v-list>
 
+    <v-divider></v-divider>
+
     <!-- Agregar ítem de Cerrar Sesión -->
     <v-list density="compact" nav class="logout-section">
-      <v-list-item class="nav-item logout-item" @click="logout">Cerrar Sesión</v-list-item>
+      <v-list-item
+        class="nav-item logout-item"
+        @click="logout"
+      >
+        <v-list-item-icon>
+          <v-icon>mdi-logout</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content v-if="!mini">
+          <v-list-item-title>Cerrar Sesión</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -45,46 +75,34 @@ const logout = () => {
 </script>
 
 <style scoped>
-/* Estilos para personalizar la apariencia de la barra lateral */
 .nav {
-  background-color: #333; /* Fondo oscuro para diferenciar del fondo de la página */
-  color: black; /* Color de texto blanco */
-  border-right: 1px solid #444; /* Borde de color más claro */
-  width: 250px; /* Ancho de la barra lateral */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  transition: background-color 0.3s ease; /* Transición suave para cambios de fondo */
-}
-
-.list-item-header {
-  border-bottom: 1px solid #444; /* Separador debajo del encabezado */
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #BDC3C7; /* Fondo del encabezado */
-  color: black; /* Color de texto del encabezado */
-}
-
-.nav {
-  background-color:  #34495E;
+  background-color: #34495e;
   color: white;
   border-right: 1px solid #444;
   width: 250px;
-  height: 100vh; /* Ajusta la altura al 100% del viewport */
-  overflow-y: auto; /* Permite el desplazamiento si es necesario */
+  height: 100vh;
+  overflow-y: auto;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
 }
 
+.list-item-header {
+  border-bottom: 1px solid #444;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #bdc3c7;
+  color: black;
+}
 
 .nav-item:hover {
-  background-color: #BDC3C7 ; /* Fondo en hover más claro */
-  color: #fff; /* Texto en hover blanco */
+  background-color: #bdc3c7;
+  color: #fff;
 }
 
 .logout-item {
   font-weight: bold;
-  color: #ffad00; /* Ajusta el color según tu diseño */
+  color: #ffad00;
   cursor: pointer;
-  margin-bottom: auto; /* Empuja el ítem hacia abajo */
 }
 
 .logout-section {
