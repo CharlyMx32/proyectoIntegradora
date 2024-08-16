@@ -23,6 +23,7 @@ import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
+import PagoFinal from '@/views/Cliente/PagoFinal.vue'
 
 // mar lineas
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
@@ -48,7 +49,8 @@ const routes = [
       { path: '/principal', component: PrincipalCliente },
       { path: '', redirect: '/principal' },
       { path: '/Agendar', component: AgendarCita },
-      { path: '/Pedir', component: PedidoProducto }
+      { path: '/Pedir', component: PedidoProducto },
+      { path: '/PagoFinal', component: PagoFinal}
     ]
   },
 
