@@ -36,15 +36,15 @@
 import BarraLateral from '@/components/Generales/BarraLateralEmpleados.vue'
 import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
 import { ref, computed } from 'vue'
-import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticación en lugar del de usuario
+import { useAuthStore } from '@/stores/authStore'
 
 const navItems = [
-  { title: 'Agendar Citas', to: '/AGC' },
-  { title: 'Asistencia Linea', to: '/AL' },
-  { title: 'Asignar Cita', to: '/AC' },
-  { title: 'Asignar Cita Fisico', to: '/ACF' },
-  { title: 'Citas Linea', to: '/CL' },
-  { title: 'Citas Fisico', to: '/CF' }
+  { title: 'Agendar Citas', to: '/AGC', icon: 'mdi-calendar-plus' },
+  { title: 'Asistencia Linea', to: '/AL', icon: 'mdi-heart-pulse' },
+  { title: 'Asignar Cita', to: '/AC', icon: 'mdi-calendar-check' },
+  { title: 'Asignar Cita Fisico', to: '/ACF', icon: 'mdi-calendar-edit' },
+  { title: 'Citas Linea', to: '/CL', icon: 'mdi-calendar-month' },
+  { title: 'Citas Fisico', to: '/CF', icon: 'mdi-calendar-week' }
 ]
 
 const mini = ref(true)

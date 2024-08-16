@@ -4,7 +4,7 @@
     <v-card-title>
       <v-row justify="space-between" align="center" class="w-100">
         <v-col>
-          <h3 class="mb-0" style="color: #0800ff">Tareas Asignadas</h3>
+          <h3 class="mb-0" style="color: #004080">Tareas Asignadas</h3>
         </v-col>
         <v-col class="d-flex justify-end">
           <v-text-field
@@ -264,6 +264,24 @@ const saveDetails = async () => {
 
 .custom-table th, .custom-table td {
   padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.custom-table th {
+  background-color: #BDC3C7;
+  color: #333;
+}
+
+.custom-table tr.selected-row {
+  background-color: #d0e8ff;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f0faff;
+  cursor: pointer;
+}
+
+.text-left {
   text-align: left;
 }
 

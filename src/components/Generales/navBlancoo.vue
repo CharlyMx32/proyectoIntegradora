@@ -4,7 +4,7 @@
       <!-- Columna para el Logo -->
       <v-col cols="auto" class="d-flex align-center">
         <v-img
-          src="/src/assets/HS.png" 
+          src="/img/Hs.png" 
           alt="Logo"
           width="40"
           height="40"
