@@ -70,10 +70,7 @@
           <v-text-field v-model="nuevosDatos.diagnostico" label="Diagnóstico Línea"></v-text-field>
           <v-text-field v-model="nuevosDatos.cambios" label="Cambios"></v-text-field>
           <v-text-field v-model="nuevosDatos.costo_chequeo" label="Costo de Chequeo"></v-text-field>
-          <v-text-field
-            v-model="nuevosDatos.costo_reparacion"
-            label="Costo de Reparación"
-          ></v-text-field>
+          <v-text-field v-model="nuevosDatos.costo_reparacion" label="Costo de Reparación"></v-text-field>
         </v-card-subtitle>
         <v-card-actions>
           <v-btn @click="saveDetails" color="primary">
@@ -89,15 +86,14 @@
     </v-snackbar>
   </v-card>
 </template>
+
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import apiClient from '@/axiosconf'
-import { useAuthStore } from '@/stores/authStore'
-
-const store = useAuthStore()
+import apiClient from '@/axiosconf' // Asegúrate de que apiClient esté correctamente configurado
 
 const filterText = ref('')
 const selectedItem = ref(null)
+const showProcessDialog = ref(false)
 const showDetailDialog = ref(false)
 const snackbar = ref({
   visible: false,
@@ -113,53 +109,85 @@ const nuevosDatos = ref({
 })
 
 const tareasAsignadas = ref([])
+const isLoading = ref(true)
 
-const cargarTareasAsignadas = async () => {
+const filteredItems = computed(() => {
+  if (Array.isArray(tareasAsignadas.value)) {
+    const filter = filterText.value.toLowerCase()
+    return tareasAsignadas.value.filter(
+      (item) =>
+        (item.id_asignacion_fisica && item.id_asignacion_fisica.toLowerCase().includes(filter)) ||
+        (item.id_asignacion_linea && item.id_asignacion_linea.toLowerCase().includes(filter)) ||
+        (item.nombre_cliente && item.nombre_cliente.toLowerCase().includes(filter)) ||
+        (item.producto && item.producto.toLowerCase().includes(filter)) ||
+        (item.problema && item.problema.toLowerCase().includes(filter)) ||
+        (item.tipo_orden && item.tipo_orden.toLowerCase().includes(filter))
+    )
+  } else {
+    return []
+  }
+})
+
+const selectItem = (item) => {
+  selectedItem.value = item;
+  console.log('Item seleccionado:', selectedItem.value); // Verifica aquí
+  nuevosDatos.value = {
+    diagnostico: item.diagnostico || '',
+    cambios: item.cambios || '',
+    costo_chequeo: item.costo_chequeo || '',
+    costo_reparacion: item.costo_reparacion || ''
+  };
+  showProcessDialog.value = true;
+}
+
+const fetchTareas = async () => {
   try {
-    const response = await apiClient.get('tareas_asignadas', {
-      headers: {
-        Authorization: `Bearer ${store.token}`
-      }
-    })
-
-    if (response.data && response.data.status === 200) {
-      tareasAsignadas.value = response.data.data
+    const response = await apiClient.get('tareas_asignadas')
+    console.log('Respuesta del servidor:', response)
+    if (response.data.data && response.data.data.tareas) {
+      console.log('Tareas recibidas:', response.data.data.tareas)
+      tareasAsignadas.value = response.data.data.tareas
     } else {
-      tareasAsignadas.value = []
-    }
+      console.error('Error: La respuesta no contiene la clave "tareas"')
+      snackbar.value = {
+        visible: true,
+        message: 'Hubo un problema al cargar las tareas.',
+        color: 'error'
+      }
+    } 
   } catch (error) {
-    tareasAsignadas.value = []
-    showSnackbar('Error al cargar las tareas asignadas', 'error')
+    console.error('Error al obtener las tareas:', error)
+    snackbar.value = {
+      visible: true,
+      message: 'Hubo un problema al cargar las tareas.',
+      color: 'error'
+    }
+  } finally {
+    isLoading.value = false
+  }
+}
+
+
+const showSnackbar = (message, color) => {
+  snackbar.value = {
+    visible: true,
+    message: message,
+    color: color
   }
 }
 
 onMounted(() => {
-  cargarTareasAsignadas()
+  fetchTareas()
 })
-
-const filteredItems = computed(() => {
-  const filter = filterText.value.toLowerCase()
-  return tareasAsignadas.value.filter(
-    (item) =>
-      item.nombre_cliente.toLowerCase().includes(filter) ||
-      item.producto.toLowerCase().includes(filter) ||
-      item.problema.toLowerCase().includes(filter) ||
-      item.tipo_orden.toLowerCase().includes(filter)
-  )
-})
-
-const selectItem = (item) => {
-  selectedItem.value = item
-}
 
 const openDetailDialog = () => {
   if (selectedItem.value) {
     showDetailDialog.value = true
     nuevosDatos.value = {
-      diagnostico: '',
-      cambios: '',
-      costo_chequeo: '',
-      costo_reparacion: ''
+      diagnostico: selectedItem.value.diagnostico || '',
+      cambios: selectedItem.value.cambios || '',
+      costo_chequeo: selectedItem.value.costo_chequeo || '',
+      costo_reparacion: selectedItem.value.costo_reparacion || ''
     }
   } else {
     showSnackbar('Por favor, seleccione una tarea para detallar.', 'warning')
@@ -173,61 +201,68 @@ const closeDetailDialog = () => {
 const saveDetails = async () => {
   if (selectedItem.value) {
     try {
-      const response = await apiClient.post(
-        'tecnicOrden',
-        {
-          id_asignacion_linea: selectedItem.value.id_asignacion_linea,
-          diagnostico: nuevosDatos.value.diagnostico,
-          cambios: nuevosDatos.value.cambios,
-          costo_chequeo: nuevosDatos.value.costo_chequeo,
-          costo_reparacion: nuevosDatos.value.costo_reparacion
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${store.token}`
-          }
-        }
-      )
+      // Verifica los datos que se van a enviar
+      console.log('Datos a enviar:', {
+        id_asignacion: selectedItem.value.id_asignacion,
+        diagnostico: nuevosDatos.value.diagnostico,
+        cambios: nuevosDatos.value.cambios,
+        costo_chequeo: nuevosDatos.value.costo_chequeo,
+        costo_reparacion: nuevosDatos.value.costo_reparacion
+      });
 
-      if (response.data.msg === 'success') {
-        showSnackbar('Datos guardados exitosamente.', 'success')
-        const index = tareasAsignadas.value.findIndex(
-          (item) => item.id_asignacion_linea === selectedItem.value.id_asignacion_linea
-        )
-        if (index !== -1) {
-          tareasAsignadas.value.splice(index, 1)
+      const response = await apiClient.post('tecOrden', {
+        id_asignacion: selectedItem.value.id_asignacion,
+        diagnostico: nuevosDatos.value.diagnostico,
+        cambios: nuevosDatos.value.cambios,
+        costo_chequeo: nuevosDatos.value.costo_chequeo,
+        costo_reparacion: nuevosDatos.value.costo_reparacion
+      });
+
+      console.log('Respuesta del servidor:', response);
+
+      if (response.data && response.data.message) {
+        if (response.data.message === 'Detalles guardados exitosamente') {
+          showSnackbar('Datos guardados exitosamente.', 'success');
+          const index = tareasAsignadas.value.findIndex(
+            (item) =>
+              item.id_asignacion_linea === nuevosDatos.value.id_asignacion_linea ||
+              item.id_asignacion_fisica === nuevosDatos.value.id_asignacion_fisica
+          );
+          if (index !== -1) {
+            tareasAsignadas.value.splice(index, 1);
+          }
+          closeDetailDialog();
+        } else {
+          showSnackbar('Hubo un problema al guardar los detalles: ' + (response.data.message || 'Error desconocido'), 'error');
         }
-        closeDetailDialog()
       } else {
-        showSnackbar('Hubo un problema al guardar los detalles: ' + response.data.msg, 'error')
+        showSnackbar('La respuesta no tiene la estructura esperada', 'error');
       }
     } catch (error) {
-      if (error.response && error.response.data) {
-        showSnackbar(
-          'Hubo un problema al guardar los detalles: ' + error.response.data.msg,
-          'error'
-        )
-      } else {
-        showSnackbar('Hubo un problema al guardar los detalles.', 'error')
-      }
+      console.error('Detalles del error:', error);
+      const errorMessage = error.response && error.response.data && error.response.data.message
+        ? 'Hubo un problema al guardar los detalles: ' + error.response.data.message
+        : 'Hubo un problema al guardar los detalles.';
+      showSnackbar(errorMessage, 'error');
     }
+  } else {
+    showSnackbar('No hay un item seleccionado para guardar.', 'warning');
   }
-}
-
-const showSnackbar = (message, color = 'success') => {
-  snackbar.value.message = message
-  snackbar.value.color = color
-  snackbar.value.visible = true
-}
+};
 </script>
+
 <style scoped>
 .table-container {
   max-height: 400px;
   overflow-y: auto;
 }
 
-.custom-table th,
-.custom-table td {
+.custom-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.custom-table th, .custom-table td {
   padding: 8px;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -250,8 +285,11 @@ const showSnackbar = (message, color = 'success') => {
   text-align: left;
 }
 
-.custom-btn {
-  font-size: 16px;
-  font-weight: bold;
+.selected-row {
+  background-color: #f5f5f5;
+}
+
+.filter-field {
+  max-width: 300px;
 }
 </style>

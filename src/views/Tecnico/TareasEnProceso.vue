@@ -133,7 +133,6 @@ const filteredItems = computed(() => {
 
 const selectItem = (item) => {
   selectedItem.value = item
-
   nuevosDatos.value.seguimiento = item.seguimiento || ''
   showProcessDialog.value = true
 }
