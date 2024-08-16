@@ -154,7 +154,7 @@ body {
 }
 
 .fondoimg {
-  background: url('../assets/login.svg');
+  background: url('../img/login.svg');
   background-size: cover;
   color: var(--v-theme-text-primary);
   width: 100%;

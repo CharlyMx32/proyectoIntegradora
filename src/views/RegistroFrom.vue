@@ -355,7 +355,7 @@ body {
 }
 
 .fondoimg {
-  background: url('../assets/registro.svg');
+  background: url('../img/registro.svg');
   background-size: cover;
   color: var(--v-theme-light-text-primary);
   width: 100%;

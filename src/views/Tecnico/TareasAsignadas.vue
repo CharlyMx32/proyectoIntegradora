@@ -4,7 +4,7 @@
     <v-card-title>
       <v-row justify="space-between" align="center" class="w-100">
         <v-col>
-          <h3 class="mb-0" style="color: #0800ff">Tareas Asignadas</h3>
+          <h3 class="mb-0" style="color: #004080">Tareas Asignadas</h3>
         </v-col>
         <v-col class="d-flex justify-end">
           <v-text-field
@@ -233,7 +233,7 @@ const showSnackbar = (message, color = 'success') => {
 }
 
 .custom-table th {
-  background-color: #f5f5f5;
+  background-color: #BDC3C7;
   color: #333;
 }
 
