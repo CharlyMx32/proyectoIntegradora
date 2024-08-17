@@ -20,11 +20,8 @@
 import { ref, onMounted, watch } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter, useRoute } from 'vue-router'
-<<<<<<< Updated upstream
-import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
-=======
 
->>>>>>> Stashed changes
+
 import HeaderComponent from '@/components/Generales/navBlancoo.vue'
 
 const authStore = useAuthStore()

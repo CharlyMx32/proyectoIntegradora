@@ -3,6 +3,7 @@
     <v-row align="center" no-gutters class="navbar">
       <!-- Columna para el Logo -->
       <v-col cols="auto" class="d-flex align-center">
+
         <v-img
           src="/public/img/Hs.png" 
           alt="Logo"
@@ -116,7 +117,7 @@ const animateBall = () => {
 }
 
 .red-ball {
-  background-color: #34495E;
+  background-color: #34495e;
   border-radius: 50%;
   display: flex;
   align-items: center;

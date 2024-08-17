@@ -9,6 +9,7 @@
             :subtitle="userEmail"
             :title="userName"
             :items="navItems"
+            :hide-text="mini"
             @mouseenter="mini = false"
             @mouseleave="mini = true"
             class="sidebar"
@@ -62,6 +63,6 @@ const userEmail = computed(() => authStore.user?.correo || 'correo@example.com')
 .content {
   height: 100vh;
   overflow-y: auto;
-  background-color: #f5f5f5;
+  background-color: #ede8e6;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-card class="mb-6" outlined>
-    <!-- Título y barra de búsqueda -->
+    
     <v-card-title>
       <v-row justify="space-between" align="center" class="w-100">
         <v-col>
@@ -55,7 +55,6 @@
       </div>
     </v-card-text>
 
-    <!-- Botón de acciones -->
     <v-card-actions class="justify-end">
       <v-btn @click="openDetailDialog" color="primary"> Detallar </v-btn>
     </v-card-actions>
@@ -89,7 +88,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import apiClient from '@/axiosconf' // Asegúrate de que apiClient esté correctamente configurado
+import apiClient from '@/axiosconf' 
 
 const filterText = ref('')
 const selectedItem = ref(null)
@@ -130,7 +129,7 @@ const filteredItems = computed(() => {
 
 const selectItem = (item) => {
   selectedItem.value = item;
-  console.log('Item seleccionado:', selectedItem.value); // Verifica aquí
+  console.log('Item seleccionado:', selectedItem.value); 
   nuevosDatos.value = {
     diagnostico: item.diagnostico || '',
     cambios: item.cambios || '',

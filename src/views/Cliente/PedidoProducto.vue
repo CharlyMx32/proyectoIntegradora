@@ -1,4 +1,5 @@
 <template>
+
   <app>
     <v-container fluid class="main-container">
       <!-- Fila superior: Tabla 0 y Tabla 1 -->
@@ -18,6 +19,7 @@
 
         <!-- Tabla 1 -->
         <v-col cols="12" sm="6" md="6">
+
           <div class="table-wrapper">
             <TablaUno
               :filterText="filterText"
@@ -46,6 +48,7 @@
           </div>
         </v-col>
 
+
         <!-- Tabla 3 -->
         <v-col cols="12" sm="6" md="6">
           <div class="table-wrapper">
@@ -60,6 +63,7 @@
         </v-col>
       </v-row>
     </v-container>
+
 
     <!-- Diálogo de Detalles -->
     <v-dialog v-model="showDetalleLog" max-width="800px">
@@ -120,6 +124,7 @@ const openSeguimientoLog = () => {
 </script>
 
 <style scoped>
+
 .table-wrapper {
   min-height: 300px;
   display: flex;
@@ -128,36 +133,30 @@ const openSeguimientoLog = () => {
   margin-bottom: 16px;
 }
 
-.table-container {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.footer-info,
-.footer-links,
-.social-icons {
-  margin-bottom: 20px;
-}
-
-.footer-title {
-  color: #2c3e50;
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.social-icons {
+.main-container {
+  flex: 1;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  
+  padding: 0;
 }
 
-.social-icon-btn {
-  color: #fff;
+.tables-row {
+  width: 100%;
+  margin: 0;
 }
 
-.social-icon-btn:hover {
-  color: #2c3e50;
+.table-wrapper {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px;
+}
+
+footer {
+  margin-top: auto; /* Empuja el footer al final del contenedor */
+  width: 100%;
 }
 
 html,
@@ -171,39 +170,26 @@ body {
   flex-direction: column;
 }
 
+
 footer {
   margin-top: auto;
 }
 
 @media (max-width: 1024px) {
   .table-wrapper {
-    min-height: 250px;
+    height: 250px;
   }
 }
 
 @media (max-width: 768px) {
   .table-wrapper {
-    min-height: 200px;
-  }
-
-  .footer-info,
-  .footer-links,
-  .social-icons {
-    margin-bottom: 10px;
-  }
-
-  .footer-title {
-    font-size: 16px;
+    height: 200px;
   }
 }
 
 @media (max-width: 480px) {
   .table-wrapper {
-    min-height: 150px;
-  }
-
-  .footer-title {
-    font-size: 14px;
+    height: 150px;
   }
 }
 </style>

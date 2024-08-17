@@ -181,7 +181,7 @@ const markAsAttended = async () => {
 }
 
 .table-container {
-  max-height: 400px; /* Ajuste de altura para el contenedor de la tabla */
+  max-height: 400px; 
   overflow-y: auto;
 }
 
@@ -197,13 +197,13 @@ const markAsAttended = async () => {
 }
 
 .selected-row {
-  background-color: rgba(46, 61, 151, 0.2); /* Verde claro y semi-transparente */
+  background-color: rgba(46, 61, 151, 0.2); 
 }
 
 .additional-component-container {
   margin-top: 20px;
   padding: 10px;
-  background-color: #ffffff; /* Fondo verde claro para el contenedor del componente adicional */
+  background-color: #ffffff; 
   border-radius: 4px;
   border: 1px solid #d1d1d1;
 }

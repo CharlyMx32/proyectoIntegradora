@@ -89,28 +89,27 @@ const nuevosDatos = ref({
   costoTotal: ''
 })
 
-// Inicializar tareasCompletadas como un arreglo vacío
 const tareasCompletadas = ref([])
 
 apiClient
   .post('Completados')
   .then((response) => {
     if (response && response.data) {
-      // Ajustar para acceder a la estructura correcta de datos
+
       if (response.data.status === 200 && response.data.data && response.data.data.tareas) {
         tareasCompletadas.value = response.data.data.tareas
       } else {
         console.error('La respuesta no tiene la estructura esperada')
-        tareasCompletadas.value = [] // Set to an empty array to avoid errors
+        tareasCompletadas.value = []
       }
     } else {
       console.error('No response data')
-      tareasCompletadas.value = [] // Set to an empty array to avoid errors
+      tareasCompletadas.value = [] 
     }
   })
   .catch((error) => {
     console.error('Error al obtener las tareas completadas:', error)
-    tareasCompletadas.value = [] // Set to an empty array to avoid errors
+    tareasCompletadas.value = [] 
   })
 
 const filteredItems = computed(() => {
@@ -120,7 +119,7 @@ const filteredItems = computed(() => {
       item.Nombre_Cliente.toLowerCase().includes(filter) ||
       item.producto.toLowerCase().includes(filter) ||
       item.diagnostico_linea.toLowerCase().includes(filter) ||
-      item.cambios.toLowerCase().includes(filter) // Adjusted field names
+      item.cambios.toLowerCase().includes(filter) 
   )
 })
 
@@ -144,7 +143,7 @@ const closeCompleteDialog = () => {
 </script>
 
 <style scoped>
-/* estilos específicos para este componente */
+
 .selected-row {
   background-color: #f0f0f0;
 }

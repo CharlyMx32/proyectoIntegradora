@@ -33,5 +33,5 @@ const logout = () => {
 .fondo{
   background-color: #D0D0D0;
 }
-/* estilos globales */
+
 </style>

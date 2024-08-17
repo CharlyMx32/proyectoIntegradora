@@ -53,7 +53,7 @@
   <v-dialog v-model="dialog" max-width="600px">
     <v-card>
       <v-card-title>
-        <span class="headline">Detalles del Item</span>
+        <span class="headline">Ticket</span>
       </v-card-title>
       <v-card-text>
         <div class="detail-item"><strong>Nombre del Técnico:</strong> {{ dialogData.nombre }}</div>
@@ -76,6 +76,7 @@
         </div>
       </v-card-text>
       <v-card-actions>
+        <v-btn @click="downloadPDF" color="primary">Descargar</v-btn>
         <v-btn text @click="closeDialog">Cerrar</v-btn>
       </v-card-actions>
     </v-card>
@@ -84,6 +85,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import jsPDF from 'jspdf'
 import apiCliente from '@/axiosconf'
 
 // Variables reactivas
@@ -163,6 +165,50 @@ const openDetailDialog = () => {
 const closeDialog = () => {
   dialog.value = false
 }
+
+// Función para descargar el PDF
+const downloadPDF = () => {
+  const doc = new jsPDF()
+  
+
+  // Agregar título con estilo centrado
+  doc.setFontSize(26) // Hacer el título más grande
+  doc.setFont("helvetica", "bold")
+  doc.setTextColor(0, 0, 0) // Color negro para el texto
+  const title = 'HardwareSolutions'
+  const titleWidth = doc.getStringUnitWidth(title) * 26 / doc.internal.scaleFactor
+  const pageWidth = doc.internal.pageSize.getWidth()
+  doc.text(title, (pageWidth - titleWidth) / 2, 20) // Centrar el título
+ 
+  // Agregar contenido con diseño mejorado
+  doc.setFontSize(14)
+  doc.setFont("helvetica", "normal")
+  doc.setTextColor(0, 0, 0) // Color negro para el texto
+
+  const lineHeight = 10
+  let y = 35
+
+  doc.text(`Nombre del Técnico: ${dialogData.value.nombre}`, 10, y += lineHeight)
+  doc.text(`Producto: ${dialogData.value.producto}`, 10, y += lineHeight)
+  doc.text(`Problema: ${dialogData.value.problema}`, 10, y += lineHeight)
+  doc.text(`Costo de Chequeo: ${dialogData.value.costoChequeo}`, 10, y += lineHeight)
+  doc.text(`Costo de Reparación: ${dialogData.value.costoReparacion}`, 10, y += lineHeight)
+  doc.text(`Total: ${dialogData.value.total}`, 10, y += lineHeight)
+  doc.text(`Diagnóstico: ${dialogData.value.diagnostico}`, 10, y += lineHeight)
+ 
+
+  // Agregar un pie de página
+  doc.setFontSize(10)
+  doc.setTextColor(100, 100, 100) // Color gris para el pie de página
+  doc.text('© 2024 Hardware Solutions', 10, 280)
+
+  // Guarda el PDF
+  doc.save('ticket_reparacion.pdf')
+}
+
+
+
+
 
 // Llama a fetchItems cuando el componente se monta
 onMounted(fetchItems)
