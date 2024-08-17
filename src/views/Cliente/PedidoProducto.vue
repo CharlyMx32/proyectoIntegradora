@@ -24,6 +24,7 @@
               :filteredItems="filteredItems1"
               :selectedItem="selectedItem1"
               @selectItem="selectItem1"
+
               @openDetalleLog="openDetalleLog"
             />
           </div>
@@ -68,6 +69,7 @@
     <v-dialog v-model="showSeguimientoLog" max-width="800px">
       <!-- Agrega aquí el contenido del diálogo -->
     </v-dialog>
+
   </app>
   <FooterComponent />
 </template>
@@ -80,7 +82,6 @@ import TablaDos from '@/components/CompCliente/TablaDos.vue'
 import TablaTres from '@/components/CompCliente/TablaTres.vue'
 import FooterComponent from '@/components/Generales/FooterComponent.vue'
 
-// Definir las variables reactivas
 const filterText = ref('')
 const filteredItems1 = ref([])
 const filteredItems2 = ref([])
@@ -109,7 +110,6 @@ const selectItem3 = (item) => {
   selectedItem3.value = item
 }
 
-// Métodos para manejar la apertura de diálogos
 const openDetalleLog = () => {
   showDetalleLog.value = true
 }
@@ -120,15 +120,12 @@ const openSeguimientoLog = () => {
 </script>
 
 <style scoped>
-
-
-
 .table-wrapper {
   min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 16px; /* Añadido para espacio entre las columnas */
+  margin-bottom: 16px;
 }
 
 .table-container {
@@ -163,7 +160,8 @@ const openSeguimientoLog = () => {
   color: #2c3e50;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -174,10 +172,9 @@ body {
 }
 
 footer {
-  margin-top: auto; /* Empuja el footer al final del contenedor */
+  margin-top: auto;
 }
 
-/* Consultas de medios para hacer el diseño responsivo */
 @media (max-width: 1024px) {
   .table-wrapper {
     min-height: 250px;

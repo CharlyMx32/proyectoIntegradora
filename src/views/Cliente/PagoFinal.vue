@@ -124,6 +124,7 @@ const isFormComplete = computed(() => {
 
 const formatCardNumber = () => {
   cardNumber.value = cardNumber.value.replace(/\D/g, '').replace(/(\d{4})/g, '$1 ').trim()
+
 }
 
 const formatExpiryDate = () => {
@@ -147,8 +148,9 @@ const cancelPayment = () => {
 
   onMounted(async () => {
   const item = router.currentRoute.value.query.item;
+
   if (item) {
-    selectedItem.value = JSON.parse(item);
+    selectedItem.value = JSON.parse(item)
   } else {
     console.error("No se pudo seleccionar un item");
   }
@@ -180,19 +182,18 @@ const cancelPayment = () => {
   } catch (error) {
     console.error('Error al procesar la solicitud:', error);
     totalAmount.value = 'Error al procesar la solicitud';
+
   }
-});
-
-
+})
 
 const handlePayment = async () => {
   if (selectedItem.value && selectedItem.value.id_detalle_linea) {
     try {
       const response = await apiCliente.post('lineaaceptado', {
-        id_detalle_linea: selectedItem.value.id_detalle_linea,
-      });
+        id_detalle_linea: selectedItem.value.id_detalle_linea
+      })
 
-      console.log('Respuesta del servidor:', response);
+      console.log('Respuesta del servidor:', response)
 
       if (response.status === 200 && response.data && response.data.success) {
         snackbarMessage.value = 'El pago fue realizado con éxito.'
@@ -201,14 +202,15 @@ const handlePayment = async () => {
           router.push({ path: '/Pedir' }); // Redirigir después de 3 segundos
         }, 3000)
         console.log("Pago exitoso"); // Asegúrate de que este mensaje aparezca en la consola
+
       } else {
-        console.error('Error: ', response.data.message);
+        console.error('Error: ', response.data.message)
       }
     } catch (error) {
-      console.error('Error al procesar el pago:', error);
+      console.error('Error al procesar el pago:', error)
     }
   } else {
-    console.error('Error: selectedItem o id_detalle_linea no está definido');
+    console.error('Error: selectedItem o id_detalle_linea no está definido')
   }
 }
 </script>
