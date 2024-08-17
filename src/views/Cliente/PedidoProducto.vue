@@ -148,7 +148,6 @@ body {
   overflow-y: auto;
 }
 
-/* Consultas de medios para hacer el diseño responsivo */
 @media (max-width: 1024px) {
   .table-wrapper {
     height: 250px;

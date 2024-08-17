@@ -9,28 +9,28 @@
 import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
 import TareasFrom from './TareasFrom.vue'
 import { ref, computed } from 'vue'
-import { useAuthStore } from '@/stores/authStore' // Usa el store de autenticación en lugar del de usuario
+import { useAuthStore } from '@/stores/authStore'
 
 const authStore = useAuthStore()
 const showWelcome = ref(true)
 
 setTimeout(() => {
   showWelcome.value = false
-}, 1500) // Duración de la animación en milisegundos
+}, 1500) 
 
 const userName = computed(() => authStore.user?.nombre)
 </script>
 
 <style scoped>
 body {
-  background-image: url('../../assets/iii.svg'); /* Ruta de la imagen */
-  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la página */
-  background-position: center; /* Centra la imagen en la página */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  margin: 0; /* Elimina el margen predeterminado */
-  font-family: 'Arial', sans-serif; /* Fuente de la página */
+  background-image: url('../../assets/iii.svg');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  margin: 0;
+  font-family: 'Arial', sans-serif; 
 }
-/* Estilos para el Contenido Principal */
+
 html,
 body,
 #app {
@@ -52,7 +52,7 @@ body,
   background-image: url('/src/assets/lolo.png');
   background-size: cover;
   background-position: center;
-  height: 200px; /* Ajusta la altura según sea necesario */
+  height: 200px; 
 }
 
 .v-card-title {
@@ -65,7 +65,7 @@ body,
 
 .v-btn {
   background-image: linear-gradient(to right, #ffffff 0%, #26d0ce 51%, #1a2980 100%);
-  color: #ffffff; /* Texto blanco */
+  color: #ffffff; 
   margin-left: 8px;
   border-radius: 4px;
   transition: background-position 0.5s ease;
@@ -73,8 +73,8 @@ body,
 }
 
 .v-btn:hover {
-  background-position: right center; /* Cambia el fondo al hacer hover */
-  color: #ffffff; /* Texto blanco */
+  background-position: right center; 
+  color: #ffffff; 
 }
 
 .v-container {

@@ -101,12 +101,12 @@ import apiClient from '@/axiosconf'
 const filterText = ref('')
 const selectedItem = ref(null)
 const showProcessDialog = ref(false)
-const seguimientos = ref(['Completado', 'Con retraso']) // Opciones de seguimiento
+const seguimientos = ref(['Completado', 'Con retraso']) 
 const nuevosDatos = ref({
   seguimiento: ''
 })
 const tareasEnProceso = ref([])
-const isLoading = ref(true) // Estado de carga
+const isLoading = ref(true) 
 
 const snackbar = ref({
   show: false,
@@ -141,7 +141,6 @@ const closeProcessDialog = () => {
   showProcessDialog.value = false
 }
 
-// Función para obtener las tareas desde el backend
 const fetchTareas = async () => {
   try {
     const response = await apiClient.get('obtener_tareas_en_proceso')
@@ -169,7 +168,6 @@ const fetchTareas = async () => {
   }
 }
 
-// Llamada a fetchTareas cuando se monta el componente
 onMounted(() => {
   fetchTareas()
 })
@@ -178,7 +176,7 @@ const saveProcessUpdate = async () => {
   if (selectedItem.value) {
     try {
       const response = await apiClient.post('actualizar_proceso', {
-        idDetalleLinea: selectedItem.value.id_detalle_linea, // Verifica si este nombre es correcto
+        idDetalleLinea: selectedItem.value.id_detalle_linea, 
         seguimiento: nuevosDatos.value.seguimiento
       })
 
@@ -190,7 +188,7 @@ const saveProcessUpdate = async () => {
           color: 'success'
         }
         closeProcessDialog()
-        fetchTareas() // Refrescar la lista de tareas
+        fetchTareas() 
       } else {
         console.error('Error al actualizar el proceso:', response)
         snackbar.value = {
@@ -212,7 +210,7 @@ const saveProcessUpdate = async () => {
 </script>
 
 <style scoped>
-/* Ajustar el padding para mejorar la visualización de la tabla */
+
 .table-container {
   max-height: 400px;
   overflow-y: auto;
