@@ -164,7 +164,6 @@ import { ref, computed, onMounted } from 'vue'
 const isDarkMode = ref(false)
 
 const menuItems = [
-  { name: 'Inicio', route: '/' },
   { name: 'Login', route: '/login' },
   { name: 'Registro', route: '/register' }
 ]

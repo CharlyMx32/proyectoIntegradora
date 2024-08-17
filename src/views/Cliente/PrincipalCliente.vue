@@ -59,8 +59,8 @@
 <script setup>
 import FooterComponent from '@/components/Generales/FooterComponent.vue'
 import { useRouter } from 'vue-router'
-import img1 from '/img/ima.jpg';
-import img2 from '/img/ma.jpg';
+import img1 from '/img/ki.png';
+import img2 from '/img/pa.jpeg';
 import img3 from '/img/pis.png';
 
 const router = useRouter();

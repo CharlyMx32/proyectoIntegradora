@@ -1,28 +1,22 @@
 <template>
   <v-app>
-    <!-- Encabezado -->
     <header>
       <HeaderComponent :title="'HardwareSolutions'" :menuItems="menuItems" />
     </header>
 
-    <!-- Contenido Principal -->
     <v-main>
       <v-container class="d-flex justify-center align-center fill-height background pa-0">
-        <!-- Contenedor para partículas -->
         <div id="particles-container"></div>
 
         <v-card class="rounded-lg card-size" elevation="10" flat>
           <v-row no-gutters>
-            <!-- Sección de bienvenida -->
             <v-col
               cols="12"
               md="5"
               class="d-flex flex-column align-center justify-center pa-4 fondoimg"
             >
-              <!-- Puedes agregar contenido de bienvenida aquí -->
             </v-col>
 
-            <!-- Sección del formulario -->
             <v-col cols="12" md="7" class="pa-4">
               <v-card class="white-card" elevation="5" flat>
                 <v-col cols="12" class="pa-4">
@@ -38,7 +32,7 @@
                             dense
                             class="minimalista"
                             :rules="[
-                              (v) => !!v || 'Nombre es obligatorio',
+                              (v) => !!v.trim() || 'Nombre es obligatorio',
                               (v) =>
                                 /^[a-zA-ZÀ-ÿ\s]+$/.test(v) ||
                                 'El nombre solo debe contener letras y espacios'
@@ -54,7 +48,7 @@
                             dense
                             class="minimalista"
                             :rules="[
-                              (v) => !!v || 'Apellido Paterno es obligatorio',
+                              (v) => !!v.trim() || 'Apellido Paterno es obligatorio',
                               (v) =>
                                 /^[a-zA-ZÀ-ÿ\s]+$/.test(v) ||
                                 'El apellido debe contener solo letras y espacios'
@@ -70,7 +64,7 @@
                             dense
                             class="minimalista"
                             :rules="[
-                              (v) => !!v || 'Apellido Materno es obligatorio',
+                              (v) => !!v.trim() || 'Apellido Materno es obligatorio',
                               (v) =>
                                 /^[a-zA-ZÀ-ÿ\s]+$/.test(v) ||
                                 'El apellido debe contener solo letras y espacios'
@@ -91,7 +85,7 @@
                             dense
                             class="minimalista mb-3"
                             :rules="[
-                              (v) => !!v || 'Correo es obligatorio',
+                              (v) => !!v.trim() || 'Correo es obligatorio',
                               (v) => /.+@.+\..+/.test(v) || 'Correo electrónico no válido'
                             ]"
                           />
@@ -106,7 +100,7 @@
                             dense
                             class="minimalista mb-3"
                             :rules="[
-                              (v) => !!v || 'Contraseña es obligatoria',
+                              (v) => !!v.trim() || 'Contraseña es obligatoria',
                               (v) =>
                                 v.length >= 8 || 'La contraseña debe tener al menos 8 caracteres'
                             ]"
@@ -122,8 +116,9 @@
                             dense
                             class="minimalista mb-3"
                             :rules="[
-                              (v) => !!v || 'Confirmar Contraseña es obligatoria',
-                              (v) => v === form.contraseña || 'Las contraseñas no coinciden'
+                              (v) => !!v.trim() || 'Confirmar Contraseña es obligatoria',
+                              (v) => v === form.contraseña || 'Las contraseñas no coinciden',
+                              (v) => v.trim().length === v.length || 'No se permiten espacios al inicio o al final'
                             ]"
                           />
                         </v-col>
@@ -145,20 +140,7 @@
           </v-row>
         </v-card>
 
-        <!-- Mensaje de éxito -->
         <v-snackbar
-          v-if="successMessage"
-          v-model="showSuccessSnackbar"
-          color="success"
-          timeout="3000"
-          @input="clearSuccessMessage"
-        >
-          {{ successMessage }}
-        </v-snackbar>
-
-        <!-- Mensaje de error -->
-        <v-snackbar
-          v-if="errorMessage"
           v-model="showErrorSnackbar"
           color="error"
           timeout="3000"
@@ -166,15 +148,22 @@
         >
           {{ errorMessage }}
         </v-snackbar>
+
+        <v-snackbar
+          v-model="showSuccessSnackbar"
+          color="success"
+          timeout="3000"
+          @input="clearSuccessMessage"
+        >
+          {{ successMessage }}
+        </v-snackbar>
       </v-container>
     </v-main>
   </v-app>
 </template>
-
 <script setup>
 import { ref, computed } from 'vue'
 import apiClient from '@/axiosconf'
-
 import HeaderComponent from '@/components/Generales/navBlancoo.vue'
 
 const step = ref(1)
@@ -194,6 +183,17 @@ const showErrorSnackbar = ref(false)
 const idRolCliente = 2
 
 function nextStep() {
+  // Verificar si los campos están vacíos o contienen solo espacios
+  if (
+    !form.value.nombre.trim() ||
+    !form.value.apellido_paterno.trim() ||
+    !form.value.apellido_materno.trim()
+  ) {
+    errorMessage.value = 'Todos los campos de nombre y apellidos deben ser completados correctamente.'
+    showErrorSnackbar.value = true
+    return
+  }
+
   step.value = 2
 }
 
@@ -203,20 +203,19 @@ function prevStep() {
 
 const isFormComplete = computed(() => {
   return (
-    form.value.nombre &&
-    form.value.apellido_paterno &&
-    form.value.apellido_materno &&
-    form.value.correo &&
-    form.value.contraseña &&
-    form.value.confirmarContraseña
+    form.value.nombre.trim() &&
+    form.value.apellido_paterno.trim() &&
+    form.value.apellido_materno.trim() &&
+    form.value.correo.trim() &&
+    form.value.contraseña.trim() &&
+    form.value.confirmarContraseña.trim()
   )
 })
 
 function validarFormulario() {
-  // Expresión regular para solo letras con acentos
   const soloLetrasConAcentos = /^[a-zA-ZÀ-ÿ\s]+$/
 
-  if (!form.value.nombre || !form.value.apellido_paterno || !form.value.apellido_materno) {
+  if (!form.value.nombre.trim() || !form.value.apellido_paterno.trim() || !form.value.apellido_materno.trim()) {
     errorMessage.value = 'Todos los campos de nombre y apellidos son obligatorios.'
     showErrorSnackbar.value = true
     return false
@@ -232,7 +231,7 @@ function validarFormulario() {
     return false
   }
 
-  if (!form.value.correo || !form.value.correo.includes('@')) {
+  if (!form.value.correo.trim() || !form.value.correo.includes('@')) {
     errorMessage.value = 'El correo electrónico es obligatorio y debe contener un "@"'
     showErrorSnackbar.value = true
     return false
@@ -298,6 +297,7 @@ const menuItems = [
 ]
 </script>
 
+
 <style scoped>
 @keyframes swoop {
   from {
@@ -355,7 +355,7 @@ body {
 }
 
 .fondoimg {
-  background: url('../img/registro.svg');
+  background: url('../img/login.svg');
   background-size: cover;
   color: var(--v-theme-light-text-primary);
   width: 100%;
