@@ -2,7 +2,11 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
+<<<<<<< Updated upstream
   baseURL: 'http://hs.com/',
+=======
+  baseURL: 'http://3.14.136.129/',
+>>>>>>> Stashed changes
   headers: {
     'Content-Type': 'application/json'
   }
