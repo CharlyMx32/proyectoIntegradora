@@ -9,6 +9,7 @@
             :subtitle="userEmail"
             :title="userName"
             :items="navItems"
+            :hide-text="mini"
             @mouseenter="mini = false"
             @mouseleave="mini = true"
             class="sidebar"

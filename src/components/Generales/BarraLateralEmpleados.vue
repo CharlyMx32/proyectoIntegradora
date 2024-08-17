@@ -4,6 +4,8 @@
     rail
     :mini-variant="mini"
     class="nav"
+    @mouseenter="mini = false"
+    @mouseleave="mini = true"
   >
     <v-list>
       <v-list-item class="list-item-header">
@@ -20,12 +22,7 @@
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item
-        v-for="(item, index) in items"
-        :key="index"
-        :to="item.to"
-        class="nav-item"
-      >
+      <v-list-item v-for="(item, index) in items" :key="index" :to="item.to" class="nav-item">
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -37,12 +34,8 @@
 
     <v-divider></v-divider>
 
-    <!-- Agregar ítem de Cerrar Sesión -->
     <v-list density="compact" nav class="logout-section">
-      <v-list-item
-        class="nav-item logout-item"
-        @click="logout"
-      >
+      <v-list-item class="nav-item logout-item" @click="logout">
         <v-list-item-icon>
           <v-icon>mdi-logout</v-icon>
         </v-list-item-icon>
@@ -57,6 +50,8 @@
 <script setup>
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+const mini = ref(true)
 
 const props = defineProps({
   avatarUrl: String,

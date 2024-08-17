@@ -21,6 +21,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter, useRoute } from 'vue-router'
+
 import Welcome from '@/components/Generales/bienvenidaUsuarios.vue'
 import HeaderComponent from '@/components/Generales/navBlancoo.vue'
 
