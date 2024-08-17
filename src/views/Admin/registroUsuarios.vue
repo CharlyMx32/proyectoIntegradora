@@ -1,19 +1,13 @@
 <template>
   <v-container>
-    <v-card
-      class="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-2xl my-card"
-    >
+    <v-card class="rounded-lg my-card">
       <v-card-title>
-        <v-flex class="flex-col space-y-1.5 p-6">
-          <h3
-            class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight"
-            style="color: #34495E"
-          >
-            Registrar Usuarios
-          </h3>
-          <p class="text-sm text-muted-foreground">Ingresa los datos del usuario</p>
+        <v-flex class="flex-col p-6">
+          <h3 class="card-title">Registrar Usuarios</h3>
+          <p class="card-subtitle">Ingresa los datos del usuario</p>
         </v-flex>
       </v-card-title>
+
       <v-card-text class="p-6 space-y-6">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-row>
@@ -154,12 +148,27 @@
               />
             </v-col>
           </v-row>
+
+          <v-row v-if="role && role !== 'Cliente'">
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="telefono"
+                label="Teléfono"
+                placeholder="Ingrese su teléfono"
+                outlined
+                class="my-input-class"
+                dense
+              />
+            </v-col>
+          </v-row>
         </v-form>
       </v-card-text>
+
       <v-card-actions class="flex items-center p-6">
-        <v-btn class="btn-grad" @click="submitForm" :disabled="isSubmitting"> Registrar </v-btn>
+        <v-btn class="custom-btn" @click="submitForm" :disabled="isSubmitting">Registrar</v-btn>
       </v-card-actions>
     </v-card>
+
     <v-snackbar v-model="snackbar.visible" :timeout="3000" color="success">
       {{ snackbar.message }}
       <template #action="{ attrs }">
@@ -209,7 +218,6 @@ const onRoleChange = () => {
 
 const submitForm = async () => {
   if (form.value.validate()) {
-    // Validar el formulario
     const formData = {
       nombre: username.value,
       apellido_paterno: apellidoPaterno.value,
@@ -228,16 +236,13 @@ const submitForm = async () => {
 
     try {
       await apiClient.post('AR', formData)
-      // Mostrar mensaje de éxito
       snackbar.value = {
         visible: true,
         message: 'Registro exitoso'
       }
-      // Limpiar datos del formulario
       resetForm()
     } catch (error) {
       console.error('Error en el registro:', error.response?.data?.message || error.message)
-      // Mostrar mensaje de error
       snackbar.value = {
         visible: true,
         message: 'Error al registrar'
@@ -260,8 +265,7 @@ const resetForm = () => {
   calle.value = ''
   colonia.value = ''
   telefono.value = ''
-  // Aquí puedes también reiniciar `form` si es necesario
-  form.value?.reset() // Resetea el formulario si hay un método disponible
+  form.value?.reset()
 }
 
 const getRoleId = (roleName) => {
@@ -276,43 +280,42 @@ const getRoleId = (roleName) => {
 </script>
 
 <style scoped>
-.my-input-class {
-  margin-bottom: 1em;
-  background-color: #f9f9f9; /* Gris claro para los inputs */
-  border: 1px solid #d1d1d1; /* Borde gris medio */
-  border-radius: 4px;
-  color: #333333; /* Texto gris oscuro */
-}
-
-.my-select-class {
-  margin-top: 1em;
-  background-color: #f9f9f9; /* Gris claro para el select */
-  border: 1px solid #d1d1d1; /* Borde gris medio */
-  border-radius: 4px;
-  color: #333333; /* Texto gris oscuro */
-  margin-top: 5px;
-  margin-bottom: 15px;
-}
-
-/* Estilo unificado para todos los botones */
-.v-btn,
-.custom-btn {
-  background-color: #34495E ; /* Color de fondo */
-  color:  #E0E0E0; /* Color del texto */
-  border-radius: 4px;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-
-.v-btn:hover,
-.custom-btn:hover {
-  background-color: #BDC3C7; /* Color de fondo en hover */
-  color: #ffffff; /* Color del texto en hover */
-}
-
 .my-card {
-  background-color: #E0E0E0; /* Gris muy claro */
-  border: 1px solid #d1d1d1; /* Borde gris medio */
+  background-color: #e0e0e0;
+  border: 1px solid #d1d1d1;
+  max-width: 640px;
+  margin: auto;
+  width: 100%;
+}
+
+.card-title {
+  color: #34495e;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.card-subtitle {
+  color: #757575;
+  font-size: 0.875rem;
+}
+
+.my-input-class,
+.my-select-class {
+  margin-bottom: 1em;
+  background-color: #f9f9f9;
+  border: 1px solid #d1d1d1;
+  border-radius: 4px;
+  color: #333333;
+}
+
+/* Unificar el estilo de todos los botones */
+.custom-btn,
+.v-btn {
+  color: #ffffff;
+  background-color: #2196f3;
+  border-radius: 4px;
+  font-weight: bold;
+  padding: 10px 20px;
 }
 </style>
