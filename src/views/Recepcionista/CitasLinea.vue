@@ -74,6 +74,7 @@
       <p>Costo Chequeo: {{ selectedOrder.CostoChequeo }}</p>
       <p>Costo Reparacion: {{ selectedOrder.CostoReparacion }}</p>
       <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
+      <p>Seguimiento: {{ selectedOrder.Seguimiento }}</p>
       <p>Entregado: {{ selectedOrder.Entregado }}</p>
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Garantia }}</p>
@@ -82,7 +83,8 @@
         v-if="
           selectedOrder &&
           selectedOrder.Garantia !== 'expirada' &&
-          selectedOrder.Garantia !== 'usada'
+          selectedOrder.Garantia !== 'usada' &&
+          selectedOrder.Garantia !== 'Pendiente de entrega'
         "
         @click="usarGarantia"
         class="custom-btn"
@@ -90,10 +92,24 @@
         USAR GARANTÍA
       </v-btn>
 
-      <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
+      <v-btn
+  v-if="
+    !selectedOrder || 
+    (selectedOrder && 
+      selectedOrder.Pago !== 'Efectivo' && 
+      selectedOrder.Pago !== 'Tarjeta'
+    )
+  "
+  @click="realizarPago"
+  class="custom-btn"
+>
+  PAGO
+</v-btn>
+
+
 
       <v-btn
-        v-if="selectedOrder && selectedOrder.Entregado !== 'Si'"
+        v-if="selectedOrder &&  selectedOrder.Entregado === 'No'"
         @click="marcarEntregado"
         class="custom-btn"
         >ENTREGADO</v-btn
@@ -111,6 +127,7 @@
     </v-snackbar>
   </v-container>
 </template>
+
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'

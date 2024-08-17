@@ -45,7 +45,7 @@
       </div>
     </v-card-text>
     <v-card-actions class="justify-end">
-      <v-btn @click="processPayment" color="#ffffff" class="custom-btn">Ir a pagar</v-btn>
+      <v-btn @click="processPayment" color="#ffffff" class="custom-btn">pagar</v-btn>
     </v-card-actions>
   </v-card>
 
@@ -75,11 +75,17 @@
         </v-row>
       </v-card-subtitle>
       <v-card-actions>
-        <v-btn text @click="showPaymentInfo">Confirmar</v-btn>
+        <v-btn text @click="redirectToPayment">Confirmar</v-btn>
         <v-btn text @click="rejectPayment">Cancelar</v-btn>
+        <v-btn text @click="handleCancellation">Cancelado</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
+
+  <!-- Snackbar for cancellation message -->
+  <v-snackbar v-model="cancellationSnackbar.show" timeout="5000">
+    Favor de pasar al local a pagar el chequeo y recoger el producto
+  </v-snackbar>
 
   <!-- Snackbar for selection warning -->
   <v-snackbar v-model="snackbar.visible" :color="snackbar.color" timeout="3000">
@@ -90,13 +96,17 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import apiCliente from '@/axiosconf'
+
+const router = useRouter()
 
 const localFilterText = ref('')
 const filteredItems = ref([])
 const selectedItem = ref(null)
 const dialog = ref(false)
 const snackbar = ref({ visible: false, message: '', color: 'error' })
+const cancellationSnackbar = ref({ show: false })
 const itemDetails = ref({
   producto: '',
   problema: '',
@@ -123,87 +133,45 @@ const fetchItems = async () => {
   }
 }
 
-const showPaymentInfo = async () => {
-  try {
-    if (!selectedItem.value || !selectedItem.value.id_detalle_linea) {
-      snackbar.value = {
-        visible: true,
-        message: 'Primero debes seleccionar un servicio.',
-        color: 'warning'
-      }
-      return
-    }
-
-    const response = await apiCliente.post('lineaaceptado', {
-      id_detalle_linea: selectedItem.value.id_detalle_linea
-    })
-
-    console.log('Respuesta del servidor:', response) // Para depuración
-
-    if (response.status === 200 && response.data && response.data.success) {
-      snackbar.value = {
-        visible: true,
-        message: 'El pago ha sido confirmado exitosamente.',
-        color: 'success'
-      }
-      dialog.value = false
-      await fetchItems() // Actualiza la lista de items
-    } else {
-      throw new Error(response.data.message || 'Error desconocido al confirmar el pago')
-    }
-  } catch (error) {
-    console.error('Error detallado:', error) // Para depuración
-    snackbar.value = {
-      visible: true,
-      message: `Error al confirmar el pago: ${error.message}`,
-      color: 'error'
-    }
-  }
-}
-
 const rejectPayment = async () => {
   try {
+    // Verificar que un servicio esté seleccionado
     if (!selectedItem.value || !selectedItem.value.id_detalle_linea) {
-      snackbar.value = {
-        visible: true,
-        message: 'Primero debes seleccionar un servicio.',
-        color: 'warning'
-      }
+      alert('Primero debes seleccionar un servicio.')
       return
     }
 
+    // Enviar solicitud para rechazar el pago
     const response = await apiCliente.post('linearechazado', {
       id_detalle_linea: selectedItem.value.id_detalle_linea
     })
 
+    // Mostrar mensaje de éxito
+    alert('El pago ha sido rechazado exitosamente.')
+
     console.log('Respuesta del servidor:', response) // Para depuración
 
-    if (response.status === 200 && response.data && response.data.success) {
-      snackbar.value = {
-        visible: true,
-        message: 'El pago ha sido rechazado exitosamente.',
-        color: 'success'
-      }
-      dialog.value = false
-      await fetchItems() // Actualiza la lista de items
-    } else {
-      throw new Error(response.data.message || 'Error desconocido al rechazar el pago')
-    }
   } catch (error) {
-    console.error('Error detallado:', error) // Para depuración
-    snackbar.value = {
-      visible: true,
-      message: `Error al rechazar el pago: ${error.message}`,
-      color: 'error'
-    }
+    // Mostrar mensaje de error
+    alert('Ocurrió un error al rechazar el pago. Intenta nuevamente.')
 
+    console.error('Error al rechazar el pago:', error) // Para depuración
   }
-  }
+}
+
+
 onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
 
+const redirectToPayment = () => {
+  if (selectedItem.value) {
+    router.push({ path: '/PagoFinal', query: { item: JSON.stringify(selectedItem.value) } });
+  }
+};
+
 const selectItem = (item) => {
-  selectedItem.value = item
-}
+  selectedItem.value = item;
+  localStorage.setItem('selectedItem', JSON.stringify(item));
+};
 
 const openDialog = () => {
   if (selectedItem.value) {
@@ -220,10 +188,6 @@ const openDialog = () => {
   }
 }
 
-const closeDialog = () => {
-  dialog.value = false
-}
-
 const processPayment = () => {
   if (!selectedItem.value) {
     snackbar.value = { visible: true, message: 'Primero selecciona un servicio.', color: 'error' }
@@ -231,6 +195,19 @@ const processPayment = () => {
   }
   openDialog()
 }
+
+const handleCancellation = async () => {
+  // Rechazar el pago
+  await rejectPayment();
+
+  // Mostrar el snackbar por 5 segundos
+  cancellationSnackbar.value.show = true;
+
+  // Después de 5 segundos, redirigir a /PagoFinal
+  setTimeout(() => {
+    router.push({ path: '/PagoFinal' });
+  }, 5000);
+};
 </script>
 
 <style scoped>
@@ -240,7 +217,7 @@ const processPayment = () => {
 }
 
 .title {
-  color:  #DC143C; /* Azul para el título */
+  color: #DC143C; /* Azul para el título */
   font-size: 24px;
   font-weight: bold;
 }
@@ -294,10 +271,9 @@ const processPayment = () => {
 
 .detail-item {
   margin-bottom: 8px;
-  font-size: 16px;
 }
 
-.detail-item strong {
-  color: #0000ff; /* Azul para las etiquetas */
+.v-snackbar {
+  bottom: 100px;
 }
 </style>

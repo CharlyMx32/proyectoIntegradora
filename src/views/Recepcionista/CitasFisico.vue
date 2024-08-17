@@ -75,21 +75,42 @@
       <p>Costo Chequeo: {{ selectedOrder.CostoChequeo }}</p>
       <p>Costo Reparacion: {{ selectedOrder.CostoReparacion }}</p>
       <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
+      <p>Seguimiento: {{ selectedOrder.Seguimiento}}</p>
+      <p>Entregado: {{ selectedOrder.Entregado}}</p>
       <p>Pago: {{ selectedOrder.Pago }}</p>
       <p>Garantia: {{ selectedOrder.Uso_Garantia }}</p>
       <v-btn
         v-if="
           selectedOrder &&
           selectedOrder.Uso_Garantia !== 'expirada' &&
-          selectedOrder.Uso_Garantia !== 'usada'
+          selectedOrder.Uso_Garantia !== 'usada' &&
+          selectedOrder.Garantia !== 'Pendiente de entrega'
         "
         @click="usarGarantia"
         class="custom-btn"
       >
         USAR GARANTÍA
       </v-btn>
-      <v-btn @click="realizarPago" class="custom-btn">PAGO</v-btn>
-      <v-btn @click="marcarEntregado" class="custom-btn">ENTREGADO</v-btn>
+      <v-btn
+  v-if="
+    !selectedOrder || 
+    (selectedOrder && 
+      selectedOrder.Pago !== 'Efectivo' && 
+      selectedOrder.Pago !== 'Tarjeta'
+    )
+  "
+  @click="realizarPago"
+  class="custom-btn"
+>
+  PAGO
+</v-btn>
+
+<v-btn
+        v-if="selectedOrder &&  selectedOrder.Entregado === 'No'"
+        @click="marcarEntregado"
+        class="custom-btn"
+        >ENTREGADO</v-btn
+      >
     </div>
 
     <!-- Snackbar para mensajes de éxito -->

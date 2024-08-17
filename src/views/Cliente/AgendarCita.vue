@@ -4,9 +4,7 @@
       <br />
       <br />
       <v-card-text>
-        <h3 class="title-header" style="color:  #34495E; margin-top: -80px">
-          Agenda tu cita
-        </h3>
+        <h3 class="title-header" style="color: #34495e; margin-top: -80px">Agenda tu cita</h3>
         <v-form @submit.prevent="agendarCita">
           <v-row>
             <!-- Columna 1 -->
@@ -84,32 +82,27 @@ import 'dayjs/locale/es'
 import apiClient from '@/axiosconf'
 import FooterComponent from '@/components/Generales/FooterComponent.vue'
 
-// Lista de productos disponibles
 const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
 
-// Variables reactivas para los datos seleccionados en el formulario
 const selectedDate = ref(null)
 const selectedTime = ref(null)
 const selectedProduct = ref(null)
 const problemDetails = ref('')
-const busyHours = ref([]) // Horas ocupadas
+const busyHours = ref([])
 const snackbar = ref({
   visible: false,
   message: '',
-  color: 'success' // Puedes cambiar a 'error' según sea necesario
+  color: 'success'
 })
 
-// Validación de fechas permitidas
 const allowedDates = (date) => {
   const hoy = dayjs().startOf('day')
   const maxDate = hoy.add(7, 'day')
   return !esDomingo(date) && !dayjs(date).isBefore(hoy) && !dayjs(date).isAfter(maxDate)
 }
 
-// Función para verificar si una fecha es domingo
 const esDomingo = (fecha) => dayjs(fecha).day() === 0
 
-// Computed para generar los intervalos de tiempo
 const timeSlots = ref([])
 
 const generateTimeSlots = () => {
@@ -138,13 +131,11 @@ const generateTimeSlots = () => {
   timeSlots.value = [...morningSlots, ...afternoonSlots]
 }
 
-// Computed para filtrar las horas disponibles, excluyendo las horas ocupadas
 const filteredTimeSlots = computed(() => {
   if (!selectedDate.value) return []
 
   const availableSlots = timeSlots.value.filter((slot) => !busyHours.value.includes(slot))
 
-  // Filtrar horas pasadas si es el mismo día
   const now = dayjs()
   const selectedDateObj = dayjs(selectedDate.value).startOf('day')
   const isToday = selectedDateObj.isSame(now, 'day')
@@ -157,8 +148,6 @@ const filteredTimeSlots = computed(() => {
   return availableSlots
 })
 
-// Obtener horas ocupadas desde el backend
-// Obtener horas ocupadas desde el backend
 async function fetchHorasOcupadas(fechaCita) {
   try {
     const response = await apiClient.post('obtener_horas_ocupadas', {
@@ -177,14 +166,10 @@ async function fetchHorasOcupadas(fechaCita) {
   }
 }
 
-// Función para agendar una cita
-
-// Actualiza las horas ocupadas y las horas disponibles
 async function updateAvailableTimes(selectedDate) {
   busyHours.value = await fetchHorasOcupadas(selectedDate)
 }
 
-// Evento que se ejecuta al cambiar la fecha
 const onDateChange = async (date) => {
   selectedDate.value = dayjs(date).format('YYYY-MM-DD')
   selectedTime.value = null
@@ -192,8 +177,6 @@ const onDateChange = async (date) => {
   await updateAvailableTimes(selectedDate.value)
 }
 
-// Función para agendar una cita
-// Función para mostrar mensajes en el snackbar
 const showSnackbar = (message, color = 'success') => {
   snackbar.value = {
     visible: true,
@@ -202,7 +185,6 @@ const showSnackbar = (message, color = 'success') => {
   }
 }
 
-// Función para agendar una cita
 const agendarCita = async () => {
   if (selectedDate.value && selectedTime.value && selectedProduct.value && problemDetails.value) {
     try {
@@ -215,8 +197,6 @@ const agendarCita = async () => {
 
       const response = await apiClient.post('agendar', data)
 
-    
-
       if (
         response.status === 200 &&
         response.data.status === 200 &&
@@ -224,13 +204,12 @@ const agendarCita = async () => {
       ) {
         showSnackbar('Cita agendada exitosamente', 'success')
 
-        // Limpiar los campos del formulario
         selectedDate.value = null
         selectedTime.value = null
         selectedProduct.value = null
         problemDetails.value = ''
-        busyHours.value = [] // Limpiar las horas ocupadas
-        generateTimeSlots() // Regenerar los slots para la fecha actual
+        busyHours.value = []
+        generateTimeSlots()
       } else {
         showSnackbar(
           'Error al agendar la cita: ' + (response.data.message || 'Desconocido'),
@@ -242,7 +221,6 @@ const agendarCita = async () => {
 
       let errorMessage = 'Error al agendar la cita: Desconocido'
 
-      // Verificar la respuesta del error para determinar el mensaje adecuado
       if (error.response && error.response.data) {
         const errorData = error.response.data
         if (errorData.msg === 'cita_existente') {
@@ -261,10 +239,8 @@ const agendarCita = async () => {
   }
 }
 
-// Inicializar los slots de tiempo cuando se carga el componente
 generateTimeSlots()
 
-// Verificar horas disponibles cuando cambia la fecha
 watch(selectedDate, async (newDate) => {
   if (newDate) {
     generateTimeSlots()
@@ -274,7 +250,6 @@ watch(selectedDate, async (newDate) => {
 </script>
 
 <style scoped>
-
 .v-snackbar {
   font-size: 16px;
 }
@@ -291,9 +266,7 @@ watch(selectedDate, async (newDate) => {
   margin-bottom: 10px;
 }
 .title-card {
-  font-size: 14px; /* Ajustado para ser más visible */
+  font-size: 14px;
   font-weight: 600;
 }
-
-/*Pie de pagina */
 </style>

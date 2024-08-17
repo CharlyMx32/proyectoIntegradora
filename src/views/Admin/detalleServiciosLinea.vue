@@ -29,19 +29,27 @@
                 placeholder="Ingrese el nombre del técnico"
               />
             </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-select
+                v-model="filters.status"
+                :items="statusOptions"
+                label="Estado de la Cita"
+                placeholder="Seleccione el estado"
+              />
+            </v-col>
           </v-row>
         </v-form>
 
-        <!-- Tabla de datos -->
         <div class="table-container">
           <v-table density="compact">
             <thead>
               <tr>
+                <th class="text-left">Fecha Cita</th>
                 <th class="text-left">Nombre Cliente</th>
                 <th class="text-left">Producto</th>
                 <th class="text-left">Problema</th>
-                <th class="text-left">Fecha Cita</th>
                 <th class="text-left">Nombre Técnico</th>
+                <th class="text-left">Estado</th>
               </tr>
             </thead>
             <tbody>
@@ -54,30 +62,30 @@
                 }"
                 @click="selectOrder(item)"
               >
+                <td>{{ item.diaHora }}</td>
                 <td>{{ item.nombre_cliente }}</td>
                 <td>{{ item.producto }}</td>
                 <td>{{ item.problema }}</td>
-                <td>{{ item.diaHora }}</td>
                 <td>{{ item.nombre_tecnico }}</td>
+                <td>{{ item.seguimiento_tecnico }}</td>
               </tr>
             </tbody>
           </v-table>
         </div>
 
-        <!-- Botones para asignar técnico y ver detalles -->
         <div v-if="selectedOrder" class="button-container">
           <v-btn
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showTechnicianTable = true"
             class="mr-2"
-            style="background-color: #34495E; color: white"
+            style="background-color: #34495e; color: white"
           >
             Asignar Técnico
           </v-btn>
           <v-btn
             v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
             @click="showDetailModal = true"
-            style="background-color: #34495E; color: white"
+            style="background-color: #34495e; color: white"
           >
             Ver Detalles
           </v-btn>
@@ -92,7 +100,6 @@
       </v-card-text>
     </v-card>
 
-    <!-- Componente adicional solo se muestra si el técnico está "Sin asignar" -->
     <v-card
       v-if="showTechnicianTable"
       class="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-2xl my-card mt-4"
@@ -135,7 +142,6 @@
       </v-card-text>
     </v-card>
 
-    <!-- Modal para mostrar más detalles de la cita -->
     <v-dialog v-model="showDetailModal" max-width="600px">
       <v-card>
         <v-card-title>
@@ -149,10 +155,18 @@
             <p><strong>Problema:</strong> {{ selectedOrder.problema }}</p>
             <p><strong>Fecha Cita:</strong> {{ selectedOrder.diaHora }}</p>
             <p><strong>Nombre Técnico:</strong> {{ selectedOrder.nombre_tecnico }}</p>
+            <p><strong>Estado de pago:</strong> {{ selectedOrder.estado_de_pago }}</p>
+            <p><strong>Seguimiento:</strong> {{ selectedOrder.seguimiento_tecnico }}</p>
+            <p><strong>Costo chequeo:</strong> {{ selectedOrder.costo_chequeo }}</p>
+            <p><strong>Costo Reparacion:</strong> {{ selectedOrder.costo_reparacion }}</p>
+            <p><strong>Total:</strong> {{ selectedOrder.Total }}</p>
+            <p><strong>Entrega realizada:</strong> {{ selectedOrder.entrega_realizada }}</p>
+            <p><strong>tiempo garantia:</strong> {{ selectedOrder.tiempo_garantia }}</p>
+            <p><strong>uso de garantia:</strong> {{ selectedOrder.uso_garantia }}</p>
           </div>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="showDetailModal = false" style="background-color: #34495E; color: white">
+          <v-btn @click="showDetailModal = false" style="background-color: #34495e; color: white">
             Cerrar
           </v-btn>
         </v-card-actions>
@@ -168,13 +182,20 @@ import apiClient from '@/axiosconf'
 const orders = ref([])
 const filters = ref({
   clientName: '',
-  technicianName: ''
+  technicianName: '',
+  status: null
 })
 const selectedOrder = ref(null)
-const selectedTechnician = ref(null) // Técnico seleccionado
+const selectedTechnician = ref(null)
 const technicianDetails = ref([])
 const showTechnicianTable = ref(false)
 const showDetailModal = ref(false)
+const statusOptions = ref([
+  { text: 'Completo', value: 'Completo' },
+  { text: 'Con retraso', value: 'Con retraso' },
+  { text: 'En reparacion', value: 'En reparacion' },
+  { text: 'Pendiente de tecnico', value: 'Pendiente de tecnico' }
+])
 
 const fetchData = async () => {
   try {
@@ -182,7 +203,8 @@ const fetchData = async () => {
     const response = await apiClient.get('DSA', {
       params: {
         client_name: clientName,
-        technician_name: technicianName
+        technician_name: technicianName,
+        status: status
       }
     })
     orders.value = Array.isArray(response.data) ? response.data : []
@@ -213,24 +235,23 @@ const filteredOrders = computed(() => {
     const matchesTechnician = order.nombre_tecnico
       .toLowerCase()
       .includes(filters.value.technicianName.toLowerCase())
-    const matchesDate = !filters.value.date || order.fecha_cita === filters.value.date
-    return matchesClient && matchesTechnician && matchesDate
+    const matchesStatus = filters.value.status
+      ? order.seguimiento_tecnico === filters.value.status
+      : true
+    return matchesClient && matchesTechnician && matchesStatus
   })
 })
 
-// Función para seleccionar una orden
 const selectOrder = (order) => {
   selectedOrder.value = order
   showTechnicianTable.value = false
   showDetailModal.value = false
 }
 
-// Función para seleccionar un técnico
 const selectTechnician = (technician) => {
   selectedTechnician.value = technician
 }
 
-// Función para asignar un técnico a una orden
 const assignTechnician = async () => {
   try {
     const orderId = selectedOrder.value?.id_orden_cita
@@ -267,7 +288,7 @@ const assignTechnician = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
   border: 1px solid #d1d1d1;
 }
 
@@ -284,7 +305,7 @@ const assignTechnician = async () => {
 }
 
 .v-table th {
-  background-color: #BDC3C7;
+  background-color: #bdc3c7;
 }
 
 .selected-row {
@@ -294,7 +315,7 @@ const assignTechnician = async () => {
 .additional-component-container {
   margin-top: 10px;
   padding: 10px;
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
   border: 1px solid #c8e6c9;
   border-radius: 4px;
 }
@@ -314,6 +335,6 @@ const assignTechnician = async () => {
 }
 
 .title-text {
-  color:  #34495E;
+  color: #34495e;
 }
 </style>
