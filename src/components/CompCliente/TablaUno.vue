@@ -45,7 +45,7 @@
       </div>
     </v-card-text>
     <v-card-actions class="justify-end">
-      <v-btn @click="processPayment" color="#ffffff" class="custom-btn">Ir a pagar</v-btn>
+      <v-btn @click="processPayment" color="#ffffff" class="custom-btn">pagar</v-btn>
     </v-card-actions>
   </v-card>
 

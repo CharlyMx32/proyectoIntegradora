@@ -1,65 +1,80 @@
 <template>
-<app>
-    
-      <v-container fluid class="main-container">
-        <v-row>
-          <!-- Componente Table1 -->
-          <v-col cols="12" sm="6" md="4">
-            <div class="table-wrapper">
-              <TablaUno
-                :filterText="filterText"
-                :filteredItems="filteredItems1"
-                :selectedItem="selectedItem1"
-                @selectItem="selectItem1"
-                @openDetalleLog="openDetalleLog"
-              />
-            </div>
-          </v-col>
+  <app>
+    <v-container fluid class="main-container">
+      <!-- Fila superior: Tabla 0 y Tabla 1 -->
+      <v-row>
+        <!-- Tabla 0 -->
+        <v-col cols="12" sm="6" md="6">
+          <div class="table-wrapper">
+            <TablaCero
+              :filterText="filterText"
+              :filteredItems="filteredItems4"
+              :selectedItem="selectedItem4"
+              @selectItem="selectItem4"
+              @openDetalleLog="openDetalleLog"
+            />
+          </div>
+        </v-col>
 
-          <!-- Componente Table2 -->
-          <v-col cols="12" sm="6" md="4">
-            <div class="table-wrapper">
-              <TablaDos
-                :filterText="filterText"
-                :filteredItems="filteredItems2"
-                :selectedItem="selectedItem2"
-                @selectItem="selectItem2"
-                @openDetalleLog="openDetalleLog"
-              />
-            </div>
-          </v-col>
+        <!-- Tabla 1 -->
+        <v-col cols="12" sm="6" md="6">
+          <div class="table-wrapper">
+            <TablaUno
+              :filterText="filterText"
+              :filteredItems="filteredItems1"
+              :selectedItem="selectedItem1"
+              @selectItem="selectItem1"
+              @openDetalleLog="openDetalleLog"
+            />
+          </div>
+        </v-col>
+      </v-row>
 
-          <!-- Componente Table3 -->
-          <v-col cols="12" sm="6" md="4">
-            <div class="table-wrapper">
-              <TablaTres
-                :filterText="filterText"
-                :filteredItems="filteredItems3"
-                :selectedItem="selectedItem3"
-                @selectItem="selectItem3"
-                @openSeguimientoLog="openSeguimientoLog"
-              />
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
+      <!-- Fila inferior: Tabla 2 y Tabla 3 -->
+      <v-row>
+        <!-- Tabla 2 -->
+        <v-col cols="12" sm="6" md="6">
+          <div class="table-wrapper">
+            <TablaDos
+              :filterText="filterText"
+              :filteredItems="filteredItems2"
+              :selectedItem="selectedItem2"
+              @selectItem="selectItem2"
+              @openDetalleLog="openDetalleLog"
+            />
+          </div>
+        </v-col>
 
-      <!-- Diálogo de Detalles -->
-      <v-dialog v-model="showDetalleLog" max-width="800px">
-        <!-- Agrega aquí el contenido del diálogo -->
-      </v-dialog>
+        <!-- Tabla 3 -->
+        <v-col cols="12" sm="6" md="6">
+          <div class="table-wrapper">
+            <TablaTres
+              :filterText="filterText"
+              :filteredItems="filteredItems3"
+              :selectedItem="selectedItem3"
+              @selectItem="selectItem3"
+              @openSeguimientoLog="openSeguimientoLog"
+            />
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
 
-      <v-dialog v-model="showSeguimientoLog" max-width="800px">
-        <!-- Agrega aquí el contenido del diálogo -->
-      </v-dialog>
+    <!-- Diálogo de Detalles -->
+    <v-dialog v-model="showDetalleLog" max-width="800px">
+      <!-- Agrega aquí el contenido del diálogo -->
+    </v-dialog>
 
-
-</app>
-<FooterComponent />
+    <v-dialog v-model="showSeguimientoLog" max-width="800px">
+      <!-- Agrega aquí el contenido del diálogo -->
+    </v-dialog>
+  </app>
+  <FooterComponent />
 </template>
-
+  
 <script setup>
 import { ref } from 'vue'
+import TablaCero from '@/components/CompCliente/TablaCero.vue'
 import TablaUno from '@/components/CompCliente/TablaUno.vue'
 import TablaDos from '@/components/CompCliente/TablaDos.vue'
 import TablaTres from '@/components/CompCliente/TablaTres.vue'
@@ -70,6 +85,7 @@ const filterText = ref('')
 const filteredItems1 = ref([])
 const filteredItems2 = ref([])
 const filteredItems3 = ref([])
+const selectedItem4 = ref(null)
 const selectedItem1 = ref(null)
 const selectedItem2 = ref(null)
 const selectedItem3 = ref(null)
@@ -77,6 +93,10 @@ const showDetalleLog = ref(false)
 const showSeguimientoLog = ref(false)
 
 // Métodos para manejar selección de items
+const selectItem4 = (item) => {
+  selectedItem4.value = item
+}
+
 const selectItem1 = (item) => {
   selectedItem1.value = item
 }
