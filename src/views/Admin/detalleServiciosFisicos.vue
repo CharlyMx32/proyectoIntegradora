@@ -7,7 +7,7 @@
         <v-flex class="flex-col space-y-1.5 p-6">
           <h3
             class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight"
-            style="color: #34495E"
+            style="color: #34495e"
           >
             Citas Físicas
           </h3>
@@ -41,6 +41,7 @@
                 <th class="text-left">Producto</th>
                 <th class="text-left">Problema</th>
                 <th class="text-left">Nombre Técnico</th>
+                <th class="text-left">Fecha Asistencia</th>
               </tr>
             </thead>
             <tbody>
@@ -57,6 +58,7 @@
                 <td>{{ item.producto }}</td>
                 <td>{{ item.problema }}</td>
                 <td>{{ item.nombre_tecnico }}</td>
+                <td>{{ item.fecha }}</td>
               </tr>
             </tbody>
           </v-table>
@@ -122,7 +124,7 @@
           </tbody>
         </v-table>
         <div v-if="selectedTechnician" class="mt-4">
-          <v-btn @click="assignTechnician" style="background-color: #0800ff; color: #34495E"
+          <v-btn @click="assignTechnician" style="background-color: #0800ff; color: #34495e"
             >Asignar</v-btn
           >
         </div>
@@ -132,19 +134,26 @@
     <v-dialog v-model="showDetailModal" max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5" style="color: #34495E">Detalles de la Cita</span>
+          <span class="text-h5" style="color: #34495e">Detalles de la Cita</span>
         </v-card-title>
         <v-card-text>
           <div v-if="selectedOrder">
             <p><strong>Nombre Cliente:</strong> {{ selectedOrder.nombre_cliente }}</p>
             <p><strong>Producto:</strong> {{ selectedOrder.producto }}</p>
             <p><strong>Problema:</strong> {{ selectedOrder.problema }}</p>
-            <p><strong>Fecha Cita:</strong> {{ selectedOrder.diaHora }}</p>
+            <p><strong>Fecha Cita:</strong> {{ selectedOrder.fecha }}</p>
             <p><strong>Nombre Técnico:</strong> {{ selectedOrder.nombre_tecnico }}</p>
+            <p><strong>Estatus Asignación:</strong> {{ selectedOrder.estatus_asignacion }}</p>
+            <p><strong>Costo Chequeo:</strong> {{ selectedOrder.costo_chequeo }}</p>
+            <p><strong>Costo Reparación:</strong> {{ selectedOrder.costo_reparacion }}</p>
+            <p><strong>Total:</strong> {{ selectedOrder.Total }}</p>
+            <p><strong>Entrega Realizada:</strong> {{ selectedOrder.entrega_realizada }}</p>
+            <p><strong>Tiempo Garantía:</strong> {{ selectedOrder.tiempo_garantia }}</p>
+            <p><strong>Uso Garantía:</strong> {{ selectedOrder.uso_garantia }}</p>
           </div>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="showDetailModal = false" style="background-color: #0800ff; color: #34495E"
+          <v-btn @click="showDetailModal = false" style="background-color: #0800ff; color: #34495e"
             >Cerrar</v-btn
           >
         </v-card-actions>
@@ -235,8 +244,6 @@ const assignTechnician = async () => {
       technicianId
     })
 
-    
-
     if (response.data.status === 'success') {
       await fetchData()
       showTechnicianTable.value = false
@@ -253,7 +260,7 @@ const assignTechnician = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
   border: 1px solid #d1d1d1;
 }
 
@@ -270,7 +277,7 @@ const assignTechnician = async () => {
 }
 
 .v-table th {
-  background-color: #BDC3C7;
+  background-color: #bdc3c7;
 }
 
 .selected-row {
@@ -280,7 +287,7 @@ const assignTechnician = async () => {
 .additional-component-container {
   margin-top: 10px;
   padding: 10px;
-  background-color: #BDC3C7;
+  background-color: #bdc3c7;
   border: 1px solid #c8e6c9;
   border-radius: 4px;
 }
