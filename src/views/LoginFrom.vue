@@ -114,7 +114,7 @@ const login = async () => {
         router.push({ path: '/login' })
     }
   } catch (error) {
-    errorMessage.value = 'Credenciales incorrectas. Inténtalo de nuevo.'
+    errorMessage.value = 'El Correo o la Contraseña son Incorrectas. Inténtalo de nuevo.'
     showErrorSnackbar.value = true
   }
 }

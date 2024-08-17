@@ -5,6 +5,7 @@
         <h3 class="title-header" style="color: #34495E; margin-top: -80px">
           Agenda tu cita
         </h3>
+
         <v-form @submit.prevent="agendarCita">
           <v-row>
             <!-- Columna 1 -->
@@ -82,35 +83,30 @@ import 'dayjs/locale/es'
 import apiClient from '@/axiosconf'
 import FooterComponent from '@/components/Generales/FooterComponent.vue'
 
-// Lista de productos disponibles
 const products = ['Laptop', 'Celular', 'Tablet', 'Impresora', 'Televisor', 'Otros']
 
-// Variables reactivas para los datos seleccionados en el formulario
 const selectedDate = ref(null)
 const selectedTime = ref(null)
 const selectedProduct = ref(null)
 const problemDetails = ref('')
-const busyHours = ref([]) // Horas ocupadas
+const busyHours = ref([])
 const snackbar = ref({
   visible: false,
   message: '',
-  color: 'success' // Puedes cambiar a 'error' según sea necesario
+  color: 'success'
 })
 
-// Validación de fechas permitidas
 const allowedDates = (date) => {
   const hoy = dayjs().startOf('day')
   const maxDate = hoy.add(7, 'day')
   return !esDomingo(date) && !dayjs(date).isBefore(hoy) && !dayjs(date).isAfter(maxDate)
 }
 
-// Función para verificar si una fecha es domingo
 const esDomingo = (fecha) => dayjs(fecha).day() === 0
 
 // Generar slots de tiempo
 const timeSlots = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '15:00', '15:30', '16:00']
 
-// Función para agendar una cita
 const agendarCita = async () => {
   if (selectedDate.value && selectedTime.value && selectedProduct.value) {
     const problemDetailsTrimmed = problemDetails.value.trim()
@@ -133,19 +129,23 @@ const agendarCita = async () => {
       const response = await apiClient.post('agendar', data)
 
       if (response.status === 200 && response.data.status === 200 && response.data.msg === 'success') {
+
         showSnackbar('Cita agendada exitosamente', 'success')
 
-        // Limpiar los campos del formulario
         selectedDate.value = null
         selectedTime.value = null
         selectedProduct.value = null
         problemDetails.value = ''
+
+        busyHours.value = []
+        generateTimeSlots()
       } else {
         showSnackbar('Error al agendar la cita: ' + (response.data.message || 'Desconocido'), 'error')
       }
     } catch (error) {
       console.error('Error en la solicitud:', error)
       showSnackbar('Error inesperado al agendar la cita', 'error')
+
     }
   } else {
     showSnackbar('Faltan datos', 'error')
@@ -158,6 +158,7 @@ const showSnackbar = (message, color = 'success') => {
     visible: true,
     message,
     color
+
   }
 }
 
@@ -168,7 +169,6 @@ const onDateChange = async (date) => {
 </script>
 
 <style scoped>
-
 .v-snackbar {
   font-size: 16px;
 }
@@ -185,9 +185,10 @@ const onDateChange = async (date) => {
   margin-bottom: 10px;
 }
 .title-card {
-  font-size: 14px; /* Ajustado para ser más visible */
+  font-size: 14px;
   font-weight: 600;
 }
 
 </style>
+
 

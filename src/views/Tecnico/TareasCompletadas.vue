@@ -27,8 +27,9 @@
               <th class="text-left">Nombre Cliente</th>
               <th class="text-left">Producto</th>
               <th class="text-left">Problema</th>
-              <th class="text-left">Técnico Asignado</th>
-              <th class="text-left">Fecha de Finalización</th>
+              <th class="text-left">cambios</th>
+              <th class="text-left">Costo Chequeo</th>
+              <th class="text-left">Costo Reparacion</th>
             </tr>
           </thead>
           <tbody>

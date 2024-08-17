@@ -3,7 +3,14 @@
     <v-row align="center" no-gutters class="navbar">
       <!-- Columna para el Logo -->
       <v-col cols="auto" class="d-flex align-center">
-        <v-img src="/img/Hs.png" alt="Logo" width="40" height="40" class="logo"></v-img>
+
+        <v-img
+          src="/public/img/Hs.png" 
+          alt="Logo"
+          width="40"
+          height="40"
+          class="logo"
+        ></v-img>
       </v-col>
 
       <!-- Columna para el Título -->

@@ -52,20 +52,22 @@
           </v-table>
         </div>
 
-        <!-- Botones para acciones adicionales -->
         <div v-if="selectedOrder" class="button-container">
-          <v-btn @click="showDetailModal = true" style="background-color: #34495E; color: white">
-            Ver Detalles
+          <v-btn @click="showRoleModal = true" style="background-color: #34495e; color: white">
+            Cambiar Rol
+          </v-btn>
+          <v-btn @click="showDetailModal = true" style="background-color: #2c3e50; color: white">
+            Más Detalles
           </v-btn>
         </div>
       </v-card-text>
     </v-card>
 
-    <!-- Modal de Detalles -->
-    <v-dialog v-model="showDetailModal" max-width="500px">
+    <!-- Modal de Cambiar Rol -->
+    <v-dialog v-model="showRoleModal" max-width="500px">
       <v-card>
         <v-card-title>
-          <span class="headline">Detalles del Usuario</span>
+          <span class="headline">Cambiar Rol del Usuario</span>
         </v-card-title>
         <v-card-text>
           <v-list>
@@ -89,13 +91,104 @@
                 <v-select v-model="selectedOrder.rol" :items="roles" label="Seleccione un rol" />
               </v-list-item-content>
             </v-list-item>
-
-            <!-- Añadir más campos si es necesario -->
           </v-list>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="#34495E" text @click="showDetailModal = false"> Cerrar </v-btn>
+          <v-btn color="#34495E" text @click="showRoleModal = false"> Cerrar </v-btn>
           <v-btn color="#34495E" @click="updateUserRole"> Guardar Cambios </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <!-- Modal de Más Detalles -->
+    <v-dialog v-model="showDetailModal" max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Detalles del Usuario</span>
+        </v-card-title>
+        <v-card-text>
+          <v-list>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Nombre:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.nombre }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Correo:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.correo }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Rol:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.rol }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Fecha de Ingreso:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.fecha_de_registro }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <!-- Añadir más detalles -->
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Calle:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.calle }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Colonia:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.colonia }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Código Postal:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.codigo_postal }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">Teléfono:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.telefono }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">RFC:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.rfc }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">CURP:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.curp }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title class="title">NSS:</v-list-item-title>
+                <v-list-item-subtitle>{{ selectedOrder.nss }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="#2C3E50" text @click="showDetailModal = false"> Cerrar </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -109,8 +202,9 @@ import apiClient from '@/axiosconf'
 const orders = ref([])
 const filters = ref({ nombre: '' })
 const selectedOrder = ref(null)
+const showRoleModal = ref(false)
 const showDetailModal = ref(false)
-const roles = ref(['Admin', 'Recepcionista', 'Tecnico']) // Los roles disponibles
+const roles = ref(['Admin', 'Recepcionista', 'Tecnico'])
 
 const fetchData = async () => {
   try {
@@ -135,8 +229,20 @@ onMounted(() => {
 
 const selectOrder = (order) => {
   console.log('Order selected:', order)
-  selectedOrder.value = order
-  showDetailModal.value = true
+  selectedOrder.value = {
+    id: order.id,
+    nombre: order.nombre,
+    correo: order.correo,
+    rol: order.rol,
+    fecha_de_registro: order.fecha_de_registro,
+    calle: order.calle,
+    colonia: order.colonia,
+    codigo_postal: order.codigo_postal,
+    telefono: order.telefono,
+    rfc: order.rfc,
+    curp: order.curp,
+    nss: order.nss
+  }
 }
 
 const updateUserRole = async () => {
@@ -144,8 +250,7 @@ const updateUserRole = async () => {
     const { id, rol } = selectedOrder.value
     await apiClient.post('RolCambio', { id, rol })
     console.log('User role updated:', { id, rol })
-    showDetailModal.value = false
-    // Puedes actualizar la lista de pedidos si es necesario
+    showRoleModal.value = false
   } catch (error) {
     console.error('Error updating user role:', error)
   }
@@ -154,7 +259,7 @@ const updateUserRole = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
   border: 1px solid #d1d1d1;
 }
 
@@ -171,7 +276,7 @@ const updateUserRole = async () => {
 }
 
 .v-table th {
-  background-color: #BDC3C7;
+  background-color: #bdc3c7;
 }
 
 .selected-row {
@@ -179,6 +284,12 @@ const updateUserRole = async () => {
 }
 
 .title-text {
-  color: #34495E;
+  color: #34495e;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  padding-top: 14px;
 }
 </style>
