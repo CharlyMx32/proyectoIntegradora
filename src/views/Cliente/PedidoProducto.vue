@@ -1,11 +1,10 @@
 <template>
-
   <app>
     <v-container fluid class="main-container">
       <!-- Fila superior: Tabla 0 y Tabla 1 -->
-      <v-row>
+      <v-row class="tables-row">
         <!-- Tabla 0 -->
-        <v-col cols="12" sm="6" md="6">
+        <v-col cols="12" sm="6" md="6" class="table-col">
           <div class="table-wrapper">
             <TablaCero
               :filterText="filterText"
@@ -18,15 +17,13 @@
         </v-col>
 
         <!-- Tabla 1 -->
-        <v-col cols="12" sm="6" md="6">
-
+        <v-col cols="12" sm="6" md="6" class="table-col">
           <div class="table-wrapper">
             <TablaUno
               :filterText="filterText"
               :filteredItems="filteredItems1"
               :selectedItem="selectedItem1"
               @selectItem="selectItem1"
-
               @openDetalleLog="openDetalleLog"
             />
           </div>
@@ -34,9 +31,9 @@
       </v-row>
 
       <!-- Fila inferior: Tabla 2 y Tabla 3 -->
-      <v-row>
+      <v-row class="tables-row bottom-row">
         <!-- Tabla 2 -->
-        <v-col cols="12" sm="6" md="6">
+        <v-col cols="12" sm="6" md="6" class="table-col">
           <div class="table-wrapper">
             <TablaDos
               :filterText="filterText"
@@ -48,9 +45,8 @@
           </div>
         </v-col>
 
-
         <!-- Tabla 3 -->
-        <v-col cols="12" sm="6" md="6">
+        <v-col cols="12" sm="6" md="6" class="table-col">
           <div class="table-wrapper">
             <TablaTres
               :filterText="filterText"
@@ -64,7 +60,6 @@
       </v-row>
     </v-container>
 
-
     <!-- Diálogo de Detalles -->
     <v-dialog v-model="showDetalleLog" max-width="800px">
       <!-- Agrega aquí el contenido del diálogo -->
@@ -73,11 +68,10 @@
     <v-dialog v-model="showSeguimientoLog" max-width="800px">
       <!-- Agrega aquí el contenido del diálogo -->
     </v-dialog>
-
   </app>
   <FooterComponent />
 </template>
-  
+
 <script setup>
 import { ref } from 'vue'
 import TablaCero from '@/components/CompCliente/TablaCero.vue'
@@ -124,55 +118,37 @@ const openSeguimientoLog = () => {
 </script>
 
 <style scoped>
-
-.table-wrapper {
-  min-height: 300px;
+.main-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-bottom: 16px;
-}
-
-.main-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  
+  justify-content: space-between;
+  height: 100%;
   padding: 0;
 }
 
 .tables-row {
-  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
   margin: 0;
+  padding: 0; /* Elimina todo el padding de las filas */
+}
+
+.table-col {
+  padding: 0; /* Elimina todo el padding de las columnas */
 }
 
 .table-wrapper {
-  height: 300px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 8px;
+  margin-bottom: 8px; /* Reduce el espacio entre tablas */
 }
 
-footer {
-  margin-top: auto; /* Empuja el footer al final del contenedor */
-  width: 100%;
-}
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-
-footer {
-  margin-top: auto;
+.bottom-row {
+  margin-top: -80px; /* Reduce aún más el espacio entre la fila superior e inferior */
 }
 
 @media (max-width: 1024px) {

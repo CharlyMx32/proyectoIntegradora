@@ -45,10 +45,10 @@
       </div>
     </v-card-text>
     <v-card-actions class="justify-end">
-      <v-btn @click="processPayment" color="#ffffff" class="custom-btn">pagar</v-btn>
+      <v-btn @click="processPayment" color="#ffffff" class="custom-btn">Pagar</v-btn>
     </v-card-actions>
   </v-card>
-
+  
   <!-- Dialog for item details -->
   <v-dialog v-model="dialog" max-width="800px">
     <v-card>
@@ -76,15 +76,15 @@
       </v-card-subtitle>
       <v-card-actions>
         <v-btn text @click="redirectToPayment">Confirmar</v-btn>
-        <v-btn text @click="rejectPayment">Cancelar</v-btn>
-        <v-btn text @click="handleCancellation">Cancelado</v-btn>
+        <v-btn text @click="handleCancellation">Cancelar</v-btn>
+        <v-btn text @click="dialog = false">Cerrar</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 
   <!-- Snackbar for cancellation message -->
   <v-snackbar v-model="cancellationSnackbar.show" timeout="5000">
-    Favor de pasar al local a pagar el chequeo y recoger el producto
+   El servicio fue canceldo. Favor de pasar al local a pagar el chequeo y recoger su producto
   </v-snackbar>
 
   <!-- Snackbar for selection warning -->
@@ -117,7 +117,7 @@ const itemDetails = ref({
 
 const fetchItems = async () => {
   try {
-    const token = localStorage.getItem('token') // Obtén el token almacenado
+    const token = localStorage.getItem('token')
     const response = await apiCliente.post(
       `ClienteCitas`,
       {},
@@ -127,40 +127,13 @@ const fetchItems = async () => {
         }
       }
     )
-    filteredItems.value = response.data.data.citas // Asigna los datos a `filteredItems`
+    filteredItems.value = response.data.data.citas
   } catch (error) {
     console.error('Error fetching items:', error)
   }
 }
 
-const rejectPayment = async () => {
-  try {
-    // Verificar que un servicio esté seleccionado
-    if (!selectedItem.value || !selectedItem.value.id_detalle_linea) {
-      alert('Primero debes seleccionar un servicio.')
-      return
-    }
-
-    // Enviar solicitud para rechazar el pago
-    const response = await apiCliente.post('linearechazado', {
-      id_detalle_linea: selectedItem.value.id_detalle_linea
-    })
-
-    // Mostrar mensaje de éxito
-    alert('El pago ha sido rechazado exitosamente.')
-
-    console.log('Respuesta del servidor:', response) // Para depuración
-
-  } catch (error) {
-    // Mostrar mensaje de error
-    alert('Ocurrió un error al rechazar el pago. Intenta nuevamente.')
-
-    console.error('Error al rechazar el pago:', error) // Para depuración
-  }
-}
-
-
-onMounted(fetchItems) // Llama a fetchItems cuando el componente se monta
+onMounted(fetchItems)
 
 const redirectToPayment = () => {
   if (selectedItem.value) {
@@ -197,17 +170,30 @@ const processPayment = () => {
 }
 
 const handleCancellation = async () => {
-  // Rechazar el pago
-  await rejectPayment();
+  try {
+    const token = localStorage.getItem('token')
+    await apiCliente.post(
+      `linearechazado`,
+      { item: selectedItem.value },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
 
-  // Mostrar el snackbar por 5 segundos
-  cancellationSnackbar.value.show = true;
+    // Mostrar el snackbar
+    cancellationSnackbar.value.show = true;
 
-  // Después de 5 segundos, redirigir a /PagoFinal
-  setTimeout(() => {
-    router.push({ path: '/PagoFinal' });
-  }, 5000);
+    // Cerrar el diálogo
+    dialog.value = false; 
+
+  } catch (error) {
+    console.error('Error handling cancellation:', error);
+    snackbar.value = { visible: true, message: 'Error al rechazar el pago.', color: 'error' }
+  }
 };
+
 </script>
 
 <style scoped>
@@ -223,9 +209,9 @@ const handleCancellation = async () => {
 }
 
 .table-container {
-  width: 100%; /* Asegura que la tabla ocupe todo el ancho del card */
-  max-height: 400px; /* Ajusta la altura según tus necesidades */
-  overflow-y: auto; /* Agrega scroll vertical si el contenido excede la altura */
+  width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .custom-table {

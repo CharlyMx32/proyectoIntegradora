@@ -92,25 +92,34 @@
         USAR GARANTÍA
       </v-btn>
       <v-btn
-  v-if="
-    !selectedOrder || 
-    (selectedOrder && 
-      selectedOrder.Pago !== 'Efectivo' && 
-      selectedOrder.Pago !== 'Tarjeta'
-    )
-  "
-  @click="realizarPago"
-  class="custom-btn"
->
-  PAGO
-</v-btn>
+        v-if="
+          !selectedOrder || 
+          (selectedOrder && 
+            selectedOrder.Pago !== 'Efectivo' && 
+            selectedOrder.Pago !== 'Tarjeta'
+          )
+        "
+        @click="realizarPago"
+        class="custom-btn"
+      >
+        PAGO
+      </v-btn>
 
-<v-btn
+      <v-btn
         v-if="selectedOrder &&  selectedOrder.Entregado === 'No'"
         @click="marcarEntregado"
         class="custom-btn"
         >ENTREGADO</v-btn
       >
+
+      <!-- Botón Cancelar -->
+      <v-btn
+        v-if="selectedOrder"
+        @click="cancelarCita"
+        class="custom-btn"
+      >
+        CANCELAR
+      </v-btn>
     </div>
 
     <!-- Snackbar para mensajes de éxito -->
@@ -218,6 +227,24 @@ const marcarEntregado = async () => {
       'Error marcando como entregado: ' + (error.response?.data?.message || error.message)
     errorSnackbar.value = true
     console.error('Error marcando como entregado:', error)
+  }
+}
+
+const cancelarCita = async () => {
+  try {
+    const response = await apiClient.post('cancelarfisico', {
+      id_detalle_fisico: selectedOrder.value.id_detalle_fisico,
+      cliente: selectedOrder.value.Nombre_Cliente
+    })
+    successMessage.value =
+      'Cita cancelada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.'
+    successSnackbar.value = true
+    console.log('Response data:', response.data)
+  } catch (error) {
+    errorMessage.value =
+      'Error cancelando la cita: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
+    console.error('Error cancelando la cita:', error)
   }
 }
 </script>

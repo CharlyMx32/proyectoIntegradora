@@ -52,98 +52,145 @@
     </v-card>
   
     <!-- Dialogo para ver detalles -->
-    <v-dialog v-model="dialog" max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">Detalles de Cita</span>
-        </v-card-title>
-        <v-card-text>
-          <div class="detail-item"><strong>Producto:</strong> {{ dialogData.producto }}</div>
-          <div class="detail-item"><strong>Día:</strong> {{ dialogData.fecha_cita }}</div>
-          <div class="detail-item"><strong>Hora:</strong> {{ dialogData.fecha_hora }}</div>
-          <div class="detail-item"><strong>Problema:</strong> {{ dialogData.problema }}</div>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn text @click="closeDialog">Cerrar</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <!-- Dialogo para ver detalles -->
+<v-dialog v-model="dialog" max-width="600px">
+  <v-card>
+    <v-card-title>
+      <span class="headline">Detalles de Cita</span>
+    </v-card-title>
+    <v-card-text>
+      <div class="detail-item"><strong>Producto:</strong> {{ dialogData.producto }}</div>
+      <div class="detail-item"><strong>Día:</strong> {{ dialogData.fecha_cita }}</div>
+      <div class="detail-item"><strong>Hora:</strong> {{ dialogData.fecha_hora }}</div>
+      <div class="detail-item"><strong>Problema:</strong> {{ dialogData.problema }}</div>
+    </v-card-text>
+    <v-card-actions>
+      <v-btn text @click="cancelarCita">Cancelar Cita</v-btn>
+      <v-btn text @click="closeDialog">Cerrar</v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
+
   </template>
   
   <script setup>
-  import { ref, onMounted, computed } from 'vue'
-  import apiCliente from '@/axiosconf'
-  
-  // Variables reactivas
-  const localFilterText = ref('')
-  const items = ref([]) // Almacena las citas
-  const selectedItem = ref(null) // Almacena la cita seleccionada
-  const dialog = ref(false) // Controla la visibilidad del diálogo
-  const dialogData = ref({
+import { ref, onMounted, computed } from 'vue'
+import apiCliente from '@/axiosconf'
+
+// Variables reactivas
+const localFilterText = ref('')
+const items = ref([]) // Almacena las citas
+const selectedItem = ref(null) // Almacena la cita seleccionada
+const dialog = ref(false) // Controla la visibilidad del diálogo
+const dialogData = ref({
+  id_orden_cita: '',
+  producto: '',
+  problema: '',
+  fecha_cita: '',
+  fecha_hora: ''
+})
+
+// Función para obtener las citas
+const fetchItems = async () => {
+  try {
+    const token = localStorage.getItem('token')
+    const response = await apiCliente.post(
+      `ClienteCitasPendientes`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
+    items.value = response.data.data.citas 
+  } catch (error) {
+    console.error('Error fetching items:', error)
+  }
+}
+
+// Computed para filtrar las citas basadas en el texto de búsqueda
+const filteredItems = computed(() => {
+  if (!localFilterText.value) {
+    return items.value
+  }
+  return items.value.filter((item) =>
+    item.producto.toLowerCase().includes(localFilterText.value.toLowerCase())
+  )
+})
+
+// Selecciona un ítem de la tabla
+const selectItem = (item) => {
+  selectedItem.value = item
+}
+
+// Abre el diálogo con los detalles del ítem seleccionado
+const openDetailDialog = () => {
+  if (selectedItem.value) {
+    dialogData.value = {
+      producto: selectedItem.value.producto,
+      fecha_cita: selectedItem.value.fecha_cita,
+      fecha_hora: selectedItem.value.fecha_hora,
+      problema: selectedItem.value.problema
+    }
+    dialog.value = true
+  } else {
+    console.warn('No item selected')
+  }
+}
+
+const closeDialog = () => {
+  dialog.value = false
+  dialogData.value = {
+    id_orden_cita: '',
     producto: '',
     problema: '',
     fecha_cita: '',
     fecha_hora: ''
-  })
-  
-  // Función para obtener las citas
-  const fetchItems = async () => {
-    try {
-      const token = localStorage.getItem('token')
-      const response = await apiCliente.post(
-        `ClienteCitasPendientes`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+  }
+}
+
+const cancelarCita = async () => {
+  try {
+    if (!selectedItem.value) {
+      console.error('No se ha seleccionado ninguna cita para cancelar');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    const requestData = { item: { id_orden_cita: selectedItem.value.id_orden_cita } };
+
+    console.log('Datos que se enviarán:', requestData);
+    
+    const response = await apiCliente.post(
+      `cancelarcita`,
+      requestData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      )
-      items.value = response.data.data.citas 
-    } catch (error) {
-      console.error('Error fetching items:', error)
-    }
-  }
-  
-  // Computed para filtrar las citas basadas en el texto de búsqueda
-  const filteredItems = computed(() => {
-    if (!localFilterText.value) {
-      return items.value
-    }
-    return items.value.filter((item) =>
-      item.producto.toLowerCase().includes(localFilterText.value.toLowerCase())
-    )
-  })
-  
-  // Selecciona un ítem de la tabla
-  const selectItem = (item) => {
-    selectedItem.value = item
-  }
-  
-  // Abre el diálogo con los detalles del ítem seleccionado
-  const openDetailDialog = () => {
-    if (selectedItem.value) {
-      dialogData.value = {
-        producto: selectedItem.value.producto,
-        fecha_cita: selectedItem.value.fecha_cita,
-        fecha_hora: selectedItem.value.fecha_hora,
-        problema: selectedItem.value.problema
       }
-      dialog.value = true
+    );
+
+    console.log('Respuesta del servidor:', response.data);
+
+    if (response.data.success) {
+      console.log('Cancelación exitosa');
+      // Actualiza la lista de citas
+      await fetchItems();
+      // Cierra el diálogo
+      closeDialog();
     } else {
-      console.warn('No item selected')
+      console.error('Error en la cancelación:', response.data.message);
     }
+  } catch (error) {
+    console.error('Error al cancelar la cita:', error);
   }
-  
-  // Cierra el diálogo
-  const closeDialog = () => {
-    dialog.value = false
-  }
-  
-  // Llama a fetchItems cuando el componente se monta
-  onMounted(fetchItems)
-  </script>
-  
+};
+
+onMounted(fetchItems)
+</script>
+
   <style scoped>
   .custom-card {
     border-radius: 10px;
