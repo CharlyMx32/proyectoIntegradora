@@ -29,14 +29,6 @@
                 placeholder="Ingrese el nombre del técnico"
               />
             </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-select
-                v-model="filters.status"
-                :items="statusOptions"
-                label="Estado de la Cita"
-                placeholder="Seleccione el estado"
-              />
-            </v-col>
           </v-row>
         </v-form>
 
@@ -190,21 +182,14 @@ const selectedTechnician = ref(null)
 const technicianDetails = ref([])
 const showTechnicianTable = ref(false)
 const showDetailModal = ref(false)
-const statusOptions = ref([
-  { text: 'Completo', value: 'Completo' },
-  { text: 'Con retraso', value: 'Con retraso' },
-  { text: 'En reparacion', value: 'En reparacion' },
-  { text: 'Pendiente de tecnico', value: 'Pendiente de tecnico' }
-])
 
 const fetchData = async () => {
   try {
     const { clientName, technicianName } = filters.value
     const response = await apiClient.get('DSA', {
       params: {
-        client_name: clientName,
-        technician_name: technicianName,
-        status: status
+        client_name: clientName || '',
+        technician_name: technicianName || ''
       }
     })
     orders.value = Array.isArray(response.data) ? response.data : []
@@ -235,8 +220,8 @@ const filteredOrders = computed(() => {
     const matchesTechnician = order.nombre_tecnico
       .toLowerCase()
       .includes(filters.value.technicianName.toLowerCase())
-    const matchesStatus = filters.value.status
-      ? order.seguimiento_tecnico === filters.value.status
+    const matchesStatus = filters.value.seguimiento_tecnico
+      ? order.seguimiento_tecnico === filters.value.seguimiento_tecnico
       : true
     return matchesClient && matchesTechnician && matchesStatus
   })

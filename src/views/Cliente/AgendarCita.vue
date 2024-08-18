@@ -2,9 +2,7 @@
   <v-app class="fondo">
     <v-container class="d-flex justify-center align-center fill-height">
       <v-card-text>
-        <h3 class="title-header" style="color: #34495E; margin-top: -80px">
-          Agenda tu cita
-        </h3>
+        <h3 class="title-header" style="color: #34495e; margin-top: -80px">Agenda tu cita</h3>
 
         <v-form @submit.prevent="agendarCita">
           <v-row>
@@ -105,14 +103,28 @@ const allowedDates = (date) => {
 const esDomingo = (fecha) => dayjs(fecha).day() === 0
 
 // Generar slots de tiempo
-const timeSlots = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '15:00', '15:30', '16:00']
+const timeSlots = [
+  '09:00',
+  '09:30',
+  '10:00',
+  '10:30',
+  '11:00',
+  '11:30',
+  '12:00',
+  '12:30',
+  '13:00',
+  '13:30',
+  '15:00',
+  '15:30',
+  '16:00'
+]
 
 const agendarCita = async () => {
   if (selectedDate.value && selectedTime.value && selectedProduct.value) {
     const problemDetailsTrimmed = problemDetails.value.trim()
 
     // Validar que la descripción tenga más de 8 palabras
-    const wordCount = problemDetailsTrimmed.split(/\s+/).filter(word => word.length > 0).length
+    const wordCount = problemDetailsTrimmed.split(/\s+/).filter((word) => word.length > 0).length
     if (wordCount < 3) {
       showSnackbar('La descripción debe tener al menos 3 palabras.', 'error')
       return
@@ -128,24 +140,27 @@ const agendarCita = async () => {
 
       const response = await apiClient.post('agendar', data)
 
-      if (response.status === 200 && response.data.status === 200 && response.data.msg === 'success') {
-
+      if (
+        response.status === 200 &&
+        response.data.status === 200 &&
+        response.data.msg === 'success'
+      ) {
         showSnackbar('Cita agendada exitosamente', 'success')
 
         selectedDate.value = null
         selectedTime.value = null
         selectedProduct.value = null
         problemDetails.value = ''
-
         busyHours.value = []
-        generateTimeSlots()
       } else {
-        showSnackbar('Error al agendar la cita: ' + (response.data.message || 'Desconocido'), 'error')
+        showSnackbar(
+          'Error al agendar la cita: ' + (response.data.message || 'Desconocido'),
+          'error'
+        )
       }
     } catch (error) {
       console.error('Error en la solicitud:', error)
       showSnackbar('Error inesperado al agendar la cita', 'error')
-
     }
   } else {
     showSnackbar('Faltan datos', 'error')
@@ -158,7 +173,6 @@ const showSnackbar = (message, color = 'success') => {
     visible: true,
     message,
     color
-
   }
 }
 
@@ -188,7 +202,4 @@ const onDateChange = async (date) => {
   font-size: 14px;
   font-weight: 600;
 }
-
 </style>
-
-

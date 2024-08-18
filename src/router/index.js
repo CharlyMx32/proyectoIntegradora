@@ -40,7 +40,6 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
   { path: '/TAS', name: 'tareas', component: Tareas },
-  
 
   // Rutas para Cliente
   {
@@ -52,7 +51,7 @@ const routes = [
       { path: '', redirect: '/principal' },
       { path: '/Agendar', component: AgendarCita },
       { path: '/Pedir', component: PedidoProducto },
-      { path: '/PagoFinal', component: PagoFinal}
+      { path: '/PagoFinal', component: PagoFinal }
     ]
   },
 
