@@ -202,7 +202,14 @@ const roles = ['Cliente', 'Recepcionista', 'Admin', 'Técnico']
 
 const rules = {
   required: (value) => !!value || 'Este campo es obligatorio.',
-  email: (value) => /.+@.+\..+/.test(value) || 'Ingrese un correo electrónico válido.'
+  email: (value) => /.+@.+\..+/.test(value) || 'Ingrese un correo electrónico válido.',
+  noSpaces: (value) => value.trim() === value || 'No se permiten espacios al inicio o al final.',
+  minLength: (min) => (value) => value.length >= min || `Debe tener al menos ${min} caracteres.`,
+  validNSS: (value) => /^[0-9]{11}$/.test(value) || 'NSS no válido.',
+  validCURP: (value) => /^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[0-9]{2}$/.test(value) || 'CURP no válida.',
+  validRFC: (value) => /^[A-Z]{4}[0-9]{6}[A-Z0-9]{3}$/.test(value) || 'RFC no válido.',
+  validPostalCode: (value) => /^[0-9]{5}$/.test(value) || 'Código postal no válido.',
+  validPhoneNumber: (value) => /^[0-9]{10}$/.test(value) || 'Teléfono no válido.'
 }
 
 const snackbar = ref({

@@ -1,11 +1,15 @@
 <template>
-
+<<<<<<< Updated upstream
   <app>
+=======
+  <div id="app">
+    <!-- Contenedor principal de tablas -->
+>>>>>>> Stashed changes
     <v-container fluid class="main-container">
       <!-- Fila superior: Tabla 0 y Tabla 1 -->
-      <v-row>
+      <v-row class="tables-row">
         <!-- Tabla 0 -->
-        <v-col cols="12" sm="6" md="6">
+        <v-col cols="12" sm="6" md="6" class="table-col">
           <div class="table-wrapper">
             <TablaCero
               :filterText="filterText"
@@ -18,15 +22,17 @@
         </v-col>
 
         <!-- Tabla 1 -->
+<<<<<<< Updated upstream
+        <v-col cols="12" sm="6" md="6" class="table-col">
+=======
         <v-col cols="12" sm="6" md="6">
-
+>>>>>>> Stashed changes
           <div class="table-wrapper">
             <TablaUno
               :filterText="filterText"
               :filteredItems="filteredItems1"
               :selectedItem="selectedItem1"
               @selectItem="selectItem1"
-
               @openDetalleLog="openDetalleLog"
             />
           </div>
@@ -34,9 +40,9 @@
       </v-row>
 
       <!-- Fila inferior: Tabla 2 y Tabla 3 -->
-      <v-row>
+      <v-row class="tables-row bottom-row">
         <!-- Tabla 2 -->
-        <v-col cols="12" sm="6" md="6">
+        <v-col cols="12" sm="6" md="6" class="table-col">
           <div class="table-wrapper">
             <TablaDos
               :filterText="filterText"
@@ -48,9 +54,8 @@
           </div>
         </v-col>
 
-
         <!-- Tabla 3 -->
-        <v-col cols="12" sm="6" md="6">
+        <v-col cols="12" sm="6" md="6" class="table-col">
           <div class="table-wrapper">
             <TablaTres
               :filterText="filterText"
@@ -64,20 +69,25 @@
       </v-row>
     </v-container>
 
-
     <!-- Diálogo de Detalles -->
     <v-dialog v-model="showDetalleLog" max-width="800px">
-      <!-- Agrega aquí el contenido del diálogo -->
+      <!-- Contenido del diálogo -->
     </v-dialog>
 
     <v-dialog v-model="showSeguimientoLog" max-width="800px">
-      <!-- Agrega aquí el contenido del diálogo -->
+      <!-- Contenido del diálogo -->
     </v-dialog>
-
+<<<<<<< Updated upstream
   </app>
   <FooterComponent />
+=======
+
+    <!-- Footer -->
+    <FooterComponent />
+  </div>
+>>>>>>> Stashed changes
 </template>
-  
+
 <script setup>
 import { ref } from 'vue'
 import TablaCero from '@/components/CompCliente/TablaCero.vue'
@@ -90,6 +100,7 @@ const filterText = ref('')
 const filteredItems1 = ref([])
 const filteredItems2 = ref([])
 const filteredItems3 = ref([])
+const filteredItems4 = ref([])
 const selectedItem4 = ref(null)
 const selectedItem1 = ref(null)
 const selectedItem2 = ref(null)
@@ -97,7 +108,6 @@ const selectedItem3 = ref(null)
 const showDetalleLog = ref(false)
 const showSeguimientoLog = ref(false)
 
-// Métodos para manejar selección de items
 const selectItem4 = (item) => {
   selectedItem4.value = item
 }
@@ -124,6 +134,55 @@ const openSeguimientoLog = () => {
 </script>
 
 <style scoped>
+<<<<<<< Updated upstream
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0;
+}
+
+.tables-row {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0; /* Elimina todo el padding de las filas */
+}
+
+.table-col {
+  padding: 0; /* Elimina todo el padding de las columnas */
+}
+
+.table-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px;
+  margin-bottom: 8px; /* Reduce el espacio entre tablas */
+}
+
+.bottom-row {
+  margin-top: -80px; /* Reduce aún más el espacio entre la fila superior e inferior */
+}
+
+=======
+/* Estructura general de la página */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+}
 
 .table-wrapper {
   min-height: 300px;
@@ -133,29 +192,8 @@ const openSeguimientoLog = () => {
   margin-bottom: 16px;
 }
 
-.main-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  
-  padding: 0;
-}
-
-.tables-row {
-  width: 100%;
-  margin: 0;
-}
-
-.table-wrapper {
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8px;
-}
-
 footer {
-  margin-top: auto; /* Empuja el footer al final del contenedor */
+  margin-top: auto;
   width: 100%;
 }
 
@@ -170,11 +208,8 @@ body {
   flex-direction: column;
 }
 
-
-footer {
-  margin-top: auto;
-}
-
+/* Consultas de medios para hacer el diseño responsivo */
+>>>>>>> Stashed changes
 @media (max-width: 1024px) {
   .table-wrapper {
     height: 250px;

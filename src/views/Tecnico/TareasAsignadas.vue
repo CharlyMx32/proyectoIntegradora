@@ -150,7 +150,7 @@ const fetchTareas = async () => {
       console.error('Error: La respuesta no contiene la clave "tareas"')
       snackbar.value = {
         visible: true,
-        message: 'Hubo un problema al cargar las tareas.',
+      
         color: 'error'
       }
     } 
@@ -158,7 +158,7 @@ const fetchTareas = async () => {
     console.error('Error al obtener las tareas:', error)
     snackbar.value = {
       visible: true,
-      message: 'Hubo un problema al cargar las tareas.',
+    
       color: 'error'
     }
   } finally {

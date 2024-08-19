@@ -87,6 +87,7 @@
                             :rules="[
                               (v) => !!v.trim() || 'Correo es obligatorio',
                               (v) => /.+@.+\..+/.test(v) || 'Correo electrónico no válido'
+                              
                             ]"
                           />
                         </v-col>
@@ -161,6 +162,7 @@
     </v-main>
   </v-app>
 </template>
+
 <script setup>
 import { ref, computed } from 'vue'
 import apiClient from '@/axiosconf'
@@ -189,7 +191,7 @@ function nextStep() {
     !form.value.apellido_paterno.trim() ||
     !form.value.apellido_materno.trim()
   ) {
-    errorMessage.value = 'Todos los campos de nombre y apellidos deben ser completados correctamente.'
+    errorMessage.value = 'Todos los campos de nombre y apellidos deben ser completados correctamente. No se permiten solo espacios.'
     showErrorSnackbar.value = true
     return
   }
@@ -290,7 +292,6 @@ function clearErrorMessage() {
   errorMessage.value = ''
   showErrorSnackbar.value = false
 }
-
 const menuItems = [
   { name: 'Home', route: '/Global' },
   { name: 'Login', route: '/login' }
