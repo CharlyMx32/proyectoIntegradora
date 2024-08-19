@@ -11,7 +11,7 @@
         <v-row no-gutters>
           <v-col cols="12" class="main-image-container">
             <v-img
-              src="/img/imgfondo.jpg"
+              src="/img/Local.jpeg"
               alt="Imagen Principal"
               class="main-image"
               contain

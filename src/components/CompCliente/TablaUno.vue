@@ -48,7 +48,7 @@
       <v-btn @click="processPayment" color="#ffffff" class="custom-btn">Pagar</v-btn>
     </v-card-actions>
   </v-card>
-  
+
   <!-- Dialog for item details -->
   <v-dialog v-model="dialog" max-width="800px">
     <v-card>
@@ -84,7 +84,7 @@
 
   <!-- Snackbar for cancellation message -->
   <v-snackbar v-model="cancellationSnackbar.show" timeout="5000">
-   El servicio fue canceldo. Favor de pasar al local a pagar el chequeo y recoger su producto
+    El servicio fue canceldo. Favor de pasar al local a pagar el chequeo y recoger su producto
   </v-snackbar>
 
   <!-- Snackbar for selection warning -->
@@ -112,7 +112,8 @@ const itemDetails = ref({
   problema: '',
   costoChequeo: '',
   costoReparacion: '',
-  diagnostico: ''
+  diagnostico: '',
+  idDetalleLinea: ''
 })
 
 const fetchItems = async () => {
@@ -135,16 +136,10 @@ const fetchItems = async () => {
 
 onMounted(fetchItems)
 
-const redirectToPayment = () => {
-  if (selectedItem.value) {
-    router.push({ path: '/PagoFinal', query: { item: JSON.stringify(selectedItem.value) } });
-  }
-};
-
 const selectItem = (item) => {
-  selectedItem.value = item;
-  localStorage.setItem('selectedItem', JSON.stringify(item));
-};
+  selectedItem.value = item
+  localStorage.setItem('selectedItem', JSON.stringify(item))
+}
 
 const openDialog = () => {
   if (selectedItem.value) {
@@ -153,7 +148,8 @@ const openDialog = () => {
       problema: selectedItem.value.problema,
       costoChequeo: selectedItem.value.costo_chequeo,
       costoReparacion: selectedItem.value.costo_reparacion,
-      diagnostico: selectedItem.value.diagnostico_linea
+      diagnostico: selectedItem.value.diagnostico_linea,
+      idDetalleLinea: selectedItem.value.id_detalle_linea
     }
     dialog.value = true
   } else {
@@ -169,31 +165,45 @@ const processPayment = () => {
   openDialog()
 }
 
+const redirectToPayment = () => {
+  if (selectedItem.value) {
+    // Añadido console.log para mostrar el valor de id_detalle_linea
+    console.log('ID Detalle Línea para pago:', itemDetails.value.idDetalleLinea)
+
+    router.push({
+      path: '/PagoFinal',
+      query: { id_detalle_linea: selectedItem.value.id_detalle_linea }
+    })
+  }
+}
+
 const handleCancellation = async () => {
   try {
     const token = localStorage.getItem('token')
+
+    // Añadido console.log para mostrar el valor de id_detalle_linea
+    console.log('ID Detalle Línea para cancelación:', itemDetails.value.idDetalleLinea)
+
     await apiCliente.post(
       `linearechazado`,
-      { item: selectedItem.value },
+      { id_detalle_linea: itemDetails.value.idDetalleLinea }, // Usar id_detalle_linea del diálogo
       {
         headers: {
           Authorization: `Bearer ${token}`
         }
       }
-    );
+    )
 
     // Mostrar el snackbar
-    cancellationSnackbar.value.show = true;
+    cancellationSnackbar.value.show = true
 
     // Cerrar el diálogo
-    dialog.value = false; 
-
+    dialog.value = false
   } catch (error) {
-    console.error('Error handling cancellation:', error);
+    console.error('Error handling cancellation:', error)
     snackbar.value = { visible: true, message: 'Error al rechazar el pago.', color: 'error' }
   }
-};
-
+}
 </script>
 
 <style scoped>
@@ -203,7 +213,7 @@ const handleCancellation = async () => {
 }
 
 .title {
-  color: #DC143C; /* Azul para el título */
+  color: #dc143c; /* Azul para el título */
   font-size: 24px;
   font-weight: bold;
 }
@@ -220,7 +230,7 @@ const handleCancellation = async () => {
 }
 
 .custom-table thead {
-  background-color: #E8E8E8;
+  background-color: #e8e8e8;
 }
 
 .custom-table th,

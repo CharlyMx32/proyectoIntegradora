@@ -24,7 +24,7 @@ import DashBoardCliente from '@/views/Cliente/DashBoardCliente.vue'
 import AgendarCita from '@/views/Cliente/AgendarCita.vue'
 import PrincipalCliente from '@/views/Cliente/PrincipalCliente.vue'
 import PedidoProducto from '@/views/Cliente/PedidoProducto.vue'
-import PagoFinal from '@/views/Cliente/PagoFinal.vue'
+import PagoFinal from '@/components/CompCliente/PagoFinal.vue'
 
 // mar lineas
 import agendarCitas from '@/views/Recepcionista/AgendarCitas.vue'
@@ -40,8 +40,11 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/register', name: 'Register', component: Register },
   { path: '/TAS', name: 'tareas', component: Tareas },
-  
-
+  {
+    path: '/PagoFinal',
+    name: 'pago',
+    component: PagoFinal
+  },
   // Rutas para Cliente
   {
     path: '/Cliente',
@@ -51,8 +54,7 @@ const routes = [
       { path: '/principal', component: PrincipalCliente },
       { path: '', redirect: '/principal' },
       { path: '/Agendar', component: AgendarCita },
-      { path: '/Pedir', component: PedidoProducto },
-      { path: '/PagoFinal', component: PagoFinal}
+      { path: '/Pedir', component: PedidoProducto }
     ]
   },
 

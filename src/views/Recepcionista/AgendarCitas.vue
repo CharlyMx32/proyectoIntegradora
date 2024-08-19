@@ -134,9 +134,11 @@ const isSubmitting = ref(false)
 
 const rules = {
   required: value => !!value || 'Este campo es obligatorio',
+  noSpaces: value => (value && value.trim() !== '') || 'No se permiten solo espacios',
   phone: value => {
     const isNumeric = /^\d+$/.test(value);
     return (isNumeric && value.length === 10) || 'El teléfono debe tener 10 dígitos y solo debe contener números';
+    
   }
 }
 
