@@ -69,22 +69,25 @@
         Detalles de la cita:
       </h2>
 
-      <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
-      <p>Contacto Cliente: {{ selectedOrder.Contacto }}</p>
-      <p>Producto: {{ selectedOrder.Producto }}</p>
-      <p>Costo Chequeo: {{ selectedOrder.CostoChequeo }}</p>
-      <p>Costo Reparacion: {{ selectedOrder.CostoReparacion }}</p>
-      <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
-      <p>Seguimiento: {{ selectedOrder.Seguimiento}}</p>
-      <p>Entregado: {{ selectedOrder.Entregado}}</p>
-      <p>Pago: {{ selectedOrder.Pago }}</p>
-      <p>Garantia: {{ selectedOrder.Uso_Garantia }}</p>
+      <p><strong>Nombre Cliente: </strong>{{ selectedOrder.Nombre_Cliente }}</p>
+      <p><strong>Contacto Cliente: </strong>{{ selectedOrder.Contacto }}</p>
+      <p><strong>Producto: </strong>{{ selectedOrder.Producto }}</p>
+      <p><strong>Costo Chequeo: </strong>{{ selectedOrder.CostoChequeo }}</p>
+      <p><strong>Costo Reparación: </strong>{{ selectedOrder.CostoReparacion }}</p>
+      <p><strong>Costo Total: </strong>{{ selectedOrder.CostoTotal }}</p>
+      <p><strong>Estado Cita: </strong>{{ selectedOrder.Estado }}</p>
+      <p><strong>Seguimiento: </strong>{{ selectedOrder.Seguimiento }}</p>
+      <p><strong>Entregado: </strong>{{ selectedOrder.Entregado }}</p>
+      <p><strong>Pago: </strong>{{ selectedOrder.Pago }}</p>
+      <p><strong>Garantía: </strong>{{ selectedOrder.Uso_Garantia }}</p>
+
       <v-btn
         v-if="
           selectedOrder &&
           selectedOrder.Uso_Garantia !== 'expirada' &&
           selectedOrder.Uso_Garantia !== 'usada' &&
-          selectedOrder.Garantia !== 'Pendiente de entrega'
+          selectedOrder.Garantia !== 'Pendiente de entrega' &&
+          selectedOrder.Entregado !== 'Si'
         "
         @click="usarGarantia"
         class="custom-btn"
@@ -96,7 +99,7 @@
           !selectedOrder || 
           (selectedOrder && 
             selectedOrder.Pago !== 'Efectivo' && 
-            selectedOrder.Pago !== 'Tarjeta'
+            selectedOrder.Pago !== 'Aceptado'
           )
         "
         @click="realizarPago"
@@ -112,9 +115,12 @@
         >ENTREGADO</v-btn
       >
 
-      <!-- Botón Cancelar -->
       <v-btn
-        v-if="selectedOrder"
+      v-if="
+          !selectedOrder || 
+          (selectedOrder && 
+            selectedOrder.Estado !== 'Rechazado'
+          )"
         @click="cancelarCita"
         class="custom-btn"
       >
@@ -237,7 +243,7 @@ const cancelarCita = async () => {
       cliente: selectedOrder.value.Nombre_Cliente
     })
     successMessage.value =
-      'Cita cancelada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.'
+      `Cita cancelada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`
     successSnackbar.value = true
     console.log('Response data:', response.data)
   } catch (error) {
@@ -247,6 +253,7 @@ const cancelarCita = async () => {
     console.error('Error cancelando la cita:', error)
   }
 }
+
 </script>
 
 <style scoped>
