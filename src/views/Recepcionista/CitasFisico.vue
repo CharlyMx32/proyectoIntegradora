@@ -29,7 +29,6 @@
           </v-row>
         </v-form>
 
-        <!-- Tabla de datos -->
         <div class="table-container">
           <v-table density="compact" class="custom-table">
             <thead>
@@ -61,7 +60,6 @@
       </v-card-text>
     </v-card>
 
-    <!-- Componente adicional -->
     <div v-if="selectedOrder" class="additional-component-container">
       <h2
         class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight efecto-titulo"
@@ -72,6 +70,8 @@
       <p><strong>Nombre Cliente: </strong>{{ selectedOrder.Nombre_Cliente }}</p>
       <p><strong>Contacto Cliente: </strong>{{ selectedOrder.Contacto }}</p>
       <p><strong>Producto: </strong>{{ selectedOrder.Producto }}</p>
+      <p><strong>Evaloracion: </strong>{{ selectedOrder.Diagnostico }}</p>
+      <p><strong>Cambios a realizar: </strong>{{ selectedOrder.Cambios }}</p>
       <p><strong>Costo Chequeo: </strong>{{ selectedOrder.CostoChequeo }}</p>
       <p><strong>Costo Reparación: </strong>{{ selectedOrder.CostoReparacion }}</p>
       <p><strong>Costo Total: </strong>{{ selectedOrder.CostoTotal }}</p>
@@ -128,12 +128,12 @@
       </v-btn>
     </div>
 
-    <!-- Snackbar para mensajes de éxito -->
+
     <v-snackbar v-model="successSnackbar" :timeout="3000" color="green" top>
       {{ successMessage }}
     </v-snackbar>
 
-    <!-- Snackbar para mensajes de error -->
+
     <v-snackbar v-model="errorSnackbar" :timeout="3000" color="red" top>
       {{ errorMessage }}
     </v-snackbar>
