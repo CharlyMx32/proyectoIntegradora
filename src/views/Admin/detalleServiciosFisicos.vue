@@ -83,7 +83,7 @@
           <v-btn
             v-else
             @click="showDetailModal = true"
-            style="background-color: #0800ff; color: #ffad00"
+            style="background-color: #34495e; color: #ffad00"
           >
             Ver Detalles
           </v-btn>
