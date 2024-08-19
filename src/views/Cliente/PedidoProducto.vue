@@ -1,10 +1,6 @@
 <template>
-<<<<<<< Updated upstream
-  <app>
-=======
   <div id="app">
     <!-- Contenedor principal de tablas -->
->>>>>>> Stashed changes
     <v-container fluid class="main-container">
       <!-- Fila superior: Tabla 0 y Tabla 1 -->
       <v-row class="tables-row">
@@ -22,11 +18,7 @@
         </v-col>
 
         <!-- Tabla 1 -->
-<<<<<<< Updated upstream
-        <v-col cols="12" sm="6" md="6" class="table-col">
-=======
         <v-col cols="12" sm="6" md="6">
->>>>>>> Stashed changes
           <div class="table-wrapper">
             <TablaUno
               :filterText="filterText"
@@ -77,15 +69,10 @@
     <v-dialog v-model="showSeguimientoLog" max-width="800px">
       <!-- Contenido del diálogo -->
     </v-dialog>
-<<<<<<< Updated upstream
-  </app>
-  <FooterComponent />
-=======
 
     <!-- Footer -->
     <FooterComponent />
   </div>
->>>>>>> Stashed changes
 </template>
 
 <script setup>
@@ -134,41 +121,6 @@ const openSeguimientoLog = () => {
 </script>
 
 <style scoped>
-<<<<<<< Updated upstream
-.main-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 0;
-}
-
-.tables-row {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-  padding: 0; /* Elimina todo el padding de las filas */
-}
-
-.table-col {
-  padding: 0; /* Elimina todo el padding de las columnas */
-}
-
-.table-wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8px;
-  margin-bottom: 8px; /* Reduce el espacio entre tablas */
-}
-
-.bottom-row {
-  margin-top: -80px; /* Reduce aún más el espacio entre la fila superior e inferior */
-}
-
-=======
 /* Estructura general de la página */
 #app {
   display: flex;
@@ -209,7 +161,6 @@ body {
 }
 
 /* Consultas de medios para hacer el diseño responsivo */
->>>>>>> Stashed changes
 @media (max-width: 1024px) {
   .table-wrapper {
     height: 250px;
