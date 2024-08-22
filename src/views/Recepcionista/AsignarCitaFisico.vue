@@ -56,7 +56,7 @@
                 <td>{{ item.nombre_cliente }}</td>
                 <td>{{ item.producto }}</td>
                 <td>{{ item.problema }}</td>
-                <td>{{ item.nombre_tecnico }}</td>
+                <td>{{ item.estado }}</td>
               </tr>
             </tbody>
           </v-table>
@@ -64,8 +64,14 @@
 
         <!-- Botones para asignar técnico y ver detalles -->
         <div v-if="selectedOrder" class="button-container">
+          <!-- Muestra el nombre del técnico seleccionado -->
+          <p>{{ selectedOrder.nombre_tecnico }}</p>
+
+          <!-- Botón para asignar técnico -->
           <v-btn
-            v-if="selectedOrder.nombre_tecnico === 'Sin Asignar'"
+            v-if="
+              selectedOrder.nombre_tecnico && selectedOrder.nombre_tecnico.trim() === 'Sin Asignar'
+            "
             @click="showTechnicianTable = true"
             class="mr-2"
             style="background-color: #ffad00; color: white"
@@ -110,10 +116,7 @@
           </tbody>
         </v-table>
         <div v-if="selectedTechnician" class="mt-4">
-          <v-btn
-            @click="assignTechnician"
-            style="background-color: #34495E; color: white;"
-          >
+          <v-btn @click="assignTechnician" style="background-color: #34495e; color: white">
             Asignar
           </v-btn>
         </div>
@@ -203,8 +206,10 @@ const filteredOrders = computed(() => {
 
 // Función para seleccionar una orden
 const selectOrder = (order) => {
+  console.log('Orden seleccionada:', order)
+  console.log('Nombre del técnico:', order.nombre_tecnico) // Verifica el valor aquí
   selectedOrder.value = order
-  showTechnicianTable.value = false
+  showTechnicianTable.value = true
 }
 
 // Función para seleccionar un técnico
@@ -263,7 +268,7 @@ const assignTechnician = async () => {
 
 <style scoped>
 .my-card {
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
   border: 1px solid #d1d1d1;
 }
 
@@ -280,7 +285,7 @@ const assignTechnician = async () => {
 }
 
 .v-table th {
-  background-color: #BDC3C7;
+  background-color: #bdc3c7;
   color: #fff;
 }
 
@@ -311,7 +316,6 @@ const assignTechnician = async () => {
 }
 
 .title-text {
-  color: #34495E;
-
+  color: #34495e;
 }
 </style>
