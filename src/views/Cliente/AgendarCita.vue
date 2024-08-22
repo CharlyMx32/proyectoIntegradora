@@ -3,6 +3,7 @@
     <v-container class="d-flex justify-center align-center fill-height">
       <v-card-text>
         <h3 class="title-header" style="color: #34495e; margin-top: -80px">Agenda tu cita</h3>
+
         <v-form @submit.prevent="agendarCita">
           <v-row>
             <!-- Columna 1 -->

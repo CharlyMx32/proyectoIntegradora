@@ -69,15 +69,16 @@
       >
         Detalles de la cita:
       </h2>
-      <p>Nombre Cliente: {{ selectedOrder.Nombre_Cliente }}</p>
-      <p>Producto: {{ selectedOrder.Producto }}</p>
-      <p>Costo Chequeo: {{ selectedOrder.CostoChequeo }}</p>
-      <p>Costo Reparacion: {{ selectedOrder.CostoReparacion }}</p>
-      <p>Costo Total: {{ selectedOrder.CostoTotal }}</p>
-      <p>Seguimiento: {{ selectedOrder.Seguimiento }}</p>
-      <p>Entregado: {{ selectedOrder.Entregado }}</p>
-      <p>Pago: {{ selectedOrder.Pago }}</p>
-      <p>Garantia: {{ selectedOrder.Garantia }}</p>
+      <p><strong>Nombre Cliente: </strong>{{ selectedOrder.Nombre_Cliente }}</p>
+      <p><strong>Producto: </strong>{{ selectedOrder.Producto }}</p>
+      <p><strong>Costo Chequeo: </strong>{{ selectedOrder.CostoChequeo }}</p>
+      <p><strong>Costo Reparacion: </strong>{{ selectedOrder.CostoReparacion }}</p>
+      <p><strong>Costo Total: </strong>{{ selectedOrder.CostoTotal }}</p>
+      <p><strong>Estado Cita: </strong>{{ selectedOrder.Estado }}</p>
+      <p><strong>Seguimiento: </strong>{{ selectedOrder.Seguimiento }}</p>
+      <p><strong>Entregado: </strong>{{ selectedOrder.Entregado }}</p>
+      <p><strong>Pago: </strong>{{ selectedOrder.Pago }}</p>
+      <p><strong>Garantia: </strong>{{ selectedOrder.Garantia }}</p>
 
       <v-btn
         v-if="
@@ -114,6 +115,18 @@
         class="custom-btn"
         >ENTREGADO</v-btn
       >
+
+      <v-btn
+      v-if="
+          !selectedOrder || 
+          (selectedOrder && 
+            selectedOrder.Estado !== 'Rechazado'
+          )"
+        @click="cancelarCita"
+        class="custom-btn"
+      >
+        CANCELAR
+      </v-btn>
     </div>
 
     <!-- Snackbar para mensajes de éxito -->
@@ -221,6 +234,25 @@ const marcarEntregado = async () => {
     console.error('Error al marcar como entregado:', error)
   }
 }
+
+  const cancelarCita = async () => {
+  try {
+    const response = await apiClient.post('cancelarlineaf', {
+      id_detalle_linea: selectedOrder.value.id_detalle_linea,
+      cliente: selectedOrder.value.Nombre_Cliente
+    })
+    successMessage.value =
+      `Cita cancelada exitosamente para el cliente ${selectedOrder.value.Nombre_Cliente}.`
+    successSnackbar.value = true
+    console.log('Response data:', response.data)
+  } catch (error) {
+    errorMessage.value =
+      'Error cancelando la cita: ' + (error.response?.data?.message || error.message)
+    errorSnackbar.value = true
+    console.error('Error cancelando la cita:', error)
+  }
+}
+
 </script>
 
 <style scoped>
