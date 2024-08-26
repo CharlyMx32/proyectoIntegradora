@@ -70,12 +70,12 @@
       <p><strong>Nombre Cliente: </strong>{{ selectedOrder.Nombre_Cliente }}</p>
       <p><strong>Contacto Cliente: </strong>{{ selectedOrder.Contacto }}</p>
       <p><strong>Producto: </strong>{{ selectedOrder.Producto }}</p>
-      <p><strong>Evaloracion: </strong>{{ selectedOrder.Diagnostico }}</p>
+      <p><strong>Evaloracion: </strong>{{ selectedOrder.Evaloracion }}</p>
       <p><strong>Cambios a realizar: </strong>{{ selectedOrder.Cambios }}</p>
       <p><strong>Costo Chequeo: </strong>{{ selectedOrder.CostoChequeo }}</p>
       <p><strong>Costo Reparación: </strong>{{ selectedOrder.CostoReparacion }}</p>
       <p><strong>Costo Total: </strong>{{ selectedOrder.CostoTotal }}</p>
-      <p><strong>Estado Cita: </strong>{{ selectedOrder.Estado }}</p>
+      <p><strong>Estado Cita: </strong>{{ selectedOrder.estado }}</p>
       <p><strong>Seguimiento: </strong>{{ selectedOrder.Seguimiento }}</p>
       <p><strong>Entregado: </strong>{{ selectedOrder.Entregado }}</p>
       <p><strong>Pago: </strong>{{ selectedOrder.Pago }}</p>
@@ -86,8 +86,7 @@
           selectedOrder &&
           selectedOrder.Uso_Garantia !== 'expirada' &&
           selectedOrder.Uso_Garantia !== 'usada' &&
-          selectedOrder.Garantia !== 'Pendiente de entrega' &&
-          selectedOrder.Entregado !== 'Si'
+          selectedOrder.Uso_Garantia !== 'Pendiente de entrega' 
         "
         @click="usarGarantia"
         class="custom-btn"
@@ -99,7 +98,7 @@
           !selectedOrder || 
           (selectedOrder && 
             selectedOrder.Pago !== 'Efectivo' && 
-            selectedOrder.Pago !== 'Aceptado'
+            selectedOrder.Pago !== 'Tarjeta'
           )
         "
         @click="realizarPago"
@@ -109,7 +108,13 @@
       </v-btn>
 
       <v-btn
-        v-if="selectedOrder &&  selectedOrder.Entregado === 'No'"
+      v-if="
+    !selectedOrder || 
+    (selectedOrder && 
+    selectedOrder.Entregado === 'No' && 
+    selectedOrder.Pago !== 'Pendiente' 
+    )
+  "
         @click="marcarEntregado"
         class="custom-btn"
         >ENTREGADO</v-btn
@@ -119,7 +124,8 @@
       v-if="
           !selectedOrder || 
           (selectedOrder && 
-            selectedOrder.Estado !== 'Rechazado'
+            selectedOrder.estado !== 'Rechazado' && 
+            selectedOrder.estado !== 'Aceptado'
           )"
         @click="cancelarCita"
         class="custom-btn"
