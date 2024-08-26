@@ -107,10 +107,16 @@
   PAGO
 </v-btn>
 
-
-
       <v-btn
-        v-if="selectedOrder &&  selectedOrder.Entregado === 'No'"
+      v-if="
+    !selectedOrder || 
+    (selectedOrder && 
+    selectedOrder.Entregado === 'No' && 
+    selectedOrder.Pago !== 'Pendiente' && 
+    selectedOrder.Pago === 'Efectivo' && 
+    selectedOrder.Pago === 'Tarjeta'
+    )
+  "
         @click="marcarEntregado"
         class="custom-btn"
         >ENTREGADO</v-btn
@@ -120,7 +126,8 @@
       v-if="
           !selectedOrder || 
           (selectedOrder && 
-            selectedOrder.Estado !== 'Rechazado'
+            selectedOrder.Estado !== 'Rechazado' && 
+            selectedOrder.Estado !== 'Aceptado'
           )"
         @click="cancelarCita"
         class="custom-btn"
